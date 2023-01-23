@@ -4,6 +4,7 @@ session_start();
 require_once "../conexion/conexion.php";
 include "funciones_login.php";
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     if (isset($_COOKIE["sessionTemporal"])) {

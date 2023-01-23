@@ -1,5 +1,6 @@
 <?php
 
+
  session_start();
  echo $mail = $_POST['mail']."<br>";
  echo $contra = $_POST['pass']."<br>";

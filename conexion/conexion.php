@@ -5,7 +5,8 @@ function conexion(){
          $conexion = new pdo('mysql:dbname=restaurante; host=localhost','administrador','renaido2023');
          $conexion->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
          $conexion->exec("SET CHARACTER SET utf8");
-         
+
+
         } catch (PDOException $e) {
              echo 'No conectado a la base de datos porque:<br>';
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());

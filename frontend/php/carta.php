@@ -1,6 +1,6 @@
 <?php
 /* Bloque try-catch con la conexión a la bdd. */
-require_once DIRECTORY_SEPARATOR . "PMM" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "conexion" . DIRECTORY_SEPARATOR . "conexion.php";
+require_once ("..\..\backend" . DIRECTORY_SEPARATOR . "conexion" . DIRECTORY_SEPARATOR . "conexion.php");
 $conexion = conexion();
 /*try {
     $conexion = new PDO('mysql:dbname=luachea;host=localhost', 'root', '');
@@ -31,9 +31,9 @@ $conexion = conexion();
     /* Realizamos la consulta que nos pide para enseñar los datos. */
     if (isset($_GET["tipo"])) {
         $tipo = $_GET["tipo"];
-        $consulta = "select nombre, descripcion, tipo, cantidad, precio, img, disponible from carta_comida where tipo='$tipo'";
+        $consulta = "select nombre, descripcion, tipo, cantidad, precio, img, disponible, id_comida from carta_comida where tipo='$tipo'";
     } else {
-        $consulta = "select nombre, descripcion, tipo, cantidad, precio, img, disponible from carta_comida";
+        $consulta = "select nombre, descripcion, tipo, cantidad, precio, img, disponible, id_comida from carta_comida";
     }
     ?>
 
@@ -109,8 +109,10 @@ $conexion = conexion();
                             <h5 class="precio-producto"> Precio: ' . number_format($fila[4], 2, '.', '') . '</h5>
                                 </div>';
                         echo '<div class="col-4 d-flex justify-content-center">
+                            <a href="..\..\backend\cart\ejemplo.php?id="'.$fila[7].'">
                                 <button class="btn-add-cart btn btn-outline-secondary" id="compra" type="button">Comprar</button>
-                                </div>';
+                            </a>
+                            </div>';
                         echo '</div>';
                     }
                 } else {

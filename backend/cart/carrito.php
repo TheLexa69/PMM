@@ -39,10 +39,11 @@ class carrito {
         //Código para visualizar el carro
     }
     /*Añadir productos al carro*/
-    public function add($id_usuario, $id_comida) {
-        $stmt = $this->pdo->prepare("INSERT INTO $this->table (id_usuario, id_comida) VALUES (:id_usuario, :id_comida)");
+    public function add($id_usuario, $id_comida, $cantidad) {
+        $stmt = $this->pdo->prepare("INSERT INTO $this->table (id_usuario, id_comida, cantidad) VALUES (:id_usuario, :id_comida, :cantidad)");
         $stmt->bindParam(':id_usuario', $id_usuario);
         $stmt->bindParam(':id_comida', $id_comida);
+        $stmt->bindParam(':cantidad', $cantidad);
         return $stmt->execute();
     }
     

@@ -39,7 +39,7 @@
                 <a class="nav-link" href="#">Sobre Mi</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../../backend/cart/ejemplo.php">Cesta</a>
+                <a class="nav-link" href="<?php echo DIRECTORY_SEPARATOR . "PMM" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "ejemplo.php" ?>">Cesta</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Login</a>

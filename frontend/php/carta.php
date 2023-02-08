@@ -1,11 +1,13 @@
 <?php
 /* Bloque try-catch con la conexión a la bdd. */
-try {
+require_once DIRECTORY_SEPARATOR . "PMM" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "conexion" . DIRECTORY_SEPARATOR . "conexion.php";
+$conexion = conexion();
+/*try {
     $conexion = new PDO('mysql:dbname=luachea;host=localhost', 'root', '');
     $conexion->exec("SET CHARACTER SET utf8");
 } catch (PDOException $e) {
     die("ERROR: " . $e->getMessage());
-}
+}*/
 ?>
 
 <!DOCTYPE html>

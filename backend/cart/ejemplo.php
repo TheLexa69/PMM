@@ -5,7 +5,7 @@ print $o1->printCarro("restaurante@b01.daw2d.iesteis.gal");
 
 print var_dump($o1->getCarro("restaurante@b01.daw2d.iesteis.gal"));
 
-$o1->add(1, 5);
+$o1->add(1, 5, 2);
 print $o1->printCarro("restaurante@b01.daw2d.iesteis.gal");
 
 $o1->removeItem(5);

@@ -3,6 +3,20 @@ drop database if exists LuaChea;
 create database if not exists LuaChea;
 use LuaChea;
 
+create table if not exists trabajador(
+id_trabajador int auto_increment,
+nie_trabajdor varchar(9) null,
+pasaporte_trabajador varchar(12) null,
+nombre varchar(40) not null,
+apellido1 varchar(40) not null,
+apellido2 varchar(40) null,
+fecha date not null,
+num_telef varchar(9) not null,
+id_rol int not null,
+contraseña varchar(255) not null unique,
+constraint pk_idTrabajador primary key (id_trabajador)
+);
+
 create table if not exists usuario(
 id_usuario int auto_increment,
 nombre varchar(40) not null,
@@ -13,7 +27,10 @@ fecha date not null,
 num_telef varchar(9) not null,
 id_rol int not null,
 estado_usuario enum('activado','desactivado') not null default 'desactivado',
-contraseña varchar(40) not null unique,
+NIF varchar(9) not null unique,
+direccion varchar(1000) null,
+cp varchar(5) null,
+contraseña varchar(255) not null unique,
 
 constraint pk_idUsuario primary key (id_usuario)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -35,10 +52,25 @@ cantidad int not null,
 precio float not null,
 disponible boolean not null,
 img varchar(100) not null,
+tipo_alergeno int not null,
 
 constraint pk_id primary key (id_comida),
 constraint ck_tipo check (tipo in ('entrantes','arroz','carne','cachopo','pescado','postre','bebida'))
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table if not exists alergenos(
+id_alergeno	int	auto_increment,
+nombre_alergeno varchar(100) not null,
+descripcion varchar(100) not null,
+img varchar(100) null,
+
+constraint pk_idAlergeno primary key (id_alergeno)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table if not exists carta_alergenos(
+id_alergeno int not null,
+id_comida int not null
+);
 
 create table if not exists factura(
 id_factura int auto_increment,
@@ -46,7 +78,7 @@ id_usuario int not null,
 cif_empresa varchar(10) not null,
 precio float not null,
 fecha date not null,
-producto varchar(100) not null,
+id_comida int not null,
 total int not null,
 modo_pago enum('efectivo','tarjeta','otro modo') not null default 'efectivo',
 
@@ -54,8 +86,8 @@ constraint pk_id_factura primary key (id_factura),
 constraint ck_pago check (modo_pago in ('efectivo','tarjeta','otro modo'))
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table if not exists empresa
-( cif varchar(10) not null,
+create table if not exists empresa(
+cif varchar(10) not null,
 nombre varchar(120) not null,
 nombre_sociedad varchar(120) not null,
 direccion varchar(60) not null,
@@ -72,7 +104,7 @@ id_carro int auto_increment,
 id_usuario int not null,
 id_comida int not null,
 #id_producto int not null,
-#cantidad int not null,
+cantidad int not null,
 #fecha Date not null,
 constraint pk_id primary key (id_carro)
 );
@@ -87,6 +119,9 @@ ALTER TABLE carrito ADD FOREIGN KEY (id_comida) REFERENCES carta_comida(id_comid
 
 ALTER TABLE usuario ADD FOREIGN KEY (id_rol) REFERENCES roles(id_rol);
 
+ALTER TABLE carta_alergenos ADD FOREIGN KEY (id_alergeno) REFERENCES alergenos(id_alergeno);
+ALTER TABLE carta_alergenos ADD FOREIGN KEY (id_comida) REFERENCES carta_comida(id_comida);
+
 #ALTER TABLE carro ADD CONSTRAINT FK_ArrayProducto FOREIGN KEY (array_producto) REFERENCES factura(producto);
 
 ###########################################################################################
@@ -99,6 +134,27 @@ INSERT INTO roles (nombre_rol) VALUES ('Trabajador');
 INSERT INTO roles (nombre_rol) VALUES ('Registrado');
 INSERT INTO roles (nombre_rol) VALUES ('Sin registrar');
 
+INSERT INTO alergenos (nombre_alergeno) values ('ninguno');
+INSERT INTO alergenos (nombre_alergeno, img) values ('altramuces', 'url');
+INSERT INTO alergenos (nombre_alergeno, img) values ('apio', 'url');
+INSERT INTO alergenos (nombre_alergeno, img) values ('cacahuete', 'url');
+INSERT INTO alergenos (nombre_alergeno, img) values ('crustaceos', 'url');
+INSERT INTO alergenos (nombre_alergeno, img) values ('huevo', 'url');
+INSERT INTO alergenos (nombre_alergeno, img) values ('lacteos', 'url');
+INSERT INTO alergenos (nombre_alergeno, img) values ('moluscos', 'url');
+INSERT INTO alergenos (nombre_alergeno, img) values ('mostaza', 'url');
+INSERT INTO alergenos (nombre_alergeno, img) values ('pescado', 'url');
+INSERT INTO alergenos (nombre_alergeno, img) values ('soja', 'url');
+INSERT INTO alergenos (nombre_alergeno, img) values ('sulfitos', 'url');
+INSERT INTO alergenos (nombre_alergeno, img) values ('sesamo', 'url');
+INSERT INTO alergenos (nombre_alergeno, img) values ('frutoscascara', 'url');
+INSERT INTO alergenos (nombre_alergeno, img) values ('gluten', 'url');
+
+INSERT INTO carta_alergenos (id_alergeno, id_comida) values (15,1);
+INSERT INTO carta_alergenos (id_alergeno, id_comida) values (6,1);
+INSERT INTO carta_alergenos (id_alergeno, id_comida) values (7,1);
+
+#FALTA AGREGAR LOS CAMPOS DE ALERGENOS !!!!!!!!
 INSERT INTO carta_comida (nombre, descripcion, tipo, subtipo, cantidad, precio, disponible, img) VALUES ('Surtido de Croquetas','Jamón, Cecina y Pulpo','entrantes', 'croquetas','1','13.50','1','url');
 INSERT INTO carta_comida (nombre, tipo, subtipo, cantidad, precio, disponible, img) VALUES ('Pulpo','entrantes', 'croquetas','1','12.50','1','url');
 INSERT INTO carta_comida (nombre, tipo, subtipo, cantidad, precio, disponible, img) VALUES ('Rulo de cabra y cebolla caramelizada','entrantes', 'croquetas','1','12.00','1','url');
@@ -190,39 +246,51 @@ INSERT INTO carta_comida (nombre, tipo, cantidad, precio, disponible, img) VALUE
 INSERT INTO carta_comida (nombre, tipo, cantidad, precio, disponible, img) VALUES ('Tarta de la abuela', 'postre','1','5.00','1','url');
 INSERT INTO carta_comida (nombre, tipo, cantidad, precio, disponible, img) VALUES ('Arroz con leche', 'postre','1','4.50','1','url');
 
-INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_usuario, contraseña) VALUES ('LUENGOS ANDRE','SL','','restaurante@b01.daw2d.iesteis.gal',DATE(NOW()),'628746312',1,'activado','Restaurante@1');
-INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_usuario, contraseña) VALUES ('Gabriel','Domínguez','Borines','gabrieldb@iesteis.gal',DATE(NOW()),'689526341',2, 'activado','abc123..');
-INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_usuario, contraseña) VALUES ('Nuria','Buceta','García','nuriabg@iesteis.gal',DATE(NOW()),'621456983',3, 'desactivado','abc123...');
+INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_usuario, NIF, direccion, cp, contraseña) VALUES ('LUENGOS ANDRE','SL','','restaurante@b01.daw2d.iesteis.gal',DATE(NOW()),'628746312',1,'activado','54918574N','','','Restaurante@1');
+INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_usuario, NIF, direccion, cp, contraseña) VALUES ('Gabriel','Domínguez','Borines','gabrieldb@iesteis.gal',DATE(NOW()),'689526341',2, 'activado','54918574M','','','abc123..');
+INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_usuario, NIF, direccion, cp, contraseña) VALUES ('Nuria','Buceta','García','nuriabg@iesteis.gal',DATE(NOW()),'621456983',3, 'desactivado','54918574A','','','abc123...');
 
 INSERT INTO empresa (cif, nombre, nombre_sociedad, direccion, ciudad, cp, telefono, logo) VALUES ('B27788272','Novo Lua Chea','LUENGOS ANDRE S.L.','Rua de Eduardo Cabello, 25','Vigo','36208','986132537','url');
 
-select * from roles;
-select * from carrito;
-select * from carta_comida;
-select * from empresa;
-select * from factura;
-select * from usuario;
+
+insert into factura (id_usuario, cif_empresa, precio, fecha, id_comida, total, modo_pago) values (1,'B27788272', 20, DATE(NOW()), 5, 20, 'efectivo');
+insert into carrito (id_usuario, id_comida, cantidad) values (1, 4, 2);
+
+#select * from roles;
+#select * from carrito;
+#select * from carta_comida;
+#select * from carta_alergenos;
+#select * from alergenos;
+#select img, nombre, descripcion, cantidad, precio from carta_comida;
+#select * from empresa;
+#select * from factura;
+#select * from carrito where id_usuario in (select id_usuario from factura);
+#select * from factura where id_usuario in (select id_usuario from carrito);
+#select * from factura as f inner join carrito as c
+#				ON f.id_carro;
+#select * from usuario;
 
 ###########################################################################################
 ################################################################################
 #	ROLES Y USUARIOS 
-DROP USER IF EXISTS administrador;
-DROP USER IF EXISTS gabriel;
-DROP USER IF EXISTS nuria;
-DROP USER IF EXISTS Raul;
+#DROP USER IF EXISTS administrador;
+#DROP USER IF EXISTS gabriel;
+#DROP USER IF EXISTS nuria;
+#DROP USER IF EXISTS Raul;
 
-DROP ROLE IF EXISTS 'administrador','gestor','trabajador', 'registrado', 'sin_registrar';
+#DROP ROLE IF EXISTS 'administrador','gestor','trabajador', 'registrado', 'sin_registrar';
 
 #CREATE USER IF NOT EXISTS administrador IDENTIFIED BY 'renaido2023';
 #CREATE USER IF NOT EXISTS gabriel IDENTIFIED BY 'renaido2023';
 #CREATE USER IF NOT EXISTS nuria IDENTIFIED BY 'renaido2023';
 CREATE USER IF NOT EXISTS Raul IDENTIFIED BY 'LuaChea@Raul1';
-
+CREATE USER IF NOT EXISTS login	IDENTIFIED BY 'login@1234';
 
 DROP ROLE IF EXISTS 'administrador','gestor','trabajador';
 CREATE ROLE IF NOT EXISTS 'administrador';
 
 GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP ON LuaChea.* TO Raul;
+GRANT SELECT, INSERT, UPDATE ON LuaChea.* TO login;
 #GRANT SELECT, INSERT, UPDATE, DELETE ON LuaChea.* TO gestor;
 #GRANT SELECT ON LuaChea.* to trabajador;
 
@@ -238,6 +306,23 @@ GRANT administrador TO 'Raul'@'localhost';
 FLUSH PRIVILEGES;
 
 SHOW GRANTS;
+
+###########################################################################################
+CREATE TRIGGER dbo.NombreTrigger
+    ON dbo.MiTabla
+    AFTER UPDATE
+AS
+BEGIN
+    IF UPDATE(NombreColumna)
+    BEGIN
+	   UPDATE	 OtraTabla
+	   SET
+		  NombreColumna = i.NombreColumna
+	   FROM
+		  inserted i
+    END
+END
+###########################################################################################
 
 ###########################################################################################
 #CREATE TABLE if not exists roles (

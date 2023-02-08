@@ -1,12 +1,18 @@
 <?php
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+ 
 
+ 
+require_once "../conexion/conexion.php";
 require '../PHPMailer/Exception.php';
 require '../PHPMailer/PHPMailer.php';
 require '../PHPMailer/SMTP.php';
-
-
+ 
+ 
+    //novoluachea@gmail
+function mail($mail,$nombre,$token){
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);
 
@@ -23,7 +29,7 @@ try {
 
     //Recipients
     $mail->setFrom('restaurante@b01.daw2d.iesteis.gal', 'NovoLuaChea');     //Desde donde se envia
-    $mail->addAddress('novoluachea@gmail.com', 'usuario1');     //A quien se envia
+    $mail->addAddress($mail, $nombre);     //A quien se envia
     //$mail->addAddress('ellen@example.com');               //Name is optional
     //$mail->addReplyTo('info@example.com', 'Information');
    // $mail->addCC('cc@example.com');
@@ -35,8 +41,8 @@ try {
 
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
-    $mail->Subject = 'Prueba de funcionamiento';
-    $mail->Body    = 'Hola esto es una prueba</b>';
+    $mail->Subject = 'Mensaje de verificacion cuenta';
+    $mail->Body    = 'Valla a la pagina y ponga este codigo </b>'.$token;
    // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';    //mensaje alternativo
 
     $mail->send();
@@ -44,3 +50,5 @@ try {
 } catch (Exception $e) {
     echo "Mensaje no enviado Error : {$mail->ErrorInfo}";
 }
+}
+ 

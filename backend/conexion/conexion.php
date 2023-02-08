@@ -2,7 +2,7 @@
  
 function conexion(){
     try {              
-         $conexion = new pdo('mysql:dbname=restaurante; host=localhost','administrador','renaido2023');
+         $conexion = new pdo('mysql:dbname=luachea; host=localhost','root','');
          $conexion->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
          $conexion->exec("SET CHARACTER SET utf8");
 

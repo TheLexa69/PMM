@@ -1,47 +1,43 @@
 <?php
+//require_once "../conexion/conexion.php";
+//include "funciones_login.php";
 
-session_start();
-require_once "../conexion/conexion.php";
-include "funciones_login.php";
-
+include "../clases/formularios.php";
+include "../clases/funciones.php";
+include "../clases/consultas.php";
+$a= new formularios;
+$b= new funciones;
+$c= new consultas;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
-    if (isset($_COOKIE["sessionTemporal"])) {
 
-        $datos = explode(",", $_COOKIE["sessionTemporal"]);
+    if (isset($_POST["mail"])) {
+        $mail = $_POST["mail"];
+    }
 
-        
-        $mail = $datos[4];
-         
-        if (contraseña($_POST["pass"], $_POST["pass2"])) {
-            $contra = $_POST["pass"];
-            try {
-                $conexion = conexion();
 
-                $sql = 'UPDATE usuario SET contraseña=:contrasena where correo=:correo';
 
-                $stmt = $conexion->prepare($sql);
+    if ($_POST["pass"] == $_POST["pass2"]) {
+        $contranueva = $_POST["pass"];
+        $contra = password_hash($contranueva, PASSWORD_DEFAULT);
 
-                $stmt->bindParam(':contrasena', $contra, PDO::PARAM_STR);
-                $stmt->bindParam(':correo', $mail, PDO::PARAM_STR, 50);
-
-                $stmt->execute();
-
-                if ($stmt == true) {
-                    header("Location: login.php");
-                } else {
-                    echo "fallo la insercion";
-                }
-
+        try {
+          $stmt= $c->nuevaContraseña($mail,$contra);
+          
+           
+            if ($stmt->rowCount() > 0) {
                 unset($conexion);
-            } catch (PDOException $e) {
-                echo 'Accion no realizada porque:<br>';
-                if ($e->getCode() == 23000) {
-                    echo "<br>El correo introducido <b>ya existe</b> en la base de datos.<br><br> ";
-                }
-                die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
-            }
+                unset($stmt);
+                 header("Location: login.php");
+            }   
+
+            unset($conexion);
+            unset($stmt);
+        } catch (PDOException $e) {
+            echo 'Accion no realizada porque:<br>';
+            die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
+    } else {
+        $a->contraMail($mail);
     }
 }

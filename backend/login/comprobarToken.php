@@ -1,13 +1,19 @@
 <?php
-require_once "../conexion/conexion.php";
-include "funciones_login.php";
-
+//require_once "../conexion/conexion.php";
+//include "funciones_login.php";
+include "../clases/formularios.php";
+include "../clases/funciones.php";
+include "../clases/consultas.php";
+$a= new formularios;
+$b= new funciones;
+$c= new consultas;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $token = $_POST['token'];
+      
+     $mail = $_POST['mail'];
     
-    $mail = $_POST['mail'];
      //es el token generado
     //$tokenGenerado = $_POST['tokenGenerado'];
     //$contra= password_verify($token, $contra); //$token es el de base de datos //$contra es la de la cooki
@@ -19,21 +25,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     try {
-        $conexion = conexion();
+        
         $token = $_POST['token']; // token que se envio al mail
 
-        $sql = "select * from usuario where correo=?";
-
-        $stmt = $conexion->prepare($sql);
-
-        $stmt->execute(array($mail));
-
-        $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $datos = array();
-        foreach ($fila as $fil) {
-            $datos = $fil;
-        }
-
+          $mail;
+         
+      $datos=$c->comprobarDatos($mail);
+        
+         
         $datos["id_usuario"];
         $hash = $datos["contraseña"]; //contiene hash base de datos
 
@@ -46,11 +45,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } 
         
         unset($conexion);
+        
         if (isset($boll)) {
-         contraseña($mail);
+         
+            $a->contraseña($mail);
         } else {
             
-        tokenMal($mail);
+        $a->tokenMal($mail);
         }
     } catch (PDOException $e) {
         echo 'No conectado';

@@ -1,6 +1,13 @@
 <?php
-require_once "../conexion/conexion.php";
-include "funciones_login.php";
+//require_once "../conexion/conexion.php";
+//include "funciones_login.php";
+
+include "../clases/formularios.php";
+include "../clases/funciones.php";
+include "../clases/consultas.php";
+$a= new formularios;
+$b= new funciones;
+$c= new consultas;
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -10,31 +17,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail = $_POST['mail'];
         $contra = $_POST['pass'];
         Try {
-            $conexion = conexion();
-
-            $sql = "select * from usuario where correo=?";
-
-            $stmt = $conexion->prepare($sql);
-
-            $stmt->execute(array($mail));
-
-            $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $datos = array();
-            foreach ($fila as $fil) {
-                $datos = $fil;
-            }
-
-            $verificado = "no"; //$datos["verificado"]; //campo verificado
+            $datos= $c->comprobarDatos($mail);
+            
+            $verificado = "si"; //$datos["verificado"]; //campo verificado
             
             $mailBd = $datos["correo"];
-            $hash = $datos["contraseña"];
+             $hash = $datos["contraseña"];
             
             if ($verificado == "si") {
                 unset($conexion);
                 unset($stmt);
                
 
-              contrastaToken( $mailBd );
+             $a-> contrastaToken( $mailBd );
             } else {
 
 
@@ -49,12 +44,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
  
 
                     $campos = array("email" => $mail, "password" => $contra); //mail base de datos y contraseña
-                    $necesarios = campos(['email', 'password'], $campos);
+                    $necesarios = $b->campos(['email', 'password'], $campos);
 
                     if (!isset($_POST['login']) || (isset($_POST['login']) && !is_string($necesarios))) {
 
                         $tiempo = 300;
-                        if (password_verify($_POST['pass'], $hash) && correo($mail) == $mailBd) {  ////sql mail y contraseña sql
+                        if (password_verify($_POST['pass'], $hash) && $b->correo($mail) == $mailBd) {  ////sql mail y contraseña sql
                             //redirecionar a la pagina correspondiente
                             // cookis($nombre, $valor, $tiempo);
                             // header("location:http://localhost/examen_1_eva/proyectos.php");
@@ -66,18 +61,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 setcookie('access_error', $_COOKIE['access_error'] + 1, time() + $tiempo);
                                 $access_error = $_COOKIE['access_error'];
 
-                                html("Revisa contraseña y correo", "Numero de intentos maximos 6 lleva: " . $access_error . " Si alcanza el maximo no podra ingresar en 5 min");
+                               $a-> html("Revisa contraseña y correo", "Numero de intentos maximos 6 lleva: " . $access_error . " Si alcanza el maximo no podra ingresar en 5 min");
                             } else {
                                 // Caduca en un año 
                                 setcookie('access_error', 2, time() + $tiempo);
-                                html("Revisa contraseña y correo");
+                                $a->html("Revisa contraseña y correo");
                             }
                         }
                     } else {
-                        html("No ha puesto datos de loggin");
+                        $a->html("No ha puesto datos de loggin");
                     }
                 } else {
-                    html();
+                    $a->html();
                 }
             }
 
@@ -89,5 +84,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 } else {
-    html();
+    $a->html();
 }
+ 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Description of carta_comida
+ * Description of carrito
  *
  * @author Nuria
  */

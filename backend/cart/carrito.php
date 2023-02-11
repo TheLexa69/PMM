@@ -118,6 +118,13 @@ class carrito {
         //guardar en variable y return en html
     }
 
+    public function searchId($email) {
+        $query = "SELECT id_usuario FROM usuario WHERE correo = '$email'";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
 }
 
 

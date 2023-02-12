@@ -47,7 +47,7 @@ try {
     //echo 'Mensaje enviado correctamente';
 } catch (Exception $e) {
     
-    echo "Mensaje no enviado Error : {$email->ErrorInfo}";
+    echo "Mensaje no enviado Error : {$mail->ErrorInfo}";
   
 }
 }

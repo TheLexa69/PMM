@@ -15,9 +15,9 @@
     </head>
 
     <body>
-        <ul class="nav nav-tabs justify-content-end sticky-top">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="../../index.php">Inicio</a>
+        <ul class="nav nav-tabs justify-content-end sticky-top">  
+            <li class="nav-item"> 
+                <a class="nav-link active" aria-current="page" href= '<?php echo DIRECTORY_SEPARATOR ."proyecto". DIRECTORY_SEPARATOR."index.php" ?>' >Inicio</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Carta</a>
@@ -41,9 +41,27 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">Cesta</a>
             </li>
+            
+            
+            <?php
+            
+            if(isset($_SESSION['usuario'])){
+              ?> 
+            <li class="nav-item">
+                <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."backend". DIRECTORY_SEPARATOR . "login". DIRECTORY_SEPARATOR."logout.php" ?>'>Log Out</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href=' #'>usuario </a>
+                </li><?php
+            }else{
+                   ?> 
             <li class="nav-item">
                 <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."backend". DIRECTORY_SEPARATOR . "login". DIRECTORY_SEPARATOR."indexLogin.php" ?>'>Login</a>
             </li>
+           <?php
+             }
+            ?>
         </ul>
     </body>
 

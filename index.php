@@ -1,11 +1,8 @@
 <?php
 define('DS',DIRECTORY_SEPARATOR);
-
- require  __DIR__.DS."backend".DS."sesiones".DS."sesiones.php";
-
-//require 'backend/sesiones/sesiones.php';
-comprobar_sesion();
- 
+  //require  __DIR__.DS."backend".DS."sesiones".DS."sesiones.php";
+// comprobar_sesion();
+session_start();
  ?>
 <!DOCTYPE html>
 <html lang="en">

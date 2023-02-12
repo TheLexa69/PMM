@@ -27,10 +27,10 @@ fecha date not null,
 num_telef varchar(9) not null,
 id_rol int not null,
 estado_usuario enum('activado','desactivado') not null default 'desactivado',
-NIF varchar(9) not null unique,
+NIF varchar(9)  null unique,
 direccion varchar(1000) null,
 cp varchar(5) null,
-contraseña varchar(255) not null unique,
+contraseña varchar(255) not null,
 
 constraint pk_idUsuario primary key (id_usuario)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

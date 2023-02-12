@@ -17,19 +17,19 @@
     <body>
         <ul class="nav nav-tabs justify-content-end sticky-top">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="../index.php">Inicio</a>
+                <a class="nav-link active" aria-current="page" href="../../index.php">Inicio</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Carta</a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "PMM" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "carta.php?tipo=cachopo" ?>'>Cachopo</a></li>
-                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "PMM" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "carta.php?tipo=arroz" ?>'>Arroz</a></li>
-                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "PMM" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "carta.php?tipo=carne" ?>'>Carnes</a></li>
-                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "PMM" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "carta.php?tipo=pescado" ?>'>Pescados</a></li>
-                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "PMM" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "carta.php?tipo=postre" ?>'>Postres</a></li>
-                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "PMM" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "carta.php?tipo=bebida" ?>'>Bebidas</a></li>
+                <ul class="dropdown-menu">   
+                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR."carta.php?tipo=cachopo" ?>'>Cachopo</a></li>
+                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR."carta.php?tipo=arroz" ?>'>Arroz</a></li>
+                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR."carta.php?tipo=carne" ?>'>Carnes</a></li>
+                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR."carta.php?tipo=pescado" ?>'>Pescados</a></li>
+                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR."carta.php?tipo=postre" ?>'>Postres</a></li>
+                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR."carta.php?tipo=bebida" ?>'>Bebidas</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "PMM" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "carta.php" ?>'>Carta</a></li>
+                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR."carta.php" ?>'>Carta</a></li>
                 </ul>
             </li>
             <li class="nav-item">
@@ -42,7 +42,7 @@
                 <a class="nav-link" href="#">Cesta</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Login</a>
+                <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."backend". DIRECTORY_SEPARATOR . "login". DIRECTORY_SEPARATOR."indexLogin.php" ?>'>Login</a>
             </li>
         </ul>
     </body>

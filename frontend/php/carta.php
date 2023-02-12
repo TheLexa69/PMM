@@ -1,4 +1,9 @@
 <?php
+define('DS',DIRECTORY_SEPARATOR);
+
+require   dirname(dirname(__DIR__)).DS."backend".DS."sesiones".DS."sesiones.php";
+// comprobar_sesion();
+session_start();
 /* Bloque try-catch con la conexión a la bdd. */
 try {
     $conexion = new PDO('mysql:dbname=LuaChea; host=mysql-5707.dinaserver.com','Raul','oSyh36033^(/');

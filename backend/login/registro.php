@@ -55,6 +55,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $formularios->htmlRegistro($necesarios);
     }
 } else {
+    if($_GET['registro']){
+       echo $mensaje="<h2><b>No estas registrado date de alta por favor</b></h2>";
+    }
     $formularios->htmlRegistro();
 }
 

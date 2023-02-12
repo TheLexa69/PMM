@@ -15,11 +15,11 @@ class conexion{
              echo 'No conectado a la base de datos porque:<br>';
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
            
-        }
-	
-        
-         
-        
+        } 
     }
+    public function __destruct() {
+        $this->conexion=null;
+    }
+    
                                       
 }

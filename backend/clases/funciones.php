@@ -1,5 +1,5 @@
 <?php
-
+namespace clases;
  class funciones{
      
 
@@ -18,8 +18,6 @@ public function campos(array $campos, $requeridos) {
     }
     return $respuesta;
 }
-
-
 
 public function texto($texto) {
     /*

@@ -47,9 +47,10 @@ class carrito {
     /*Añadir productos al carro*/
 public function add($id_usuario, $id_comida, $cantidad) {
     // Verificar si el producto ya existe en el carrito
-    $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE id_usuario = :id_usuario AND id_comida = :id_comida");
+    $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE id_usuario = :id_usuario AND id_comida = :id_comida AND cantidad = :cantidad");
     $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
     $stmt->bindParam(':id_comida', $id_comida, PDO::PARAM_INT);
+    $stmt->bindParam(':cantidad', $cantidad, PDO::PARAM_INT);
     $stmt->execute();
     $existe = $stmt->fetch();
 

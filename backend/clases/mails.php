@@ -39,7 +39,7 @@ try {
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = 'Mensaje de verificacion cuenta';
-    $mail->Body    = 'Valla a la pagina y ponga este codigo </b>'.$token;
+    $mail->Body    = 'Vaya a la página y ponga este codigo </b>'.$token;
    // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';    //mensaje alternativo
 
     $mail->send();

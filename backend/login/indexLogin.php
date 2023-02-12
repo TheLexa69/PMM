@@ -91,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
                 }
             } else {
-                $formularios->htmlRegistro();
+                header("Location: /proyecto/backend/login/registro.php");
             }
 
 

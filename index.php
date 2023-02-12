@@ -1,4 +1,9 @@
-<?php require 'backend/sesiones/sesiones.php';
+<?php
+define('DS',DIRECTORY_SEPARATOR);
+
+ require  __DIR__.DS."backend".DS."sesiones".DS."sesiones.php";
+
+//require 'backend/sesiones/sesiones.php';
 comprobar_sesion();
  
  ?>
@@ -17,10 +22,10 @@ comprobar_sesion();
     <body>
           
         <?php   
-        require(__DIR__ . DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR."nav.php");?>
+        require(__DIR__ .DS."frontend". DS . "php". DS."nav.php");?>
         <div class="contenedor">
         </div>
         
-        <?php require(__DIR__ . DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR."footer.php") ?>
+        <?php require(__DIR__ .DS ."frontend".DS . "php".DS."footer.php") ?>
     </body>
 </html>

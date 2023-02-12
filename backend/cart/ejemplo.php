@@ -12,10 +12,10 @@
         <title>Cesta</title>
     </head>
     <body>
-        <?php require("../../frontend/php/nav.php");?>
+        <?php //require("../../frontend/php/nav.php");?>
         <div class="contenedor">
         <?php
-            require_once 'carrito.php';
+           /* require_once 'carrito.php';
             $o1 = new carrito();
             print $o1->printCarro("restaurante@b01.daw2d.iesteis.gal");
 
@@ -30,7 +30,7 @@
             print var_dump($o1->getTotalPrice("restaurante@b01.daw2d.iesteis.gal"));
 
             $o1->clearCarro("restaurante@b01.daw2d.iesteis.gal");
-            print $o1->printCarro("restaurante@b01.daw2d.iesteis.gal");
+            print $o1->printCarro("restaurante@b01.daw2d.iesteis.gal");*/
         ?>
         <button class="sc-iqHYmW dJJQhN">
             <div class="sc-kEjbQP bEQCBe">
@@ -40,7 +40,7 @@
             Vaciar cesta</div>
         </button>
         </div>
-        <?php require "../../frontend/php/footer.php" ?>
+        <?php //require "../../frontend/php/footer.php" ?>
     </body>
 </html>
 

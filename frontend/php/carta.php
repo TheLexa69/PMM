@@ -1,7 +1,7 @@
 <?php
 /* Bloque try-catch con la conexión a la bdd. */
 try {
-    $conexion = new PDO('mysql:dbname=luachea;host=localhost', 'root', '');
+    $conexion = new PDO('mysql:dbname=LuaChea; host=mysql-5707.dinaserver.com','Raul','oSyh36033^(/');
     $conexion->exec("SET CHARACTER SET utf8");
 } catch (PDOException $e) {
     die("ERROR: " . $e->getMessage());

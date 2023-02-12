@@ -34,9 +34,9 @@ try {
     /* Realizamos la consulta que nos pide para enseñar los datos. */
     if (isset($_GET["tipo"])) {
         $tipo = $_GET["tipo"];
-        $consulta = "select nombre, descripcion, tipo, cantidad, precio, img, disponible from carta_comida where tipo='$tipo'";
+        $consulta = "select nombre, descripcion, tipo, cantidad, precio, img, disponible,id_comida from carta_comida where tipo='$tipo'";
     } else {
-        $consulta = "select nombre, descripcion, tipo, cantidad, precio, img, disponible from carta_comida";
+        $consulta = "select nombre, descripcion, tipo, cantidad, precio, img, disponible,id_comida from carta_comida";
     }
     ?>
 
@@ -112,7 +112,10 @@ try {
                             <h5 class="precio-producto"> Precio: ' . number_format($fila[4], 2, '.', '') . '</h5>
                                 </div>';
                         echo '<div class="col-4 d-flex justify-content-center">
+                            
+                                <a href="....\backend\cart\agregar_carrito.php?cod="'.$fila[7].'">
                                 <button class="btn-add-cart btn btn-outline-secondary" id="compra" type="button">Comprar</button>
+                            </a>
                                 </div>';
                         echo '</div>';
                     }
@@ -223,6 +226,6 @@ try {
             }
         }
     </script>
-</body>
+</body> 
 
 </html>

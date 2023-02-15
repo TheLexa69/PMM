@@ -38,8 +38,8 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">Sobre Mi</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo DIRECTORY_SEPARATOR . "PMM" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "ejemplo.php" ?>">Cesta</a>
+            <li class="nav-item">  
+                <a class="nav-link" href="<?php echo DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."backend". DIRECTORY_SEPARATOR . "cart". DIRECTORY_SEPARATOR."index_carrito.php" ?>">Cesta</a>
             </li>
             
             

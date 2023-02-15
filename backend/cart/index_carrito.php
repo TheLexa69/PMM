@@ -5,7 +5,7 @@ require("../../frontend/php/nav.php");
 //require_once 'conexion.php';
 
 if (!isset($_SESSION['usuario'])) { 
-    var_dump($_COOKIE['carrito']);
+    if(isset($_COOKIE['carrito']));
 } elseif (isset( $_SESSION['usuario'])) {
 	session_start();
 //$db = conexion();

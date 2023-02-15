@@ -22,7 +22,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Carta</a>
                 <ul class="dropdown-menu">   
-                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR."carta.php?tipo=cachopo" ?>'>Cachopo</a></li>
+                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR."carta.php?tipo=cachopo" ?> '>Cachopo</a></li>
                     <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR."carta.php?tipo=arroz" ?>'>Arroz</a></li>
                     <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR."carta.php?tipo=carne" ?>'>Carnes</a></li>
                     <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR."carta.php?tipo=pescado" ?>'>Pescados</a></li>

@@ -113,8 +113,8 @@ try {
                             <h5 class="precio-producto"> Precio: ' . number_format($fila[4], 2, '.', '') . '</h5>
                                 </div>';
                         echo '<div class="col-4 d-flex justify-content-center">
-                            
-                                <a href="....\backend\cart\agregar_carrito.php?cod="'.$fila[7].'">
+                                      
+                                <a href="<?php echo DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."backend". DIRECTORY_SEPARATOR . "cart". DIRECTORY_SEPARATOR."agregar_carrito.php?cod="'.$fila[7].';?>" >
                                 <button class="btn-add-cart btn btn-outline-secondary" id="compra" type="button">Comprar</button>
                             </a>
                                 </div>';

@@ -22,8 +22,8 @@ $envioMail = new mailLogin;
           
             $datos= $consulta->comprobarDatos($mail);
            if(!empty($datos)){
-            $mailBd = $datos["correo"];
-            $nombre=datos['nombre'];
+            $mailBd = $datos['correo'];
+            $nombre=$datos['nombre'];
             
             
               $token = intval(rand(100000, 900000) * 25 / 4 + 3);

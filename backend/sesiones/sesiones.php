@@ -9,5 +9,7 @@ function comprobar_sesion() {
     session_start();
     if (!isset($_SESSION['usuario'])) {
         header("Location:/proyecto/backend/login/indexLogin.php");
-    }
+    }else{
+        return true;
+}
 }

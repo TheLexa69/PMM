@@ -1,34 +1,23 @@
 <?php
-include "header.php";
+require("../../frontend/php/nav.php");
 
 //fichero conexion (no hace falta al tenerlo en la clase)
 //require_once 'conexion.php';
 
-if (!isset($_SESSION)) {
+if (!isset($_SESSION['usuario'])) { 
+    if(isset($_COOKIE['carrito']));
+} elseif (isset( $_SESSION['usuario'])) {
 	session_start();
-        //guardar en cookies el carrito
-} 
-
 //$db = conexion();
 
-if (!isset($_SESSION['usuario'])) {
-	echo "<div class='warning'>Necesitas iniciar sesión para visualizar este contenido</div>";
-} else {
 	$email = $_SESSION['usuario'];
-        $carrito = new carrito();
-        $carrito->getCarro($email);
-        if ($carrito->rowCount() == 0) {
-		echo "<div class='warning'>No tienes productos en tu cesta todavía.</div>";
-	} else {
-		
-           
-	}	
+	$carrito = new carrito();
+	$filas_carro = $carrito->getCarro($email);
+		if ($filas_carro->rowCount() == 0) {
+			echo "<div class='warning'>No tienes productos en tu cesta todavía.</div>";
+		} else {
+			$carrito->printCarro($email);
+		}	
 }
-
-
-
-
-include "footer.php";
+require "../../frontend/php/footer.php";
 ?>
-</body>
-</html>

@@ -38,15 +38,9 @@ public function __construct() {
             unset($stmt);
             unset($this->conexion);
         } catch (PDOException $e) {
-            echo 'Accion no realizada porque:<br> ';
-           
-            if($e->getCode()==23000){
-               echo   die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
-               // echo 'Mail ya registrado <br>';
-            }else{
+         
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
-        }
-        
+                
        } 
     } 
         public function comprobarDatos($mail){

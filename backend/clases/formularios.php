@@ -6,11 +6,6 @@
 public function html($err = " ", $num = " ") {
     ?>
 
-    <html lang="ES">
-        <head>
-            <title>title</title>
-        </head>
-        <body>
             <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
                 <h2>Login:</h2>
                 <label for="c1" class="form-label">Mail:</label><br>     
@@ -30,10 +25,6 @@ public function html($err = " ", $num = " ") {
             </form>
 
 
-
-        </body>
-    </html>
-
     <?php
 }
 
@@ -41,11 +32,7 @@ public function html($err = " ", $num = " ") {
     
     public function htmlRegistro($necesarios = "") {
     ?>
-    <html lang="ES">
-        <head>
-            <title>title</title>
-        </head>
-        <body>
+
             <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
                 <h2>Registro:</h2>
                 <label for="c1" class="form-label">Nombre:</label><br>
@@ -96,8 +83,6 @@ public function html($err = " ", $num = " ") {
 
             </form>
 
-        </body>
-    </html>
 
     <?php
 }
@@ -106,11 +91,7 @@ public function html($err = " ", $num = " ") {
 public function recuperar($mensaje="") {
     ?>
 
-    <html lang="ES">
-        <head>
-            <title>title</title>
-        </head>
-        <body>
+
             <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
                 <h2>Mail con el que te diste de alta:</h2>
                 <?php echo $mensaje; ?><br> 
@@ -126,10 +107,6 @@ public function recuperar($mensaje="") {
             </form>
 
 
-
-        </body>
-    </html>
-
     <?php
 }
 
@@ -142,11 +119,6 @@ public function contrastaToken( $mail){
 
            ?> 
     
-    <html lang="ES">
-        <head>
-        </head>
-        <body>
-            <div  > 
                 <form   action= "comprobarToken.php " method="POST">
                     <h2><b>Revise su Email y ponga el código de verificación para finalizar el proceso</b></h2>
                    
@@ -161,10 +133,7 @@ public function contrastaToken( $mail){
                     </div>
                     <input type="submit" name="validar" value="Activar Cuenta" ></input>
                 </form> 
-            </div>
-
-        </body> 
-    </html>
+           
     <?php
 }
 
@@ -175,11 +144,7 @@ public function contrastaToken( $mail){
 public function tokenMal($mail){
 
   ?>  
-            <html lang="ES">
-        <head>
-        </head>
-        <body>
-            <div  > 
+       
                 <form   action= "comprobarToken.php " method="POST">
                     <h2>Comprobar Mail</h2><br>
                    
@@ -193,10 +158,7 @@ public function tokenMal($mail){
                     </div>
                     <input type="submit" name="validar" value="Activar Cuenta" ></input>
                 </form> 
-            </div>
-
-        </body> 
-    </html>
+      
     <?php
 
 
@@ -207,11 +169,7 @@ public function tokenMal($mail){
 
 public function contrasena($mail){
    ?>
-            <html lang="ES">
-                <head>
-                </head>
-                <body>
-                    <div  >
+         
                         <form   action="guardarContrasena.php" method="POST">
 
                             <label for="c2" class="form-label">Escriba su contraseña:</label><br>
@@ -223,9 +181,7 @@ public function contrasena($mail){
                             
                             <input type="submit" name="contraMail" value="PULSAR PARA VERIFICAR"></input>
                         </form> 
-                    </div>
-                </body>
-            </html>
+           
             <?php
 
 }
@@ -234,12 +190,7 @@ public function contrasena($mail){
 
 public function contraMail($mail) {
     ?>
-         <html lang="ES">
-            <head>
-            </head>
-
-            <body>
-                <div  >
+       
                     <form   action="guardarContrasena.php" method="POST">
                         <h1>Tienen que ser iguales</h1>   
                         <label for="c2" class="form-label">Escriba su contraseña:</label><br>
@@ -252,9 +203,7 @@ public function contraMail($mail) {
 
                         <input type="submit" name="contraMail" value="PULSAR PARA VERIFICAR"></input>
                     </form> 
-                </div>
-            </body>
-        </html>
+             
     <?php
 }
 

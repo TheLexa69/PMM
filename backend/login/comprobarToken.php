@@ -1,12 +1,13 @@
 <?php
-//require_once "../conexion/conexion.php";
-//include "funciones_login.php";
-include "../clases/formularios.php";
-include "../clases/funciones.php";
-include "../clases/consultas.php";
-$a= new formularios;
-$b= new funciones;
-$c= new consultas;
+ include "../../autoloadClasesLogin.php";
+use \clases\formularios as formulariosLogin;
+use \clases\funciones as funcionesLogin;
+use consultas as consultasLogin;
+use \clases\mails as mailLogin;
+  
+$formularios= new formulariosLogin;
+$funciones= new funcionesLogin;
+$consulta= new consultasLogin;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -30,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
           $mail;
          
-      $datos=$c->comprobarDatos($mail);
+      $datos=$consulta->comprobarDatos($mail);
         
          
         $datos["id_usuario"];
@@ -48,15 +49,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         if (isset($boll)) {
          
-            $a->contraseña($mail);
+            $formularios->contrasena($mail);
         } else {
             
-        $a->tokenMal($mail);
+        $formularios->tokenMal($mail);
         }
     } catch (PDOException $e) {
         echo 'No conectado';
         die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
     }
 } else {
-    ?><p> "NO PUEDE ESTAR AQUI. VUELVA A LA PAGINA  PRINCIPAL... ->"<a href=login.php> <b style="color:red">PRINGAD@</b><a/> !!!!!!</p><?php
+     header("Location:/proyecto/backend/login/login.php");
+    
 }

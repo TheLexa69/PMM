@@ -103,9 +103,7 @@ create table if not exists carrito (
 id_carro int auto_increment,
 id_usuario int not null,
 id_comida int not null,
-#id_producto int not null,
 cantidad int not null,
-#fecha Date not null,
 constraint pk_id primary key (id_carro)
 );
 
@@ -337,7 +335,6 @@ END
 
 #para crear usuarios INSERT INTO usuarios (nombre, password, rol) VALUES ('johndoe', 'password', 'usuario registrado');
 
-#insert into provincia values ('27','Lugo');
 
 #GRANT SELECT,INSERT,UPDATE,DELETE ON *.* TO 'johndoe'@'localhost' IDENTIFIED BY 'password';
 #GRANT SELECT, INSERT, UPDATE, DELETE, GRANT OPTION ON *.* TO 'johndoe'@'localhost';

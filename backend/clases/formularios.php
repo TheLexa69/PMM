@@ -1,9 +1,7 @@
 <?php
-
+ namespace clases;
  class formularios {
-     
-    
-    
+      
 //funcion que recoge loggin
 public function html($err = " ", $num = " ") {
     ?>
@@ -105,6 +103,40 @@ public function html($err = " ", $num = " ") {
 }
 
 
+public function recuperar($mensaje="") {
+    ?>
+
+    <html lang="ES">
+        <head>
+            <title>title</title>
+        </head>
+        <body>
+            <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
+                <h2>Mail con el que te diste de alta:</h2>
+                <?php echo $mensaje; ?><br> 
+                <label for="c1" class="form-label">Correo electrónico :</label><br>     
+                <input type="email" name="mailr" class="form-control" id="c1"  <?php
+                if (!empty($_POST['mail'])) {
+                    echo " value='" . $_POST['mail'] . "'";
+                }
+                ?>   > 
+                 
+                <input type="submit" name="ENVIAR MAIL">
+                  
+            </form>
+
+
+
+        </body>
+    </html>
+
+    <?php
+}
+
+
+
+
+
 
 public function contrastaToken( $mail){
 
@@ -173,14 +205,14 @@ public function tokenMal($mail){
 
 
 
-public function contraseña($mail){
+public function contrasena($mail){
    ?>
             <html lang="ES">
                 <head>
                 </head>
                 <body>
                     <div  >
-                        <form   action="guardarContraseña.php" method="POST">
+                        <form   action="guardarContrasena.php" method="POST">
 
                             <label for="c2" class="form-label">Escriba su contraseña:</label><br>
                             <label for="c3" class="form-label">Contraseña:</label><br>
@@ -208,7 +240,7 @@ public function contraMail($mail) {
 
             <body>
                 <div  >
-                    <form   action="guardarContraseña.php" method="POST">
+                    <form   action="guardarContrasena.php" method="POST">
                         <h1>Tienen que ser iguales</h1>   
                         <label for="c2" class="form-label">Escriba su contraseña:</label><br>
                         <label for="c3" class="form-label">Contraseña:</label><br>
@@ -227,136 +259,6 @@ public function contraMail($mail) {
 }
 
 
-
-
-
-/*
-
-public function contraMail() {
-    ?>
-    <html lang="ES">
-        <head>
-        </head>
-        <body>
-            <div  >
-                <form   action="guardarContraseña.php" method="POST">
-
-                    <label for="c2" class="form-label">Escriba su contraseña:</label><br>
-                    <label for="c3" class="form-label">Contraseña:</label><br>
-                    <input type="password" name="pass" class="form-control" id="c3"  ><br>
-                    <label for="c4" class="form-label">Repite contraseña:</label><br>
-                    <input type="password" name="pass2" class="form-control" id="c4"  ><br><br> 
-                    <input type="hidden" name="mail" value="<?php if (!empty($mail)){echo $mail;}?>">
-                    <input type="submit" name="contraMail" value="PULSAR PARA VERIFICAR"></input>
-                </form> 
-            </div>
-        </body>
-    </html>
-    <?php
-}
-
-*/
-
-/*
-
-
-
-     //atributos privados
-     
-    private  $nombre; 
-    private  $apellido1;
-    private  $apellido2; 
-    private  $mail; 
-    private  $fecha;
-    private  $telefono;
-    private  $rol="registrado";
-    private  $estado;
-    private  $nif;
-    private  $direccion;
-    private  $cp;
-    private  $contraseña;
-
-    
-    public function __construct($nombre="",$apellido1="",$apellido2="",$mail="",$fecha="",$telefono="",$rol="",$estado="",$nif="",$direccion="",$cp="",$contraseña="") {
-      
-            $this->nombre = $nombre;
-            $this->apellido1 = $apellido1;
-            $this->apellido2 = $apellido2;
-            $this->mail = $mail;
-            $this->fecha = $fecha;
-            $this->telefono = $telefono;
-            $this->rol = $rol;
-            $this->estado = $estado;
-            $this->nif = $nif;
-            $this->direccion = $direccion;
-            $this->cp = $cp;
-            $this->contraseña = $contraseña;
-                    
-            
-        
-    }
- 
-    public function get_nombre(){
-       return $this->nombre;
-    }
-    public function set_nombre(){
-        $this->nombre;
-    }
-    public function get_apellido1(){
-       return $this->apellido1;
-    }
-    public function set_apellido1(){
-       return $this->apellido1;
-    }
-    public function get_apellido2(){
-       return $this->apellido2;
-    }
-    public function set_apellido2(){
-       return $this->apellido2;
-    }
-    public function get_mail(){
-       return $this->mail;
-    }
-    public function set_mail(){
-       return $this->mail;
-    }  
-    public function get_telefono(){
-       return $this->telefono;
-    }
-    public function set_telefono(){
-       return $this->telefono;
-    }  
-    public function get_estado(){
-       return $this->estado;
-    }
-    public function set_estado(){
-       return $this->estado;
-    }  
-    public function get_nif(){
-       return $this->nif;
-    }
-    public function set_nif(){
-       return $this->nif;
-    }  
-    public function get_direccion(){
-       return $this->direccion;
-    }
-    public function set_direccion(){
-       return $this->direccion;
-    }  
-    public function get_cp(){
-       return $this->cp;
-    }
-    public function set_cp(){
-       return $this->cp;
-    } 
-    public function get_contraseña(){
-       return $this->contraseña;
-    }
-    public function set_contraseña(){
-       return $this->contraseña;
-    }
-    */
 
 
     

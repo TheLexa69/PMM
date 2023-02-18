@@ -138,8 +138,11 @@ ALTER TABLE factura ADD FOREIGN KEY (cif_empresa) REFERENCES empresa(cif);
 ALTER TABLE carrito ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
 ALTER TABLE carrito ADD FOREIGN KEY (id_comida) REFERENCES carta_comida(id_comida);
 ALTER TABLE carrito ADD FOREIGN KEY (id_ped) REFERENCES pedidos(id_ped);
+<<<<<<< Updated upstream
 
 ALTER TABLE pedidos ADD FOREIGN KEY (restaurante) REFERENCES empresa(cif);
+=======
+>>>>>>> Stashed changes
 
 ALTER TABLE usuario ADD FOREIGN KEY (id_rol) REFERENCES roles(id_rol);
 

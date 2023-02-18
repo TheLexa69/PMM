@@ -11,7 +11,6 @@ nombre varchar(40) not null,
 apellido1 varchar(40) not null,
 apellido2 varchar(40) null,
 fecha TIMESTAMP not null,
-fecha TIMESTAMP not null,
 num_telef varchar(9) not null,
 id_rol int not null,
 contraseña varchar(255) not null unique,
@@ -88,7 +87,7 @@ id_comida int not null
 
 create table if not exists pedidos (
   id_ped int NOT NULL auto_increment,
-  fecha datetime NOT NULL,
+  fecha TIMESTAMP NOT NULL,
   enviado boolean NOT NULL,
   restaurante varchar(10) NOT NULL
 

@@ -1,29 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-
-        <title>Inicio</title>
-    </head>
-    <body>
-
-
 <?php
-require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "nav.php"); 
-include "../../autoloadClasesLogin.php";
 
-use \clases\formularios as formulariosLogin;
-use \clases\funciones as funcionesLogin;
-use consultas as consultasLogin;
+include(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
 
+use \clases\Formularios as formulariosLogin;
+use \clases\Funciones as funcionesLogin;
+use \clases\Consultas as consultasLogin;
+
+$consulta = new consultasLogin;
 $formularios = new formulariosLogin;
 $funciones = new funcionesLogin;
-$consulta = new consultasLogin;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -36,14 +21,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $datos = $consulta->comprobarDatos($mail);
 
             if (!empty($datos["correo"])) {
-                $verificado = $datos["estado_usuario"]; 
+                $verificado = $datos["estado_usuario"];
                 $hash = $datos["contraseña"];
-                 $mailBd = $datos["correo"];
+                $mailBd = $datos["correo"];
                 // $verificado="desactivado"  entonces no acabo el registro
                 if ($verificado == "desactivado") {
-               
-                //campo verificado
-                
+
+                    //campo verificado
+
                     $formularios->contrastaToken($mailBd);
                 } else {
 
@@ -93,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                     $formularios->html("Revisa contraseña y correo", "Numero de intentos maximos 6 lleva: " . $access_error . " Si alcanza el maximo no podra ingresar en 5 min");
                                 } else {
-                                    // Caduca en un año 
+
                                     setcookie('access_error', 2, time() + $tiempo);
                                     $formularios->html("Revisa contraseña y correo");
                                 }
@@ -110,8 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
 
-            unset($conexion);
-            unset($stmt);
+        
         } catch (PDOException $e) {
             echo 'Accion no realizada porque:<br>';
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
@@ -120,8 +104,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } else {
     $formularios->html();
 }
-  
-    require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "footer.php"); 
-?>
-  </body>
-</html>
+include(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");

@@ -1,5 +1,9 @@
 <?php
+//use clases_carrito\carrito;
+require "../clases_carrito/carrito.php";
+session_start();
 $cod_comida = $_GET["cod"];
+$cantidad = $_POST["cantidad"];
 if (!isset($_SESSION['usuario'])) { 
 	// Si no hay una sesión iniciada, comprobar si hay productos en la cookie
 	if (isset($_COOKIE['carrito'])) {
@@ -13,7 +17,8 @@ if (!isset($_SESSION['usuario'])) {
 
 	// Añadir producto al array
 	if($_GET["cod"]) {
-                $arr_carrito[] = array('codigo' => $cod_comida, 'cantidad' => 1);
+                $arr_carrito[] = array('codigo' => $cod_comida, 'cantidad' => $cantidad);
+                var_dump($arr_carrito);
 		//array_push($arr_carrito, $_GET["cod"], 1);
 		// Serializar los datos y guardarlos en una cookie
                 setcookie('carrito', serialize($arr_carrito), time() + (86400 * 30), "/");
@@ -22,10 +27,10 @@ if (!isset($_SESSION['usuario'])) {
 } else {
 //Se manda un proucto por $_GET desde carta.php y añade a la cesta
 	if($_GET["cod"]) {
-            $email = $_SESSION['usuario'];
+            $id_usuario = $_SESSION['usuario'];
             $carrito = new carrito();
-            $carrito->add($carrito->searchId($email), $cod_comida, $_POST["cantidad"]);
+            $carrito->add($id_usuario, $cod_comida, $_POST["cantidad"]);
 	}
 }
 
-header("Location: index_carrito.php?cod=$cod_comida");
+header("Location: index_carrito.php");

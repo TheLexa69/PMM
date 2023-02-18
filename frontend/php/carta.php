@@ -1,13 +1,17 @@
 <?php
+define('DS',DIRECTORY_SEPARATOR);
+
+require   dirname(dirname(__DIR__)).DS."backend".DS."sesiones".DS."sesiones.php";
+// comprobar_sesion();
+session_start();
 /* Bloque try-catch con la conexión a la bdd. */
-require_once ("..\..\backend" . DIRECTORY_SEPARATOR . "conexion" . DIRECTORY_SEPARATOR . "conexion.php");
-$conexion = conexion();
-/*try {
-    $conexion = new PDO('mysql:dbname=luachea;host=localhost', 'root', '');
+
+try {
+    $conexion = new PDO('mysql:dbname=LuaChea; host=mysql-5707.dinaserver.com','Raul','oSyh36033^(/');
     $conexion->exec("SET CHARACTER SET utf8");
 } catch (PDOException $e) {
     die("ERROR: " . $e->getMessage());
-}*/
+}
 ?>
 
 <!DOCTYPE html>
@@ -31,9 +35,12 @@ $conexion = conexion();
     /* Realizamos la consulta que nos pide para enseñar los datos. */
     if (isset($_GET["tipo"])) {
         $tipo = $_GET["tipo"];
-        $consulta = "select nombre, descripcion, tipo, cantidad, precio, img, disponible, id_comida from carta_comida where tipo='$tipo'";
+        $consulta = "SELECT nombre, descripcion, tipo, precio, img, disponible, id_comida 
+                    FROM carta_comida c 
+                    INNER JOIN tipo t ON c.tipo = t.id_tipo
+                    WHERE t.nombre_tipo = '$tipo'";
     } else {
-        $consulta = "select nombre, descripcion, tipo, cantidad, precio, img, disponible, id_comida from carta_comida";
+        $consulta = "select nombre, descripcion, tipo, precio, img, disponible, id_comida from carta_comida";
     }
     ?>
 
@@ -91,13 +98,13 @@ $conexion = conexion();
             <div id="boton">
                 <?php
                 if ($resultado = $conexion->query($consulta)) {
-                    while ($fila = $resultado->fetch()) {
-                        echo '<div class="layered box row mr-2" id="producto">';
-                        echo '<div class="col-4">                        
+                    while ($fila = $resultado->fetch()) { ?>
+                        <div class="layered box row mr-2" id="producto">
+                        <div class="col-4">                        
                                 <img class="imagenes rounded img-fluid" id="producto_img" title="vaso" src="https://cdn.pixabay.com/photo/2020/12/15/13/44/children-5833685__340.jpg">
-                                </div>';
-                        echo '<div class="col-4 d-flex ml-2 flex-column">
-                            <h4 class="nombre-producto">' . $fila[0] . '</h4>
+                                </div>
+                        <div class="col-4 d-flex ml-2 flex-column">
+                            <h4 class="nombre-producto"><?php echo $fila[0] ?></h4>
                             <p>Descripción:
                             <a href="#" id="info">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
@@ -106,15 +113,22 @@ $conexion = conexion();
                                 </svg>
                             </a>
                             </p>
-                            <h5 class="precio-producto"> Precio: ' . number_format($fila[4], 2, '.', '') . '</h5>
-                                </div>';
-                        echo '<div class="col-4 d-flex justify-content-center">
-                            <a href="..\..\backend\cart\ejemplo.php?id="'.$fila[7].'">
-                                <button class="btn-add-cart btn btn-outline-secondary" id="compra" type="button">Comprar</button>
-                            </a>
-                            </div>';
-                        echo '</div>';
-                    }
+
+                            <h5 class="precio-producto"> Precio: <?php echo number_format($fila[3], 2, '.', '') ?> </h5>
+                            <form method="post" action="<?php echo  DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."backend". DIRECTORY_SEPARATOR . "cart". DIRECTORY_SEPARATOR."agregar_carrito.php?cod=". $fila[6] ?>">
+                            <label for="cantidad">Cantidad:</label>
+                              <select id="cantidad" name="cantidad">';
+		                        <?php for($i=1; $i<=10;$i++) {        
+		                        echo '<option value="'.$i.'">'.$i.'</option>';
+		                        }
+                              echo '</select>'; ?> 
+                              </div>
+                        <div class="col-4 d-flex justify-content-center">
+                                      
+                                <button class="btn-add-cart btn btn-outline-secondary" id="compra" type="submit">Comprar</button></form>
+                            </div>
+                        </div>;
+                    <?php }
                 } else {
                     echo "ERROR: " . print_r($pdo->errorInfo());
                 }
@@ -222,6 +236,6 @@ $conexion = conexion();
             }
         }
     </script>
-</body>
+</body> 
 
 </html>

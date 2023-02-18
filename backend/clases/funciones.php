@@ -1,9 +1,9 @@
 <?php
 namespace clases;
- class funciones{
+
+ class Funciones{
      
-
-
+     
 public function campos(array $campos, $requeridos) {
     $noCubiertos = [];
     foreach ($campos as $campo) {

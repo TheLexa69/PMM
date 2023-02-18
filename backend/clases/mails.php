@@ -1,10 +1,11 @@
 <?php
 namespace clases;
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 require"../vendor/autoload.php";
  
-class mails{
+class Mails{
  
 
 //novoluachea@gmail

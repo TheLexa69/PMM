@@ -1,9 +1,6 @@
 <?php
-define('DS',DIRECTORY_SEPARATOR);
-  //require  __DIR__.DS."backend".DS."sesiones".DS."sesiones.php";
-// comprobar_sesion();
 session_start();
- ?>
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -17,12 +14,11 @@ session_start();
         <title>Inicio</title>
     </head>
     <body>
-          
-        <?php   
-        require(__DIR__ .DS."frontend". DS . "php". DS."nav.php");?>
+
+        <?php require(__DIR__ . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php"); ?>
         <div class="contenedor">
         </div>
-        
-        <?php require(__DIR__ .DS ."frontend".DS . "php".DS."footer.php"); ?>
+
+<?php require(__DIR__ . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php"); ?>
     </body>
 </html>

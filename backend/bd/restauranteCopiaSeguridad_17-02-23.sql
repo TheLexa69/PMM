@@ -85,6 +85,15 @@ id_alergeno int not null,
 id_comida int not null
 );
 
+create table if not exists pedidos (
+  id_ped int NOT NULL auto_increment,
+  fecha datetime NOT NULL,
+  enviado boolean NOT NULL,
+  restaurante varchar(10) NOT NULL
+
+constraint pk_id_ped primary key (id_ped)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 create table if not exists factura(
 id_factura int auto_increment,
 id_usuario int not null,
@@ -116,11 +125,11 @@ create table if not exists carrito (
 id_carro int auto_increment,
 id_usuario int not null,
 id_comida int not null,
-#id_producto int not null,
 cantidad int not null,
-#fecha Date not null,
+id_pedido int,
 constraint pk_id primary key (id_carro)
 );
+
 
 ###########################################################################################
 #FOREIGN KEYS

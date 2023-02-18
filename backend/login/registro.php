@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cp = null;
 
     $rol = 1;
-    $fecha = $funciones->fechaActual();
+    $fecha = $funciones->fechaHoraActual();
 
     $campos = array("nombre" => $nombre, "apellido1" => $apellido1, "telefono" => $telefono, "email" => $mail); //mail base de datos y contraseña
 

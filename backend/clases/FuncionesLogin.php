@@ -40,8 +40,13 @@ public function hora() {
 }
 
 public function fechaActual() {
-    return $fecha_actual = date("Y-m-d ");
+    return   date("Y-m-d ");
 }
+public function fechaHoraActual() {
+    return  date("Y-m-d H:i:s", time());
+}
+
+ 
 
      /*
 function contrasenas($pass, $pass2) {

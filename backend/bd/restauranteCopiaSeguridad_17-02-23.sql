@@ -11,6 +11,7 @@ nombre varchar(40) not null,
 apellido1 varchar(40) not null,
 apellido2 varchar(40) null,
 fecha TIMESTAMP not null,
+fecha TIMESTAMP not null,
 num_telef varchar(9) not null,
 id_rol int not null,
 contraseña varchar(255) not null unique,
@@ -27,7 +28,7 @@ fecha TIMESTAMP not null,
 num_telef varchar(9) not null,
 id_rol int not null,
 estado_usuario enum('activado','desactivado') not null default 'desactivado',
-NIF varchar(9) not null unique,
+NIF varchar(9)  null unique,
 direccion varchar(1000) null,
 cp varchar(5) null,
 contraseña varchar(255) not null unique,
@@ -99,7 +100,7 @@ id_factura int auto_increment,
 id_usuario int not null,
 cif_empresa varchar(10) not null,
 precio float not null,
-fecha date not null,
+fecha TIMESTAMP not null,
 id_comida int not null,
 total int not null,
 modo_pago enum('efectivo','tarjeta','otro modo') not null default 'efectivo',
@@ -125,8 +126,9 @@ create table if not exists carrito (
 id_carro int auto_increment,
 id_usuario int not null,
 id_comida int not null,
+#id_producto int not null,
 cantidad int not null,
-id_pedido int,
+#fecha TIMESTAMP not null,
 constraint pk_id primary key (id_carro)
 );
 
@@ -138,7 +140,7 @@ ALTER TABLE factura ADD FOREIGN KEY (cif_empresa) REFERENCES empresa(cif);
 ALTER TABLE carrito ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
 ALTER TABLE carrito ADD FOREIGN KEY (id_comida) REFERENCES carta_comida(id_comida);
 ALTER TABLE carrito ADD FOREIGN KEY (id_ped) REFERENCES pedidos(id_ped);
-<<<<<<< Updated upstream
+
 
 ALTER TABLE pedidos ADD FOREIGN KEY (restaurante) REFERENCES empresa(cif);
 =======

@@ -85,12 +85,21 @@ id_alergeno int not null,
 id_comida int not null
 );
 
+create table if not exists pedidos (
+  id_ped int NOT NULL auto_increment,
+  fecha datetime NOT NULL,
+  enviado boolean NOT NULL,
+  restaurante varchar(10) NOT NULL
+
+constraint pk_id_ped primary key (id_ped)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 create table if not exists factura(
 id_factura int auto_increment,
 id_usuario int not null,
 cif_empresa varchar(10) not null,
 precio float not null,
-fecha date not null,
+fecha TIMESTAMP not null,
 id_comida int not null,
 total int not null,
 modo_pago enum('efectivo','tarjeta','otro modo') not null default 'efectivo',
@@ -118,7 +127,7 @@ id_usuario int not null,
 id_comida int not null,
 #id_producto int not null,
 cantidad int not null,
-#fecha Date not null,
+#fecha TIMESTAMP not null,
 constraint pk_id primary key (id_carro)
 );
 
@@ -129,6 +138,9 @@ ALTER TABLE factura ADD FOREIGN KEY (cif_empresa) REFERENCES empresa(cif);
 
 ALTER TABLE carrito ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
 ALTER TABLE carrito ADD FOREIGN KEY (id_comida) REFERENCES carta_comida(id_comida);
+ALTER TABLE carrito ADD FOREIGN KEY (id_ped) REFERENCES pedidos(id_ped);
+
+ALTER TABLE pedidos ADD FOREIGN KEY (restaurante) REFERENCES empresa(cif);
 
 ALTER TABLE usuario ADD FOREIGN KEY (id_rol) REFERENCES roles(id_rol);
 

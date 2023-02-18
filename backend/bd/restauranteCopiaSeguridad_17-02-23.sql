@@ -130,6 +130,7 @@ id_pedido int,
 constraint pk_id primary key (id_carro)
 );
 
+
 ###########################################################################################
 #FOREIGN KEYS
 ALTER TABLE factura ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
@@ -138,6 +139,7 @@ ALTER TABLE factura ADD FOREIGN KEY (cif_empresa) REFERENCES empresa(cif);
 ALTER TABLE carrito ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
 ALTER TABLE carrito ADD FOREIGN KEY (id_comida) REFERENCES carta_comida(id_comida);
 ALTER TABLE carrito ADD FOREIGN KEY (id_ped) REFERENCES pedidos(id_ped);
+
 
 ALTER TABLE pedidos ADD FOREIGN KEY (restaurante) REFERENCES empresa(cif);
 
@@ -398,3 +400,4 @@ END;
 #GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP
 #    ON restaurante.*
 #	TO 'administrador'@'localhost';
+################################################################################

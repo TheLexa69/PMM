@@ -2,7 +2,7 @@
 
 namespace clases;
 
-class Formularios {
+class FormulariosLogin {
 
 //funcion que recoge loggin
     public function html($err = " ", $num = " ") {

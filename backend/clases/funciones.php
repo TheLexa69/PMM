@@ -1,7 +1,7 @@
 <?php
 namespace clases;
 
- class Funciones{
+ class FuncionesLogin{
      
      
 public function campos(array $campos, $requeridos) {

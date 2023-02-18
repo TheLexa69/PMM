@@ -5,7 +5,7 @@ namespace clases;
 use \PDO;
 use \PDOException;
 
-class Consultas extends Conexion {
+class ConsultasLogin extends Conexion {
 
     public function __construct() {
         //  var_dump ($this->conexion= $this->conectar());

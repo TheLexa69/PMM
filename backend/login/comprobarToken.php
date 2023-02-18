@@ -3,10 +3,9 @@
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
 //include "../../autoloadClasesLogin.php";
 
-use \clases\Formularios as formulariosLogin;
-use \clases\Funciones as funcionesLogin;
-use Consultas as consultasLogin;
-use \clases\Consultas as consultasLogin;
+use \clases\FormulariosLogin as formulariosLogin;
+use \clases\FuncionesLogin as funcionesLogin; 
+use \clases\ConsultasLogin as consultasLogin;
 
 $formularios = new formulariosLogin;
 $funciones = new funcionesLogin;

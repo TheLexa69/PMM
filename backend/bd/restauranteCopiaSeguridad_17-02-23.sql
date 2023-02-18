@@ -10,7 +10,7 @@ pasaporte_trabajador varchar(12) null,
 nombre varchar(40) not null,
 apellido1 varchar(40) not null,
 apellido2 varchar(40) null,
-fecha date not null,
+fecha TIMESTAMP not null,
 num_telef varchar(9) not null,
 id_rol int not null,
 contraseña varchar(255) not null unique,
@@ -23,7 +23,7 @@ nombre varchar(40) not null,
 apellido1 varchar(40) not null,
 apellido2 varchar(40) null,
 correo varchar(40) not null unique,
-fecha date not null,
+fecha TIMESTAMP not null,
 num_telef varchar(9) not null,
 id_rol int not null,
 estado_usuario enum('activado','desactivado') not null default 'desactivado',
@@ -48,8 +48,8 @@ nombre varchar(100) not null,
 descripcion varchar(300) null,
 tipo int not null,
 subtipo int null,
-fecha_inicio date not null,
-fecha_fin date null,
+fecha_inicio TIMESTAMP not null,
+fecha_fin TIMESTAMP null,
 precio float not null,
 disponible boolean not null,
 img varchar(100) not null,
@@ -130,7 +130,6 @@ id_pedido int,
 constraint pk_id primary key (id_carro)
 );
 
-
 ###########################################################################################
 #FOREIGN KEYS
 ALTER TABLE factura ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
@@ -139,9 +138,11 @@ ALTER TABLE factura ADD FOREIGN KEY (cif_empresa) REFERENCES empresa(cif);
 ALTER TABLE carrito ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
 ALTER TABLE carrito ADD FOREIGN KEY (id_comida) REFERENCES carta_comida(id_comida);
 ALTER TABLE carrito ADD FOREIGN KEY (id_ped) REFERENCES pedidos(id_ped);
-
+<<<<<<< Updated upstream
 
 ALTER TABLE pedidos ADD FOREIGN KEY (restaurante) REFERENCES empresa(cif);
+=======
+>>>>>>> Stashed changes
 
 ALTER TABLE usuario ADD FOREIGN KEY (id_rol) REFERENCES roles(id_rol);
 

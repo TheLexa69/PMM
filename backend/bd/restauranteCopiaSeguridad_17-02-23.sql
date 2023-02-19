@@ -35,6 +35,28 @@ contraseña varchar(255) not null unique,
 constraint pk_idUsuario primary key (id_usuario)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+create table if not exists datos_usuario(
+id_datos_usuario int auto_increment,
+id_usuario int,
+nombre varchar(40) not null,
+apellido1 varchar(40) not null,
+apellido2 varchar(40) null,
+correo varchar(40) not null unique,
+fecha TIMESTAMP not null,
+num_telef varchar(9) not null,
+NIF varchar(9)  null unique,
+direccion varchar(1000) null,
+cp varchar(5) null,
+
+constraint pk_id primary key (id_datos_usuario)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+
+
 create table if not exists roles(
 id_rol	int	auto_increment,
 nombre_rol varchar (100) not null,
@@ -145,6 +167,7 @@ ALTER TABLE pedidos ADD FOREIGN KEY (restaurante) REFERENCES empresa(cif);
  
 
 ALTER TABLE usuario ADD FOREIGN KEY (id_rol) REFERENCES roles(id_rol);
+ALTER TABLE datos_usuario ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
 
 ALTER TABLE carta_alergenos ADD FOREIGN KEY (id_alergeno) REFERENCES alergenos(id_alergeno);
 ALTER TABLE carta_alergenos ADD FOREIGN KEY (id_comida) REFERENCES carta_comida(id_comida);

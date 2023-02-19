@@ -89,7 +89,7 @@ create table if not exists pedidos (
   id_ped int NOT NULL auto_increment,
   fecha TIMESTAMP NOT NULL,
   enviado boolean NOT NULL,
-  restaurante varchar(10) NOT NULL
+  restaurante varchar(10) NOT NULL,
 
 constraint pk_id_ped primary key (id_ped)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -138,12 +138,11 @@ ALTER TABLE factura ADD FOREIGN KEY (cif_empresa) REFERENCES empresa(cif);
 
 ALTER TABLE carrito ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
 ALTER TABLE carrito ADD FOREIGN KEY (id_comida) REFERENCES carta_comida(id_comida);
-ALTER TABLE carrito ADD FOREIGN KEY (id_ped) REFERENCES pedidos(id_ped);
+#ALTER TABLE carrito ADD FOREIGN KEY (id_ped) REFERENCES pedidos(id_ped);
 
 
 ALTER TABLE pedidos ADD FOREIGN KEY (restaurante) REFERENCES empresa(cif);
-=======
->>>>>>> Stashed changes
+ 
 
 ALTER TABLE usuario ADD FOREIGN KEY (id_rol) REFERENCES roles(id_rol);
 

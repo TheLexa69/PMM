@@ -7,36 +7,69 @@ use \clases\FormulariosLogin as formulariosLogin;
 use \clases\FuncionesLogin as funcionesLogin;
 use \clases\ConsultasLogin as consultasLogin;
 use \clases\Mails as mailLogin;
+use \clases\ConsultasAdministrador as consultasAdministrador;
 
 $formularios = new formulariosLogin;
 $funciones = new funcionesLogin;
 $consulta = new consultasLogin;
 $envioMail = new mailLogin;
+$consultaTrabajador = new consultasAdministrador;
+
 
 if (isset($_POST['mailr'])) {
 
     $mail = $_POST['mailr'];
-
+    $trabajas=$_POST['trabajo'];
+    $trabajas == "SI";
     Try {
 
         $datos = $consulta->comprobarDatos($mail);
-        if (!empty($datos)) {
-            $mailBd = $datos['correo'];
-            $nombre = $datos['nombre'];
+        $datosTrabajador = $consultaTrabajador->comprobarDatosTrabajador($mail);
+            
+              if (!empty($datos["correo"]) ) {
+                $nombre = $datos['nombre'];
+                $mailBd = $datos["correo"];
+                $rol=$datos["id_rol"];
+                 
+              }
+              if (!empty($datosTrabajador["correo"]) ) {
+                $nombreTrabajador = $datosTrabajador['nombre'];
+                $mailBdTrabajador = $datosTrabajador["correo"];
+                $roltrabajador=$datosTrabajador["id_rol"];
+                
+              } 
+    
+       
+        if (!empty($datos)&& $trabajas == "NO") {
+          
 
             $token = intval(rand(100000, 900000) * 25 / 4 + 3);
             // $token = 123456;
             $token2 = password_hash($token, PASSWORD_DEFAULT);
-            $envioMail->mail($mail, $nombre, $token);
-            $consulta->quitarActivacion($mail, $token2);
+            $envioMail->mail($mailBd, $nombre, $token);
+            $consulta->quitarActivacion($mailBd, $token2);
 
-            $formularios->contrastaToken($mailBd);
-        } else {
+            $formularios->contrastaToken($mailBd,$rol);
+        } else if(!empty($datosTrabajador["correo"]) && $trabajas == "SI"){
+            
+               $token = intval(rand(100000, 900000) * 25 / 4 + 3);
+            // $token = 123456;
+            $token2 = password_hash($token, PASSWORD_DEFAULT);
+            $envioMail->mail($mailBdTrabajador, $nombreTrabajador, $token);
+            $consultaTrabajador->quitarActivacionTrabajador($mailBdTrabajador, $token2);
+
+              $formularios->contrastaToken($mailBdTrabajador,$roltrabajador);
+            
+        }else{
+            if($trabajas == "SI"){
+            $mensaje = "<b>" . $mail . "</b>  Usted no trabaja con nosotros<br>";
+            }else{
             $mensaje = "<b>" . $mail . "</b>   No existe en nuestra base de datos<br>";
+            }
             $formularios->recuperar($mensaje);
         }
     } catch (PDOException $e) {
-        echo 'Accion no realizada porque:<br>';
+        
         die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
     }
 } else {

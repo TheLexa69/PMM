@@ -10,14 +10,19 @@ class FormulariosLogin {
 
         <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
             <h2>Login:</h2>
-            <label for="c1" class="form-label">Mail:</label><br>     
+            <label for="trabajo"><b>¿Trabajas con nosotros?</b></label> <br>
+            <input type="radio" id="trabajo" name="trabajo" value="NO" checked>  <label for="trabajo"> NO </label> <br> 
+            <input type="radio" id="trabajo" name="trabajo" value="SI" >  <label for="trabajo"> SI </label>
+            <br><br> 
+            <label for="c1" class="form-label"><b>Mail:</b></label><br>     
             <input type="email" name="mail" class="form-control" id="c1"  <?php
             if (!empty($_POST['mail'])) {
                 echo " value='" . $_POST['mail'] . "'";
             }
             ?>   ><br>
-            <label for="c2" class="form-label">Contraseña:</label><br>
+            <label for="c2" class="form-label"><b>Contraseña:</b></label><br>
             <input type="password" name="pass" class="form-control" id="c2"  ><br><br>
+            
             <input type="submit" name="login">
             <br> <?php echo $err; ?><br> 
         <?php echo $num; ?> <br>
@@ -94,6 +99,10 @@ class FormulariosLogin {
         <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
             <h2>Mail con el que te diste de alta:</h2>
         <?php echo $mensaje; ?><br> 
+         <label for="trabajo"><b>¿Trabajas con nosotros?</b></label> <br>
+            <input type="radio" id="trabajo" name="trabajo" value="NO" checked>  <label for="trabajo"> NO </label> <br> 
+            <input type="radio" id="trabajo" name="trabajo" value="SI" >  <label for="trabajo"> SI </label>
+            <br><br> 
             <label for="c1" class="form-label">Correo electrónico :</label><br>     
             <input type="email" name="mailr" class="form-control" id="c1"  <?php
         if (!empty($_POST['mail'])) {
@@ -109,7 +118,7 @@ class FormulariosLogin {
         <?php
     }
 
-    public function contrastaToken($mail) {
+    public function contrastaToken($mail,$rol) {
         ?> 
 
         <form   action= "comprobarToken.php " method="POST">
@@ -118,6 +127,7 @@ class FormulariosLogin {
             <div  >
                 <label for="c" class="form-label">Codigo Mail:</label><br>
                 <input type="password" class="form-control" id="c" name="token"><br><br>
+                <input type="hidden" name="rol" value="<?php echo $rol?>">
                 <input type="hidden" name="testigo" >
 
                 <input type="hidden" name="mail" value="<?php if (!empty($mail)) {
@@ -132,7 +142,7 @@ class FormulariosLogin {
         <?php
     }
 
-    public function tokenMal($mail) {
+    public function tokenMal($mail ,$rol) {
         ?>  
 
         <form   action= "comprobarToken.php " method="POST">
@@ -142,7 +152,7 @@ class FormulariosLogin {
                 <label for="c" class="form-label">Codigo Mail <b>INCORRECTO</b> vuelva a ponerlo:</label><br><br>
                 <input type="password" class="form-control" id="c" name="token"><br><br>
                 <input type="hidden" name="testigo"  >
-
+                <input type="hidden" name="rol" value="<?php echo $rol?>">
                 <input type="hidden" name="mail" value="<?php if (!empty($mail)) {
             echo $mail;
         } ?>">
@@ -154,7 +164,7 @@ class FormulariosLogin {
         <?php
     }
 
-    public function contrasena($mail) {
+    public function contrasena($mail,$rol) {
         ?>
 
         <form   action="guardarContrasena.php" method="POST">
@@ -167,6 +177,7 @@ class FormulariosLogin {
             <input type="hidden" name="mail" value="<?php if (!empty($mail)) {
             echo $mail;
         } ?>">
+            <input type="hidden" name="rol" value="<?php echo $rol?>">
 
             <input type="submit" name="contraMail" value="PULSAR PARA VERIFICAR"></input>
         </form> 
@@ -174,7 +185,7 @@ class FormulariosLogin {
         <?php
     }
 
-    public function contraMail($mail) {
+    public function contraMail($mail,$rol) {
         ?>
 
         <form   action="guardarContrasena.php" method="POST">
@@ -184,7 +195,7 @@ class FormulariosLogin {
             <input type="password" name="pass" class="form-control" id="c3"  ><br>
             <label for="c4" class="form-label">Repite contraseña:</label><br>
             <input type="password" name="pass2" class="form-control" id="c4"><br><br>
-
+             <input type="hidden" name="rol" value="<?php echo $rol?>">
             <input type="hidden" name="mail" value="<?php if (!empty($mail)) {
             echo $mail;
         } ?>">

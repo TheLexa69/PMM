@@ -5,7 +5,7 @@ namespace clases;
 use \PDO;
 use \PDOException;
 
-class ConsultasLogin extends Conexion {
+class ConsultasAdministrador extends Conexion {
 
     public function __construct() {
         //  var_dump ($this->conexion= $this->conectar());
@@ -13,10 +13,10 @@ class ConsultasLogin extends Conexion {
         parent::__construct();
     }
 
-    public function añadirUsuario($nombre, $apellido1, $apellido2, $token2, $mail, $telefono, $rol, $fecha, $nif, $direccion, $cp) {
+    public function añadirTrabajador($nombre, $apellido1, $apellido2, $token2, $mail, $telefono, $privilegios, $fecha, $nie, $pasaporte) {
 
         try {
-            $sql = "INSERT INTO usuario (nombre,apellido1 ,apellido2,contraseña,correo,num_telef, id_rol,fecha,NIF,direccion,cp) VALUES (:nombre,:apellido1,:apellido2,:contrasena,:correo,:num_telef,:rol,:fecha,:nif,:direccion,:cp)";
+            $sql = "INSERT INTO trabajador (nombre,apellido1 ,apellido2,contraseña,correo,num_telef, id_rol,fecha,nie_trabajador,pasaporte_trabajador) VALUES (:nombre,:apellido1,:apellido2,:contrasena,:correo,:num_telef,:rol,:fecha,:nie,:pasaporte)";
 
             $stmt = $this->conexion->prepare($sql);
 
@@ -26,12 +26,11 @@ class ConsultasLogin extends Conexion {
             $stmt->bindParam(':contrasena', $token2, PDO::PARAM_STR);
             $stmt->bindParam(':correo', $mail, PDO::PARAM_STR, 50);
             $stmt->bindParam(':num_telef', $telefono, PDO::PARAM_STR);
-            $stmt->bindParam(':rol', $rol, PDO::PARAM_STR);
+            $stmt->bindParam(':rol', $privilegios, PDO::PARAM_STR);
             $stmt->bindParam(':fecha', $fecha, PDO::PARAM_STR);
-
-            $stmt->bindParam(':nif', $nif, PDO::PARAM_STR);
-            $stmt->bindParam(':direccion', $direccion, PDO::PARAM_STR);
-            $stmt->bindParam(':cp', $cp, PDO::PARAM_STR);
+            $stmt->bindParam(':nie', $nie, PDO::PARAM_STR);
+            $stmt->bindParam(':pasaporte', $pasaporte, PDO::PARAM_STR);
+            
 
             $stmt->execute();
             unset($stmt);
@@ -42,9 +41,9 @@ class ConsultasLogin extends Conexion {
         }
     }
 
-    public function comprobarDatos($mail) {
+    public function comprobarDatosTrabajador($mail) {
 
-        $sql = "select * from usuario where correo=?";
+        $sql = "select * from trabajador where correo=?";
 
         $stmt = $this->conexion->prepare($sql);
 
@@ -60,10 +59,10 @@ class ConsultasLogin extends Conexion {
         return $datos;
     }
     
-      public function registroHoraSession($id,$fecha) {
+      public function registroHoraSessionTrabajador($id,$fecha) {
  
 
-        $sql1 = "UPDATE usuario SET  fecha=:fecha where id_usuario = :id";
+        $sql1 = "UPDATE trabajador SET  fecha=:fecha where id_trabajador = :id";
 
         $stmt = $this->conexion->prepare($sql1);
 
@@ -78,9 +77,9 @@ class ConsultasLogin extends Conexion {
     
     
 
-    public function nuevaContraseña($mail, $contra) {
+    public function nuevaContraseñaTrabajador($mail, $contra) {
 
-        $sql = "select * from usuario where correo=?";
+        $sql = "select * from trabajador where correo=?";
 
         $stmt = $this->conexion->prepare($sql);
 
@@ -92,8 +91,8 @@ class ConsultasLogin extends Conexion {
             $datos = $fil;
         }
 
-        $id = $datos["id_usuario"];
-        $estado = $datos["estado_usuario"];
+        $id = $datos["id_trabajador"];
+        $estado = $datos["estado_trabajador"];
 
         if ($estado == "activado") {
             $estado = "desactivado";
@@ -101,12 +100,12 @@ class ConsultasLogin extends Conexion {
             $estado = "activado";
         }
 
-        $sql1 = "UPDATE usuario SET  estado_usuario=:estado_usuario , contraseña=:contrasena where id_usuario = :id";
+        $sql1 = "UPDATE trabajador SET  estado_trabajador=:estado_trabajador , contraseña=:contrasena where id_trabajador = :id";
 
         $stmt = $this->conexion->prepare($sql1);
 
         $stmt->bindParam(':id', $id, PDO::PARAM_STR, 25);
-        $stmt->bindParam(':estado_usuario', $estado, PDO::PARAM_STR);
+        $stmt->bindParam(':estado_trabajador', $estado, PDO::PARAM_STR);
         $stmt->bindParam(':contrasena', $contra, PDO::PARAM_STR); //nueva contraseña de usuario hash
 
         $stmt->execute();
@@ -114,9 +113,9 @@ class ConsultasLogin extends Conexion {
         return $stmt;
     }
 
-    public function quitarActivacion($mail, $contra) {
+    public function quitarActivacionTrabajador($mail, $contra) {
 
-        $sql = "select * from usuario where correo=?";
+        $sql = "select * from trabajador where correo=?";
 
         $stmt = $this->conexion->prepare($sql);
 
@@ -128,15 +127,15 @@ class ConsultasLogin extends Conexion {
             $datos = $fil;
         }
 
-        $id = $datos["id_usuario"];
+        $id = $datos["id_trabajador"];
         $estado = "desactivado";
 
-        $sql1 = "UPDATE usuario SET  estado_usuario=:estado_usuario , contraseña=:contrasena where id_usuario = :id";
+        $sql1 = "UPDATE trabajador SET  estado_trabajador=:estado_trabajador, contraseña=:contrasena where id_trabajador = :id";
 
         $stmt = $this->conexion->prepare($sql1);
 
         $stmt->bindParam(':id', $id, PDO::PARAM_STR, 25);
-        $stmt->bindParam(':estado_usuario', $estado, PDO::PARAM_STR);
+        $stmt->bindParam(':estado_trabajador', $estado, PDO::PARAM_STR);
         $stmt->bindParam(':contrasena', $contra, PDO::PARAM_STR); //nueva contraseña de usuario hash
 
         $stmt->execute();
@@ -145,3 +144,4 @@ class ConsultasLogin extends Conexion {
     }
 
 }
+

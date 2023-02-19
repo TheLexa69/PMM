@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $direccion = null;
     $cp = null;
 
-    $rol = 1;
+    $rol = 4;
     $fecha = $funciones->fechaHoraActual();
 
     $campos = array("nombre" => $nombre, "apellido1" => $apellido1, "telefono" => $telefono, "email" => $mail); //mail base de datos y contraseña
@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($necesarios == true) {
 
-            $formularios->contrastaToken($mail);
+            $formularios->contrastaToken($mail,$rol);
 
             // header("Location: comprobarToken.php");
         } else {

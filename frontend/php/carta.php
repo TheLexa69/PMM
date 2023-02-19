@@ -1,7 +1,5 @@
-<?php
-define('DS',DIRECTORY_SEPARATOR);
-
-require   dirname(dirname(__DIR__)).DS."backend".DS."sesiones".DS."sesiones.php";
+<?php 
+require   dirname(dirname(__DIR__)).DIRECTORY_SEPARATOR."backend".DIRECTORY_SEPARATOR."sesiones".DIRECTORY_SEPARATOR."sesiones.php";
 // comprobar_sesion();
 session_start();
 /* Bloque try-catch con la conexión a la bdd. */
@@ -13,25 +11,8 @@ try {
     die("ERROR: " . $e->getMessage());
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../css/estilos.css">
-    <script src="../js/main.js"></script>
-    <title>Inicio</title>
-</head>
-
-<body>
-    <?php require("./nav.php") ?>
-    <?php
+ 
+    <?php include("./nav.php");  
     /* Realizamos la consulta que nos pide para enseñar los datos. */
     if (isset($_GET["tipo"])) {
         $tipo = $_GET["tipo"];
@@ -104,7 +85,7 @@ try {
                                 <img class="imagenes rounded img-fluid" id="producto_img" title="vaso" src="https://cdn.pixabay.com/photo/2020/12/15/13/44/children-5833685__340.jpg">
                                 </div>
                         <div class="col-4 d-flex ml-2 flex-column">
-                            <h4 class="nombre-producto"><?php echo $fila[0] ?></h4>
+                            <h4 class="nombre-producto"><?php echo $fila[0]; ?></h4>
                             <p>Descripción:
                             <a href="#" id="info">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
@@ -114,8 +95,8 @@ try {
                             </a>
                             </p>
 
-                            <h5 class="precio-producto"> Precio: <?php echo number_format($fila[3], 2, '.', '') ?> </h5>
-                            <form method="post" action="<?php echo  DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."backend". DIRECTORY_SEPARATOR . "cart". DIRECTORY_SEPARATOR."agregar_carrito.php?cod=". $fila[6] ?>">
+                            <h5 class="precio-producto"> Precio: <?php echo number_format($fila[3], 2, '.', ''); ?> </h5>
+                            <form method="post" action="<?php echo  DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."backend". DIRECTORY_SEPARATOR . "cart". DIRECTORY_SEPARATOR."agregar_carrito.php?cod=". $fila[6]; ?>">
                             <label for="cantidad">Cantidad:</label>
                               <select id="cantidad" name="cantidad">';
 		                        <?php for($i=1; $i<=10;$i++) {        
@@ -236,6 +217,4 @@ try {
             }
         }
     </script>
-</body> 
-
-</html>
+<?php include("./footer.php");

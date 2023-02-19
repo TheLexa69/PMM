@@ -7,10 +7,12 @@ require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPAR
 use \clases\FormulariosLogin as formulariosLogin;
 use \clases\FuncionesLogin as funcionesLogin;
 use \clases\ConsultasLogin as consultasLogin;
+use \clases\ConsultasAdministrador as consultasAdministrador;
 
 $formularios = new formulariosLogin;
 $funciones = new funcionesLogin;
 $consulta = new consultasLogin;
+$consultaAdministrador = new consultasAdministrador;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -23,10 +25,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($_POST["pass"] == $_POST["pass2"]) {
         $contranueva = $_POST["pass"];
         $contra = password_hash($contranueva, PASSWORD_DEFAULT);
-
+        $rol=$_POST["rol"];
         try {
-            $stmt = $consulta->nuevaContraseña($mail, $contra);
+          
 
+                if($rol==4 ){  
+                    $stmt = $consulta->nuevaContraseña($mail,$contra);
+                
+                }else{
+                    $stmt = $consultaAdministrador->nuevaContraseñaTrabajador($mail,$contra);
+                   
+                }
+        
+            
             if ($stmt->rowCount() > 0) {
                 unset($conexion);
                 unset($stmt);
@@ -37,11 +48,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             unset($conexion);
             unset($stmt);
         } catch (PDOException $e) {
-            echo 'Accion no realizada porque:<br>';
+           
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     } else {
-        $formularios->contraMail($mail);
+        $formularios->contraMail($mail,$rol);
     }
 }
 

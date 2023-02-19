@@ -87,7 +87,7 @@ id_comida int not null
 
 create table if not exists pedidos (
   id_ped int NOT NULL auto_increment,
-  fecha datetime NOT NULL,
+  fecha TIMESTAMP NOT NULL,
   enviado boolean NOT NULL,
   restaurante varchar(10) NOT NULL
 
@@ -140,7 +140,10 @@ ALTER TABLE carrito ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
 ALTER TABLE carrito ADD FOREIGN KEY (id_comida) REFERENCES carta_comida(id_comida);
 ALTER TABLE carrito ADD FOREIGN KEY (id_ped) REFERENCES pedidos(id_ped);
 
+
 ALTER TABLE pedidos ADD FOREIGN KEY (restaurante) REFERENCES empresa(cif);
+=======
+>>>>>>> Stashed changes
 
 ALTER TABLE usuario ADD FOREIGN KEY (id_rol) REFERENCES roles(id_rol);
 

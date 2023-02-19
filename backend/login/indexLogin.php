@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 if (isset($verificado) || isset($TrabajadorVerificado)) {
 
-                    if ($trabajas == "SI" && $TrabajadorVerificado == "desactivado") {
+                    if ($TrabajadorVerificado == "desactivado" && $trabajas == "SI") {
 
                         $formularios->contrastaToken($mailBdTrabajador, $roltrabajador);
                     } else if ($verificado == "desactivado") {
@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                 $tiempo = 300;
 
-                                if ($rol == 4) {
+                                if ($rol == 4 && $trabajas == "NO") {
                                     if (password_verify($_POST['pass'], $hash) && $funciones->correo($mail) == $mailBd) {  ////sql mail y contraseña sql
                                         // cookis($nombre, $valor, $tiempo);
                                         try {
@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             $rol = $datos ["id_rol"];
                                             $fecha = $funciones->fechaHoraActual();
                                             $consulta->registroHoraSession($id_usuario, $fecha);
-
+                                            setcookie('access_error', $_COOKIE['access_error'] + 1, time() - $tiempo);
                                             session_start();
                                             // $usu tiene campos correo y codRes, correo 
 
@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
                                         }
                                     } else {
-
+ 
                                         if (isset($_COOKIE['access_error'])) {
                                             // Caduca en un año 
                                             setcookie('access_error', $_COOKIE['access_error'] + 1, time() + $tiempo);
@@ -109,16 +109,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
                                     if (password_verify($_POST['pass'], $hashTrabajador) && $funciones->correo($mail) == $mailBdTrabajador) {  ////sql mail y contraseña sql
-                                        // cookis($nombre, $valor, $tiempo);
+                                     
                                         try {
-                                            
+
                                             $datosTrabajador = $consultaTrabajador->comprobarDatosTrabajador($mailBdTrabajador);
 
                                             $id_trabajador = $datosTrabajador["id_trabajador"];
                                             $roltrabajador = $datosTrabajador["id_rol"];
                                             $fecha = $funciones->fechaHoraActual();
                                             $consultaTrabajador->registroHoraSessionTrabajador($id_trabajador, $fecha);
-
+                                            setcookie('access_error', $_COOKIE['access_error'] + 1, time() - $tiempo);
                                             session_start();
                                             // $usu tiene campos correo y codRes, correo 
 
@@ -131,7 +131,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
                                         }
                                     } else {
- 
+
                                         if (isset($_COOKIE['access_error'])) {
                                             // Caduca en un año 
                                             setcookie('access_error', $_COOKIE['access_error'] + 1, time() + $tiempo);

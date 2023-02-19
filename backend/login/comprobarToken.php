@@ -14,7 +14,7 @@ $consulta = new consultasLogin;
 $consultaAdministrador = new consultasAdministrador;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    echo$rol=$_POST["rol"];
+    $rol=$_POST["rol"];
     $token = $_POST['token'];
     $mail = $_POST['mail'];
 

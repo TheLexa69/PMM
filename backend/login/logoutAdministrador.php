@@ -3,7 +3,7 @@
  * Cierra la session y nos lleva a login
  */
 require_once '../sesiones/sesiones.php';
-comprobar_sesion();
+comprobar_sesionAdministrador();
 
 $_SESSION=array(); //Destruye las variables de sesión
 session_destroy(); // Eliminaa la sesion
@@ -21,4 +21,3 @@ session_destroy(); // Eliminaa la sesion
         <a href = "/proyecto/index.php">Ir a la página principal</a>
     </body>
 </html>
-

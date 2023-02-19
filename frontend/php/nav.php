@@ -44,7 +44,7 @@
 
 
             <?php
-            if (isset($_SESSION['usuario'])) {
+            if (!empty($_SESSION['usuario'])) {
                 ?> 
                 <li class="nav-item">
                     <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "login" . DIRECTORY_SEPARATOR . "logout.php";?>'>Log Out</a>
@@ -53,7 +53,17 @@
                 <li class="nav-item">
                     <a class="nav-link" href=' #'>usuario </a>
                 </li><?php
-        } else {
+        } elseif(!empty ($_SESSION['administrador'])){
+                ?> 
+                <li class="nav-item">
+                    <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "login" . DIRECTORY_SEPARATOR . "logoutAdministrador.php";?>'>Log Out</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "administrador" . DIRECTORY_SEPARATOR . "indexAdministrador.php";?>'>administrador </a>
+                </li>
+                <?php
+            }else{
                 ?> 
                 <li class="nav-item">
                     <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "login" . DIRECTORY_SEPARATOR . "indexLogin.php";?>'>Login</a>
@@ -62,6 +72,4 @@
             }
             ?>
         </ul> 
-        </body>
-
-</html>
+   

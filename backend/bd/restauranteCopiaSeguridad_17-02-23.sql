@@ -5,14 +5,16 @@ use LuaChea;
 
 create table if not exists trabajador(
 id_trabajador int auto_increment,
-nie_trabajdor varchar(9) null,
+nie_trabajador varchar(9) null,
 pasaporte_trabajador varchar(12) null,
 nombre varchar(40) not null,
 apellido1 varchar(40) not null,
 apellido2 varchar(40) null,
+correo varchar(40) not null unique,
 fecha TIMESTAMP not null,
 num_telef varchar(9) not null,
 id_rol int not null,
+estado_trabajador enum('activado','desactivado') not null default 'desactivado',
 contraseña varchar(255) not null unique,
 constraint pk_idTrabajador primary key (id_trabajador)
 );
@@ -34,6 +36,28 @@ contraseña varchar(255) not null unique,
 
 constraint pk_idUsuario primary key (id_usuario)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+create table if not exists datos_usuario(
+id_datos_usuario int auto_increment,
+id_usuario int,
+nombre varchar(40) not null,
+apellido1 varchar(40) not null,
+apellido2 varchar(40) null,
+correo varchar(40) not null unique,
+fecha TIMESTAMP not null,
+num_telef varchar(9) not null,
+NIF varchar(9)  null unique,
+direccion varchar(1000) null,
+cp varchar(5) null,
+
+constraint pk_id primary key (id_datos_usuario)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+
 
 create table if not exists roles(
 id_rol	int	auto_increment,
@@ -89,7 +113,7 @@ create table if not exists pedidos (
   id_ped int NOT NULL auto_increment,
   fecha TIMESTAMP NOT NULL,
   enviado boolean NOT NULL,
-  restaurante varchar(10) NOT NULL
+  restaurante varchar(10) NOT NULL,
 
 constraint pk_id_ped primary key (id_ped)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -138,14 +162,14 @@ ALTER TABLE factura ADD FOREIGN KEY (cif_empresa) REFERENCES empresa(cif);
 
 ALTER TABLE carrito ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
 ALTER TABLE carrito ADD FOREIGN KEY (id_comida) REFERENCES carta_comida(id_comida);
-ALTER TABLE carrito ADD FOREIGN KEY (id_ped) REFERENCES pedidos(id_ped);
+#ALTER TABLE carrito ADD FOREIGN KEY (id_ped) REFERENCES pedidos(id_ped);
 
 
 ALTER TABLE pedidos ADD FOREIGN KEY (restaurante) REFERENCES empresa(cif);
-=======
->>>>>>> Stashed changes
+ 
 
 ALTER TABLE usuario ADD FOREIGN KEY (id_rol) REFERENCES roles(id_rol);
+ALTER TABLE datos_usuario ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
 
 ALTER TABLE carta_alergenos ADD FOREIGN KEY (id_alergeno) REFERENCES alergenos(id_alergeno);
 ALTER TABLE carta_alergenos ADD FOREIGN KEY (id_comida) REFERENCES carta_comida(id_comida);
@@ -293,9 +317,11 @@ INSERT INTO carta_alergenos (id_alergeno, id_comida) values (6,1);
 INSERT INTO carta_alergenos (id_alergeno, id_comida) values (7,1);
 
 INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_usuario, NIF, direccion, cp, contraseña) VALUES ('Guillermo','André','','guille1insua@gmail.com',DATE(NOW()),'667821250',4,'activado', '54a','','','123');
-INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_usuario, NIF, direccion, cp, contraseña) VALUES ('Gabriel','Domínguez','Borines','cambes6@gmail.com',DATE(NOW()),'699204155',1, 'activado','','','','123a');
+INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_usuario, NIF, direccion, cp, contraseña) VALUES ('Gabriel','Domínguez','Borines','cambes6@gmail.com',DATE(NOW()),'699204155',4, 'activado','','','','$2y$10$CWUoOkAv9YneiFlglkqoRuP28nVduK3aOUTOHW5onv7cAKk3Y.wGC');
 INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_usuario, NIF, direccion, cp, contraseña) VALUES ('Nuria','Buceta','García','nuriabuceta@gmail.com',DATE(NOW()),'622838028',4, 'activado','89j','','','123b');
 
+INSERT INTO trabajador (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_trabajador, nie_trabajador, pasaporte_trabajador, contraseña) VALUES ('Gabriel','Domínguez','Borines','cambes6@gmail.com',DATE(NOW()),'699204155',1, 'activado','','','$2y$10$lysg/2UocV/RJJUh0.Ov6uc/hgBrMTPLw9D4gEZ4jJVkmf28ZJtsi');
+ 
 INSERT INTO empresa (cif, nombre, nombre_sociedad, direccion, ciudad, cp, telefono, logo) VALUES ('B27788272','Novo Lua Chea','LUENGOS ANDRE S.L.','Rua de Eduardo Cabello, 25','Vigo','36208','986132537','url');
 
 

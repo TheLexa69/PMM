@@ -6,15 +6,16 @@ require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPAR
 use \clases\FormulariosLogin as formulariosLogin;
 use \clases\FuncionesLogin as funcionesLogin; 
 use \clases\ConsultasLogin as consultasLogin;
-
+use \clases\ConsultasAdministrador as consultasAdministrador;
+ 
 $formularios = new formulariosLogin;
 $funciones = new funcionesLogin;
 $consulta = new consultasLogin;
+$consultaAdministrador = new consultasAdministrador;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
+    echo$rol=$_POST["rol"];
     $token = $_POST['token'];
-
     $mail = $_POST['mail'];
 
     //es el token generado
@@ -25,17 +26,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Registro correcto!!!   <br> <b>Rebise su Email para finalizar el proceso</b><br> ----No cierre el navegador gracias---";
         $cont++;
     }
-
-
+ 
     try {
 
         $token = $_POST['token']; // token que se envio al mail
 
-        $mail;
+        if($rol==4 ){  
 
         $datos = $consulta->comprobarDatos($mail);
-
-        $datos["id_usuario"];
+         $datos["id_usuario"];
+        }else{
+        $datos = $consultaAdministrador->comprobarDatosTrabajador($mail);
+         $datos["id_trabajador"];
+        }
+        
+       
         $hash = $datos["contraseña"]; //contiene hash base de datos
 
         $bool = false;
@@ -50,10 +55,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (isset($boll)) {
 
-            $formularios->contrasena($mail);
+            $formularios->contrasena($mail,$rol);
         } else {
 
-            $formularios->tokenMal($mail);
+            $formularios->tokenMal($mail,$rol);
         }
     } catch (PDOException $e) {
         echo 'No conectado';

@@ -1,5 +1,5 @@
 <?php
- include dirname(__DIR__, 2) .  DIRECTORY_SEPARATOR . "autoloadClasesLogin.php"
+ include dirname(__DIR__, 2) .  DIRECTORY_SEPARATOR . "autoloadClasesLogin.php";
 //echo"../../autoloadClasesLogin.php";
 ?>
 <!DOCTYPE html>
@@ -17,19 +17,19 @@
     <body> 
         <ul class="nav nav-tabs justify-content-end sticky-top">  
             <li class="nav-item"> 
-                <a class="nav-link active" aria-current="page" href= '<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php" ?>' >Inicio</a>
+                <a class="nav-link active" aria-current="page" href= '<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php";?>' >Inicio</a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Carta</a>
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Carta</a>
                 <ul class="dropdown-menu">   
-                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "carta.php?tipo=cachopo" ?> '>Cachopo</a></li>
-                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "carta.php?tipo=arroz" ?>'>Arroz</a></li>
-                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "carta.php?tipo=carne" ?>'>Carnes</a></li>
-                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "carta.php?tipo=pescado" ?>'>Pescados</a></li>
-                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "carta.php?tipo=postre" ?>'>Postres</a></li>
-                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "carta.php?tipo=bebida" ?>'>Bebidas</a></li>
+                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "carta.php?tipo=cachopo";?> '>Cachopo</a></li>
+                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "carta.php?tipo=arroz";?>'>Arroz</a></li>
+                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "carta.php?tipo=carne";?>'>Carnes</a></li>
+                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "carta.php?tipo=pescado";?>'>Pescados</a></li>
+                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "carta.php?tipo=postre";?>'>Postres</a></li>
+                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "carta.php?tipo=bebida";?>'>Bebidas</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "carta.php" ?>'>Carta</a></li>
+                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "carta.php";?>'>Carta</a></li>
                 </ul>
             </li>
             <li class="nav-item">
@@ -39,7 +39,7 @@
                 <a class="nav-link" href="#">Sobre Mi</a>
             </li>
             <li class="nav-item">  
-                <a class="nav-link" href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "index_carrito.php" ?>">Cesta</a>
+                <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "index_carrito.php";?>'>Cesta</a>
             </li>
 
 
@@ -47,7 +47,7 @@
             if (isset($_SESSION['usuario'])) {
                 ?> 
                 <li class="nav-item">
-                    <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "login" . DIRECTORY_SEPARATOR . "logout.php" ?>'>Log Out</a>
+                    <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "login" . DIRECTORY_SEPARATOR . "logout.php";?>'>Log Out</a>
                 </li>
 
                 <li class="nav-item">
@@ -56,9 +56,12 @@
         } else {
                 ?> 
                 <li class="nav-item">
-                    <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "login" . DIRECTORY_SEPARATOR . "indexLogin.php" ?>'>Login</a>
+                    <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "login" . DIRECTORY_SEPARATOR . "indexLogin.php";?>'>Login</a>
                 </li>
                 <?php
             }
             ?>
         </ul> 
+        </body>
+
+</html>

@@ -85,14 +85,22 @@ id_alergeno int not null,
 id_comida int not null
 );
 
+<<<<<<< Updated upstream
 create table if not exists pedidos (
   id_ped int NOT NULL auto_increment,
   fecha datetime NOT NULL,
   enviado boolean NOT NULL,
   restaurante varchar(10) NOT NULL
+=======
+CREATE TABLE IF NOT EXISTS pedidos (
+  id_ped INT NOT NULL AUTO_INCREMENT,
+  fecha DATETIME NOT NULL,
+  enviado BOOLEAN NOT NULL,
+  restaurante VARCHAR(10) NOT NULL,
+  PRIMARY KEY (id_ped)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+>>>>>>> Stashed changes
 
-constraint pk_id_ped primary key (id_ped)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table if not exists factura(
 id_factura int auto_increment,
@@ -126,7 +134,11 @@ id_carro int auto_increment,
 id_usuario int not null,
 id_comida int not null,
 cantidad int not null,
+<<<<<<< Updated upstream
 id_pedido int,
+=======
+id_ped int,
+>>>>>>> Stashed changes
 constraint pk_id primary key (id_carro)
 );
 
@@ -139,6 +151,10 @@ ALTER TABLE carrito ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
 ALTER TABLE carrito ADD FOREIGN KEY (id_comida) REFERENCES carta_comida(id_comida);
 ALTER TABLE carrito ADD FOREIGN KEY (id_ped) REFERENCES pedidos(id_ped);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 ALTER TABLE pedidos ADD FOREIGN KEY (restaurante) REFERENCES empresa(cif);
 =======

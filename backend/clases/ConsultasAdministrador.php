@@ -30,7 +30,6 @@ class ConsultasAdministrador extends Conexion {
             $stmt->bindParam(':fecha', $fecha, PDO::PARAM_STR);
             $stmt->bindParam(':nie', $nie, PDO::PARAM_STR);
             $stmt->bindParam(':pasaporte', $pasaporte, PDO::PARAM_STR);
-            
 
             $stmt->execute();
             unset($stmt);
@@ -54,13 +53,13 @@ class ConsultasAdministrador extends Conexion {
         foreach ($fila as $fil) {
             $datos = $fil;
         }
-      
+
         unset($stmt);
         return $datos;
     }
-    
-      public function registroHoraSessionTrabajador($id,$fecha) {
- 
+
+    public function registroHoraSessionTrabajador($id, $fecha) {
+
 
         $sql1 = "UPDATE trabajador SET  fecha=:fecha where id_trabajador = :id";
 
@@ -68,14 +67,11 @@ class ConsultasAdministrador extends Conexion {
 
         $stmt->bindParam(':id', $id, PDO::PARAM_STR, 25);
         $stmt->bindParam(':fecha', $fecha, PDO::PARAM_STR);
-        
 
         $stmt->execute();
-        
+
         return $stmt;
     }
-    
-    
 
     public function nuevaContraseñaTrabajador($mail, $contra) {
 
@@ -109,7 +105,7 @@ class ConsultasAdministrador extends Conexion {
         $stmt->bindParam(':contrasena', $contra, PDO::PARAM_STR); //nueva contraseña de usuario hash
 
         $stmt->execute();
-        
+
         return $stmt;
     }
 
@@ -139,9 +135,76 @@ class ConsultasAdministrador extends Conexion {
         $stmt->bindParam(':contrasena', $contra, PDO::PARAM_STR); //nueva contraseña de usuario hash
 
         $stmt->execute();
-       
+
         return $stmt;
     }
 
-}
+    public function filtradoTrabajadores($paginaInicio, $cantidadResultados, $nombre, $opcion, $orden) {
+        try {
+           
+           
+       
+                if (!empty($nombre) && empty($orden)&& empty($opcion)) {
 
+                $sql2 = "select t.id_trabajador,t.nie_trabajador,t.pasaporte_trabajador,t.nombre,t.apellido1,t.apellido2,t.fecha,t.num_telef,t.estado_trabajador,t.trabajando,t.id_rol,r.nombre_rol from trabajador as t inner join roles as r on r.id_rol = t.id_rol  where nombre=:nombre LIMIT :paginaInicio, :cantidadResultados";
+            
+                
+                }else if (!empty($nombre)&& !empty($opcion) &&  empty($orden) ) {
+
+
+                   $sql2 = "select t.id_trabajador,t.nie_trabajador,t.pasaporte_trabajador,t.nombre,t.apellido1,t.apellido2,t.fecha,t.num_telef,t.estado_trabajador,t.trabajando,t.id_rol,r.nombre_rol from trabajador as t inner join roles as r on r.id_rol = t.id_rol  where nombre=:nombre ORDER BY $opcion  LIMIT :paginaInicio, :cantidadResultados";
+          
+                }else if (empty($nombre) && !empty($opcion) &&  empty($orden)) {
+
+                $sql2 = "select t.id_trabajador,t.nie_trabajador,t.pasaporte_trabajador,t.nombre,t.apellido1,t.apellido2,t.fecha,t.num_telef,t.estado_trabajador,t.trabajando,t.id_rol,r.nombre_rol from trabajador as t inner join roles as r on r.id_rol = t.id_rol  ORDER BY $opcion LIMIT :paginaInicio, :cantidadResultados";
+          
+                } elseif (empty($nombre) && !empty($opcion) && !empty($orden) ) {
+
+               $sql2 = "select t.id_trabajador,t.nie_trabajador,t.pasaporte_trabajador,t.nombre,t.apellido1,t.apellido2,t.fecha,t.num_telef,t.estado_trabajador,t.trabajando,t.id_rol,r.nombre_rol from trabajador as t inner join roles as r on r.id_rol = t.id_rol  ORDER BY $opcion $orden LIMIT :paginaInicio, :cantidadResultados";
+
+                } elseif (!empty($nombre) && !empty($opcion) &&  !empty($orden)) {
+
+          $sql2 = "select t.id_trabajador,t.nie_trabajador,t.pasaporte_trabajador,t.nombre,t.apellido1,t.apellido2,t.fecha,t.num_telef,t.estado_trabajador,t.trabajando,t.id_rol,r.nombre_rol from trabajador as t inner join roles as r on r.id_rol = t.id_rol   where nombre=:nombre    ORDER BY $opcion $orden  LIMIT :paginaInicio, :cantidadResultados";
+            }
+         else {
+            $sql2 = "select t.id_trabajador,t.nie_trabajador,t.pasaporte_trabajador,t.nombre,t.apellido1,t.apellido2,t.fecha,t.num_telef,t.estado_trabajador,t.trabajando,t.id_rol,r.nombre_rol from trabajador  as t inner join roles as r on r.id_rol = t.id_rol  LIMIT :paginaInicio, :cantidadResultados";
+        }
+        
+        
+ 
+   
+             
+        $stmt = $this->conexion->prepare($sql2);
+        if(!empty($nombre)){
+            
+            $stmt->bindValue(':nombre', $nombre, PDO::PARAM_STR);
+        } 
+        
+        $stmt->bindValue(':paginaInicio', $paginaInicio, PDO::PARAM_INT);
+        $stmt->bindValue(':cantidadResultados', $cantidadResultados, PDO::PARAM_INT);
+     
+        $stmt->execute();
+      return  $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
+      
+        unset($stmt);
+        unset($this->conexion);
+        } catch (PDOException $e) {
+
+            die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
+        }
+      
+      
+    }
+     public function  trabajadoresActivos(){
+    try{
+         $sql = "select count(*) from trabajador ";
+        $stmt = $this->conexion->query($sql);
+         $stmt->fetchColumn();
+     } catch (PDOException $e) {
+
+            die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
+        }
+     
+    }
+
+}

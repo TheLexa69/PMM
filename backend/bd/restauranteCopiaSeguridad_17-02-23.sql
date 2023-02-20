@@ -15,6 +15,7 @@ fecha TIMESTAMP not null,
 num_telef varchar(9) not null,
 id_rol int not null,
 estado_trabajador enum('activado','desactivado') not null default 'desactivado',
+trabajando enum('si','no') not null DEFAULT'si',
 contraseña varchar(255) not null unique,
 constraint pk_idTrabajador primary key (id_trabajador)
 );
@@ -109,14 +110,15 @@ id_alergeno int not null,
 id_comida int not null
 );
 
-create table if not exists pedidos (
-  id_ped int NOT NULL auto_increment,
-  fecha TIMESTAMP NOT NULL,
-  enviado boolean NOT NULL,
-  restaurante varchar(10) NOT NULL,
 
-constraint pk_id_ped primary key (id_ped)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS pedidos (
+  id_ped INT NOT NULL AUTO_INCREMENT,
+  fecha TIMESTAMP NOT NULL,
+  enviado BOOLEAN NOT NULL,
+  restaurante VARCHAR(10) NOT NULL,
+  PRIMARY KEY (id_ped)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 create table if not exists factura(
 id_factura int auto_increment,
@@ -149,9 +151,8 @@ create table if not exists carrito (
 id_carro int auto_increment,
 id_usuario int not null,
 id_comida int not null,
-#id_producto int not null,
 cantidad int not null,
-#fecha TIMESTAMP not null,
+id_ped int,
 constraint pk_id primary key (id_carro)
 );
 
@@ -162,7 +163,7 @@ ALTER TABLE factura ADD FOREIGN KEY (cif_empresa) REFERENCES empresa(cif);
 
 ALTER TABLE carrito ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
 ALTER TABLE carrito ADD FOREIGN KEY (id_comida) REFERENCES carta_comida(id_comida);
-#ALTER TABLE carrito ADD FOREIGN KEY (id_ped) REFERENCES pedidos(id_ped);
+ALTER TABLE carrito ADD FOREIGN KEY (id_ped) REFERENCES pedidos(id_ped);
 
 
 ALTER TABLE pedidos ADD FOREIGN KEY (restaurante) REFERENCES empresa(cif);
@@ -321,7 +322,11 @@ INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_
 INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_usuario, NIF, direccion, cp, contraseña) VALUES ('Nuria','Buceta','García','nuriabuceta@gmail.com',DATE(NOW()),'622838028',4, 'activado','89j','','','123b');
 
 INSERT INTO trabajador (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_trabajador, nie_trabajador, pasaporte_trabajador, contraseña) VALUES ('Gabriel','Domínguez','Borines','cambes6@gmail.com',DATE(NOW()),'699204155',1, 'activado','','','$2y$10$lysg/2UocV/RJJUh0.Ov6uc/hgBrMTPLw9D4gEZ4jJVkmf28ZJtsi');
- 
+INSERT INTO trabajador (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_trabajador, nie_trabajador, pasaporte_trabajador, contraseña) VALUES ('Pepe','Domínguez','','cambes1@gmail.com',DATE(NOW()),'123123123',2, 'activado','','','$2y$10$aalysg/2UocV/RJJUh0.Ov6uc/hgBrMTPLw9D4gEZ4jJVkmf28ZJtsi');
+INSERT INTO trabajador (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_trabajador, nie_trabajador, pasaporte_trabajador, contraseña) VALUES ('Maria','Rodriguez','perez','cambes2@gmail.com',DATE(NOW()),'234234234',3, 'activado','','','$2y$10$lysgss/2UocV/RJJUh0.Ov6uc/hgBrMTPLw9D4gEZ4jJVkmf28ZJtsi');
+INSERT INTO trabajador (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_trabajador, nie_trabajador, pasaporte_trabajador,trabajando, contraseña) VALUES ('Juan','Alvarez','','cambes3@gmail.com',DATE(NOW()),'345345345',3, 'activado','','','no','$2y$10$aalysg/2UocdasdV/RJJUh0.Ov6uc/hgBrMTPLw9D4gEZ4jJVkmf28ZJtsi');
+INSERT INTO trabajador (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_trabajador, nie_trabajador, pasaporte_trabajador,trabajando, contraseña) VALUES ('Pepe','vazquez','pena','cambes4@gmail.com',DATE(NOW()),'456456456',1, 'activado','','','no','$2y$10$lysg/2aaUocV/RJJUh0.Ov6uc/hgBrMTPLw9D4gEZ4jJVkmf28ZJtsi');
+  
 INSERT INTO empresa (cif, nombre, nombre_sociedad, direccion, ciudad, cp, telefono, logo) VALUES ('B27788272','Novo Lua Chea','LUENGOS ANDRE S.L.','Rua de Eduardo Cabello, 25','Vigo','36208','986132537','url');
 
 

@@ -1,11 +1,18 @@
+<<<<<<< Updated upstream:frontend/php/carta.php
 <?php
 define('DS',DIRECTORY_SEPARATOR);
 
 require   dirname(dirname(__DIR__)).DS."backend".DS."sesiones".DS."sesiones.php";
+=======
+<?php 
+>>>>>>> Stashed changes:backend/carta/index_carta.php
 // comprobar_sesion();
 session_start();
-/* Bloque try-catch con la conexión a la bdd. */
+//require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."backend". DIRECTORY_SEPARATOR . "carta". DIRECTORY_SEPARATOR . "carta.php"); 
+require "carta.php";
+require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "nav.php"); 
 
+<<<<<<< Updated upstream:frontend/php/carta.php
 try {
     $conexion = new PDO('mysql:dbname=LuaChea; host=mysql-5707.dinaserver.com','Raul','oSyh36033^(/');
     $conexion->exec("SET CHARACTER SET utf8");
@@ -32,16 +39,17 @@ try {
 <body>
     <?php require("./nav.php") ?>
     <?php
+=======
+/* conexión a la bdd. */
+$carta = new carta();
+>>>>>>> Stashed changes:backend/carta/index_carta.php
     /* Realizamos la consulta que nos pide para enseñar los datos. */
     if (isset($_GET["tipo"])) {
         $tipo = $_GET["tipo"];
-        $consulta = "SELECT nombre, descripcion, tipo, precio, img, disponible, id_comida 
-                    FROM carta_comida c 
-                    INNER JOIN tipo t ON c.tipo = t.id_tipo
-                    WHERE t.nombre_tipo = '$tipo'";
+        $rdo = $carta->filterByTipo($tipo);
     } else {
-        $consulta = "select nombre, descripcion, tipo, precio, img, disponible, id_comida from carta_comida";
-    }
+        $rdo = $carta->printCarta();
+        }
     ?>
 
     <div class="row mt-5">
@@ -50,24 +58,24 @@ try {
                 <h2>Alergenos</h2>
                 <div class="row">
                     <div class="col-6">
-                        <img width="80px" height="auto" class="img-responsive" src="../img/altramuces.svg" alt="">
-                        <img width="80px" height="auto" class="img-responsive" src="../img/apio.svg"
+                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/altramuces.svg" alt="">
+                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/apio.svg"
                             alt="Responsive image">
-                        <img width="80px" height="auto" class="img-responsive" src="../img/cacahuete.svg" alt="">
-                        <img width="80px" height="auto" class="img-responsive" src="../img/crustaceos.svg" alt="">
-                        <img width="80px" height="auto" class="img-responsive" src="../img/huevo.svg" alt="">
-                        <img width="80px" height="auto" class="img-responsive" src="../img/lacteos.svg" alt="">
-                        <img width="80px" height="auto" class="img-responsive" src="../img/molusco.svg" alt="">
-                        <img width="80px" height="auto" class="img-responsive" src="../img/mostaza.svg" alt="">
+                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/cacahuete.svg" alt="">
+                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/crustaceos.svg" alt="">
+                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/huevo.svg" alt="">
+                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/lacteos.svg" alt="">
+                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/molusco.svg" alt="">
+                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/mostaza.svg" alt="">
 
                     </div>
                     <div class="col-6">
-                        <img width="80px" height="auto" class="img-responsive" src="../img/pescado.svg" alt="">
-                        <img width="80px" height="auto" class="img-responsive" src="../img/soja.svg" alt="">
-                        <img width="100px" height="auto" class="img-responsive" src="../img/sulfitos.svg" alt="">
-                        <img width="80px" height="auto" class="img-responsive" src="../img/sesamo.svg" alt="">
-                        <img width="80px" height="auto" class="img-responsive" src="../img/frutoscascara.svg" alt="">
-                        <img width="80px" height="auto" class="img-responsive" src="../img/gluten.svg" alt="">
+                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/pescado.svg" alt="">
+                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/soja.svg" alt="">
+                        <img width="100px" height="auto" class="img-responsive" src="../../frontend/img/sulfitos.svg" alt="">
+                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/sesamo.svg" alt="">
+                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/frutoscascara.svg" alt="">
+                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/gluten.svg" alt="">
                     </div>
                 </div>
             </div>
@@ -97,8 +105,10 @@ try {
             </div>
             <div id="boton">
                 <?php
-                if ($resultado = $conexion->query($consulta)) {
-                    while ($fila = $resultado->fetch()) { ?>
+                if(!$rdo) {
+                    echo "ERROR: " . print_r($carta->conexion->errorInfo());
+                }
+                    foreach ($rdo as $fila) { ?>
                         <div class="layered box row mr-2" id="producto">
                         <div class="col-4">                        
                                 <img class="imagenes rounded img-fluid" id="producto_img" title="vaso" src="https://cdn.pixabay.com/photo/2020/12/15/13/44/children-5833685__340.jpg">
@@ -115,27 +125,29 @@ try {
                             </p>
 
                             <h5 class="precio-producto"> Precio: <?php echo number_format($fila[3], 2, '.', '') ?> </h5>
+<<<<<<< Updated upstream:frontend/php/carta.php
                             <form method="post" action="<?php echo  DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."backend". DIRECTORY_SEPARATOR . "cart". DIRECTORY_SEPARATOR."agregar_carrito.php?cod=". $fila[6] ?>">
+=======
+                            <form method="post" action="<?php echo  DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."backend". DIRECTORY_SEPARATOR . "cart". DIRECTORY_SEPARATOR."agregar_carrito.php?cod=". $fila[6]; ?>">
+>>>>>>> Stashed changes:backend/carta/index_carta.php
                             <label for="cantidad">Cantidad:</label>
-                              <select id="cantidad" name="cantidad">';
+                              <select id="cantidad" name="cantidad">'
 		                        <?php for($i=1; $i<=10;$i++) {        
 		                        echo '<option value="'.$i.'">'.$i.'</option>';
 		                        }
                               echo '</select>'; ?> 
                               </div>
                         <div class="col-4 d-flex justify-content-center">
-                                      
+                                <!-- if session rol = admin button editar, deshabilitar -->     
                                 <button class="btn-add-cart btn btn-outline-secondary" id="compra" type="submit">Comprar</button></form>
                             </div>
-                        </div>;
+                        </div>
                     <?php }
-                } else {
-                    echo "ERROR: " . print_r($pdo->errorInfo());
-                }
+                
                 ?>
             </div>
         </div>
-        <div class="col-4">
+    <div class="col-4">
             <div id="boton">
                 <div class="layered box row " id="producto">
                     <h2 class="d-flex border-bottom justify-content-center">Cesta</h2>
@@ -213,15 +225,11 @@ try {
                     </div>
                 </div>
             </div>
-        </div>
+        </div> 
 
 
 
     </div>
-    <?php
-    unset($consulta);
-    unset($conexion);
-    ?>
     <script>
         var radios = document.getElementsByName('inlineRadioOptions');
         var mostrar = true;
@@ -236,6 +244,10 @@ try {
             }
         }
     </script>
+<<<<<<< Updated upstream:frontend/php/carta.php
 </body> 
 
 </html>
+=======
+<?php require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "footer.php"); 
+>>>>>>> Stashed changes:backend/carta/index_carta.php

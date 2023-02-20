@@ -10,7 +10,9 @@ require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR
 if (isset($_SESSION['usuario'])) {
 
 	//$db = conexion();
-	
+	if (isset($_COOKIE['carrito'])) {
+		
+	}
 		$usuario = $_SESSION['usuario'];
 		$carrito = new carrito();
 		$filas_carro = $carrito->getCarro($usuario);
@@ -20,7 +22,7 @@ if (isset($_SESSION['usuario'])) {
 				echo "<div class='warning'>No tienes productos en tu cesta todavía.</div>";
 			}
 		echo '<a href="procesar_pedido.php">Realizar compra</a>	';
-	}elseif (!isset($_SESSION)) { 
+	}else { 
     if (isset($_COOKIE['carrito'])) {
         var_dump(unserialize($_COOKIE['carrito'], [])); 
 		echo '<a href="procesar_pedido.php">Realizar compra</a>	'; //alert js que necesita iniciar sesión

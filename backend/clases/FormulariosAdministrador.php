@@ -59,5 +59,58 @@ class FormulariosAdministrador{
         <?php
     }
  
+ 
+    
+    
 
+    public function redirecionesAdministrador() {
+       
+        echo "<br><a href='altaTrabajador.php'><input type='button' value='Añadir Trabajador'></a><br>";
+          echo "<br><a href='trabajadores.php'><input type='button' value='Trabajadores'></a><br>";
+    }
+    
+    
+    
+       public function modificarEmpleados() {
+        ?>
+<center>
+        <h1>Lista de empleados registrados</h1>
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                <label for="c0">Mostrar empleados segun filtro:</label><br><br>
+                <label for="c1">Nombre:</label><input type="text" id="c1" name="nombre"<?php if (!empty($_POST['nombre'])) {  echo " value='" . $_POST['nombre'] . "'";}?> >>  <label for="v">Ordenados por:</label> 
+                <select name="opcion">            
+                    <option value="fecha" >Fecha ultimo loggin</option> 
+                    <option value="nombre">Nombre</option> 
+                    <option value="id_rol">Privilegios</option> 
+                    <option value="trabajando">En activo</option> 
+                </select> 
+                <input type="radio" name="orden" value="ASC"> Ascendente
+                <input type="radio" name="orden" value="DESC"> Descendente
+                <input type="submit" name=validar value="Filtrar" ><br><br>
+            </form><br><br>
+</center>
+                <?php
+    }
+
+     public function tablaEmpleados($fila) {
+ 
+    echo "<center><table >";
+    echo  "<tr>";
+    echo  "<th>Nie</th> <th>Pasaporte</th> <th>Nombre y apellidos</th><th>Fecha último loggin</th><th>Telefono</th><th>Privilegios</th><th>Cuenta verificada</th><th>Dado de alta en la empresa</th>";
+    echo  "</tr>";
+ 
+  
+      foreach ($fila as $a) {
+         if($a["id_rol"]){
+             $b=$a["nombre_rol"];
+         }
+     
+      
+      
+ 
+       echo "<tr><td>" . $a["nie_trabajador"] . "</td> <td>" . $a["pasaporte_trabajador"] . "</td> <td>" . $a["nombre"] . " " . $a["apellido1"] . " " . $a["apellido2"] . "</td><td>" . $a["fecha"] . "</td> <td>" . $a["num_telef"] . "</td><td>" . $b  . "</td><td>" . $a["estado_trabajador"] . "</td><td>" . $a["trabajando"] . "</td><td><a href=modificarDatosTrabajador.php?codigo=" . $a["id_trabajador"] . ">Modificar</a><td></tr>";
+    }
+    echo "</table></center>";
+    
+     }
 }

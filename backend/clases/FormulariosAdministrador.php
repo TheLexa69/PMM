@@ -77,7 +77,7 @@ class FormulariosAdministrador{
         <h1>Lista de empleados registrados</h1>
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                 <label for="c0">Mostrar empleados segun filtro:</label><br><br>
-                <label for="c1">Nombre:</label><input type="text" id="c1" name="nombre"<?php if (!empty($_POST['nombre'])) {  echo " value='" . $_POST['nombre'] . "'";}?> >>  <label for="v">Ordenados por:</label> 
+                <label for="c1">Nombre:</label><input type="text" id="c1" name="nombre"<?php if (!empty($_POST['nombre'])) {  echo " value='" . $_POST['nombre'] . "'";}?> >  <label for="v">Ordenados por:</label> 
                 <select name="opcion">            
                     <option value="fecha" >Fecha ultimo loggin</option> 
                     <option value="nombre">Nombre</option> 

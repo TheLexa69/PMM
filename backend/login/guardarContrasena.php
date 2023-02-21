@@ -54,6 +54,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $formularios->contraMail($mail,$rol);
     }
+} else {
+    header("Location:/proyecto/backend/login/indexLogin.php");
 }
 
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");

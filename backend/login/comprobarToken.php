@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
     }
 } else {
-    header("Location:/proyecto/backend/login/login.php");
+    header("Location:/proyecto/backend/login/indexLogin.php");
 }
 
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");

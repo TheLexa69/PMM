@@ -1,48 +1,12 @@
-<<<<<<< Updated upstream:frontend/php/carta.php
-<?php
-define('DS',DIRECTORY_SEPARATOR);
-
-require   dirname(dirname(__DIR__)).DS."backend".DS."sesiones".DS."sesiones.php";
-=======
 <?php 
->>>>>>> Stashed changes:backend/carta/index_carta.php
 // comprobar_sesion();
 session_start();
 //require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."backend". DIRECTORY_SEPARATOR . "carta". DIRECTORY_SEPARATOR . "carta.php"); 
 require "carta.php";
 require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "nav.php"); 
 
-<<<<<<< Updated upstream:frontend/php/carta.php
-try {
-    $conexion = new PDO('mysql:dbname=LuaChea; host=mysql-5707.dinaserver.com','Raul','oSyh36033^(/');
-    $conexion->exec("SET CHARACTER SET utf8");
-} catch (PDOException $e) {
-    die("ERROR: " . $e->getMessage());
-}
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../css/estilos.css">
-    <script src="../js/main.js"></script>
-    <title>Inicio</title>
-</head>
-
-<body>
-    <?php require("./nav.php") ?>
-    <?php
-=======
 /* conexión a la bdd. */
 $carta = new carta();
->>>>>>> Stashed changes:backend/carta/index_carta.php
     /* Realizamos la consulta que nos pide para enseñar los datos. */
     if (isset($_GET["tipo"])) {
         $tipo = $_GET["tipo"];
@@ -125,11 +89,7 @@ $carta = new carta();
                             </p>
 
                             <h5 class="precio-producto"> Precio: <?php echo number_format($fila[3], 2, '.', '') ?> </h5>
-<<<<<<< Updated upstream:frontend/php/carta.php
-                            <form method="post" action="<?php echo  DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."backend". DIRECTORY_SEPARATOR . "cart". DIRECTORY_SEPARATOR."agregar_carrito.php?cod=". $fila[6] ?>">
-=======
                             <form method="post" action="<?php echo  DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."backend". DIRECTORY_SEPARATOR . "cart". DIRECTORY_SEPARATOR."agregar_carrito.php?cod=". $fila[6]; ?>">
->>>>>>> Stashed changes:backend/carta/index_carta.php
                             <label for="cantidad">Cantidad:</label>
                               <select id="cantidad" name="cantidad">'
 		                        <?php for($i=1; $i<=10;$i++) {        
@@ -244,10 +204,4 @@ $carta = new carta();
             }
         }
     </script>
-<<<<<<< Updated upstream:frontend/php/carta.php
-</body> 
-
-</html>
-=======
 <?php require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "footer.php"); 
->>>>>>> Stashed changes:backend/carta/index_carta.php

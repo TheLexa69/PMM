@@ -1,5 +1,6 @@
 <?php
-
+require_once '../sesiones/sesiones.php';
+comprobar_sesiones();
 include(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
 
 use \clases\FormulariosLogin as formulariosLogin;
@@ -11,7 +12,7 @@ $formularios = new formulariosLogin;
 $funciones = new funcionesLogin;
 $consulta = new consultasLogin;
 $consultaTrabajador = new consultasAdministrador;
-
+ 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (isset($_POST['mail'])) {
@@ -78,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             $fecha = $funciones->fechaHoraActual();
                                             $consulta->registroHoraSession($id_usuario, $fecha);
                                             setcookie('access_error', $_COOKIE['access_error'] + 1, time() - 1000);
-                                            session_start();
+                                           // session_start();
                                             // $usu tiene campos correo y codRes, correo 
 
                                             $_SESSION['usuario'] = $id_usuario; //array de dos elementos
@@ -119,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             $fecha = $funciones->fechaHoraActual();
                                             $consultaTrabajador->registroHoraSessionTrabajador($id_trabajador, $fecha);
                                             setcookie('access_error', $_COOKIE['access_error'] + 1, time() - 1000);
-                                            session_start();
+                                         //   session_start();
                                             // $usu tiene campos correo y codRes, correo 
 
                                             $_SESSION['administrador'] = array($id_trabajador, $roltrabajador); //array de dos elementos

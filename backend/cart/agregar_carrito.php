@@ -27,9 +27,10 @@ if (!isset($_SESSION['usuario'])) {
 } else {
 //Se manda un proucto por $_GET desde carta.php y añade a la cesta
 	if($_GET["cod"]) {
-            $id_usuario = $_SESSION['usuario'];
-            $carrito = new carrito();
-            $carrito->add($id_usuario, $cod_comida, $_POST["cantidad"]);
+            //$id_usuario = $_SESSION['usuario'];
+			$_SESSION['carrito'][] = array('codigo' => $cod_comida, 'cantidad' => $cantidad);
+            //$carrito = new carrito();
+            //$carrito->add($id_usuario, $cod_comida, $_POST["cantidad"]);
 	}
 }
 

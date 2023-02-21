@@ -18,7 +18,7 @@ $paginaInicio = ($paginaActual - 1) * $cantidadResultados;
 if (isset($_POST["validar"])) {
       $_POST['nombre'];
     if (!empty($_POST['nombre'])) {
-          $nombre = $_POST['nombre'];
+          $nombre = trim($_POST['nombre']);
     }
     if (!empty($_POST['opcion'])) {
         $opcion = $_POST['opcion'];
@@ -33,8 +33,13 @@ $orden = (isset($orden)) ? $orden :"";
 
 $fila = $consulta->filtradoTrabajadores($paginaInicio, $cantidadResultados, $nombre, $opcion, $orden);
 
-$formularios->modificarEmpleados();
 
+$formularios->listaFiltradaEmpleados();
+if(empty($fila)){
+    $mensaje1 = "Nombre de empleado no registrado";
+echo "<script> alert('".$mensaje1."'); </script>";
+    
+}
 $formularios->tablaEmpleados($fila);
 
 $contador = $consulta->trabajadoresActivos();

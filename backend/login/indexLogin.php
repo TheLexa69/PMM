@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (!empty($datos["correo"]) || !empty($datosTrabajador["correo"])) {
 
 
-                if (isset($verificado) || isset($TrabajadorVerificado)) {
+        
                     $TrabajadorVerificado = (!empty($TrabajadorVerificado)) ? $TrabajadorVerificado : "";
                     $verificado = (!empty($verificado)) ? $verificado : "";
                     
@@ -155,7 +155,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $formularios->html();
                         }
                     }
-                }
+                
             } else {
                 header("Location: /proyecto/backend/login/registro.php?registro=no");
             }

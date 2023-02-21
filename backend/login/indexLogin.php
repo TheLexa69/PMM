@@ -1,4 +1,5 @@
 <?php
+
 require_once '../sesiones/sesiones.php';
 comprobar_sesiones();
 include(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
@@ -12,7 +13,7 @@ $formularios = new formulariosLogin;
 $funciones = new funcionesLogin;
 $consulta = new consultasLogin;
 $consultaTrabajador = new consultasAdministrador;
- 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (isset($_POST['mail'])) {
@@ -41,11 +42,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
                 if (isset($verificado) || isset($TrabajadorVerificado)) {
-
+                    $TrabajadorVerificado = (!empty($TrabajadorVerificado)) ? $TrabajadorVerificado : "";
+                    $verificado = (!empty($verificado)) ? $verificado : "";
+                    
                     if ($TrabajadorVerificado == "desactivado" && $trabajas == "SI") {
 
                         $formularios->contrastaToken($mailBdTrabajador, $roltrabajador);
-                    } else if ($verificado == "desactivado") {
+                    } else if ($verificado == "desactivado" && $trabajas == "NO") {
 
                         $formularios->contrastaToken($mailBd, $rol);
                     } else {
@@ -79,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             $fecha = $funciones->fechaHoraActual();
                                             $consulta->registroHoraSession($id_usuario, $fecha);
                                             setcookie('access_error', $_COOKIE['access_error'] + 1, time() - 1000);
-                                           // session_start();
+                                            // session_start();
                                             // $usu tiene campos correo y codRes, correo 
 
                                             $_SESSION['usuario'] = $id_usuario; //array de dos elementos
@@ -91,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
                                         }
                                     } else {
- 
+
                                         if (isset($_COOKIE['access_error'])) {
                                             // Caduca en un año 
                                             setcookie('access_error', $_COOKIE['access_error'] + 1, time() + $tiempo);
@@ -110,7 +113,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
                                     if (password_verify($_POST['pass'], $hashTrabajador) && $funciones->correo($mail) == $mailBdTrabajador) {  ////sql mail y contraseña sql
-                                     
                                         try {
 
                                             $datosTrabajador = $consultaTrabajador->comprobarDatosTrabajador($mailBdTrabajador);
@@ -120,7 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             $fecha = $funciones->fechaHoraActual();
                                             $consultaTrabajador->registroHoraSessionTrabajador($id_trabajador, $fecha);
                                             setcookie('access_error', $_COOKIE['access_error'] + 1, time() - 1000);
-                                         //   session_start();
+                                            //   session_start();
                                             // $usu tiene campos correo y codRes, correo 
 
                                             $_SESSION['administrador'] = array($id_trabajador, $roltrabajador); //array de dos elementos

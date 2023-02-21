@@ -17,8 +17,12 @@ if (!isset($_SESSION['usuario'])) {
 
 	// Añadir producto al array
 	if($_GET["cod"]) {
-                $arr_carrito[] = array('codigo' => $cod_comida, 'cantidad' => $cantidad);
-                var_dump($arr_carrito);
+		if($arr_carrito["$cod_comida"]) {
+			$arr_carrito["$cod_comida"] += $cantidad;
+		}else{
+			$arr_carrito["$cod_comida"] = (int) $cantidad;
+		}
+                //var_dump($arr_carrito);
 		//array_push($arr_carrito, $_GET["cod"], 1);
 		// Serializar los datos y guardarlos en una cookie
                 setcookie('carrito', serialize($arr_carrito), time() + (86400 * 30), "/");
@@ -28,7 +32,11 @@ if (!isset($_SESSION['usuario'])) {
 //Se manda un proucto por $_GET desde carta.php y añade a la cesta
 	if($_GET["cod"]) {
             //$id_usuario = $_SESSION['usuario'];
-			$_SESSION['carrito'][] = array('codigo' => $cod_comida, 'cantidad' => $cantidad);
+			if($_SESSION['carrito']["$cod_comida"]) {
+				$_SESSION['carrito']["$cod_comida"] += $cantidad;
+			} else {
+				$_SESSION['carrito']["$cod_comida"] = $cantidad;
+			}
             //$carrito = new carrito();
             //$carrito->add($id_usuario, $cod_comida, $_POST["cantidad"]);
 	}

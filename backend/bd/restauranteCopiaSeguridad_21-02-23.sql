@@ -150,11 +150,11 @@ constraint pk_cif primary key (cif)
 create table if not exists carrito (
 id_carro int auto_increment,
 id_usuario int not null,
-id_comida int not null,
-cantidad int not null,
+id_comida_cantidad JSON not null,
 id_ped int,
 constraint pk_id primary key (id_carro)
 );
+
 
 ###########################################################################################
 #FOREIGN KEYS
@@ -162,7 +162,6 @@ ALTER TABLE factura ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
 ALTER TABLE factura ADD FOREIGN KEY (cif_empresa) REFERENCES empresa(cif);
 
 ALTER TABLE carrito ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
-ALTER TABLE carrito ADD FOREIGN KEY (id_comida) REFERENCES carta_comida(id_comida);
 ALTER TABLE carrito ADD FOREIGN KEY (id_ped) REFERENCES pedidos(id_ped);
 
 
@@ -331,7 +330,7 @@ INSERT INTO empresa (cif, nombre, nombre_sociedad, direccion, ciudad, cp, telefo
 
 
 insert into factura (id_usuario, cif_empresa, precio, fecha, id_comida, total, modo_pago) values (2,'B27788272', 20, DATE(NOW()), 5, 20, 'efectivo');
-insert into carrito (id_usuario, id_comida, cantidad) values (3, 4, 1);
+#insert into carrito (id_usuario, id_comida, cantidad) values (3, 4, 1);
 
 select * from roles;
 select * from carrito;

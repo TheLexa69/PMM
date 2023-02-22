@@ -76,7 +76,7 @@ subtipo int null,
 fecha_inicio TIMESTAMP not null,
 fecha_fin TIMESTAMP null,
 precio float not null,
-disponible boolean not null,
+disponible  enum('si','no') not null default 'si',
 img varchar(100) not null,
 
 constraint pk_id primary key (id_comida)
@@ -268,49 +268,49 @@ INSERT INTO carta_comida (nombre, tipo, fecha_inicio, fecha_fin, precio, disponi
 INSERT INTO carta_comida (nombre, tipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Lubina a la espalda',5,DATE(NOW()), null,'21.00',1,'url');
 INSERT INTO carta_comida (nombre, tipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Dorada a la espaldacon ensalada y cachelo',5,DATE(NOW()), null,'20.00',1,'url');
 
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón, queso trufado y setas',4, 6,DATE(NOW()), null,'29.50',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón y queso gorgonzola',4, 6,DATE(NOW()), null,'27.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón, setas y tetilla',4, 6,DATE(NOW()), null,'28.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón y provolone',4, 6,DATE(NOW()), null,'26.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón y mozzarella',4, 6,DATE(NOW()), null,'26.00',1,'url');
-INSERT INTO carta_comida (nombre, descripcion, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('4 Quesos', 'Jamón serrano, tetilla, cabrales, oveja y provolone',4, 6,DATE(NOW()), null,'30.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón y tetilla',4, 6,DATE(NOW()), null,'26.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón, queso tetilla, cheddar, cebolla caramelizada y tomate',4, 6,DATE(NOW()), null,'30.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón, queso provolone y cebolla caramelizada',4, 6,DATE(NOW()), null,'28.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón, queso mozzarella, tomate y orégano',4, 6,DATE(NOW()), null,'26.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón, queso tetilla y tomate natural',4, 6,DATE(NOW()), null,'27.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón, setas y cabrales',4, 6,DATE(NOW()), null,'29.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón y queso de oveja',4, 6,DATE(NOW()), null,'26.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón y queso cabrales',4, 6,DATE(NOW()), null,'28.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón y rulo de cabra',4, 6,DATE(NOW()), null,'27.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón, queso gorgonzola y tomate natural',4, 6,DATE(NOW()), null,'29.00',1,'url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón, queso trufado y setas',4, 6,DATE(NOW()), null,'29.50','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón y queso gorgonzola',4, 6,DATE(NOW()), null,'27.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón, setas y tetilla',4, 6,DATE(NOW()), null,'28.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón y provolone',4, 6,DATE(NOW()), null,'26.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón y mozzarella',4, 6,DATE(NOW()), null,'26.00','si','url');
+INSERT INTO carta_comida (nombre, descripcion, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('4 Quesos', 'Jamón serrano, tetilla, cabrales, oveja y provolone',4, 6,DATE(NOW()), null,'30.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón y tetilla',4, 6,DATE(NOW()), null,'26.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón, queso tetilla, cheddar, cebolla caramelizada y tomate',4, 6,DATE(NOW()), null,'30.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón, queso provolone y cebolla caramelizada',4, 6,DATE(NOW()), null,'28.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón, queso mozzarella, tomate y orégano',4, 6,DATE(NOW()), null,'26.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón, queso tetilla y tomate natural',4, 6,DATE(NOW()), null,'27.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón, setas y cabrales',4, 6,DATE(NOW()), null,'29.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón y queso de oveja',4, 6,DATE(NOW()), null,'26.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón y queso cabrales',4, 6,DATE(NOW()), null,'28.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón y rulo de cabra',4, 6,DATE(NOW()), null,'27.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón, queso gorgonzola y tomate natural',4, 6,DATE(NOW()), null,'29.00','si','url');
 
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Cecina, cebolla caramelizada, rulo de cabra y tomate natural',4, 7,DATE(NOW()), null,'31.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Cecina, cebolla caramelizada y queso tetilla',4, 7,DATE(NOW()), null,'29.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Cecina, cebolla caramelizada y provolone',4, 7,DATE(NOW()), null,'28.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Cecina, pimientos asados y cabrales',4, 7,DATE(NOW()), null,'30.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Cecina, rulo de cabra y tomate',4, 7,DATE(NOW()), null,'28.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Cecina y queso de oveja',4, 7,DATE(NOW()), null,'25.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Cecina y tetilla',4, 7,DATE(NOW()), null,'28.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Cecina y rulo de cabra',4, 7,DATE(NOW()), null,'27.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Cecina y mozzarella',4, 7,DATE(NOW()), null,'28.00',1,'url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Cecina, cebolla caramelizada, rulo de cabra y tomate natural',4, 7,DATE(NOW()), null,'31.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Cecina, cebolla caramelizada y queso tetilla',4, 7,DATE(NOW()), null,'29.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Cecina, cebolla caramelizada y provolone',4, 7,DATE(NOW()), null,'28.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Cecina, pimientos asados y cabrales',4, 7,DATE(NOW()), null,'30.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Cecina, rulo de cabra y tomate',4, 7,DATE(NOW()), null,'28.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Cecina y queso de oveja',4, 7,DATE(NOW()), null,'25.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Cecina y tetilla',4, 7,DATE(NOW()), null,'28.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Cecina y rulo de cabra',4, 7,DATE(NOW()), null,'27.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Cecina y mozzarella',4, 7,DATE(NOW()), null,'28.00','si','url');
 
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Pollo, jamón, rulo de cabra, cebolla caramelizada y tomate natural',4, 5,DATE(NOW()), null,'29.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Pollo, jamón, cheddar, tetilla y tomate',4, 5,DATE(NOW()), null,'26.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Pollo, bacon, cheddar, tetilla y salsa bbq',4, 5,DATE(NOW()), null,'29.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Pollo, jamón y queso de oveja',4, 5,DATE(NOW()), null,'26.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Pollo, bacon y tetilla',4, 5,DATE(NOW()), null,'27.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Pollo, jamón y tetilla',4, 5,DATE(NOW()), null,'26.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Pollo, bacon, cebolla caramelizada y tetilla',4, 5,DATE(NOW()), null,'29.00',1,'url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Pollo, jamón, rulo de cabra, cebolla caramelizada y tomate natural',4, 5,DATE(NOW()), null,'29.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Pollo, jamón, cheddar, tetilla y tomate',4, 5,DATE(NOW()), null,'26.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Pollo, bacon, cheddar, tetilla y salsa bbq',4, 5,DATE(NOW()), null,'29.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Pollo, jamón y queso de oveja',4, 5,DATE(NOW()), null,'26.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Pollo, bacon y tetilla',4, 5,DATE(NOW()), null,'27.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Pollo, jamón y tetilla',4, 5,DATE(NOW()), null,'26.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Pollo, bacon, cebolla caramelizada y tetilla',4, 5,DATE(NOW()), null,'29.00','si','url');
 
-INSERT INTO carta_comida (nombre, tipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Brownie rock slide con helado de vainilla', 6,DATE(NOW()), null,'7.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Muerte por chocolate con salsa de chocolate fondant', 6,DATE(NOW()), null,'6.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Tarta de manzana con helado de vainilla', 6,DATE(NOW()), null,'6.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Tarta de queso al horno con salsa de frutos rojos', 6,DATE(NOW()), null,'5.50',1,'url');
-INSERT INTO carta_comida (nombre, tipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Profiteroles con helado y salsa de chocolate fondant', 6,DATE(NOW()), null,'5.25',1,'url');
-INSERT INTO carta_comida (nombre, tipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Helados', 6,DATE(NOW()), null,'5.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Tarta de la abuela', 6,DATE(NOW()), null,'5.00',1,'url');
-INSERT INTO carta_comida (nombre, tipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Arroz con leche', 6,DATE(NOW()), null,'4.50',1,'url');
+INSERT INTO carta_comida (nombre, tipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Brownie rock slide con helado de vainilla', 6,DATE(NOW()), null,'7.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Muerte por chocolate con salsa de chocolate fondant', 6,DATE(NOW()), null,'6.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Tarta de manzana con helado de vainilla', 6,DATE(NOW()), null,'6.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Tarta de queso al horno con salsa de frutos rojos', 6,DATE(NOW()), null,'5.50','si','url');
+INSERT INTO carta_comida (nombre, tipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Profiteroles con helado y salsa de chocolate fondant', 6,DATE(NOW()), null,'5.25','si','url');
+INSERT INTO carta_comida (nombre, tipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Helados', 6,DATE(NOW()), null,'5.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Tarta de la abuela', 6,DATE(NOW()), null,'5.00','si','url');
+INSERT INTO carta_comida (nombre, tipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Arroz con leche', 6,DATE(NOW()), null,'4.50','si','url');
 
 INSERT INTO carta_alergenos (id_alergeno, id_comida) values (15,1);
 INSERT INTO carta_alergenos (id_alergeno, id_comida) values (6,1);

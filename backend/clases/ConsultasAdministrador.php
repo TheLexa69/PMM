@@ -237,9 +237,6 @@ class ConsultasAdministrador extends Conexion {
             }
 
  
-
-
-
             $stmt = $this->conexion->prepare($sql2);
             if (!empty($nombre)) {
 
@@ -264,7 +261,66 @@ class ConsultasAdministrador extends Conexion {
         try {
             $sql = "select count(*) from trabajador ";
             $stmt = $this->conexion->query($sql);
-            $stmt->fetchColumn();
+            return  $stmt->fetchColumn();
+            
+        } catch (PDOException $e) {
+
+            die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
+        }
+    }
+    
+    
+     public function productosActivos() {
+        try {
+            $sql = "select count(*) from carta_comida ";
+            $stmt = $this->conexion->query($sql);
+            return $stmt->fetchColumn();
+            
+        } catch (PDOException $e) {
+
+            die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
+        }
+    }
+
+    public function filtradoProductos($paginaInicio, $cantidadResultados, $nombre, $opcion, $orden) {
+        try {
+
+
+            if (!empty($nombre) && empty($orden) && empty($opcion)) {
+
+                $sql2 = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo  where nombre=:nombre LIMIT :paginaInicio, :cantidadResultados";
+            } else if (!empty($nombre) && !empty($opcion) && empty($orden)) {
+
+
+                $sql2 = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo where nombre=:nombre ORDER BY $opcion  LIMIT :paginaInicio, :cantidadResultados";
+            } else if (empty($nombre) && !empty($opcion) && empty($orden)) {
+
+                $sql2 = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo  ORDER BY $opcion LIMIT :paginaInicio, :cantidadResultados";
+            } elseif (empty($nombre) && !empty($opcion) && !empty($orden)) {
+
+                $sql2 = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo  ORDER BY $opcion $orden LIMIT :paginaInicio, :cantidadResultados";
+            } elseif (!empty($nombre) && !empty($opcion) && !empty($orden)) {
+
+                $sql2 = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo where nombre=:nombre    ORDER BY $opcion $orden  LIMIT :paginaInicio, :cantidadResultados";
+            } else {
+                $sql2 = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo LIMIT :paginaInicio, :cantidadResultados";
+            }
+
+
+            $stmt = $this->conexion->prepare($sql2);
+            if (!empty($nombre)) {
+
+                $stmt->bindValue(':nombre', $nombre, PDO::PARAM_STR);
+            }
+
+            $stmt->bindValue(':paginaInicio', $paginaInicio, PDO::PARAM_INT);
+            $stmt->bindValue(':cantidadResultados', $cantidadResultados, PDO::PARAM_INT);
+
+            $stmt->execute();
+            return $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            unset($stmt);
+            unset($this->conexion);
         } catch (PDOException $e) {
 
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());

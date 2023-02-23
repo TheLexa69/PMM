@@ -11,7 +11,7 @@ use \clases\ConsultasAdministrador as consultasAdministrador;
 $formularios = new formulariosAdministrador;
 $consulta = new consultasAdministrador;
 
-$cantidadResultados = 6;
+$cantidadResultados = 15;
 $paginaActual = isset($_GET["pagina"]) ? (int) $_GET["pagina"] : 1;
 $paginaInicio = ($paginaActual - 1) * $cantidadResultados;
 

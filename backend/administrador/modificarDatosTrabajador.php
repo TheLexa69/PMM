@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET["codigo"])) {
     $numero = (isset($_POST["id"])) ? $_POST["id"] : $_GET["codigo"];
 
     $fila = $consulta->comprobarDatosTrabajador($numero);
-
+    $rol= $consulta->rolesTrabajadores();
     if (isset($_POST["actualizar"])) {
 
         $id = ($_POST["id"] == $fila["id_trabajador"]) ? $fila["id_trabajador"] : $_POST["id"];
@@ -38,7 +38,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET["codigo"])) {
         $consulta->actualizarDatosTrabajador($id, $nie, $pasaporte, $nombre, $apellido1, $apellido2, $correo, $telefono, $privilegios, $estado, $trabajando);
         $fila2 = $consulta->comprobarDatosTrabajador($numero);
         echo "<center><h1><b>Datos actualizados<b></h1></center>";
-        $formularios->datosEmpleado($fila2);
+        $formularios->datosEmpleado($fila2,$rol);
+        
     } else if (isset($_POST["eliminar"])) {
         $nombre=$_POST["nombre"];
         $consulta->eliminarTrabajador($numero);
@@ -47,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET["codigo"])) {
         
     } else {
        // $numero = $_GET["codigo"];
-        $formularios->datosEmpleado($fila);
+        $formularios->datosEmpleado($fila,$rol);
     }
 } else {
     header("Location:/proyecto/backend/administrador/indexAdministrador.php");

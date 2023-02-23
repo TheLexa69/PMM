@@ -2,17 +2,15 @@
 
 namespace clases;
 
-class FormulariosAdministrador {
+class FormulariosAdministrador   {
 
-    
-        public function redirecionesAdministrador() {
+    public function redirecionesAdministrador() {
 
         echo "<br><a href='altaTrabajador.php'><input type='button' value='Añadir Trabajador'></a><br>";
         echo "<br><a href='trabajadores.php'><input type='button' value='Trabajadores'></a><br>";
         echo "<br><a href='productos.php'><input type='button' value='Productos'></a><br>";
     }
-    
-    
+
     public function htmlRegistroEmpleados($necesarios = "", $mensaje = "") {
         ?>
 
@@ -99,12 +97,10 @@ class FormulariosAdministrador {
         <?php
     }
 
-
-
     public function listaFiltradaEmpleados() {
         ?>
         <center>
-           
+
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                 <label for="c0"><h3>Filtrar por:</h3></label><br><br>
                 <label for="c1">Nombre:</label><input type="text" id="c1" name="nombre"<?php
@@ -122,16 +118,16 @@ class FormulariosAdministrador {
                 <input type="radio" name="orden" value="DESC"> Descendente
                 <input type="submit" name=validar value="Filtrar" ><br><br>
             </form><br><br>
-             <h1>Lista de empleados registrados:</h1>
+            <h1>Lista de empleados registrados:</h1>
         </center>
         <?php
     }
 
     public function tablaEmpleados($fila) {
-        if(isset($_GET["mensaje"])){
-            echo "<script> alert('".$_GET["mensaje"]."'); </script>";
+        if (isset($_GET["mensaje"])) {
+            echo "<script> alert('" . $_GET["mensaje"] . "'); </script>";
         }
-    
+
         echo "<center><table >";
         echo "<tr>";
         echo "<th>Nie</th> <th>Pasaporte</th> <th>Nombre y apellidos</th><th>Fecha último loggin</th><th>Telefono</th><th>Privilegios</th><th>Cuenta verificada</th><th>Dado de alta en la empresa</th>";
@@ -145,16 +141,16 @@ class FormulariosAdministrador {
             echo "<tr><td>" . $a["nie_trabajador"] . "</td> <td>" . $a["pasaporte_trabajador"] . "</td> <td>" . $a["nombre"] . " " . $a["apellido1"] . " " . $a["apellido2"] . "</td><td>" . $a["fecha"] . "</td> <td>" . $a["num_telef"] . "</td><td>" . $b . "</td><td>" . $a["estado_trabajador"] . "</td><td>" . $a["trabajando"] . "</td><td><a href=modificarDatosTrabajador.php?codigo=" . $a["id_trabajador"] . ">Modificar Trabajador</a><td></tr>";
         }
         echo "</table></center>";
-      echo  "<center><a href='indexAdministrador.php'><input type='button' value='Volver a inicio'></a></center>";
+        echo "<center><a href='indexAdministrador.php'><input type='button' value='Volver a inicio'></a></center>";
     }
 
-    public function datosEmpleado($id) {
+    public function datosEmpleado($id,$rol) {
         ?>
 
 
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
             <center>   <table class="edicion">
-                  
+
                     <h1>Editar Empleado <?php echo $id["nombre"] ?></h1>
                     <tr><td>   Nie: </td><td><input type="text" name="nie" value="<?php echo $id["nie_trabajador"]; ?>"><br></td></tr>
                     <tr><td>   Pasaporte: </td><td><input type="text" name="pasaporte" value="<?php echo $id["pasaporte_trabajador"]; ?>"><br></td></tr>
@@ -169,10 +165,22 @@ class FormulariosAdministrador {
                     <br>
                     <tr><td>    Privilegios:</td><td> <select name="privilegios"> 
                                 <option value="<?php echo ($id["id_rol"]) ? $id["id_rol"] : ''; ?>"><?php echo ($id["id_rol"]) ? $id["nombre_rol"] : ''; ?></option>
-                                <option value="<?php echo 1; ?>">Administrador</option>
-                                <option value="<?php echo 2; ?>">Gestor</option>
-                                <option value="<?php echo 3; ?>">Trabajador</option>
-                            </select></td></tr>
+                             
+                                  <?php
+                             
+                                     foreach($rol as $id2 => $nombre){
+                                
+                                    if($id2+1 == 4 || $id2+1 == 5){
+                               
+                                    }else{
+                                         ?> <option value='<?php echo $id2+1?>'><?php echo $nombre["nombre_rol"] ?></option> <?php
+                                    }
+                                     }
+                              ?>
+                                
+                            
+                            </select></td></tr>     
+                   
                     <br><br>
                     <tr><td colspan="2">
                             <input type="hidden" name="id" value="<?php echo $id["id_trabajador"]; ?>">
@@ -182,27 +190,94 @@ class FormulariosAdministrador {
                             <a href="indexAdministrador.php"><input type="button" value="Volver a inicio"></a></td><td>
                 </table></center>
         </form> 
- 
+
         <?php
-        
     }
-   /* select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c 
-inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo;
-*/
-    
-    
-      public function listaFiltradaProductos() {
+
+    public function datosProducto($id,$tipobd ,$subtipobd) {
+   /*   c.tipo,c.subtipo
+t.nombre_tipo,e.nombre_subtipo    */ ?>
+ 
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+            <center>   <table class="edicion">
+
+                    <h1>Editar Producto <?php echo $id["nombre"] ?></h1>
+
+                    <tr><td>   Nombre: </td><td><input type="text" name="nombre" value="<?php echo $id["nombre"]; ?>"><br></td></tr>
+                    <tr><td>   Descripcion:</td><td> <input type="text" name="descripcion" value="<?php echo $id["descripcion"]; ?>"> <br>  </td></tr>     
+                    <tr><td>    tipo:</td><td> <select name="tipo"> 
+                                <option value="<?php echo ($id["nombre_tipo"]) ? $id["tipo"] : ''; ?>"><?php echo $id["nombre_tipo"]; ?></option>
+                                
+                                 <?php
+                             
+                                     foreach($tipobd as $id1 => $nombre){
+                                
+                                    
+                                ?> <option value='<?php echo $id1+1?>'><?php echo $nombre["nombre_tipo"] ?></option> <?php
+                                    
+                                     }
+                              ?>
+          
+                           
+                                
+                             
+                                </select></td></tr>
+                    
+                 
+                       
+                            
+                            
+                    <tr><td>    Subtipo:</td><td> <select name="subtipo"> 
+                                <option value="<?php echo ($id["nombre_subtipo"]) ? $id["subtipo"] : ''; ?>"><?php echo ($id["nombre_subtipo"]) ? $id["nombre_subtipo"] : ''; ?></option>
+                               
+                                  <?php
+                             
+                                     foreach($subtipobd as $id2 => $nombre2){
+                                
+                                    
+                                ?> <option value='<?php echo $id2+1?>'><?php echo $nombre2["nombre_subtipo"] ?></option> <?php
+                                    
+                                     }
+                              ?>
+                                
+                            
+                            </select></td></tr>
+                    <tr><td>   Disponible Desde:</td><td> <input type=datetime-local name="desde" value="<?php echo $id["fecha_inicio"]; ?>"  pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"> <br>  </td></tr>    
+                    <tr><td>   Disponible Hasta:</td><td> <input type=datetime-local name="hasta" value="<?php echo $id["fecha_fin"]; ?>"  pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"> <br>  </td></tr>    
+
+                    <tr><td>   Precio:</td><td> <input type="text" name="precio" value="<?php echo $id["precio"]; ?>"> <br>  </td></tr> 
+                    <tr><td>    Disponible:</td><td> <select name="disponible"> <option value="<?php echo ($id["disponible"] == 'si') ? 'si' : 'no'; ?>"><?php echo ($id["disponible"] == 'si') ? 'Hay Stock' : 'Sin Stock'; ?></option>
+                                <option  value="<?php echo ($id["disponible"] == 'no') ? 'si' : 'no'; ?>"> <?php echo ($id["disponible"] == 'si') ? 'Sin Stock' : 'Hay Stock'; ?> </option> 
+
+                            </select></td></tr>
+                    <br>
+                    <tr><td>   Nombre Imaguen:</td><td> <input type="text" name="img" value="<?php echo $id["img"]; ?>"> <br>  </td></tr>  
+                    <br><br>
+                    <tr><td colspan="2">
+                            <input type="hidden" name="id" value="<?php echo $id["id_comida"]; ?>">
+                            <input type="submit" name="actualizar" value="Actualizar">
+                            <input type="submit" name="eliminar" value="Eliminar" > 
+                            <a href="productos.php"><input type="button" value="Modificar Otro Producto"></a>
+                            <a href="indexAdministrador.php"><input type="button" value="Volver a inicio"></a></td><td>
+                </table></center>
+        </form> 
+
+        <?php
+    }
+
+    public function listaFiltradaProductos() {
         ?>
         <center>
-           
+
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                 <label for="c0"><h3>Filtrar por:</h3></label><br><br>
                 <label for="c1">Nombre:</label><input type="text" id="c1" name="nombre"<?php
-                if (!empty($_POST['nombre'])) {
-                    echo " value='" . $_POST['nombre'] . "'";
-                }
-                ?> >  <label for="v">Ordenados por:</label> 
+                                                      if (!empty($_POST['nombre'])) {
+                                                          echo " value='" . $_POST['nombre'] . "'";
+                                                      }
+                                                      ?> >  <label for="v">Ordenados por:</label> 
                 <select name="opcion">            
+                    <option value="disponible">En stock</option> 
                     <option value="fecha_inicio" >Disponible desde</option> 
                     <option value="fecha_fin" >Disponible Hasta </option> 
                     <option value="nombre">Nombre</option> 
@@ -213,29 +288,28 @@ inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo 
                 <input type="radio" name="orden" value="DESC"> Descendente
                 <input type="submit" name=validar value="Filtrar" ><br><br>
             </form><br><br>
-             <h1>Lista de Productos registrados:</h1>
+            <h1>Lista de Productos registrados:</h1>
         </center>
         <?php
     }
-    
-    
-     public function tablaProductos($fila) {
-        if(isset($_GET["mensaje"])){
-            echo "<script> alert('".$_GET["mensaje"]."'); </script>";
+
+    public function tablaProductos($fila) {
+        if (isset($_GET["mensaje"])) {
+            echo "<script> alert('" . $_GET["mensaje"] . "'); </script>";
         }
-    
+
         echo "<center><table >";
         echo "<tr>";
         echo "<th>Nombre</th> <th>Descripcion</th> <th>Tipo</th><th>Subtipo</th><th>Disponible desde</th><th>Disponible hasta</th><th>Precio</th><th>Visible</th><th>Imagen</th>";
         echo "</tr>";
 
         foreach ($fila as $a) {
-           
- 
-            echo "<tr><td>" . $a["nombre"] . "</td> <td>" . $a["descripcion"] . "</td> <td>" . $a["nombre_tipo"] . "</td><td>" . $a["nombre_subtipo"] . "</td> <td>" . $a["fecha_inicio"] . "</td><td>" . $a["fecha_fin"] . "</td><td>" . $a["precio"] ." E". "</td><td>" . $a["disponible"] . "</td><td>" . $a["img"] . "</td><td><a href=modificarProducto.php?codigo=" . $a["id_comida"] . ">Modificar Producto</a><td></tr>";
+
+
+            echo "<tr><td>" . $a["nombre"] . "</td> <td>" . $a["descripcion"] . "</td> <td>" . $a["nombre_tipo"] . "</td><td>" . $a["nombre_subtipo"] . "</td> <td>" . $a["fecha_inicio"] . "</td><td>" . $a["fecha_fin"] . "</td><td>" . $a["precio"] . " E" . "</td><td>" . $a["disponible"] . "</td><td>" . $a["img"] . "</td><td><a href=modificarProductos.php?codigo=" . $a["id_comida"] . ">Modificar Producto</a><td></tr>";
         }
         echo "</table></center>";
-      echo  "<center><a href='indexAdministrador.php'><input type='button' value='Volver a inicio'></a></center>";
+        echo "<center><a href='indexAdministrador.php'><input type='button' value='Volver a inicio'></a></center>";
     }
 
 }

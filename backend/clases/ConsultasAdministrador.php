@@ -72,8 +72,9 @@ class ConsultasAdministrador extends Conexion {
         }
     }
     
-   
-
+    
+    
+    
     public function actualizarDatosTrabajador($id, $nie, $pasaporte, $nombre, $apellido1, $apellido2, $correo, $telefono, $rol, $estado, $trabajando) {
 
         try {
@@ -96,6 +97,26 @@ class ConsultasAdministrador extends Conexion {
             $stmt->execute();
 
             return $stmt;
+        } catch (PDOException $e) {
+
+            die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
+        }
+    }
+
+    public function rolesTrabajadores() {
+
+        try {
+            $sql = "select * from roles";
+
+            $stmt = $this->conexion->prepare($sql);
+
+            $stmt->execute();
+
+            $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+           
+            return $fila;
+             unset($fila);
         } catch (PDOException $e) {
 
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
@@ -238,7 +259,7 @@ class ConsultasAdministrador extends Conexion {
                 $sql2 = "select t.id_trabajador,t.nie_trabajador,t.pasaporte_trabajador,t.nombre,t.apellido1,t.apellido2,t.fecha,t.num_telef,t.estado_trabajador,t.trabajando,t.id_rol,r.nombre_rol from trabajador  as t inner join roles as r on r.id_rol = t.id_rol  LIMIT :paginaInicio, :cantidadResultados";
             }
 
- 
+
             $stmt = $this->conexion->prepare($sql2);
             if (!empty($nombre)) {
 
@@ -263,21 +284,18 @@ class ConsultasAdministrador extends Conexion {
         try {
             $sql = "select count(*) from trabajador ";
             $stmt = $this->conexion->query($sql);
-            return  $stmt->fetchColumn();
-            
+            return $stmt->fetchColumn();
         } catch (PDOException $e) {
 
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-    
-    
-     public function comprobarDatosProducto($dato) {
+
+    public function comprobarDatosProducto($dato) {
 
         try {
-           
-                $sql = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo  where id_comida=?";
-           
+
+            $sql = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo  where id_comida=?";
 
             $stmt = $this->conexion->prepare($sql);
 
@@ -297,8 +315,30 @@ class ConsultasAdministrador extends Conexion {
         }
     }
 
-    
-        public function actualizarDatosProductos($id, $nombre, $descripcion, $tipo, $subtipo, $desde,$hasta, $precio,$disponible,$img) {
+    public function comprobarTipoSubtipo($dato) {
+
+        try {
+            if ($dato == 1) {
+                $sql = "select * from subtipo";
+            } else {
+                $sql = "select * from tipo";
+            }
+
+            $stmt = $this->conexion->prepare($sql);
+
+            $stmt->execute();
+
+            $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            unset($stmt);
+            return $fila;
+        } catch (PDOException $e) {
+
+            die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
+        }
+    }
+
+    public function actualizarDatosProductos($id, $nombre, $descripcion, $tipo, $subtipo, $desde, $hasta, $precio, $disponible, $img) {
 
         try {
             $sql = "UPDATE carta_comida  set nombre=:nombre, descripcion=:descripcion, tipo=:tipo, subtipo=:subtipo, fecha_inicio=:desde, fecha_fin=:hasta, precio=:precio, disponible=:disponible, img=:img where id_comida = :id";
@@ -315,7 +355,6 @@ class ConsultasAdministrador extends Conexion {
             $stmt->bindParam(':precio', $precio, PDO::PARAM_STR);
             $stmt->bindParam(':disponible', $disponible, PDO::PARAM_STR);
             $stmt->bindParam(':img', $img, PDO::PARAM_STR);
-          
 
             $stmt->execute();
 
@@ -325,14 +364,12 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-    
-    
-     public function productosActivos() {
+
+    public function productosActivos() {
         try {
             $sql = "select count(*) from carta_comida ";
             $stmt = $this->conexion->query($sql);
             return $stmt->fetchColumn();
-            
         } catch (PDOException $e) {
 
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
@@ -374,17 +411,17 @@ class ConsultasAdministrador extends Conexion {
             $stmt->bindValue(':cantidadResultados', $cantidadResultados, PDO::PARAM_INT);
 
             $stmt->execute();
-            return $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            unset($stmt);
-            unset($this->conexion);
+            $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
+              
+            return $fila; 
+            
         } catch (PDOException $e) {
 
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-    
-        public function eliminarProducto($id) {
+
+    public function eliminarProducto($id) {
 
         try {
             $sql = "DELETE from carta_comida where id_comida = :id";
@@ -399,6 +436,5 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-
 
 }

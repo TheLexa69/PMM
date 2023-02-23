@@ -2,7 +2,7 @@
 
 namespace clases;
 
-class FormulariosAdministrador {
+class FormulariosAdministrador   {
 
     public function redirecionesAdministrador() {
 
@@ -144,7 +144,7 @@ class FormulariosAdministrador {
         echo "<center><a href='indexAdministrador.php'><input type='button' value='Volver a inicio'></a></center>";
     }
 
-    public function datosEmpleado($id) {
+    public function datosEmpleado($id,$rol) {
         ?>
 
 
@@ -165,10 +165,22 @@ class FormulariosAdministrador {
                     <br>
                     <tr><td>    Privilegios:</td><td> <select name="privilegios"> 
                                 <option value="<?php echo ($id["id_rol"]) ? $id["id_rol"] : ''; ?>"><?php echo ($id["id_rol"]) ? $id["nombre_rol"] : ''; ?></option>
-                                <option value="<?php echo 1; ?>">Administrador</option>
-                                <option value="<?php echo 2; ?>">Gestor</option>
-                                <option value="<?php echo 3; ?>">Trabajador</option>
-                            </select></td></tr>
+                             
+                                  <?php
+                             
+                                     foreach($rol as $id2 => $nombre){
+                                
+                                    if($id2+1 == 4 || $id2+1 == 5){
+                               
+                                    }else{
+                                         ?> <option value='<?php echo $id2+1?>'><?php echo $nombre["nombre_rol"] ?></option> <?php
+                                    }
+                                     }
+                              ?>
+                                
+                            
+                            </select></td></tr>     
+                   
                     <br><br>
                     <tr><td colspan="2">
                             <input type="hidden" name="id" value="<?php echo $id["id_trabajador"]; ?>">
@@ -182,10 +194,10 @@ class FormulariosAdministrador {
         <?php
     }
 
-    public function datosProducto($id) {
-        ?>
-    
-
+    public function datosProducto($id,$tipobd ,$subtipobd) {
+   /*   c.tipo,c.subtipo
+t.nombre_tipo,e.nombre_subtipo    */ ?>
+ 
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
             <center>   <table class="edicion">
 
@@ -194,28 +206,41 @@ class FormulariosAdministrador {
                     <tr><td>   Nombre: </td><td><input type="text" name="nombre" value="<?php echo $id["nombre"]; ?>"><br></td></tr>
                     <tr><td>   Descripcion:</td><td> <input type="text" name="descripcion" value="<?php echo $id["descripcion"]; ?>"> <br>  </td></tr>     
                     <tr><td>    tipo:</td><td> <select name="tipo"> 
-                                <option value="<?php echo ($id["nombre_tipo"]) ? $id["tipo"] : ''; ?>"><?php echo ($id["nombre_tipo"]) ? $id["nombre_tipo"] : ''; ?></option>
-                                <option value="<?php echo 1; ?>">Entrantes</option>
-                                <option value="<?php echo 2; ?>">Arroz</option>
-                                <option value="<?php echo 3; ?>">Carne</option>
-                                <option value="<?php echo 4; ?>">cachopo</option>
-                                <option value="<?php echo 5; ?>">Pescado</option>
-                                <option value="<?php echo 6; ?>">Postre</option>
-                                <option value="<?php echo 7; ?>">Bebida</option>
-                            </select></td></tr>
+                                <option value="<?php echo ($id["nombre_tipo"]) ? $id["tipo"] : ''; ?>"><?php echo $id["nombre_tipo"]; ?></option>
+                                
+                                 <?php
+                             
+                                     foreach($tipobd as $id1 => $nombre){
+                                
+                                    
+                                ?> <option value='<?php echo $id1+1?>'><?php echo $nombre["nombre_tipo"] ?></option> <?php
+                                    
+                                     }
+                              ?>
+          
+                           
+                                
+                             
+                                </select></td></tr>
+                    
+                 
+                       
+                            
+                            
                     <tr><td>    Subtipo:</td><td> <select name="subtipo"> 
                                 <option value="<?php echo ($id["nombre_subtipo"]) ? $id["subtipo"] : ''; ?>"><?php echo ($id["nombre_subtipo"]) ? $id["nombre_subtipo"] : ''; ?></option>
                                
+                                  <?php
+                             
+                                     foreach($subtipobd as $id2 => $nombre2){
                                 
+                                    
+                                ?> <option value='<?php echo $id2+1?>'><?php echo $nombre2["nombre_subtipo"] ?></option> <?php
+                                    
+                                     }
+                              ?>
                                 
-                                
-                                <option value="<?php echo 1; ?>">Croquetas</option>
-                                <option value="<?php echo 2; ?>">Ensaladas</option>
-                                <option value="<?php echo 3; ?>">Mar</option>
-                                <option value="<?php echo 4; ?>">Tierra</option>
-                                <option value="<?php echo 5; ?>">Cachopo Pollo</option>
-                                <option value="<?php echo 6; ?>">Cachopo Ternera Jamon</option>
-                                <option value="<?php echo 7; ?>">Cachopò Ternera Cecina</option>
+                            
                             </select></td></tr>
                     <tr><td>   Disponible Desde:</td><td> <input type=datetime-local name="desde" value="<?php echo $id["fecha_inicio"]; ?>"  pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"> <br>  </td></tr>    
                     <tr><td>   Disponible Hasta:</td><td> <input type=datetime-local name="hasta" value="<?php echo $id["fecha_fin"]; ?>"  pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"> <br>  </td></tr>    
@@ -252,6 +277,7 @@ class FormulariosAdministrador {
                                                       }
                                                       ?> >  <label for="v">Ordenados por:</label> 
                 <select name="opcion">            
+                    <option value="disponible">En stock</option> 
                     <option value="fecha_inicio" >Disponible desde</option> 
                     <option value="fecha_fin" >Disponible Hasta </option> 
                     <option value="nombre">Nombre</option> 

@@ -14,7 +14,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET["codigo"])) {
     $numero = (isset($_POST["id"])) ? $_POST["id"] : $_GET["codigo"];
 
      $fila = $consulta->comprobarDatosProducto($numero);
-
+      
+      $tipobd=$consulta->comprobarTipoSubtipo(0);
+     
+     $subtipobd=$consulta->comprobarTipoSubtipo(1);
+    
+     
     if (isset($_POST["actualizar"])) {
  
         $id = ($_POST["id"] == $fila["id_comida"]) ? $fila["id_comida"] : $_POST["id"];
@@ -30,10 +35,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET["codigo"])) {
         $disponible = ($_POST["disponible"] == $fila["disponible"]) ? $fila["disponible"] : $_POST["disponible"];
         $img=trim(($_POST["img"] == $fila["img"]) ? $fila["img"] : $_POST["img"]);
 
-        $consulta->actualizarDatosProductos($id, $nombre, $descripcion, $tipo, $subtipo, $desde, $hasta, $precio, $disponible,$img);
+        $consulta->actualizarDatosProductos($id, $nombre, $descripcion, $tipo, $subtipo, $desde, $hasta, $precio, $disponible,$img );
         $fila2 = $consulta->comprobarDatosProducto($numero);
         echo "<center><h1><b>Datos actualizados<b></h1></center>";
-        $formularios->datosProducto($fila2);
+        $formularios->datosProducto($fila2,$tipobd ,$subtipobd);
     } else if (isset($_POST["eliminar"])) {
         $nombre=$_POST["nombre"];
         $consulta->eliminarProducto($numero);
@@ -42,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET["codigo"])) {
         
     } else {
        // $numero = $_GET["codigo"];
-        $formularios->datosProducto($fila);
+        $formularios->datosProducto($fila,$tipobd ,$subtipobd);
     }
 } else {
     header("Location:/proyecto/backend/administrador/indexAdministrador.php");

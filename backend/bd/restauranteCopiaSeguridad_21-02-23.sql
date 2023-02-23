@@ -182,21 +182,21 @@ ALTER TABLE carta_comida ADD FOREIGN KEY (subtipo) references subtipo(id_subtipo
 
 ###########################################################################################
 #INSERT
-INSERT INTO tipo (nombre_tipo) VALUES ('entrantes');
-INSERT INTO tipo (nombre_tipo) VALUES ('arroz');
-INSERT INTO tipo (nombre_tipo) VALUES ('carne');
-INSERT INTO tipo (nombre_tipo) VALUES ('cachopo');
-INSERT INTO tipo (nombre_tipo) VALUES ('pescado');
-INSERT INTO tipo (nombre_tipo) VALUES ('postre');
-INSERT INTO tipo (nombre_tipo) VALUES ('bebida');
+INSERT INTO tipo (nombre_tipo) VALUES ('Entrantes');
+INSERT INTO tipo (nombre_tipo) VALUES ('Arroz');
+INSERT INTO tipo (nombre_tipo) VALUES ('Carne');
+INSERT INTO tipo (nombre_tipo) VALUES ('Cachopo');
+INSERT INTO tipo (nombre_tipo) VALUES ('Pescado');
+INSERT INTO tipo (nombre_tipo) VALUES ('Postre');
+INSERT INTO tipo (nombre_tipo) VALUES ('Bebida');
 
-INSERT INTO subtipo (nombre_subtipo) VALUES ('croquetas');
-INSERT INTO subtipo (nombre_subtipo) VALUES ('ensaladas');
-INSERT INTO subtipo (nombre_subtipo) VALUES ('mar');
-INSERT INTO subtipo (nombre_subtipo) VALUES ('tierra');
-INSERT INTO subtipo (nombre_subtipo) VALUES ('cachopoPollo');
-INSERT INTO subtipo (nombre_subtipo) VALUES ('cachopoTJamon');
-INSERT INTO subtipo (nombre_subtipo) VALUES ('cachopoTCecina');
+INSERT INTO subtipo (nombre_subtipo) VALUES ('Croquetas');
+INSERT INTO subtipo (nombre_subtipo) VALUES ('Ensaladas');
+INSERT INTO subtipo (nombre_subtipo) VALUES ('Mar');
+INSERT INTO subtipo (nombre_subtipo) VALUES ('Tierra');
+INSERT INTO subtipo (nombre_subtipo) VALUES ('CachopoPollo');
+INSERT INTO subtipo (nombre_subtipo) VALUES ('CachopoTJamon');
+INSERT INTO subtipo (nombre_subtipo) VALUES ('CachopoTCecina');
 
 INSERT INTO roles (nombre_rol) VALUES ('Administrador');
 INSERT INTO roles (nombre_rol) VALUES ('Gestor');
@@ -386,19 +386,22 @@ FLUSH PRIVILEGES;
 SHOW GRANTS;
 
 ###########################################################################################
-CREATE TRIGGER elimina_usuario
+DELIMITER $$
+CREATE TRIGGER asignar_fecha_usuario
 BEFORE INSERT ON usuario
 FOR EACH ROW
 BEGIN
     SET NEW.fecha = IFNULL(NEW.fecha, NOW());
-END;
+END$$
 
 CREATE EVENT elimina_usuario_event
 ON SCHEDULE EVERY 1 DAY
 DO
 BEGIN
-	DELETE FROM usuario WHERE activado = 0 AND fecha < DATE_SUB(NOW, INTERVAL 10 DAY);
-END;
+    DELETE FROM usuario WHERE activado = 0 AND fecha < DATE_SUB(NOW, INTERVAL 10 DAY);
+END$$
+
+DELIMITER ;
 ###########################################################################################
 
 ###########################################################################################

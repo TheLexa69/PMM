@@ -15,7 +15,7 @@ function autoloadClases($clase) {
 }
 
     }
-//autoloadClases("consultas");
+ 
 spl_autoload_register("autoloadClases");
 /*
 define('DS',DIRECTORY_SEPARATOR);

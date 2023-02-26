@@ -13,6 +13,10 @@ class ConsultasLogin extends Conexion {
         parent::__construct();
     }
 
+      public function __destruct() {
+        $this->conexion = null;
+    }
+    
     public function añadirUsuario($nombre, $apellido1, $apellido2, $token2, $mail, $telefono, $rol, $fecha, $nif, $direccion, $cp) {
 
         try {

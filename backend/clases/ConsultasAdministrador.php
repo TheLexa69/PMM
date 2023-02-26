@@ -12,6 +12,9 @@ class ConsultasAdministrador extends Conexion {
         //$this->conexion= $this->conectar();
         parent::__construct();
     }
+      public function __destruct() {
+        $this->conexion = null;
+    }
 
     public function añadirTrabajador($nombre, $apellido1, $apellido2, $token2, $mail, $telefono, $privilegios, $fecha, $nie, $pasaporte) {
 
@@ -441,11 +444,11 @@ class ConsultasAdministrador extends Conexion {
 
         try {
             if($comprobante==0){
-             $sql = "  select r.id_reservas,r.id_usuario,r.id_restaurante,r.id_mesa,r.fecha_reserva,r.turno ,r.reservaAceptada,u.nombre,u.apellido1,u.num_telef,u.correo,e.nombreLocal from reservas  as r inner join usuario as u on r.id_usuario = u.id_usuario inner join empresa as e on e.cif = r.id_restaurante where reservaAceptada ='no' ";
+             $sql = "select r.id_reservas,r.id_usuario,r.id_restaurante,r.id_mesa,r.fecha_reserva,r.turno ,r.reservaAceptada,u.nombre,u.apellido1,u.num_telef,u.correo,e.nombreLocal from reservas  as r inner join usuario as u on r.id_usuario = u.id_usuario inner join empresa as e on e.cif = r.id_restaurante where reservaAceptada ='no'";
             
        
             }else{
-              $sql = "  select r.id_reservas,r.id_usuario,r.id_restaurante,r.id_mesa,r.fecha_reserva,r.turno ,r.reservaAceptada,u.nombre,u.apellido1,u.num_telef,u.correo,e.nombreLocal from reservas  as r inner join usuario as u on r.id_usuario = u.id_usuario inner join empresa as e on e.cif = r.id_restaurante where reservaAceptada ='si'";
+              $sql = "select r.id_reservas,r.id_usuario,r.id_restaurante,r.id_mesa,r.fecha_reserva,r.turno ,r.reservaAceptada,u.nombre,u.apellido1,u.num_telef,u.correo,e.nombreLocal from reservas  as r inner join usuario as u on r.id_usuario = u.id_usuario inner join empresa as e on e.cif = r.id_restaurante where reservaAceptada ='si'";
            
             }
 

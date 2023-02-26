@@ -233,8 +233,7 @@ class FormulariosAdministrador {
     }
 
     public function datosProducto($id, $tipobd, $subtipobd) {
-        /*   c.tipo,c.subtipo
-          t.nombre_tipo,e.nombre_subtipo */
+   
         ?>
 
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
@@ -253,15 +252,7 @@ class FormulariosAdministrador {
                                 }
                                 ?>
 
-
-
-
                             </select></td></tr>
-
-
-
-
-
                     <tr><td>    Subtipo:</td><td> <select name="subtipo"> 
                                 <option value="<?php echo ($id["nombre_subtipo"]) ? $id["subtipo"] : ''; ?>"><?php echo ($id["nombre_subtipo"]) ? $id["nombre_subtipo"] : ''; ?></option>
 
@@ -339,7 +330,7 @@ class FormulariosAdministrador {
                 }
                 echo "</table></center>";
 
-                echo'  <input type="submit" name=validar value="Filtrar" ><br><br>';
+              
                 echo '</form><br><br>';
                 echo "<center><a href='indexAdministrador.php'><input type='button' value='Volver a inicio'></a></center>";
             }

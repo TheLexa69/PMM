@@ -12,32 +12,23 @@ if (!isset($_SESSION['usuario'])) {
 		// Si no hay productos se crea un array vacío para guardarlos
 		$arr_carrito = array();
 	}
-
+	$arr_carrito["$id_comida"] = (int) $cantidad;
 	
-        $arr_carrito["$id_comida"] = (int) $cantidad;
-		
-		// Serializar los datos y guardarlos en una cookie
-                setcookie('carrito', serialize($arr_carrito), time() + (86400 * 30), "/");
+	// Serializar los datos y guardarlos en una cookie
+	setcookie('carrito', serialize($arr_carrito), time() + (86400 * 30), "/");
 	
 } else {
 	
 	if (isset($_SESSION['carrito'])) {
-		if (is_array($_SESSION['carrito'])) {
-			$arr_carrito = $_SESSION['carrito'];
-		} else {
-			// Si hay productos, deserializar los datos y guardarlos en una variable
-			$arr_carrito = unserialize($_SESSION['carrito'], []);
-		}
+		$arr_carrito = $_SESSION['carrito'];
+		
     } else {
         // Si no hay productos se crea un array vacío para guardarlos
         $arr_carrito = array();
     }
-
-   
-
-        $arr_carrito["$id_comida"] = $cantidad;
+	$arr_carrito["$id_comida"] = $cantidad;
 		
-        // Actualizar la variable de sesión con los cambios realizados
-        $_SESSION['carrito'] = serialize($arr_carrito);
+	// Actualizar la variable de sesión con los cambios realizados
+	$_SESSION['carrito'] = $arr_carrito;
 	}
 

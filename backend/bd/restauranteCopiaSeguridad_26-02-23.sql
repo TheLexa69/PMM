@@ -114,8 +114,9 @@ id_comida int not null
 
 CREATE TABLE IF NOT EXISTS pedidos (
   id_ped INT NOT NULL AUTO_INCREMENT,
+  id_usuario int not null,
   fecha TIMESTAMP NOT NULL,
-  enviado BOOLEAN NOT NULL,
+  enviado enum('si', 'no') NOT NULL default "no",
   restaurante VARCHAR(10) NOT NULL,
   PRIMARY KEY (id_ped)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -125,14 +126,17 @@ create table if not exists factura(
 id_factura int auto_increment,
 id_usuario int not null,
 cif_empresa varchar(10) not null,
-precio float not null,
 fecha TIMESTAMP not null,
-id_comida int not null,
 total int not null,
-modo_pago enum('efectivo','tarjeta','otro modo') not null default 'efectivo',
+modo_pago int not null,
+id_ped int not null,
 
-constraint pk_id_factura primary key (id_factura),
-constraint ck_pago check (modo_pago in ('efectivo','tarjeta','otro modo'))
+constraint pk_id_factura primary key (id_factura)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table if not exists modo_pago(
+  id_modo_pago int not null auto_increment primary key,
+  nombre varchar(50) not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table if not exists empresa(
@@ -156,6 +160,14 @@ id_ped int,
 constraint pk_id primary key (id_carro)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE if not exists ped_prod (
+  id_ped_prod int NOT NULL,
+  id_ped int NOT NULL,
+  id_prod int NOT NULL,
+  cantidad int NOT NULL,
+  precio int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 create table if not exists reservas (
 id_reservas	int auto_increment,
 id_usuario int,
@@ -176,6 +188,8 @@ constraint pk_id primary key (id_mesa)
 #FOREIGN KEYS
 ALTER TABLE factura ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
 ALTER TABLE factura ADD FOREIGN KEY (cif_empresa) REFERENCES empresa(cif);
+ALTER TABLE factura ADD FOREIGN KEY (modo_pago) REFERENCES modo_pago(id_modo_pago);
+ALTER TABLE factura ADD FOREIGN KEY (id_ped) REFERENCES pedidos(id_ped);
 
 ALTER TABLE carrito ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
 ALTER TABLE carrito ADD FOREIGN KEY (id_ped) REFERENCES pedidos(id_ped);
@@ -200,6 +214,10 @@ ALTER TABLE carta_comida ADD FOREIGN KEY (subtipo) references subtipo(id_subtipo
 
 ###########################################################################################
 #INSERT
+INSERT INTO modo_pago (nombre) values ('efectivo'); 
+INSERT INTO modo_pago (nombre) values ('tarjeta'); 
+INSERT INTO modo_pago (nombre) values ('otro'); 
+
 INSERT INTO tipo (nombre_tipo) VALUES ('Entrantes');
 INSERT INTO tipo (nombre_tipo) VALUES ('Arroz');
 INSERT INTO tipo (nombre_tipo) VALUES ('Carne');
@@ -347,7 +365,7 @@ INSERT INTO trabajador (nombre, apellido1, apellido2, correo, fecha, num_telef, 
 INSERT INTO empresa (cif, nombre, nombre_sociedad, direccion, ciudad, cp, telefono, logo) VALUES ('B27788272','Novo Lua Chea','LUENGOS ANDRE S.L.','Rua de Eduardo Cabello, 25','Vigo','36208','986132537','url');
 INSERT INTO empresa (cif, nombre, nombre_sociedad, direccion, ciudad, cp, telefono, logo) VALUES ('B28789542','Viejo Lua Chea','LUENGOS ANDRES S.L.','Rua de Otero Pedrallo, 30','Vigo','36208','986132537','url');
 
-insert into factura (id_usuario, cif_empresa, precio, fecha, id_comida, total, modo_pago) values (2,'B27788272', 20, DATE(NOW()), 5, 20, 'efectivo');
+#insert into factura (id_usuario, cif_empresa, precio, fecha, id_comida, total, modo_pago) values (2,'B27788272', 20, DATE(NOW()), 5, 20, 1);
 
 INSERT INTO mesas (enumMesa) values ('T1');
 INSERT INTO mesas (enumMesa) values ('T2');

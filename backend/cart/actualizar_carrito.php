@@ -31,4 +31,3 @@ if (!isset($_SESSION['usuario'])) {
 	// Actualizar la variable de sesión con los cambios realizados
 	$_SESSION['carrito'] = $arr_carrito;
 	}
-

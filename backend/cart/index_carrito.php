@@ -1,39 +1,79 @@
 <?php
-
 session_start();
 //use clases_carrito\carrito as carrito;
 require "../clases_carrito/carrito.php";
-require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
-
+require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "nav.php"); 
+?>
+<script>
+	function updateCantidad(id_comida, cantidad) {
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', 'actualizar_carrito.php', true);
+	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+		// Actualizar la página para reflejar los cambios
+		window.location.reload();
+		}
+	};
+	xhr.send('id_comida=' + id_comida + '&cantidad=' + cantidad);
+}
+</script>
+<?php
 //fichero conexion (no hace falta al tenerlo en la clase)
 //require_once 'conexion.php';
-
+$carrito = new carrito();
 if (isset($_SESSION['usuario'])) {
-
-    //$db = conexion();
-
-    $usuario = $_SESSION['usuario'];
-    $carrito = new carrito();
-    $filas_carro = $carrito->getCarro($usuario);
-    if ($filas_carro) {
-        print $carrito->printCarro($usuario);
-    } else {
-        echo "<div class='container bg-light rounded mt-5 w-50 p-3'>";
-        echo "<div class='text-center'>
-              <h2>Carrito</h2>
-              <hr>
-              </div>";
-        echo "<div class='warning text-center'>No tienes productos en tu cesta todavía.</div>";
-        echo "</div>";
-    }
-    echo '<a href="procesar_pedido.php">Realizar compra</a>	';
-} elseif (!isset($_SESSION)) {
+	$usuario = $_SESSION['usuario'];
+	if (!isset($_SESSION['carrito'])) {
+		$carrito_guardado = $carrito->getCarro($usuario);
+		//Sacamos el carrito de la base de datos y lo igualamos a la variable de sesión
+		//Si no encuentra nada en la base de datos va a mirar a las cookies y si no hay 
+		//nada en ninguno de los dos crear la variable de sesión como array vacío 
+		//Mejora: elegir entre el carrito de la base de datos y el carrito de las cookies
+		if ($carrito_guardado) {
+			$_SESSION['carrito'] = unserialize($carrito_guardado['comida_cantidad'], []);
+		} elseif (isset($_COOKIE['carrito']) && !empty(unserialize($_COOKIE['carrito']))) {
+			$_SESSION['carrito'] = unserialize($_COOKIE['carrito'], []);
+			setcookie('carrito', null, time() - 3600, "/");
+		
+		} else {
+			$_SESSION['carrito'] = [];
+		}
+	}
+	
+	
+	if(empty($_SESSION["carrito"])) {
+		echo "<div class='warning'>No tienes productos en tu cesta todavía.</div>";
+	} else {
+		foreach($_SESSION['carrito'] as $comida => $cant) {
+			$id_comida = $comida;
+			$cantidad = (int) $cant;
+			print ($carrito->printCarroSes($id_comida, $cantidad));
+		}
+		$precio_total = $carrito->getTotalPrice(serialize($_SESSION['carrito']));
+		print $precio_total;
+		echo '<br><a href="procesar_pedido.php">Realizar compra</a>	';
+	}
+	
+	
+		
+} else { 
     if (isset($_COOKIE['carrito'])) {
-        var_dump(unserialize($_COOKIE['carrito'], []));
-        echo '<a href="procesar_pedido.php">Realizar compra</a>	'; //alert js que necesita iniciar sesión
-    } else {
-        echo "<div class='warning text-center'>No tienes productos en tu cesta todavía.</div>";
+		if (empty(unserialize($_COOKIE['carrito']))) {
+			echo "<div class='warning'>No tienes productos en tu cesta todavía.</div>";
+		} else {
+			foreach(unserialize($_COOKIE['carrito'], []) as $comida => $cant) {
+				$id_comida = $comida;
+				$cantidad = (int) $cant;
+				echo ($carrito->printCarroSes($id_comida, $cantidad));
+			}
+			$precio_total = $carrito->getTotalPrice($_COOKIE['carrito']);
+			print $precio_total;
+			echo '<a href="procesar_pedido.php">Realizar compra</a>	'; //alert js que necesita iniciar sesión
+		}
+	} else {
+        echo "<div class='warning'>No tienes productos en tu cesta todavía.</div>";
     }
 }
-require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");
+require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "footer.php"); 
 ?>

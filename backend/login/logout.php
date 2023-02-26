@@ -3,8 +3,15 @@
  * Cierra la session y nos lleva a login
  */
 require_once '../sesiones/sesiones.php';
+require "../clases_carrito/carrito.php";
 comprobar_sesion();
-
+if (!empty($_SESSION['carrito'])) {
+    $c = new carrito();
+    $agregado = $c->add($_SESSION['usuario'], $_SESSION['carrito']);
+    if (!$agregado) {
+        echo "Por alguna razón no se pudo guardar tu cesta";
+    }
+}
 $_SESSION=array(); //Destruye las variables de sesión
 session_destroy(); // Eliminaa la sesion
 //setcookie(session_name(), 123, time() - 1000); // Elimina la cookie de sesión

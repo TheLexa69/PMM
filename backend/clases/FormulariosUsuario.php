@@ -14,7 +14,7 @@ class FormulariosUsuario {
     public function registroDatosPorUsuario($id, $necesarios = "") {
         ?>
         <div class="container bg-light rounded mt-5 w-50 p-3">
-            <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
+            <form enctype="multipart/form-data" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
                 <div class="text-center">
                     <h2>Modifica tus datos:</h2>
                     <hr>
@@ -40,20 +40,24 @@ class FormulariosUsuario {
                     <input type="text" name="telefono" class="form-control" id="c5"  value="<?php echo $id["num_telef"]; ?>">
                 </div>
                 <div class="mt-3">
-                    <label for="c5" class="form-label">Nif:</label><br>
-                    <input type="text" name="nif" class="form-control" id="c5"  value="<?php echo $id["NIF"]; ?>">
+                    <label for="c6" class="form-label">Nif:</label><br>
+                    <input type="text" name="nif" class="form-control" id="c6"  value="<?php echo $id["NIF"]; ?>">
                 </div>
                 <div class="mt-3">
-                    <label for="c5" class="form-label">Dirección:</label><br>
-                    <input type="text" name="direcion" class="form-control" id="c5"  value="<?php echo $id["direccion"]; ?>">
+                    <label for="c7" class="form-label">Dirección:</label><br>
+                    <input type="text" name="direcion" class="form-control" id="c7"  value="<?php echo $id["direccion"]; ?>">
                 </div>
                 <div class="mt-3">
-                    <label for="c5" class="form-label">Codigo Postal:</label><br>
-                    <input type="text" name="cp" class="form-control" id="c5"  value="<?php echo $id["cp"]; ?>">
+                    <label for="c8" class="form-label">Codigo Postal:</label><br>
+                    <input type="text" name="cp" class="form-control" id="c8"  value="<?php echo $id["cp"]; ?>">
+                </div>
+                <div class="mt-3">
+                    <label for="c9" class="form-label">Imagen:</label><br>
+                    <input type="file" name="imagen[]" class="form-control" id="c9">
                 </div>
                 <div class="text-center mt-3">
                     <button type="submit" class="btn btn-outline-success" name="registro">Actualizar</button>
-                    <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php";?>" id="cancel" name="cancel" class="btn btn-default btn-outline-danger">Cancelar</a>
+                    <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>" id="cancel" name="cancel" class="btn btn-default btn-outline-danger">Cancelar</a>
                 </div>
                 <!--<input type="submit" name="registro">-->
                 <?php

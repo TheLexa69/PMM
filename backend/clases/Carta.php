@@ -4,9 +4,12 @@
  *
  * @author Nuria
  */
-require_once 'conexion.php';
-//namespace clases_carrito;
-class carta extends conexion {
+namespace clases;
+
+use \PDO;
+use \PDOException;
+
+class Carta extends Conexion {
     
     private $table = 'carta_comida';
 

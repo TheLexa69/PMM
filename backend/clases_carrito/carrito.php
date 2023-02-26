@@ -26,10 +26,10 @@ class carrito extends conexion {
 
     /*saca todas las filas de la cesta del usuario con el que tenemos sesión */
     public function getCarro($id_usuario) {
-        $stmt = $this->conexion->prepare("select id_carro from $this->table where id_usuario = :id_usuario");
+        $stmt = $this->conexion->prepare("SELECT comida_cantidad FROM $this->table WHERE id_usuario = :id_usuario AND id_ped IS NULL");
         $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetch();
     }
     
     /*Saca cada producto que tiene en la cesta con esos campos, parecido al de arriba*/
@@ -80,15 +80,11 @@ class carrito extends conexion {
                             <h5 class=\"precio-producto\"> Precio: ". $result['precio'] ."</h5>
                             <form method=\"post\" action=\"". $url  ."\">
                             <label for=\"cantidad\">Cantidad:</label>
-                              <select id=\"cantidad\" name=\"cantidad\">'";
-        for($i=0; $i<=$cantidad;$i++) {        
-            $html_code .= '<option value=\"'.$i.'\">'.$i.'</option>';
-        }
-        $html_code .= "</select>
+                            <input type=\"number\" name=\"cantidad\" value=\"" . $cantidad . "\" min=\"1\" max=\"10\" onchange=\"updateCantidad(" . $id_comida . ", this.value)\">
+
                 </div>
-        <div class=\"col-4 d-flex justify-content-center\">
-                <!-- if session rol = admin button editar, deshabilitar -->     
-                <button class=\"btn-add-cart btn btn-outline-secondary\" id=\"eliminar\" type=\"submit\">Eliminar</button></form>";
+        <div class=\"col-4 d-flex justify-content-center\">    
+                <button class=\"btn-add-cart btn btn-outline-secondary\" id=\"eliminar\" type=\"submit\">Eliminar</button></form></div></div>";
 
         return $html_code;
 
@@ -97,18 +93,22 @@ class carrito extends conexion {
     
     /*Añadir productos al carro*/
     public function add($id_usuario, $carrito) {
-        $id_comida_cantidad = json_encode($carrito);
-
+        $comida_cantidad = serialize($carrito);
         try {
             // Iniciar transacción
                 $this->conexion->beginTransaction();
 
-                $stmt = $this->conexion->prepare("INSERT INTO carrito (id_usuario, id_comida_cantidad) VALUES (:id_usuario, :id_comida_cantidad)");
-                $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
-                $stmt->bindParam(':id_comida_cantidad', $id_comida_cantidad, PDO::PARAM_STR);
-                $stmt->bindParam(':id_ped', $id_ped, PDO::PARAM_INT);
-                $stmt->execute();
-
+                if ($this->getCarro($id_usuario)) {
+                    $stmt = $this->conexion->prepare("UPDATE $this->table SET comida_cantidad = :comida_cantidad WHERE id_usuario = :id_usuario AND id_ped IS NULL");
+                    $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+                    $stmt->bindParam(':comida_cantidad', $comida_cantidad, PDO::PARAM_STR);
+                    $stmt->execute();
+                } else {
+                    $stmt = $this->conexion->prepare("INSERT INTO $this->table (id_usuario, comida_cantidad) VALUES (:id_usuario, :comida_cantidad)");
+                    $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+                    $stmt->bindParam(':comida_cantidad', $comida_cantidad, PDO::PARAM_STR);
+                    $stmt->execute();
+                }
             // Si la consulta de inserción o actualización se ejecuta correctamente
             // se confirma la transacción, de lo contrario se hace un rollback
             $this->conexion->commit();
@@ -117,62 +117,6 @@ class carrito extends conexion {
             $this->conexion->rollBack();
             return false;
         }
-    }
-/*public function add($id_usuario, $id_comida, $cantidad) {
-    try {
-        // Iniciar transacción
-        $this->conexion->beginTransaction();
-
-        // Verificar si el producto ya existe en el carrito
-        if($this->searchRow($id_usuario, $id_comida)) {
-            $this->update($id_usuario, $id_comida, $cantidad);
-        } else {
-            $stmt = $this->conexion->prepare("INSERT INTO $this->table (id_usuario, id_comida, cantidad) VALUES (?, ?, ?)");
-            $stmt->bindParam(1, $id_usuario, PDO::PARAM_INT);
-            $stmt->bindParam(2, $id_comida, PDO::PARAM_INT);
-            $stmt->bindParam(3, $cantidad, PDO::PARAM_INT);
-            $stmt->execute();
-        }
-
-        // Si la consulta de inserción o actualización se ejecuta correctamente
-        // se confirma la transacción, de lo contrario se hace un rollback
-        $this->conexion->commit();
-        return true;
-    } catch(PDOException $e) {
-        $this->conexion->rollBack();
-        return false;
-    }
-}*/
-  
-
-/* Actualizar la cantidad de un producto en el carrito */
-public function update($id_usuario,$id_comida, $cantidad)
-{
-    $query = "UPDATE $this->table SET cantidad = cantidad + :cantidad WHERE id_usuario = :id_usuario and id_comida = :id_comida";
-    $stmt = $this->conexion->prepare($query);
-    $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
-    $stmt->bindParam(':id_comida', $id_comida, PDO::PARAM_INT);
-    $stmt->bindParam(':cantidad', $cantidad, PDO::PARAM_INT);
-    return $stmt->execute();
-}
-
-    
-    /*Elimina un producto de la cesta*/
-    public function removeItem($id_comida)
-    {
-        $query = "DELETE FROM $this->table WHERE id_comida = :id_comida";
-        $stmt = $this->conexion->prepare($query);
-        $stmt->bindParam(':id_comida', $id_comida, PDO::PARAM_INT);
-        return $stmt->execute();
-    }
-    
-    /*Limpiar cesta (después se añade todo a la factura)*/
-    public function clearCarro($id_usuario)
-    {
-        $query = "DELETE FROM $this->table WHERE id_usuario = :id_usuario";
-        $stmt = $this->conexion->prepare($query);
-        $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_STR);
-        return $stmt->execute();
     }
     
     /*public function getTotalPrice($id_usuario) {
@@ -184,29 +128,19 @@ public function update($id_usuario,$id_comida, $cantidad)
         //guardar en variable y return en html
     }*/
 
-    public function getTotalPrice($id_usuario) {
-        $total_price_list = array();
-    
+    public function getTotalPrice($carrito) {
+        $carrito = unserialize($carrito, []);
+        $precio = 0;
         // Obtener todos los productos en el carrito
-        $stmt = $this->conexion->prepare("SELECT * FROM $this->table WHERE id_usuario = ?");
-        $stmt->bindParam(1, $id_usuario, PDO::PARAM_INT);
-        $stmt->execute();
-        $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-        foreach ($productos as $producto) {
-            $precio_total = $producto['precio'] * $producto['cantidad'];
-            $product_info = array(
-                'id_producto' => $producto['id_producto'],
-                'nombre' => $producto['nombre'],
-                'descripcion' => $producto['descripcion'],
-                'precio_unitario' => $producto['precio'],
-                'cantidad' => $producto['cantidad'],
-                'precio_total' => $precio_total
-            );
-            array_push($total_price_list, $product_info);
+        foreach($carrito as $cod => $cant) {
+            $stmt = $this->conexion->prepare("SELECT precio FROM carta_comida WHERE id_comida = ?");
+            $stmt->bindParam(1, $cod, PDO::PARAM_INT);
+            $stmt->execute();
+            $productos = $stmt->fetch();
+            $precio += $productos['precio'] * $cant;
         }
     
-        return $total_price_list;
+        return $precio;
     }
     
 
@@ -218,14 +152,6 @@ public function update($id_usuario,$id_comida, $cantidad)
         return $stmt->fetch();
     }
 
-    public function searchRow($id_usuario, $id_comida) {
-        $query = "SELECT * FROM carrito WHERE id_usuario = :id_usuario and id_comida = :id_comida";
-        $stmt = $this->conexion->prepare($query);
-        $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
-        $stmt->bindParam(':id_comida', $id_comida, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetch();
-    }
 
 }
 

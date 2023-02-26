@@ -1,6 +1,6 @@
 <?php  
 class conexion {
-    protected $conexion;
+protected $conexion;
    
 protected function __construct(){
     try {              

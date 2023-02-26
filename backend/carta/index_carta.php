@@ -1,9 +1,9 @@
 <?php 
-// comprobar_sesion();
-session_start();
-//require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."backend". DIRECTORY_SEPARATOR . "carta". DIRECTORY_SEPARATOR . "carta.php"); 
-require "carta.php";
+require_once '../sesiones/sesiones.php';
+comprobar_sesiones();
 require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "nav.php"); 
+
+use \clases\Carta as carta;
 
 /* conexión a la bdd. */
 $carta = new carta();

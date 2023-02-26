@@ -19,21 +19,39 @@ class FormulariosUsuario {
                     <h2>Modifica tus datos:</h2>
                     <hr>
                 </div>
-                <div class="mt-3">
-                    <label for="c1" class="form-label">Nombre:</label><br>
-                    <input type="text" name="nombre" class="form-control" id="c1" value="<?php echo $id["nombre"]; ?>">
+                <div class="row">
+                    <div class="col-4 mt-3 d-flex justify-content-center">
+                        <?php
+                        // Ruta de la imagen
+                        $ruta_imagen = $id['img'];
+                        // Comprobar si la imagen existe
+                        if (file_exists($ruta_imagen)) {
+                            // Mostrar la imagen
+                            echo '<img class="rounded-circle border border-dark" src="' . $ruta_imagen . '" width="200" height="200">';
+                        } else {
+                            echo '<img class="rounded-circle border border-dark" src="../imagenes/imgUsuarios/defecto.jpg" title="perfil" width="200" height="200">';
+                        }
+                        ?>
+                    </div>
+                    <div class="col-8">
+                        <div class="mt-3">
+                            <label for="c1" class="form-label">Nombre:</label><br>
+                            <input type="text" name="nombre" class="form-control" id="c1" value="<?php echo $id["nombre"]; ?>">
+                        </div>
+                        <div class="mt-3">
+                            <label for="c2" class="form-label">Primer Apellido:</label>
+                            <input type="text" name="apellido1" class="form-control" id="c2" value="<?php echo $id["apellido1"]; ?>">
+                        </div>
+                        <div class="mt-3">
+                            <label for="c3" class="form-label">Segundo Apellido:</label>
+                            <input type="text" name="apellido2" class="form-control" id="c3"  value="<?php echo $id["apellido2"]; ?>">
+                        </div>
+                    </div>
                 </div>
-                <div class="mt-3">
-                    <label for="c2" class="form-label">Primer Apellido:</label>
-                    <input type="text" name="apellido1" class="form-control" id="c2" value="<?php echo $id["apellido1"]; ?>">
-                </div>
-                <div class="mt-3">
-                    <label for="c3" class="form-label">Segundo Apellido:</label>
-                    <input type="text" name="apellido2" class="form-control" id="c3"  value="<?php echo $id["apellido2"]; ?>">
-                </div>
+
                 <div class="mt-3">
                     <label for="c4" class="form-label">Mail:</label>     
-                    <input type="email" name="mail" class="form-control" id="c4" value="<?php echo $id["correo"]; ?>">
+                    <input type="email" name="mail" class="form-control" id="c4" readonly value="<?php echo $id["correo"]; ?>">
                 </div>
                 <div class="mt-3">
                     <label for="c5" class="form-label">Telefono:</label>

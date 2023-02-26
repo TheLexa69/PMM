@@ -5,6 +5,7 @@ require "../clases_carrito/carrito.php";
 session_start();
 $cod_comida = $_GET["cod"];
 $cantidad = $_POST["cantidad"];
+$tipo = $_GET['tipo'];
 if (!isset($_SESSION['usuario'])) { 
 	// Si no hay una sesión iniciada, comprobar si hay productos en la cookie
 	if (isset($_COOKIE['carrito'])) {
@@ -50,4 +51,4 @@ if (!isset($_SESSION['usuario'])) {
 	}
 }
 
-header("Location: index_carrito.php");
+header("Location: ../carta/index_carta.php?tipo=$tipo");

@@ -1,9 +1,7 @@
 <?php 
-// comprobar_sesion();
-session_start();
-//require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."backend". DIRECTORY_SEPARATOR . "carta". DIRECTORY_SEPARATOR . "carta.php"); 
-require "carta.php";
 require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "nav.php"); 
+session_start();
+use \clases\Carta as carta;
 
 /* conexión a la bdd. */
 $carta = new carta();
@@ -11,9 +9,11 @@ $carta = new carta();
     if (isset($_GET["tipo"])) {
         $tipo = $_GET["tipo"];
         $rdo = $carta->filterByTipo($tipo);
+        $url = "&tipo=$tipo";
     } else {
         $rdo = $carta->printCarta();
-        }
+        $url = "";
+    }
     ?>
 
     <div class="row mt-5">
@@ -69,9 +69,8 @@ $carta = new carta();
             </div>
             <div id="boton">
                 <?php
-                if(!$rdo) {
-                    echo "ERROR: " . print_r($carta->conexion->errorInfo());
-                }
+                if($rdo) {
+                    
                     foreach ($rdo as $fila) { ?>
                         <div class="layered box row mr-2" id="producto">
                         <div class="col-4">                        
@@ -89,7 +88,7 @@ $carta = new carta();
                             </p>
 
                             <h5 class="precio-producto"> Precio: <?php echo number_format($fila[3], 2, '.', '') ?> </h5>
-                            <form method="post" action="<?php echo  DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."backend". DIRECTORY_SEPARATOR . "cart". DIRECTORY_SEPARATOR."agregar_carrito.php?cod=". $fila[6]; ?>">
+                            <form method="post" action="<?php echo  DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."backend". DIRECTORY_SEPARATOR . "cart". DIRECTORY_SEPARATOR."agregar_carrito.php?cod=". $fila[6] . $url; ?>">
                             <label for="cantidad">Cantidad:</label>
                               <select id="cantidad" name="cantidad">'
 		                        <?php for($i=1; $i<=10;$i++) {        
@@ -102,7 +101,7 @@ $carta = new carta();
                                 <button class="btn-add-cart btn btn-outline-secondary" id="compra" type="submit">Comprar</button></form>
                             </div>
                         </div>
-                    <?php }
+                    <?php }}
                 
                 ?>
             </div>

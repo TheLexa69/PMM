@@ -81,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             $rol = $datos ["id_rol"];
                                             $fecha = $funciones->fechaHoraActual();
                                             $consulta->registroHoraSession($id_usuario, $fecha);
-                                            setcookie('access_error', $_COOKIE['access_error'] + 1, time() - 1000);
+                                          
                                             // session_start();
                                             // $usu tiene campos correo y codRes, correo 
 
@@ -121,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             $roltrabajador = $datosTrabajador["id_rol"];
                                             $fecha = $funciones->fechaHoraActual();
                                             $consultaTrabajador->registroHoraSessionTrabajador($id_trabajador, $fecha);
-                                            setcookie('access_error', $_COOKIE['access_error'] + 1, time() - 1000);
+                                            
                                             //   session_start();
                                             // $usu tiene campos correo y codRes, correo 
 

@@ -56,6 +56,7 @@ for ($i = 1; $i <= $total; $i++) {
 }
 echo "<a href='productos.php?todos=1000000 ' > Mostrar todos  </a>";
 echo " </div>";
+echo "</div>";
 
  
  require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");

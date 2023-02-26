@@ -137,7 +137,7 @@ constraint ck_pago check (modo_pago in ('efectivo','tarjeta','otro modo'))
 
 create table if not exists empresa(
 cif varchar(10) not null,
-nombre varchar(120) not null,
+nombreLocal varchar(120) not null,
 nombre_sociedad varchar(120) not null,
 direccion varchar(60) not null,
 ciudad varchar(20) not null,
@@ -163,6 +163,7 @@ id_restaurante varchar(10),
 id_mesa int,
 fecha_reserva date not null,
 turno enum('comer', 'cenar'),
+reservaAceptada enum('si', 'no')DEFAULT "no",
 constraint pk_id primary key (id_reservas)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -171,6 +172,8 @@ id_mesa	int auto_increment,
 enumMesa varchar(20) not null,
 constraint pk_id primary key (id_mesa)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ 
 
 ###########################################################################################
 #FOREIGN KEYS
@@ -344,8 +347,8 @@ INSERT INTO trabajador (nombre, apellido1, apellido2, correo, fecha, num_telef, 
 INSERT INTO trabajador (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_trabajador, nie_trabajador, pasaporte_trabajador,trabajando, contraseña) VALUES ('Juan','Alvarez','','cambes3@gmail.com',DATE(NOW()),'345345345',3, 'activado','','','no','$2y$10$aalysg/2UocdasdV/RJJUh0.Ov6uc/hgBrMTPLw9D4gEZ4jJVkmf28ZJtsi');
 INSERT INTO trabajador (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_trabajador, nie_trabajador, pasaporte_trabajador,trabajando, contraseña) VALUES ('Pepe','vazquez','pena','cambes4@gmail.com',DATE(NOW()),'456456456',1, 'activado','','','no','$2y$10$lysg/2aaUocV/RJJUh0.Ov6uc/hgBrMTPLw9D4gEZ4jJVkmf28ZJtsi');
   
-INSERT INTO empresa (cif, nombre, nombre_sociedad, direccion, ciudad, cp, telefono, logo) VALUES ('B27788272','Novo Lua Chea','LUENGOS ANDRE S.L.','Rua de Eduardo Cabello, 25','Vigo','36208','986132537','url');
-INSERT INTO empresa (cif, nombre, nombre_sociedad, direccion, ciudad, cp, telefono, logo) VALUES ('B28789542','Viejo Lua Chea','LUENGOS ANDRES S.L.','Rua de Otero Pedrallo, 30','Vigo','36208','986132537','url');
+INSERT INTO empresa (cif, nombreLocal, nombre_sociedad, direccion, ciudad, cp, telefono, logo) VALUES ('B27788272','Novo Lua Chea','LUENGOS ANDRE S.L.','Rua de Eduardo Cabello, 25','Vigo','36208','986132537','url');
+INSERT INTO empresa (cif, nombreLocal, nombre_sociedad, direccion, ciudad, cp, telefono, logo) VALUES ('B28789542','Viejo Lua Chea','LUENGOS ANDRES S.L.','Rua de Otero Pedrallo, 30','Vigo','36208','986132537','url');
 
 insert into factura (id_usuario, cif_empresa, precio, fecha, id_comida, total, modo_pago) values (2,'B27788272', 20, DATE(NOW()), 5, 20, 'efectivo');
 

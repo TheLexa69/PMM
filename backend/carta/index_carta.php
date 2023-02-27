@@ -1,28 +1,19 @@
 <?php
-require dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "sesiones" . DIRECTORY_SEPARATOR . "sesiones.php";
-// comprobar_sesion();
 session_start();
-/* Bloque try-catch con la conexión a la bdd. */
+require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
 
-try {
-    $conexion = new PDO('mysql:dbname=LuaChea; host=mysql-5707.dinaserver.com', 'Raul', 'oSyh36033^(/');
-    $conexion->exec("SET CHARACTER SET utf8");
-} catch (PDOException $e) {
-    die("ERROR: " . $e->getMessage());
-}
-?>
+use \clases\Carta as carta;
 
-<?php
-include("./nav.php");
+/* conexión a la bdd. */
+$carta = new carta();
 /* Realizamos la consulta que nos pide para enseñar los datos. */
 if (isset($_GET["tipo"])) {
     $tipo = $_GET["tipo"];
-    $consulta = "SELECT nombre, descripcion, tipo, precio, img, disponible, id_comida 
-                    FROM carta_comida c 
-                    INNER JOIN tipo t ON c.tipo = t.id_tipo
-                    WHERE t.nombre_tipo = '$tipo'";
+    $rdo = $carta->filterByTipo($tipo);
+    $url = "&tipo=$tipo";
 } else {
-    $consulta = "select nombre, descripcion, tipo, precio, img, disponible, id_comida from carta_comida";
+    $rdo = $carta->printCarta();
+    $url = "";
 }
 ?>
 
@@ -32,24 +23,24 @@ if (isset($_GET["tipo"])) {
             <h2>Alergenos</h2>
             <div class="row">
                 <div class="col-6">
-                    <img width="80px" height="auto" class="img-responsive" src="../img/altramuces.svg" alt="">
-                    <img width="80px" height="auto" class="img-responsive" src="../img/apio.svg"
+                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/altramuces.svg" alt="">
+                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/apio.svg"
                          alt="Responsive image">
-                    <img width="80px" height="auto" class="img-responsive" src="../img/cacahuete.svg" alt="">
-                    <img width="80px" height="auto" class="img-responsive" src="../img/crustaceos.svg" alt="">
-                    <img width="80px" height="auto" class="img-responsive" src="../img/huevo.svg" alt="">
-                    <img width="80px" height="auto" class="img-responsive" src="../img/lacteos.svg" alt="">
-                    <img width="80px" height="auto" class="img-responsive" src="../img/molusco.svg" alt="">
-                    <img width="80px" height="auto" class="img-responsive" src="../img/mostaza.svg" alt="">
+                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/cacahuete.svg" alt="">
+                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/crustaceos.svg" alt="">
+                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/huevo.svg" alt="">
+                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/lacteos.svg" alt="">
+                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/molusco.svg" alt="">
+                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/mostaza.svg" alt="">
 
                 </div>
                 <div class="col-6">
-                    <img width="80px" height="auto" class="img-responsive" src="../img/pescado.svg" alt="">
-                    <img width="80px" height="auto" class="img-responsive" src="../img/soja.svg" alt="">
-                    <img width="100px" height="auto" class="img-responsive" src="../img/sulfitos.svg" alt="">
-                    <img width="80px" height="auto" class="img-responsive" src="../img/sesamo.svg" alt="">
-                    <img width="80px" height="auto" class="img-responsive" src="../img/frutoscascara.svg" alt="">
-                    <img width="80px" height="auto" class="img-responsive" src="../img/gluten.svg" alt="">
+                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/pescado.svg" alt="">
+                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/soja.svg" alt="">
+                    <img width="100px" height="auto" class="img-responsive" src="../../frontend/img/sulfitos.svg" alt="">
+                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/sesamo.svg" alt="">
+                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/frutoscascara.svg" alt="">
+                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/gluten.svg" alt="">
                 </div>
             </div>
         </div>
@@ -79,15 +70,16 @@ if (isset($_GET["tipo"])) {
         </div>
         <div id="boton">
             <?php
-            if ($resultado = $conexion->query($consulta)) {
-                while ($fila = $resultado->fetch()) {
+            if ($rdo) {
+
+                foreach ($rdo as $fila) {
                     ?>
                     <div class="layered box row mr-2" id="producto">
                         <div class="col-4">                        
                             <img class="imagenes rounded img-fluid" id="producto_img" title="vaso" src="https://cdn.pixabay.com/photo/2020/12/15/13/44/children-5833685__340.jpg">
                         </div>
                         <div class="col-4 d-flex ml-2 flex-column">
-                            <h4 class="nombre-producto"><?php echo $fila[0]; ?></h4>
+                            <h4 class="nombre-producto"><?php echo $fila[0] ?></h4>
                             <p>Descripción:
                                 <a href="#" id="info">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
@@ -97,10 +89,10 @@ if (isset($_GET["tipo"])) {
                                 </a>
                             </p>
 
-                            <h5 class="precio-producto"> Precio: <?php echo number_format($fila[3], 2, '.', ''); ?> </h5>
-                            <form method="post" action="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "agregar_carrito.php?cod=" . $fila[6]; ?>">
+                            <h5 class="precio-producto"> Precio: <?php echo number_format($fila[3], 2, '.', '') ?> </h5>
+                            <form method="post" action="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "agregar_carrito.php?cod=" . $fila[6] . $url; ?>">
                                 <label for="cantidad">Cantidad:</label>
-                                <select id="cantidad" name="cantidad">';
+                                <select id="cantidad" name="cantidad">'
                                     <?php
                                     for ($i = 1; $i <= 10; $i++) {
                                         echo '<option value="' . $i . '">' . $i . '</option>';
@@ -109,16 +101,13 @@ if (isset($_GET["tipo"])) {
                                     ?> 
                                     </div>
                                     <div class="col-4 d-flex justify-content-center">
-
+                                        <!-- if session rol = admin button editar, deshabilitar -->     
                                         <button class="btn-add-cart btn btn-outline-secondary" id="compra" type="submit">Comprar</button></form>
                                     </div>
                                     </div>
-                                <?php
-                                }
-                            } else {
-                                echo "ERROR: " . print_r($pdo->errorInfo());
-                            }
-                            ?>
+    <?php }
+}
+?>
                             </div>
                             </div>
                             <div class="col-4">
@@ -199,15 +188,11 @@ if (isset($_GET["tipo"])) {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> 
 
 
 
                             </div>
-<?php
-unset($consulta);
-unset($conexion);
-?>
                             <script>
                                 var radios = document.getElementsByName('inlineRadioOptions');
                                 var mostrar = true;
@@ -223,4 +208,4 @@ unset($conexion);
                                 }
                             </script>
 <?php
-include("./footer.php");
+require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");

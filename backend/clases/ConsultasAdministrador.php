@@ -13,6 +13,10 @@ class ConsultasAdministrador extends Conexion {
         parent::__construct();
     }
 
+    public function __destruct() {
+        $this->conexion = null;
+    }
+
     public function añadirTrabajador($nombre, $apellido1, $apellido2, $token2, $mail, $telefono, $privilegios, $fecha, $nie, $pasaporte) {
 
         try {
@@ -71,10 +75,7 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-    
-    
-    
-    
+
     public function actualizarDatosTrabajador($id, $nie, $pasaporte, $nombre, $apellido1, $apellido2, $correo, $telefono, $rol, $estado, $trabajando) {
 
         try {
@@ -114,9 +115,8 @@ class ConsultasAdministrador extends Conexion {
 
             $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-           
             return $fila;
-             unset($fila);
+            unset($fila);
         } catch (PDOException $e) {
 
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
@@ -412,9 +412,8 @@ class ConsultasAdministrador extends Conexion {
 
             $stmt->execute();
             $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
-              
-            return $fila; 
-            
+
+            return $fila;
         } catch (PDOException $e) {
 
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
@@ -428,6 +427,46 @@ class ConsultasAdministrador extends Conexion {
             $stmt = $this->conexion->prepare($sql);
 
             $stmt->bindParam(':id', $id, PDO::PARAM_STR, 25);
+            $stmt->execute();
+
+            return $stmt;
+        } catch (PDOException $e) {
+
+            die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
+        }
+    }
+
+    public function comprobarReservas($comprobante = "") {
+
+        try {
+            if ($comprobante == 0) {
+                $sql = "select r.id_reservas,r.id_usuario,r.id_restaurante,r.id_mesa,r.fecha_reserva,r.turno ,r.reservaAceptada,u.nombre,u.apellido1,u.num_telef,u.correo,e.nombreLocal from reservas  as r inner join usuario as u on r.id_usuario = u.id_usuario inner join empresa as e on e.cif = r.id_restaurante where reservaAceptada ='no'";
+            } else {
+                $sql = "select r.id_reservas,r.id_usuario,r.id_restaurante,r.id_mesa,r.fecha_reserva,r.turno ,r.reservaAceptada,u.nombre,u.apellido1,u.num_telef,u.correo,e.nombreLocal from reservas  as r inner join usuario as u on r.id_usuario = u.id_usuario inner join empresa as e on e.cif = r.id_restaurante where reservaAceptada ='si'";
+            }
+ 
+            $stmt = $this->conexion->prepare($sql);
+
+            $stmt->execute();
+
+            $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            unset($stmt);
+            return $fila;
+        } catch (PDOException $e) {
+
+            die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
+        }
+    }
+
+    public function actualizarReservas($id, $reserva) {
+        try {
+            $sql = "UPDATE reservas  set reservaAceptada=:reserva  where id_reservas = :id";
+
+            $stmt = $this->conexion->prepare($sql);
+
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR, 25);
+            $stmt->bindParam(':reserva', $reserva, PDO::PARAM_STR);
             $stmt->execute();
 
             return $stmt;

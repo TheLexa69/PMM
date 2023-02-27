@@ -13,7 +13,7 @@ class FormulariosUsuario {
 
     public function registroDatosPorUsuario($id, $necesarios = "") {
         ?>
-        <div class="container bg-light rounded mt-5 w-50 p-3">
+        <div class="container bg-light rounded mt-5 w-60 p-3">
             <form enctype="multipart/form-data" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
                 <div class="text-center">
                     <h2>Modifica tus datos:</h2>
@@ -90,6 +90,53 @@ class FormulariosUsuario {
                     echo "<br><br><b style=color:red>Faltan campos obligatorios para completar el registro:</b> <br>$necesarios";
                 }
                 ?>
+            </form>
+        </div>
+        <?php
+    }
+
+    public function formularioReserva($restaurante, $mesas, $necesarios = "") {
+        ?>
+        <div class="container bg-light rounded mt-5 w-60 p-3">
+            <form enctype="multipart/form-data" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
+                <div class="text-center">
+                    <h2>Reserva tu mesa</h2>
+                    <hr>
+                </div>
+                <div class="mt-3">
+                    <label for="c1" class="form-label">Fecha de Reserva:</label>     
+                    <input type=datetime-local name="fecha" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}">
+                </div>
+
+                <div class="mt-3">
+                    <label for="c2" class="form-label">Restaurante:</label>  
+                    <select name="restaurante">
+                        <?php foreach ($restaurante as $res) { ?>
+                            <option value = "<?php echo ($res["nombreLocal"]) ? $res["nombreLocal"] : "no"; ?>"><?php echo ($res["nombreLocal"]) ? $res["nombreLocal"] : "Restaurante no disponible"; ?></option>;
+                        <?php } ?>
+                    </select>
+                </div>
+
+                <div class='mt-3'>
+                    <label for="c2" class="form-label">Mesas:</label>  
+                    <select name="mesas">
+                        <option value = "<?php echo (!empty($mesas["id_mesa"])) ? $mesas["id_mesa"] : ""; ?>"><?php echo (!empty($mesas["id_mesa"])) ? "Hay mesas disponibles" : "No hay mesas disponibles"; ?></option>;
+                    </select>
+                </div>
+
+                <div class='mt-3'>
+                    <label for="c2" class="form-label">Turno:</label>  
+                    <select name="turno">
+                        <option value = "comer" selected>Comer</option>;
+                        <option value = "cenar">Cenar</option>;
+                    </select>
+                </div>
+
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-outline-success" name="registro">Reservar</button>
+                    <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>" id="cancel" name="cancel" class="btn btn-default btn-outline-danger">Cancelar</a>
+                </div>
+
             </form>
         </div>
         <?php

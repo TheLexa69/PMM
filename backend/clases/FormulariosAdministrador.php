@@ -5,7 +5,7 @@ namespace clases;
 class FormulariosAdministrador {
 
     public function redirecionesAdministrador() {
-        echo "<div class='container bg-light rounded mt-5 w-50 p-3'>";
+        echo "<div class='container bg-light rounded mt-5 w-50 p-5'>";
         echo "<div class='text-center'>
               <h2>Panel Administrador</h2>
               <hr>
@@ -14,6 +14,7 @@ class FormulariosAdministrador {
         echo "<a href='altaTrabajador.php'><input type='button' class='btn btn-outline-success' value='Añadir Trabajador'></a>";
         echo "<a href='trabajadores.php'><input type='button' class='btn btn-outline-success' value='Listar Trabajadores'></a>";
         echo "<a href='productos.php'><input type='button' class='btn btn-outline-success' value='Modificar Productos'></a>";
+        echo "<a href='consultaReservas.php'><input type='button' class='btn btn-outline-success' value='Reservas'></a>";
         echo "</div>";
         echo "</div>";
     }
@@ -232,8 +233,6 @@ class FormulariosAdministrador {
     }
 
     public function datosProducto($id, $tipobd, $subtipobd) {
-        /*   c.tipo,c.subtipo
-          t.nombre_tipo,e.nombre_subtipo */
         ?>
 
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
@@ -252,15 +251,7 @@ class FormulariosAdministrador {
                                 }
                                 ?>
 
-
-
-
                             </select></td></tr>
-
-
-
-
-
                     <tr><td>    Subtipo:</td><td> <select name="subtipo"> 
                                 <option value="<?php echo ($id["nombre_subtipo"]) ? $id["subtipo"] : ''; ?>"><?php echo ($id["nombre_subtipo"]) ? $id["nombre_subtipo"] : ''; ?></option>
 
@@ -327,18 +318,59 @@ class FormulariosAdministrador {
             if (isset($_GET["mensaje"])) {
                 echo "<script> alert('" . $_GET["mensaje"] . "'); </script>";
             }
+            ?> '<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">';<?php
+                echo "<center><table >";
+                echo "<tr>";
+                echo "<th>Nombre</th> <th>Descripcion</th> <th>Tipo</th><th>Subtipo</th><th>Disponible desde</th><th>Disponible hasta</th><th>Precio</th><th>Visible</th><th>Imagen</th>";
+                echo "</tr>";
 
-            echo "<center><table >";
-            echo "<tr>";
-            echo "<th>Nombre</th> <th>Descripcion</th> <th>Tipo</th><th>Subtipo</th><th>Disponible desde</th><th>Disponible hasta</th><th>Precio</th><th>Visible</th><th>Imagen</th>";
-            echo "</tr>";
+                foreach ($fila as $a) {
+                    echo "<tr><td>" . $a["nombre"] . "</td> <td>" . $a["descripcion"] . "</td> <td>" . $a["nombre_tipo"] . "</td><td>" . $a["nombre_subtipo"] . "</td> <td>" . $a["fecha_inicio"] . "</td><td>" . $a["fecha_fin"] . "</td><td>" . $a["precio"] . " E" . "</td><td>" . $a["disponible"] . "</td><td>" . $a["img"] . "</td><td><a href=modificarProductos.php?codigo=" . $a["id_comida"] . " class='btn btn-default btn-outline-info'>Modificar</a><td></tr>";
+                }
+                echo "</table></center>";
 
-            foreach ($fila as $a) {
-                echo "<tr><td>" . $a["nombre"] . "</td> <td>" . $a["descripcion"] . "</td> <td>" . $a["nombre_tipo"] . "</td><td>" . $a["nombre_subtipo"] . "</td> <td>" . $a["fecha_inicio"] . "</td><td>" . $a["fecha_fin"] . "</td><td>" . $a["precio"] . " E" . "</td><td>" . $a["disponible"] . "</td><td>" . $a["img"] . "</td><td><a href=modificarProductos.php?codigo=" . $a["id_comida"] . " class='btn btn-default btn-outline-info'>Modificar</a><td></tr>";
-            }                                                                                                                                                                                        
-            echo "</table></center>";
-            echo "<center><a href='indexAdministrador.php'><input type='button' value='Volver a inicio'></a></center>";
-        }
+                echo '</form><br><br>';
+                echo "<center><a href='indexAdministrador.php'><input type='button' value='Volver a inicio'></a></center>";
+            }
 
-    }
-    
+            public function tablaReservas($fila, $tipoTabla = "") {
+                if (isset($_GET["mensaje"])) {
+                    echo "<script> alert('" . $_GET["mensaje"] . "'); </script>";
+                }
+                if ($tipoTabla == "pendientes") {
+                    echo ' <div> <center> <h1>Reservas pendientes de ser aceptadas</h1>';
+                    ?> '<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">';<?php
+                        echo ' <table class="container bg-light rounded mt-5 display: flex align-items:center justify-content:center" >';
+                        echo "<tr>";
+                        echo "<th>Selecionar Aceptadas</th><th>Numero de reserva</th> <th>Usuario</th> <th>Telefono</th><th>Mail</th><th>Restaurante</th><th>Mesa</th><th>Fecha reserva</th><th>Turno</th><th>Reservas Confirmadas </th><th></th>";
+                        echo "</tr>";
+
+                        foreach ($fila as $a) {
+                            $id = $a["id_reservas"];
+                            echo "<tr><td><input type='checkbox' name='confirmado[]' value='$id'> <td>" . $a["id_reservas"] . "</td> <td>" . $a["nombre"] . " " . $a["apellido1"] . "</td><td>" . $a["num_telef"] . "</td><td>" . $a["correo"] . "</td><td>" . $a["nombreLocal"] . "</td><td>" . $a["id_mesa"] . "</td><td>" . $a["fecha_reserva"] . "</td> <td>" . $a["turno"] . "</td> <td>" . $a["reservaAceptada"] . "</td></tr>  ";
+                        }
+                        echo "</table> ";
+                        echo " <a href='indexAdministrador.php'><input type='button' value='Volver a inicio'></a> ";
+
+                        echo'  <input type="submit" name=aceptar value="Aceptar reservas selecionadas" ><br><br>';
+                        echo '</form><br><br>';
+                        echo ' </center> </div> ';
+                    } else {
+                        echo ' <div> <center> <h1>Reservas ya aceptadas</h1>';
+
+                        echo '<table class="container bg-light rounded mt-5 " >';
+                        echo "<tr>";
+                        echo "<th>Numero de reserva</th> <th>Usuario</th> <th>Telefono</th><th>Mail</th><th>Restaurante</th><th>Mesa</th><th>Fecha reserva</th><th>Turno</th><th>Reservas Confirmadas </th><th></th>";
+                        echo "</tr>";
+
+                        foreach ($fila as $a) {
+                            echo "<tr><td>" . $a["id_reservas"] . "</td> <td>" . $a["nombre"] . " " . $a["apellido1"] . "</td><td>" . $a["num_telef"] . "</td><td>" . $a["correo"] . "</td><td>" . $a["nombreLocal"] . "</td><td>" . $a["id_mesa"] . "</td><td>" . $a["fecha_reserva"] . "</td> <td>" . $a["turno"] . "</td> <td>" . $a["reservaAceptada"] . "</td>  ";
+                        }
+                        echo "</table> ";
+                        echo " <a href='indexAdministrador.php'><input type='button' value='Volver a inicio'></a> ";
+                        echo ' </center> </div> ';
+                    }
+                }
+
+            }
+            

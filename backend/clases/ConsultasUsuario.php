@@ -61,4 +61,61 @@ class ConsultasUsuario extends Conexion {
         }
     }
 
+    public function restaurantes() {
+        try {
+            $sql = "select * from empresa";
+
+            $stmt = $this->conexion->prepare($sql);
+
+            $stmt->execute();
+
+            $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $fila;
+            unset($fila);
+        } catch (Exception $ex) {
+            
+        }
+    }
+
+    public function mesas() {
+        try {
+            $sql = "select * from mesas where (id_mesa not in (select id_mesa from reservas))";
+
+            $stmt = $this->conexion->prepare($sql);
+
+            $stmt->execute();
+
+            $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $dato = array();
+            foreach ($fila as $mesa) {
+                $dato = $mesa;
+            }
+            return $dato;
+
+            unset($fila);
+        } catch (Exception $ex) {
+            
+        }
+    }
+
+    public function hacerReserva($id, $restaurante, $mesa, $fecha, $turno) {
+        try {
+            $sql = "UPDATE reservas SET id_usuario=:id, id_restaurante=:restaurante, id_mesa=:mesa, fecha_reserva=:fecha, turno=:turno";
+            $stmt = $this->conexion->prepare($sql);
+
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR, 25);
+            $stmt->bindParam(':restaurante', $restaurante, PDO::PARAM_STR);
+            $stmt->bindParam(':mesa', $mesa, PDO::PARAM_STR);
+            $stmt->bindParam(':fecha', $fecha, PDO::PARAM_STR);
+            $stmt->bindParam(':turno', $turno, PDO::PARAM_STR);
+
+            $stmt->execute();
+
+            return $stmt;
+        } catch (PDOException $e) {
+            die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
+        }
+    }
+
 }

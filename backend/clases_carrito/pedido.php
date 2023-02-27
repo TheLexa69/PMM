@@ -116,10 +116,10 @@ class pedido extends \clases\Conexion {
             $stmt->bindParam(':id_comida', $id_comida, PDO::PARAM_INT);
             $stmt->execute();
             $result = $stmt->fetch();
-            $array_carrito .=  "<tr><td>" .$result['nombre']. "</td><td>$cantidad</td><td>".$result['precio']."</td><td> </tr>";
+            $array_carrito .=  "<tr><td>" .$result['nombre']. "</td><td>$cantidad</td><td>".$result['precio']."€</td><td> </tr>";
         }
         $array_carrito .= "<tr><td colspan=3>_________________</td></tr></tr>
-                            <tr><td>Precio Total</td><td colspan=2>$precio_total</td> </tr>
+                            <tr><td>Precio Total</td><td colspan=2>$precio_total €</td> </tr>
                             <tr><td colspan=3>_________________</td></tr>
                             <tr><td>Especificaciones del cliente: </td><td colspan=2>$especif</td> </tr>"; 
         return $array_carrito;

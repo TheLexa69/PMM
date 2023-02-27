@@ -20,7 +20,7 @@ if (isset($_SESSION['usuario'])) {
             $cif = $restaurante['cif'];
             $nombre = $restaurante['nombreLocal'];
             $dir = $restaurante['direccion'];
-            echo "<input type='radio' id='" .$dir."' name='opciones_res' value='".$cif."'>
+            echo "<input type='radio' id='" .$dir."' name='opciones_res' value='".$cif."' required>
             <label for='" .$dir."'>$nombre<br>Dirección: $dir</label><br>";
         }
       ?>
@@ -34,7 +34,7 @@ if (isset($_SESSION['usuario'])) {
         foreach ($modo_pago as $pago) {
             $nombre = $pago['nombre'];
             $id = $pago['id_modo_pago'];
-            echo "<input type='radio' id='" .$id."' name='opciones_modo_pago' value='".$id."'>
+            echo "<input type='radio' id='" .$id."' name='opciones_modo_pago' value='".$id."' required>
             <label for='" .$id."'>". strtoupper($nombre) . "</label><br>";
         }
       ?>

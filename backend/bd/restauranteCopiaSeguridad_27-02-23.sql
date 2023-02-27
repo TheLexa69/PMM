@@ -161,7 +161,7 @@ constraint pk_id primary key (id_carro)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE if not exists ped_prod (
-  id_ped_prod int NOT NULL,
+  id_ped_prod int NOT NULL auto_increment,
   id_ped int NOT NULL,
   id_prod int NOT NULL,
   cantidad int NOT NULL,

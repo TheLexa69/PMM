@@ -4,8 +4,10 @@
  *
  * @author Nuria
  */
-require_once 'conexion.php';
-class pedido extends conexion {
+//require_once 'conexion.php';
+require "../clases/Conexion.php";
+require "../clases/Mails.php";
+class pedido extends \clases\Conexion {
     
     private $tabla_pedidos;
     private $tabla_productos;
@@ -51,7 +53,7 @@ class pedido extends conexion {
             $stmt->execute();
 
             $this->conexion->commit();
-            return true;
+            return $id_pedido;
         } catch (PDOException $e) {
             $this->conexion->rollback();
             return false;
@@ -104,5 +106,40 @@ class pedido extends conexion {
         $stmt = $this->conexion->prepare("SELECT * FROM modo_pago");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function array_carrito($carrito, $precio_total, $especif) {
+        $array_carrito = "";
+        foreach ($carrito as $id_comida => $cantidad) {
+            $stmt = $this->conexion->prepare("SELECT id_comida, nombre, precio
+                                    FROM carta_comida WHERE id_comida = :id_comida");
+            $stmt->bindParam(':id_comida', $id_comida, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetch();
+            $array_carrito .=  "<tr><td>" .$result['nombre']. "</td><td>$cantidad</td><td>".$result['precio']."</td><td> </tr>";
+        }
+        $array_carrito .= "<tr><td colspan=3>_________________</td></tr></tr>
+                            <tr><td>Precio Total</td><td colspan=2>$precio_total</td> </tr>
+                            <tr><td colspan=3>_________________</td></tr>
+                            <tr><td>Especificaciones del cliente: </td><td colspan=2>$especif</td> </tr>"; 
+        return $array_carrito;
+    }
+
+    function crear_correo($carrito, $pedido) {
+        /*
+         * Crea la tabla HTML con los productos que se piden, incluyendo el peso
+         */
+        $pesoTotal = 0;
+        $texto = "<h1>Pedido nº $pedido</h1>";
+        $texto .= "Detalle del pedido:";
+        $texto .= "<table>"; //abrir la tabla
+        $texto .= "<tr><th>Nombre</th><th>Unidades</th><th>Precio</th></tr>";
+        $texto .= $carrito;
+        $texto .= "</table> </br> Su pedido se está cocinando...";
+        return $texto;
+    }
+    function enviar($email, $cuerpo) {
+        $c_envio = new \clases\Mails;
+        $c_envio->enviar_correo_pedidos($email, $cuerpo);
     }
 }

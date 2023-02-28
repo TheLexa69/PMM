@@ -340,17 +340,18 @@ class FormulariosAdministrador {
                                     </td>
                                 </tr>  
                             </table>
+                            <div class="mt-3 d-flex justify-content-center">
+                                <input type="hidden" name="id" value="<?php echo $id["id_comida"]; ?>">
+                                <input type="submit" name="actualizar" value="Actualizar" class="btn btn-outline-info">
+                                <input type="submit" name="eliminar" value="Eliminar" class="btn btn-outline-danger"> 
+                                <a href="productos.php"><input type="button" value="Modificar Otro Producto" class="btn btn-outline-success"></a>
+                                <a href="indexAdministrador.php"><input type="button" value="Volver a inicio" class="btn btn-outline-warning"></a>
+                            </div>
                         </form>
                     </div>
                 </div>
 
-                <div class="mt-3 d-flex justify-content-center">
-                    <input type="hidden" name="id" value="<?php echo $id["id_comida"]; ?>">
-                    <input type="submit" name="actualizar" value="Actualizar" class="btn btn-outline-info">
-                    <input type="submit" name="eliminar" value="Eliminar" class="btn btn-outline-danger"> 
-                    <a href="productos.php"><input type="button" value="Modificar Otro Producto" class="btn btn-outline-success"></a>
-                    <a href="indexAdministrador.php"><input type="button" value="Volver a inicio" class="btn btn-outline-warning"></a>
-                </div>
+
             </div>
 
             <?php
@@ -460,11 +461,11 @@ class FormulariosAdministrador {
                                     }
                                     ?>
                                 </table>
+                                <div class="mt-3 text-center pb-3"> 
+                                    <a href='indexAdministrador.php'><input type='button' value='Volver a inicio' class="btn btn-outline-warning"></a>
+                                    <input class="btn btn-outline-success" type="submit" name="aceptar" value="Aceptar reservas selecionadas" >
+                                </div>
                             </form>
-                        </div>
-                        <div class="mt-3 text-center pb-3"> 
-                            <a href='indexAdministrador.php'><input type='button' value='Volver a inicio' class="btn btn-outline-warning"></a>
-                            <input class="btn btn-outline-success" type="submit" name=aceptar value="Aceptar reservas selecionadas" >
                         </div>
                     </div>
                 <?php } else {

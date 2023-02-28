@@ -1,10 +1,11 @@
 <?php
+namespace clases;
 /**
  * Description of carta
  *
  * @author Nuria
  */
-namespace clases;
+
 
 use \PDO;
 use \PDOException;

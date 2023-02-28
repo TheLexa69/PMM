@@ -1,8 +1,9 @@
 <?php
 /*Elimina el producto de la cesta */
-//use clases_carrito\carrito;
-require "../clases_carrito/carrito.php";
 session_start();
+require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "nav.php"); 
+//require "../clases_carrito/carrito.php";
+use clases\Carrito as carrito;
 $cod_comida = $_GET["cod"];
 if (!isset($_SESSION['usuario'])) { 
 	// Si no hay una sesión iniciada, comprobar si hay productos en la cookie
@@ -42,3 +43,4 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 header("Location: index_carrito.php");
+require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "footer.php"); 

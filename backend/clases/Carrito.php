@@ -1,13 +1,18 @@
 <?php
+namespace clases;
 /**
  * Description of carrito
  *
  * @author Nuria
  */
-require_once 'conexion.php';
+
+
+use \PDO;
+use \PDOException;
+
 
 //namespace clases_carrito;
-class carrito extends conexion {
+class Carrito extends Conexion {
     
     private $table = 'carrito';
 
@@ -34,7 +39,7 @@ class carrito extends conexion {
     
     /*Saca cada producto que tiene en la cesta con esos campos, parecido al de arriba*/
     /*Sin utilidad, anteriormente para mostrar cada fila x producto, base de datos cambiada*/
-    public function printCarro($id_usuario) {
+    /*public function printCarro($id_usuario) {
         $rows = "";
         $stmt = $this->conexion->prepare("SELECT c.id_comida, p.img, p.nombre, precio, c.id_usuario, c.cantidad 
                                             FROM carta_comida p 
@@ -48,7 +53,7 @@ class carrito extends conexion {
         }
         return $rows;
         //Código para visualizar el carro
-    }
+    }*/
 
     public function printCarroSes($id_comida, $cantidad) {
         $stmt = $this->conexion->prepare("SELECT id_comida, img, nombre, precio
@@ -77,7 +82,7 @@ class carrito extends conexion {
                             </a>
                             </p>
 
-                            <h5 class=\"precio-producto\"> Precio: ". $result['precio'] ."</h5>
+                            <h5 class=\"precio-producto\"> Precio: ". $result['precio'] ."€</h5>
                             <form method=\"post\" action=\"". $url  ."\">
                             <label for=\"cantidad\">Cantidad:</label>
                             <input type=\"number\" name=\"cantidad\" value=\"" . $cantidad . "\" min=\"1\" max=\"10\" onchange=\"updateCantidad(" . $id_comida . ", this.value)\">
@@ -89,6 +94,36 @@ class carrito extends conexion {
         return $html_code;
 
 
+    }
+
+    
+    function printCarritoCarta($id_comida, $cantidad) {
+        $stmt = $this->conexion->prepare("SELECT id_comida, nombre, precio
+                                        FROM carta_comida WHERE id_comida = :id_comida");
+        $stmt->bindParam(':id_comida', $id_comida, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch();
+
+        //Código para visualizar el carro
+        $url = DIRECTORY_SEPARATOR .'proyecto'.DIRECTORY_SEPARATOR .'backend'. DIRECTORY_SEPARATOR . 'cart'. DIRECTORY_SEPARATOR.'eliminar_carrito.php?cod='. $result['id_comida'];
+        $html_code = '<div class="row align-items-center border-bottom pt-2 pb-2">
+                    <div class="col-3">'.$result['nombre'].'</div>
+                    <div class="col-3">'.$result['precio'].'</div>
+                    <div class="col-3">'.$cantidad.'</div>
+                    <div class="col-3 d-flex justify-content-center align-items-center">
+                        <a href="'.$url.'">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash" viewBox="0 0 16 16">
+                                <path
+                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                <path fill-rule="evenodd"
+                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>';
+
+return $html_code;
     }
     
     /*Añadir productos al carro*/
@@ -137,7 +172,7 @@ class carrito extends conexion {
             $stmt->bindParam(1, $cod, PDO::PARAM_INT);
             $stmt->execute();
             $productos = $stmt->fetch();
-            $precio += $productos['precio'] * $cant;
+            $precio += (int)$productos['precio'] * (int)$cant;
         }
     
         return $precio;
@@ -148,6 +183,14 @@ class carrito extends conexion {
         $query = "SELECT id_usuario FROM usuario WHERE correo = :email";
         $stmt = $this->conexion->prepare($query);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
+    function searchRol($id_usuario) {
+        $query = "SELECT id_rol FROM usuario WHERE id_usuario = :id_usuario";
+        $stmt = $this->conexion->prepare($query);
+        $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch();
     }

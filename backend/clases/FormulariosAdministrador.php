@@ -16,6 +16,7 @@ class FormulariosAdministrador {
         echo "<a href='productos.php'><input type='button' class='btn btn-outline-success' value='Modificar Productos'></a>";
         echo "<a href='consultaReservas.php'><input type='button' class='btn btn-outline-success' value='Reservas sin confirmar'></a>";
         echo "<a href='reservasPorDias.php'><input type='button' class='btn btn-outline-success' value='Historico Reservas'></a>";
+        echo "<a href='.php'><input type='button' class='btn btn-outline-success' value='Pedidos Pendientes'></a>";
         echo "</div>";
         echo "</div>";
     }
@@ -428,45 +429,75 @@ class FormulariosAdministrador {
 
                 <?php
             }
-            
-            
-              public function FiltrarReservasFecha() {
-            ?>
-            <div class="container bg-light rounded mt-5 p-3">
-                <div class='d-flex justify-content-center text-center'>
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-                        <h3>Ordenar por:</h3>
-                        <label for="c1"> Fecha de la reserva:</label>
-                        <input type="date" name="fecha"   class="form-check-input">
-                         
-                      
-                        <input type="submit" name=validar value="Filtrar" class="btn btn-default btn-outline-success">
-                        
-                    </form>
-                </div>
-             
-                <?php
-            }
 
-            
-            
+            public function FiltrarReservasFecha() {
+                ?>
+                <div class="container bg-light rounded mt-5 p-3">
+                    <div class='d-flex justify-content-center text-center'>
+                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                            <h3>Ordenar por:</h3>
+                            <label for="c1"> Fecha de la reserva:</label>
+                            <input type="date" name="fecha"   class="form-check-input">
 
-            public function tablaReservas($fila, $tipoTabla = "") {
-                if (isset($_GET["mensaje"])) {
-                    echo "<script> alert('" . $_GET["mensaje"] . "'); </script>";
+
+                            <input type="submit" name=validar value="Filtrar" class="btn btn-default btn-outline-success">
+
+                        </form>
+                    </div>
+
+                    <?php
                 }
-                if ($tipoTabla == "pendientes") {
-                    ?>
-                    <div class="container bg-light rounded mt-5">
-                        <div class="mt-3 d-flex justify-content-center">
-                            <h1>Reservas pendientes de ser aceptadas</h1>
-                            <hr>
+
+                public function tablaReservas($fila, $tipoTabla = "") {
+                    if (isset($_GET["mensaje"])) {
+                        echo "<script> alert('" . $_GET["mensaje"] . "'); </script>";
+                    }
+                    if ($tipoTabla == "pendientes") {
+                        ?>
+                        <div class="container bg-light rounded mt-5">
+                            <div class="mt-3 d-flex justify-content-center">
+                                <h1>Reservas pendientes de ser aceptadas</h1>
+                                <hr>
+                            </div>
+                            <div class="mt-3 d-flex justify-content-center">
+                                <form class='form-group' action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                                    <table>
+                                        <tr class='text-center'>
+                                            <th>Selecionar Aceptadas</th>
+                                            <th>Numero de reserva</th>
+                                            <th>Usuario</th>
+                                            <th>Telefono</th>
+                                            <th>Mail</th>
+                                            <th>Restaurante</th>
+                                            <th>Mesa</th>
+                                            <th>Fecha reserva</th>
+                                            <th>Turno</th>
+                                            <th>Reservas Confirmadas </th>
+                                        </tr>
+            <?php
+            foreach ($fila as $a) {
+                $id = $a["id_reservas"];
+                $correo = $a['correo'];
+                $nombre=$a["nombre"];
+                echo "<tr class='border border-dark'><td class='text-center'> <input type='hidden' name='correo' value='$correo'><input type='hidden' name='nombre' value='$nombre'><input type='checkbox' name='confirmado[]' value='$id'><input type='checkbox' name='confirmado[]' value='$id'> <td class='text-center'>" . $a["id_reservas"] . "</td> <td class='text-center'>" . $a["nombre"] . " " . $a["apellido1"] . "</td><td class='text-center'>" . $a["num_telef"] . "</td><td class='text-center'>" . $a["correo"] . "</td><td class='text-center'>" . $a["nombreLocal"] . "</td><td class='text-center'>" . $a["id_mesa"] . "</td><td class='text-center'>" . $a["fecha_reserva"] . "</td> <td class='text-center'>" . $a["turno"] . "</td> <td class='text-center'>" . $a["reservaAceptada"] . "</td></tr>";
+            }
+            ?>
+                                    </table>
+                                    <div class="mt-3 text-center pb-3"> 
+                                        <a href='indexAdministrador.php'><input type='button' value='Volver a inicio' class="btn btn-outline-warning"></a>
+                                        <input class="btn btn-outline-success" type="submit" name="aceptar" value="Aceptar reservas selecionadas" >
+                                        <input class="btn btn-outline-success" type="submit" name="rechazar" value="Rechazar reservas selecionadas" >
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <div class="mt-3 d-flex justify-content-center">
-                            <form class='form-group' action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-                                <table>
-                                    <tr class='text-center'>
-                                        <th>Selecionar Aceptadas</th>
+        <?php } else {
+            ?>
+                        <div> 
+                            <center> 
+                                <h1>Reservas ya aceptadas</h1>
+                                <table class="container bg-light rounded mt-5 ">
+                                    <tr>
                                         <th>Numero de reserva</th>
                                         <th>Usuario</th>
                                         <th>Telefono</th>
@@ -476,52 +507,28 @@ class FormulariosAdministrador {
                                         <th>Fecha reserva</th>
                                         <th>Turno</th>
                                         <th>Reservas Confirmadas </th>
+                                        <th></th>
                                     </tr>
-                                    <?php
-                                    foreach ($fila as $a) {
-                                        $id = $a["id_reservas"];
-                                        echo "<tr class='border border-dark'><td class='text-center'><input type='checkbox' name='confirmado[]' value='$id'> <td class='text-center'>" . $a["id_reservas"] . "</td> <td class='text-center'>" . $a["nombre"] . " " . $a["apellido1"] . "</td><td class='text-center'>" . $a["num_telef"] . "</td><td class='text-center'>" . $a["correo"] . "</td><td class='text-center'>" . $a["nombreLocal"] . "</td><td class='text-center'>" . $a["id_mesa"] . "</td><td class='text-center'>" . $a["fecha_reserva"] . "</td> <td class='text-center'>" . $a["turno"] . "</td> <td class='text-center'>" . $a["reservaAceptada"] . "</td></tr>";
-                                    }
-                                    ?>
-                                </table>
-                                <div class="mt-3 text-center pb-3"> 
-                                    <a href='indexAdministrador.php'><input type='button' value='Volver a inicio' class="btn btn-outline-warning"></a>
-                                    <input class="btn btn-outline-success" type="submit" name="aceptar" value="Aceptar reservas selecionadas" >
-                                     <input class="btn btn-outline-success" type="submit" name="rechazar" value="Rechazar reservas selecionadas" >
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                <?php } else {
-                    ?>
-                    <div> 
-                        <center> 
-                            <h1>Reservas ya aceptadas</h1>
-                            <table class="container bg-light rounded mt-5 ">
-                                <tr>
-                                    <th>Numero de reserva</th>
-                                    <th>Usuario</th>
-                                    <th>Telefono</th>
-                                    <th>Mail</th>
-                                    <th>Restaurante</th>
-                                    <th>Mesa</th>
-                                    <th>Fecha reserva</th>
-                                    <th>Turno</th>
-                                    <th>Reservas Confirmadas </th>
-                                    <th></th>
-                                </tr>
-                                <?php
-                                foreach ($fila as $a) {
-                                    echo "<tr><td>" . $a["id_reservas"] . "</td> <td>" . $a["nombre"] . " " . $a["apellido1"] . "</td><td>" . $a["num_telef"] . "</td><td>" . $a["correo"] . "</td><td>" . $a["nombreLocal"] . "</td><td>" . $a["id_mesa"] . "</td><td>" . $a["fecha_reserva"] . "</td> <td>" . $a["turno"] . "</td> <td>" . $a["reservaAceptada"] . "</td>  ";
-                                }
-                                ?>
-                            </table>
-                            <a href='indexAdministrador.php'><input type='button' value='Volver a inicio' class="btn btn-outline-warning"></a>
-                    </div> 
-                </div>
-                <?php
+            <?php
+            foreach ($fila as $a) {
+                echo "<tr><td>" . $a["id_reservas"] . "</td> <td>" . $a["nombre"] . " " . $a["apellido1"] . "</td><td>" . $a["num_telef"] . "</td><td>" . $a["correo"] . "</td><td>" . $a["nombreLocal"] . "</td><td>" . $a["id_mesa"] . "</td><td>" . $a["fecha_reserva"] . "</td> <td>" . $a["turno"] . "</td> <td>" . $a["reservaAceptada"] . "</td>  ";
             }
+            ?>
+                                </table>
+                                <a href='indexAdministrador.php'><input type='button' value='Volver a inicio' class="btn btn-outline-warning"></a>
+                        </div> 
+                    </div>
+            <?php
         }
-
     }
-    
+
+    public function mensageReserva($tipo = "") {
+        if ($tipo == "cancelada") {
+            $mensaje = "<h1>Estimado cliente su solicitud de reserva <b>ha sido cancelada</b> </h1>";
+        } else {
+            $mensaje = "<h1>Estimado cliente su solicitud de reserva <b>ha sido aceptada</b> </h1>";
+        }
+        return $mensaje;
+    }
+
+}

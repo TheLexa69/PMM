@@ -261,11 +261,11 @@ INSERT INTO alergenos (nombre_alergeno, descripcion, img) values ('frutoscascara
 INSERT INTO alergenos (nombre_alergeno, descripcion, img) values ('gluten', 'Contiene Gluten', 'url');
 
 #FALTA AGREGAR LOS CAMPOS DE ALERGENOS !!!!!!!!
-INSERT INTO carta_comida (nombre, descripcion, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Surtido de Croquetas','Jamón, Cecina y Pulpo',1, 1,DATE(NOW()), null,'13.50',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Pulpo',1, 1,DATE(NOW()), null,'12.50',1,'url');
+INSERT INTO carta_comida (nombre, descripcion, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Surtido de Croquetas','Jamón, Cecina y Pulpo',1, 1,DATE(NOW()), DATE(NOW()),'13.50',1,'url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Pulpo',1, 1,DATE(NOW()),DATE(NOW()),'12.50',1,'url');
 INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Rulo de cabra y cebolla caramelizada',1, 1,DATE(NOW()), null,'12.00',1,'url');
 INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Cecina y Queso San Simón',1, 1,DATE(NOW()), null,'11.50',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón',1, 1,DATE(NOW()), null,'10.00',1,'url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón',1, 1,DATE(NOW()), DATE(NOW()),'10.00',1,'url');
 
 INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Cesar con Pollo',1, 2,DATE(NOW()), null,'13.50',1,'url');
 INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Tomate, Ventresca y Anchoa',1, 2,DATE(NOW()), null,'12.50',1,'url');
@@ -369,7 +369,9 @@ INSERT INTO trabajador (nombre, apellido1, apellido2, correo, fecha, num_telef, 
 INSERT INTO empresa (cif, nombreLocal, nombre_sociedad, direccion, ciudad, cp, telefono, logo) VALUES ('B27788272','Novo Lua Chea','LUENGOS ANDRE S.L.','Rua de Eduardo Cabello, 25','Vigo','36208','986132537','url');
 INSERT INTO empresa (cif, nombreLocal, nombre_sociedad, direccion, ciudad, cp, telefono, logo) VALUES ('B28789542','Viejo Lua Chea','LUENGOS ANDRES S.L.','Rua de Otero Pedrallo, 30','Vigo','36208','986132537','url');
 
-#insert into pedidos (id_usuario, cif_empresa, fecha, total, modo_pago, id_ped) values (3,'B27788272', DATE(NOW()), 20, 1, 20, 1);
+insert into pedidos (id_usuario, fecha, enviado,restaurante) values (3,DATE(NOW()), 'no','B27788272');
+insert into pedidos (id_usuario, fecha, enviado,restaurante) values (2,DATE(NOW()), 'no','B27788272');
+insert into pedidos (id_usuario, fecha, enviado,restaurante) values (1,DATE(NOW()), 'no','B27788272');
 #insert into factura (id_usuario, cif_empresa, fecha, total, modo_pago, id_ped) values (3,'B27788272', DATE(NOW()), 20, 1, 20, 1);
 #insert into factura (id_usuario, cif_empresa, fecha, total, modo_pago, id_ped) values (3,'B27788272', DATE(NOW()), 20, 1, 20, 1);
 #insert into factura (id_usuario, cif_empresa, fecha, total, modo_pago, id_ped) values (3,'B27788272', DATE(NOW()), 20, 1, 20, 1);

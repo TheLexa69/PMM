@@ -1,5 +1,4 @@
-<?php
-
+<?php 
 require dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "sesiones" . DIRECTORY_SEPARATOR . "sesiones.php";
 sesionAdministrador();
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
@@ -24,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $consulta->actualizarReservas($id, $reserva);
         } 
         $mensaje=$formularios->mensageReserva();
+        $envioMail->mailReservas($email, $nombre, $mensaje);
         $fila = $consulta->comprobarReservas();
 
         $formularios->tablaReservas($fila);
@@ -47,12 +47,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 } else {
 
-    $fila = $consulta->comprobarReservas(0);
+    $fila = $consulta->comprobarPedidosPorFecha();
 
     if (!empty($fila)) {
-        $formularios->tablaReservas($fila, "pendientes");
+        $formularios->tablaPedidos($fila);
     } else {
-       echo "<h1 class='  text-center'>No hay reservas por validar </h1>";
+       echo "<h1 class='  text-center'>No hay Pedidos pendientes </h1>";
     }
 }
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");
+
+ 

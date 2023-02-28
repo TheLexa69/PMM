@@ -61,8 +61,8 @@ include dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "autoloadClasesLogin.php";
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "indexUsuario.php"; ?>'>Usuario </a>
-                </li>
+                    <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "modificarDatosUsuario.php"; ?>'>Usuario </a>
+                </li> 
                 <?php
             } elseif (!empty($_SESSION['administrador'])) {
                 ?> 

@@ -33,7 +33,6 @@ estado_usuario enum('activado','desactivado') not null default 'desactivado',
 NIF varchar(9)  null unique,
 direccion varchar(1000) null,
 cp varchar(5) null,
-img varchar(100) not null,
 contraseña varchar(255) not null unique,
 
 constraint pk_idUsuario primary key (id_usuario)
@@ -52,7 +51,7 @@ num_telef varchar(9) not null,
 NIF varchar(9)  null unique,
 direccion varchar(1000) null,
 cp varchar(5) null,
-img varchar(100) not null,
+
 constraint pk_id primary key (id_datos_usuario)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -114,9 +113,8 @@ id_comida int not null
 
 CREATE TABLE IF NOT EXISTS pedidos (
   id_ped INT NOT NULL AUTO_INCREMENT,
-  id_usuario int not null,
   fecha TIMESTAMP NOT NULL,
-  enviado enum('si', 'no') NOT NULL default "no",
+  enviado BOOLEAN NOT NULL,
   restaurante VARCHAR(10) NOT NULL,
   PRIMARY KEY (id_ped)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -126,22 +124,19 @@ create table if not exists factura(
 id_factura int auto_increment,
 id_usuario int not null,
 cif_empresa varchar(10) not null,
+precio float not null,
 fecha TIMESTAMP not null,
+id_comida int not null,
 total int not null,
-modo_pago int not null,
-id_ped int not null,
+modo_pago enum('efectivo','tarjeta','otro modo') not null default 'efectivo',
 
-constraint pk_id_factura primary key (id_factura)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-create table if not exists modo_pago(
-  id_modo_pago int not null auto_increment primary key,
-  nombre varchar(50) not null
+constraint pk_id_factura primary key (id_factura),
+constraint ck_pago check (modo_pago in ('efectivo','tarjeta','otro modo'))
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table if not exists empresa(
 cif varchar(10) not null,
-nombreLocal varchar(120) not null,
+nombre varchar(120) not null,
 nombre_sociedad varchar(120) not null,
 direccion varchar(60) not null,
 ciudad varchar(20) not null,
@@ -155,53 +150,23 @@ constraint pk_cif primary key (cif)
 create table if not exists carrito (
 id_carro int auto_increment,
 id_usuario int not null,
-comida_cantidad longtext not null,
+id_comida_cantidad JSON not null,
 id_ped int,
 constraint pk_id primary key (id_carro)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);
 
-CREATE TABLE if not exists ped_prod (
-  id_ped_prod int NOT NULL auto_increment,
-  id_ped int NOT NULL,
-  id_prod int NOT NULL,
-  cantidad int NOT NULL,
-  precio int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-create table if not exists reservas (
-id_reservas	int auto_increment,
-id_usuario int,
-id_restaurante varchar(10),
-id_mesa int,
-fecha_reserva date not null,
-turno enum('comer', 'cenar'),
-reservaAceptada enum('si', 'no')DEFAULT "no",
-constraint pk_id primary key (id_reservas)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-create table if not exists mesas (
-id_mesa	int auto_increment,
-enumMesa varchar(20) not null,
-constraint pk_id primary key (id_mesa)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
- 
 
 ###########################################################################################
 #FOREIGN KEYS
 ALTER TABLE factura ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
 ALTER TABLE factura ADD FOREIGN KEY (cif_empresa) REFERENCES empresa(cif);
-ALTER TABLE factura ADD FOREIGN KEY (modo_pago) REFERENCES modo_pago(id_modo_pago);
-ALTER TABLE factura ADD FOREIGN KEY (id_ped) REFERENCES pedidos(id_ped);
 
 ALTER TABLE carrito ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
 ALTER TABLE carrito ADD FOREIGN KEY (id_ped) REFERENCES pedidos(id_ped);
 
-ALTER TABLE reservas ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
-ALTER TABLE reservas ADD FOREIGN KEY (id_restaurante) REFERENCES empresa(cif);
-ALTER TABLE reservas ADD FOREIGN KEY (id_mesa) REFERENCES mesas(id_mesa);
 
 ALTER TABLE pedidos ADD FOREIGN KEY (restaurante) REFERENCES empresa(cif);
+ 
 
 ALTER TABLE usuario ADD FOREIGN KEY (id_rol) REFERENCES roles(id_rol);
 ALTER TABLE datos_usuario ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
@@ -217,10 +182,6 @@ ALTER TABLE carta_comida ADD FOREIGN KEY (subtipo) references subtipo(id_subtipo
 
 ###########################################################################################
 #INSERT
-INSERT INTO modo_pago (nombre) values ('efectivo'); 
-INSERT INTO modo_pago (nombre) values ('tarjeta'); 
-INSERT INTO modo_pago (nombre) values ('otro'); 
-
 INSERT INTO tipo (nombre_tipo) VALUES ('Entrantes');
 INSERT INTO tipo (nombre_tipo) VALUES ('Arroz');
 INSERT INTO tipo (nombre_tipo) VALUES ('Carne');
@@ -355,9 +316,9 @@ INSERT INTO carta_alergenos (id_alergeno, id_comida) values (15,1);
 INSERT INTO carta_alergenos (id_alergeno, id_comida) values (6,1);
 INSERT INTO carta_alergenos (id_alergeno, id_comida) values (7,1);
 
-INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_usuario, NIF, direccion, cp, img, contraseña) VALUES ('Guillermo','André','','guille1insua@gmail.com',DATE(NOW()),'667821250',4,'activado', '54a','','','','$2y$10$xl8U8Xd6AHSYSnW5k4n0B.7lXk9HavWen43stDMlyg9EBpz13j6.O');
-INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_usuario, NIF, direccion, cp, img, contraseña) VALUES ('Gabriel','Domínguez','Borines','cambes6@gmail.com',DATE(NOW()),'699204155',4, 'activado','','','','','$2y$10$CWUoOkAv9YneiFlglkqoRuP28nVduK3aOUTOHW5onv7cAKk3Y.wGC');
-INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_usuario, NIF, direccion, cp, img, contraseña) VALUES ('Nuria','Buceta','García','nuriabuceta@gmail.com',DATE(NOW()),'622838028',4, 'activado','89j','','','','$2y$10$HxDSrQwOEEqVv4uloY5VDe0/NuZnStwORxLwUO..ORK1GmtzKom/.');
+INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_usuario, NIF, direccion, cp, contraseña) VALUES ('Guillermo','André','','guille1insua@gmail.com',DATE(NOW()),'667821250',4,'activado', '54a','','','$2y$10$xl8U8Xd6AHSYSnW5k4n0B.7lXk9HavWen43stDMlyg9EBpz13j6.O');
+INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_usuario, NIF, direccion, cp, contraseña) VALUES ('Gabriel','Domínguez','Borines','cambes6@gmail.com',DATE(NOW()),'699204155',4, 'activado','','','','$2y$10$CWUoOkAv9YneiFlglkqoRuP28nVduK3aOUTOHW5onv7cAKk3Y.wGC');
+INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_usuario, NIF, direccion, cp, contraseña) VALUES ('Nuria','Buceta','García','nuriabuceta@gmail.com',DATE(NOW()),'622838028',4, 'activado','89j','','','$2y$10$HxDSrQwOEEqVv4uloY5VDe0/NuZnStwORxLwUO..ORK1GmtzKom/.');
 
 INSERT INTO trabajador (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_trabajador, nie_trabajador, pasaporte_trabajador, contraseña) VALUES ('Gabriel','Domínguez','Borines','cambes6@gmail.com',DATE(NOW()),'699204155',1, 'activado','','','$2y$10$lysg/2UocV/RJJUh0.Ov6uc/hgBrMTPLw9D4gEZ4jJVkmf28ZJtsi');
 INSERT INTO trabajador (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_trabajador, nie_trabajador, pasaporte_trabajador, contraseña) VALUES ('Pepe','Domínguez','','cambes1@gmail.com',DATE(NOW()),'123123123',2, 'activado','','','$2y$10$aalysg/2UocV/RJJUh0.Ov6uc/hgBrMTPLw9D4gEZ4jJVkmf28ZJtsi');
@@ -365,65 +326,24 @@ INSERT INTO trabajador (nombre, apellido1, apellido2, correo, fecha, num_telef, 
 INSERT INTO trabajador (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_trabajador, nie_trabajador, pasaporte_trabajador,trabajando, contraseña) VALUES ('Juan','Alvarez','','cambes3@gmail.com',DATE(NOW()),'345345345',3, 'activado','','','no','$2y$10$aalysg/2UocdasdV/RJJUh0.Ov6uc/hgBrMTPLw9D4gEZ4jJVkmf28ZJtsi');
 INSERT INTO trabajador (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_trabajador, nie_trabajador, pasaporte_trabajador,trabajando, contraseña) VALUES ('Pepe','vazquez','pena','cambes4@gmail.com',DATE(NOW()),'456456456',1, 'activado','','','no','$2y$10$lysg/2aaUocV/RJJUh0.Ov6uc/hgBrMTPLw9D4gEZ4jJVkmf28ZJtsi');
   
-INSERT INTO empresa (cif, nombreLocal, nombre_sociedad, direccion, ciudad, cp, telefono, logo) VALUES ('B27788272','Novo Lua Chea','LUENGOS ANDRE S.L.','Rua de Eduardo Cabello, 25','Vigo','36208','986132537','url');
-INSERT INTO empresa (cif, nombreLocal, nombre_sociedad, direccion, ciudad, cp, telefono, logo) VALUES ('B28789542','Viejo Lua Chea','LUENGOS ANDRES S.L.','Rua de Otero Pedrallo, 30','Vigo','36208','986132537','url');
+INSERT INTO empresa (cif, nombre, nombre_sociedad, direccion, ciudad, cp, telefono, logo) VALUES ('B27788272','Novo Lua Chea','LUENGOS ANDRE S.L.','Rua de Eduardo Cabello, 25','Vigo','36208','986132537','url');
 
-#insert into pedidos (id_usuario, cif_empresa, fecha, total, modo_pago, id_ped) values (3,'B27788272', DATE(NOW()), 20, 1, 20, 1);
-#insert into factura (id_usuario, cif_empresa, fecha, total, modo_pago, id_ped) values (3,'B27788272', DATE(NOW()), 20, 1, 20, 1);
-#insert into factura (id_usuario, cif_empresa, fecha, total, modo_pago, id_ped) values (3,'B27788272', DATE(NOW()), 20, 1, 20, 1);
-#insert into factura (id_usuario, cif_empresa, fecha, total, modo_pago, id_ped) values (3,'B27788272', DATE(NOW()), 20, 1, 20, 1);
 
-INSERT INTO mesas (enumMesa) values ('T1');
-INSERT INTO mesas (enumMesa) values ('T2');
-INSERT INTO mesas (enumMesa) values ('T3');
-INSERT INTO mesas (enumMesa) values ('T4');
-INSERT INTO mesas (enumMesa) values ('T5');
-INSERT INTO mesas (enumMesa) values ('C1');
-INSERT INTO mesas (enumMesa) values ('C2');
-INSERT INTO mesas (enumMesa) values ('C3');
-INSERT INTO mesas (enumMesa) values ('C4');
-INSERT INTO mesas (enumMesa) values ('C5');
-INSERT INTO mesas (enumMesa) values ('S1');
-INSERT INTO mesas (enumMesa) values ('S2');
-INSERT INTO mesas (enumMesa) values ('S3');
-INSERT INTO mesas (enumMesa) values ('S4');
-INSERT INTO mesas (enumMesa) values ('S5');
-
-select * from mesas where (id_mesa not in (select id_mesa from reservas)); #limit 1
-select * from reservas;
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 13, "2023-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B28789542', 10, "2017-06-20",'cenar');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 4, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B28789542', 9, "2017-06-20",'cenar');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 12, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 1, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 2, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 3, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 4, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 5, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 6, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 7, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 8, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 11, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 14, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 15, "2017-06-20",'comer');
-
+insert into factura (id_usuario, cif_empresa, precio, fecha, id_comida, total, modo_pago) values (2,'B27788272', 20, DATE(NOW()), 5, 20, 'efectivo');
 #insert into carrito (id_usuario, id_comida, cantidad) values (3, 4, 1);
 
-#select * from reservas;
-#select * from mesas;
-#select * from roles;
-#select * from carrito;
-#select * from carta_comida;
-#select * from tipo;
-#select * from subtipo;
-#select * from carta_alergenos;
-#select * from alergenos;
-#select img, nombre, descripcion, fecha_inicio, fecha_fin, precio from carta_comida;
-#select * from empresa;
-#select * from factura;
-#select * from carrito where id_usuario in (select id_usuario from factura);
-#select * from factura where id_usuario in (select id_usuario from carrito);
+select * from roles;
+select * from carrito;
+select * from carta_comida;
+select * from tipo;
+select * from subtipo;
+select * from carta_alergenos;
+select * from alergenos;
+select img, nombre, descripcion, fecha_inicio, fecha_fin, precio from carta_comida;
+select * from empresa;
+select * from factura;
+select * from carrito where id_usuario in (select id_usuario from factura);
+select * from factura where id_usuario in (select id_usuario from carrito);
 #select * from factura as f inner join carrito as c
 #				ON f.id_carro;
 #select * from usuario;
@@ -441,14 +361,14 @@ INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno)
 #CREATE USER IF NOT EXISTS administrador IDENTIFIED BY 'renaido2023';
 #CREATE USER IF NOT EXISTS gabriel IDENTIFIED BY 'renaido2023';
 #CREATE USER IF NOT EXISTS nuria IDENTIFIED BY 'renaido2023';
-#CREATE USER IF NOT EXISTS Raul IDENTIFIED BY 'LuaChea@Raul1';
-#CREATE USER IF NOT EXISTS login	IDENTIFIED BY 'login@1234';
+CREATE USER IF NOT EXISTS Raul IDENTIFIED BY 'LuaChea@Raul1';
+CREATE USER IF NOT EXISTS login	IDENTIFIED BY 'login@1234';
 
 #DROP ROLE IF EXISTS 'administrador','gestor','trabajador';
 #CREATE ROLE IF NOT EXISTS 'administrador';
 
-#GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP ON LuaChea.* TO Raul;
-#GRANT SELECT, INSERT, UPDATE ON LuaChea.* TO login;
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP ON LuaChea.* TO Raul;
+GRANT SELECT, INSERT, UPDATE ON LuaChea.* TO login;
 #GRANT SELECT, INSERT, UPDATE, DELETE ON LuaChea.* TO gestor;
 #GRANT SELECT ON LuaChea.* to trabajador;
 
@@ -461,9 +381,9 @@ INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno)
 #GRANT trabajador TO 'nuria'@'localhost';
 #GRANT administrador TO 'root'@'localhost';
 
-#FLUSH PRIVILEGES;
+FLUSH PRIVILEGES;
 
-#SHOW GRANTS;
+SHOW GRANTS;
 
 ###########################################################################################
 DELIMITER $$
@@ -484,8 +404,6 @@ END$$
 DELIMITER ;
 ###########################################################################################
 
-select id_mesa from reservas;
-select * from reservas;
 ###########################################################################################
 #CREATE TABLE if not exists roles (
 #   id INT PRIMARY KEY AUTO_INCREMENT,

@@ -19,15 +19,5 @@ if ($tipoAdministrador == 1) {
 } else {
     header("Location:/proyecto/backend/login/indexLogin.php");
 }
-
-
-
-
-
-
-
-
-
-
-
+ 
 include(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");

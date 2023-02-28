@@ -1,13 +1,18 @@
 <?php
+namespace clases;
 /**
  * Description of carrito
  *
  * @author Nuria
  */
-require_once 'conexion.php';
+
+
+use \PDO;
+use \PDOException;
+
 
 //namespace clases_carrito;
-class carrito extends conexion {
+class Carrito extends Conexion {
     
     private $table = 'carrito';
 
@@ -34,7 +39,7 @@ class carrito extends conexion {
     
     /*Saca cada producto que tiene en la cesta con esos campos, parecido al de arriba*/
     /*Sin utilidad, anteriormente para mostrar cada fila x producto, base de datos cambiada*/
-    public function printCarro($id_usuario) {
+    /*public function printCarro($id_usuario) {
         $rows = "";
         $stmt = $this->conexion->prepare("SELECT c.id_comida, p.img, p.nombre, precio, c.id_usuario, c.cantidad 
                                             FROM carta_comida p 
@@ -48,7 +53,7 @@ class carrito extends conexion {
         }
         return $rows;
         //Código para visualizar el carro
-    }
+    }*/
 
     public function printCarroSes($id_comida, $cantidad) {
         $stmt = $this->conexion->prepare("SELECT id_comida, img, nombre, precio
@@ -77,7 +82,7 @@ class carrito extends conexion {
                             </a>
                             </p>
 
-                            <h5 class=\"precio-producto\"> Precio: ". $result['precio'] ."</h5>
+                            <h5 class=\"precio-producto\"> Precio: ". $result['precio'] ."€</h5>
                             <form method=\"post\" action=\"". $url  ."\">
                             <label for=\"cantidad\">Cantidad:</label>
                             <input type=\"number\" name=\"cantidad\" value=\"" . $cantidad . "\" min=\"1\" max=\"10\" onchange=\"updateCantidad(" . $id_comida . ", this.value)\">
@@ -137,7 +142,7 @@ class carrito extends conexion {
             $stmt->bindParam(1, $cod, PDO::PARAM_INT);
             $stmt->execute();
             $productos = $stmt->fetch();
-            $precio += $productos['precio'] * $cant;
+            $precio += (int)$productos['precio'] * (int)$cant;
         }
     
         return $precio;
@@ -152,6 +157,13 @@ class carrito extends conexion {
         return $stmt->fetch();
     }
 
+    function searchRol($id_usuario) {
+        $query = "SELECT id_rol FROM usuario WHERE id_usuario = :id_usuario";
+        $stmt = $this->conexion->prepare($query);
+        $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
 
 }
 

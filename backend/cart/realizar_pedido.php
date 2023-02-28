@@ -1,11 +1,14 @@
 <?php
-session_start();
-require "../clases_carrito/pedido.php";
-require "../clases_carrito/carrito.php";
-//require "../clases/Mails.php";
+require "../sesiones/sesiones.php";
+//session_start();
+comprobar_sesion();
+require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "nav.php"); 
+//require "../clases_carrito/pedido.php";
+//require "../clases_carrito/carrito.php";
+use \clases\Pedido as pedido;
+use \clases\Carrito as carrito;
 $c = new carrito();
 $p = new pedido();
-//$c_envio = new Mails();
 $id_usuario = $_SESSION['usuario'];
 $carrito = $_SESSION['carrito'];
 $precio = $c->getTotalPrice(serialize($_SESSION['carrito']));
@@ -18,7 +21,6 @@ if($pedido) {
     $array_carrito = $p->array_carrito($carrito, $precio, $especif);
     $cuerpo = $p->crear_correo($array_carrito, $pedido);
     $p->enviar($_SESSION['mail'], $cuerpo);
-    //$c_envio->enviar_correo_pedidos("nuriabuceta@gmail.com", "dshfksdh");
     echo "pedido realizado con éxito";
     $_SESSION['carrito'] = [];
 } else {
@@ -27,3 +29,5 @@ if($pedido) {
 ?>
 </br>
 <a href="../cart/index_carrito.php">Volver a la cesta</a>
+<?php
+require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "footer.php"); 

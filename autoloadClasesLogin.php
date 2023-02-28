@@ -1,21 +1,20 @@
 <?php
 
-define('DS',DIRECTORY_SEPARATOR);
+define('DS', DIRECTORY_SEPARATOR);
 
 function autoloadClases($clase) {
- //   echo $fichero = __DIR__ . DS."backend".DS.str_replace('/','\\', DS, $clase). '.php';
-   $fichero = __DIR__ . DS."backend".DS.str_replace('\\', DS, $clase). '.php';
-  
-    if (file_exists($fichero)){
+    //   echo $fichero = __DIR__ . DS."backend".DS.str_replace('/','\\', DS, $clase). '.php';
+    $fichero = __DIR__ . DS . "backend" . DS . str_replace('\\', DS, $clase) . '.php';
+
+    if (file_exists($fichero)) {
         include $fichero;
-    }else{
-  
- 
-         include  __DIR__ . DS."backend".DS."clases".DS.str_replace('\\', DS, $clase). '.php';
+    } else {
+
+
+        include __DIR__ . DS . "backend" . DS . "clases" . DS . str_replace('\\', DS, $clase) . '.php';
+    }
 }
 
-    }
- 
 spl_autoload_register("autoloadClases");
 /*
 define('DS',DIRECTORY_SEPARATOR);

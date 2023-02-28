@@ -16,53 +16,61 @@ if (isset($_GET["tipo"])) {
     $url = "";
 }
 ?>
-<div class="layered box container mt-2 d-flex justify-content-center">
-    
+<div class="container bg-light rounded mt-2 d-flex justify-content-center">
+
     <div class="container">
-        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/altramuces.svg" alt="">
-        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/apio.svg"
-             alt="Responsive image">
-        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/cacahuete.svg" alt="">
-        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/crustaceos.svg" alt="">
-        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/huevo.svg" alt="">
-        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/lacteos.svg" alt="">
-        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/molusco.svg" alt="">
-        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/mostaza.svg" alt="">
+        <div class="text-center mt-3">
+            <h2>Alergenos</h2>
+            <hr>
+        </div>
+        <div class="text-center">
+            <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/2.svg" alt="2">
+            <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/3.svg" alt="3">
+            <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/4.svg" alt="4">
+            <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/5.svg" alt="5">
+            <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/6.svg" alt="6">
+            <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/7.svg" alt="7">
+            <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/8.svg" alt="8">
+            <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/9.svg" alt="9">
+            <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/10.svg" alt="10">
+            <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/11.svg" alt="11">
+            <img width="100px" height="auto" class="img-responsive" src="../../frontend/img/12.svg" alt="12">
+            <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/13.svg" alt="13">
+            <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/14.svg" alt="14">
+            <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/15.svg" alt="15">
+        </div>
 
-        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/pescado.svg" alt="">
-        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/soja.svg" alt="">
-        <img width="100px" height="auto" class="img-responsive" src="../../frontend/img/sulfitos.svg" alt="">
-        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/sesamo.svg" alt="">
-        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/frutoscascara.svg" alt="">
-        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/gluten.svg" alt="">
-    </div>
+        <div class="text-center mt-3">
+            <h2>Filtros</h2>
+            <hr>
+        </div>
 
-</div>
-<div class="row mt-5">
-
-    <div class="col-8">
-        <div class="layered box row">
-            <div class="col-3">
-                <h2>Filtros:</h2>
-            </div>
-            <div class="col-3 d-flex justify-content-center">
+        <div id="contenedorAlergenos">
+            <!--<div class="d-flex justify-content-center">
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
                            value="option1" onclick="reset()">
                     <label class="form-check-label" for="inlineRadio1">Precio Ascendente</label>
                 </div>
             </div>
-            <div class="col-3 d-flex justify-content-center">
+            <div class="d-flex justify-content-center">
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
                            value="option2" onclick="reset()">
                     <label class="form-check-label" for="inlineRadio2">Precio Descendente</label>
                 </div>
-            </div>
-            <div class="col-3 d-flex justify-content-center">
-                <input class="btn btn-outline-dark" type="reset" value="Reset">
-            </div>
+            </div>-->
         </div>
+        <div class="d-flex justify-content-center pb-3" id="reset">
+            <input class="btn btn-outline-dark" type="reset" value="Reset">
+        </div>
+    </div>
+
+</div>
+
+</div>
+<div class="row mt-5">
+    <div class="col-8">
         <div id="boton">
             <?php
             if ($rdo) {
@@ -70,34 +78,43 @@ if (isset($_GET["tipo"])) {
                 foreach ($rdo as $fila) {
                     ?>
                     <div class="layered box row mr-2" id="producto">
-                        <div class="col-4">                        
-                            <img class="imagenes rounded img-fluid" id="producto_img" title="vaso" src="https://cdn.pixabay.com/photo/2020/12/15/13/44/children-5833685__340.jpg">
+                        <div class="col-4">
+                            <img class="imagenes rounded img-fluid" id="producto_img" title="vaso"
+                                 src="https://cdn.pixabay.com/photo/2020/12/15/13/44/children-5833685__340.jpg">
                         </div>
                         <div class="col-4 d-flex ml-2 flex-column">
-                            <h4 class="nombre-producto"><?php echo $fila[0] ?></h4>
+                            <h4 class="nombre-producto">
+                                <?php echo $fila[0] ?>
+                            </h4>
                             <p>Descripción:
                                 <a href="#" id="info">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                    <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                    <path
+                                        d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
                                     </svg>
                                 </a>
                             </p>
 
-                            <h5 class="precio-producto"> Precio: <?php echo number_format($fila[3], 2, '.', '') ?> </h5>
-                            <form method="post" action="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "agregar_carrito.php?cod=" . $fila[6] . $url; ?>">
+                            <h5 class="precio-producto"> Precio:
+                                <?php echo number_format($fila[3], 2, '.', '') ?>
+                            </h5>
+                            <form method="post"
+                                  action="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "agregar_carrito.php?cod=" . $fila[6] . $url; ?>">
                                 <label for="cantidad">Cantidad:</label>
-                                <select id="cantidad" name="cantidad">'
+                                <select id="cantidad" name="cantidad">
                                     <?php
                                     for ($i = 1; $i <= 10; $i++) {
                                         echo '<option value="' . $i . '">' . $i . '</option>';
                                     }
                                     echo '</select>';
-                                    ?> 
+                                    ?>
                                     </div>
                                     <div class="col-4 d-flex justify-content-center">
-                                        <!-- if session rol = admin button editar, deshabilitar -->     
-                                        <button class="btn-add-cart btn btn-outline-secondary" id="compra" type="submit">Comprar</button></form>
+                                        <!-- if session rol = admin button editar, deshabilitar -->
+                                        <button class="btn-add-cart btn btn-outline-secondary" id="compra" type="submit">Comprar</button>
+                                        </form>
                                     </div>
                                     </div>
                                     <?php
@@ -184,7 +201,7 @@ if (isset($_GET["tipo"])) {
                                         </div>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
 
 
 
@@ -201,6 +218,33 @@ if (isset($_GET["tipo"])) {
                                         radios[0].checked = false;
                                         radios[1].checked = false;
                                     }
+                                }
+
+                                // Obtener todos los elementos <img> del documento
+                                const imagenes = document.getElementsByTagName("img");
+
+                                // Crear un array vacío para almacenar los nombres de las imágenes seleccionadas
+                                let seleccionadas = [];
+
+                                // Recorrer todas las imágenes y agregar un listener de click a cada una
+                                for (let i = 0; i < imagenes.length; i++) {
+                                    imagenes[i].addEventListener("click", function () {
+                                        // Obtener el valor del atributo "alt" de la imagen
+                                        const nombre = this.getAttribute("alt");
+
+                                        // Si el nombre ya está en el array, eliminarlo
+                                        if (seleccionadas.includes(nombre)) {
+                                            seleccionadas = seleccionadas.filter(n => n !== nombre);
+                                        }
+                                        // Si no está en el array, agregarlo
+                                        else {
+                                            seleccionadas.push(nombre);
+                                        }
+
+                                        // Actualizar el contenido del contenedor de alérgenos
+                                        const contenedor = document.getElementById("contenedorAlergenos");
+                                        contenedor.innerHTML = seleccionadas.join(", ");
+                                    });
                                 }
                             </script>
                             <?php

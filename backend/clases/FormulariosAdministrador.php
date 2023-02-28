@@ -479,7 +479,7 @@ class FormulariosAdministrador {
                 $id = $a["id_reservas"];
                 $correo = $a['correo'];
                 $nombre=$a["nombre"];
-                echo "<tr class='border border-dark'><td class='text-center'> <input type='hidden' name='correo' value='$correo'><input type='hidden' name='nombre' value='$nombre'><input type='checkbox' name='confirmado[]' value='$id'><input type='checkbox' name='confirmado[]' value='$id'> <td class='text-center'>" . $a["id_reservas"] . "</td> <td class='text-center'>" . $a["nombre"] . " " . $a["apellido1"] . "</td><td class='text-center'>" . $a["num_telef"] . "</td><td class='text-center'>" . $a["correo"] . "</td><td class='text-center'>" . $a["nombreLocal"] . "</td><td class='text-center'>" . $a["id_mesa"] . "</td><td class='text-center'>" . $a["fecha_reserva"] . "</td> <td class='text-center'>" . $a["turno"] . "</td> <td class='text-center'>" . $a["reservaAceptada"] . "</td></tr>";
+                echo "<tr class='border border-dark'><td class='text-center'> <input type='hidden' name='correo' value='$correo'><input type='hidden' name='nombre' value='$nombre'><input type='checkbox' name='confirmado[]' value='$id'> <td class='text-center'>" . $a["id_reservas"] . "</td> <td class='text-center'>" . $a["nombre"] . " " . $a["apellido1"] . "</td><td class='text-center'>" . $a["num_telef"] . "</td><td class='text-center'>" . $a["correo"] . "</td><td class='text-center'>" . $a["nombreLocal"] . "</td><td class='text-center'>" . $a["id_mesa"] . "</td><td class='text-center'>" . $a["fecha_reserva"] . "</td> <td class='text-center'>" . $a["turno"] . "</td> <td class='text-center'>" . $a["reservaAceptada"] . "</td></tr>";
             }
             ?>
                                     </table>

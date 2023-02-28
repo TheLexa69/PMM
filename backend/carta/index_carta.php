@@ -3,7 +3,6 @@ session_start();
 require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "nav.php"); 
 use \clases\Carta as carta;
 
-/* conexión a la bdd. */
 $carta = new carta();
     /* Realizamos la consulta que nos pide para enseñar los datos. */
     if (isset($_GET["tipo"])) {
@@ -87,7 +86,11 @@ $carta = new carta();
                             </a>
                             </p>
 
+<<<<<<< Updated upstream
                             <h5 class="precio-producto"> Precio: <?php echo number_format($fila[3], 2, '.', '') ?> </h5>
+=======
+                            <h5 class="precio-producto"> Precio: <?php echo number_format($fila[3], 2, '.', '') ?> €</h5>
+>>>>>>> Stashed changes
                             <form method="post" action="<?php echo  DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."backend". DIRECTORY_SEPARATOR . "cart". DIRECTORY_SEPARATOR."agregar_carrito.php?cod=". $fila[6] . $url; ?>">
                             <label for="cantidad">Cantidad:</label>
                               <select id="cantidad" name="cantidad">'
@@ -98,7 +101,11 @@ $carta = new carta();
                               </div>
                         <div class="col-4 d-flex justify-content-center">
                                 <!-- if session rol = admin button editar, deshabilitar -->     
+<<<<<<< Updated upstream
                                 <button class="btn-add-cart btn btn-outline-secondary" id="compra" type="submit">Comprar</button></form>
+=======
+                                <button class="btn-add-cart btn btn-outline-secondary" id="compra" type="submit">Añadir</button></form>
+>>>>>>> Stashed changes
                             </div>
                         </div>
                     <?php }}

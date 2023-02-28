@@ -1,13 +1,21 @@
 <?php
+
+namespace clases;
 /**
  * Description of pedido
  *
  * @author Nuria
  */
+
 //require_once 'conexion.php';
-require "../clases/Conexion.php";
-require "../clases/Mails.php";
-class pedido extends \clases\Conexion {
+//require "../clases/Conexion.php";
+//require "../clases/Mails.php";
+use \clases\Mails as mails;
+
+use \PDO;
+use \PDOException;
+
+class Pedido extends Conexion {
     
     private $tabla_pedidos;
     private $tabla_productos;
@@ -139,7 +147,7 @@ class pedido extends \clases\Conexion {
         return $texto;
     }
     function enviar($email, $cuerpo) {
-        $c_envio = new \clases\Mails;
+        $c_envio = new mails;
         $c_envio->enviar_correo_pedidos($email, $cuerpo);
     }
 }

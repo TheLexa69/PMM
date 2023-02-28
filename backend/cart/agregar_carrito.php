@@ -1,8 +1,10 @@
 <?php
 /* Suma productos a la cesta si eliges el mismo al añadir producto */
-//use clases_carrito\carrito;
-require "../clases_carrito/carrito.php";
 session_start();
+require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "nav.php"); 
+use clases_carrito\Carrito as carrito;
+//require "../clases_carrito/carrito.php";
+
 $cod_comida = $_GET["cod"];
 $cantidad = $_POST["cantidad"];
 $tipo = $_GET['tipo'];
@@ -50,5 +52,9 @@ if (!isset($_SESSION['usuario'])) {
             //$carrito->add($id_usuario, $cod_comida, $_POST["cantidad"]);
 	}
 }
-
+if ($tipo) {
 header("Location: ../carta/index_carta.php?tipo=$tipo");
+} else {
+	header("Location: ../carta/index_carta.php");
+}
+require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "footer.php"); 

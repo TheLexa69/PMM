@@ -118,7 +118,8 @@ class FormulariosUsuario {
                 </div>
 
                 <div class='mt-3'>
-                    <label for="c2" class="form-label">Mesas:</label>  
+                    <label for="c2" class="form-label">Mesas:</label>
+                    <?php var_dump($mesas["id_mesa"]);   ?>
                     <select name="mesas">
                         <option value = "<?php echo (!empty($mesas["id_mesa"])) ? $mesas["id_mesa"] : ""; ?>"><?php echo (!empty($mesas["id_mesa"])) ? "Hay mesas disponibles" : "No hay mesas disponibles"; ?></option>;
                     </select>

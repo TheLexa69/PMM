@@ -13,20 +13,30 @@ $consulta = new consultasAdministrador;
 $envioMail = new mailAdministrador;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['confirmado'])) {
-
-        $aceptadas = $_POST['confirmado'];
-        foreach ($aceptadas as $a) {
+    if (isset($_POST['aceptar'])) {
+     if (isset($_POST['confirmado'])){
+        $selecionadas  = $_POST['confirmado'];
+        foreach ($selecionadas  as $a) {
             $reserva = "si";
             $id = $a;
             $consulta->actualizarReservas($id, $reserva);
-        }
-
+        } 
         $fila = $consulta->comprobarReservas();
 
         $formularios->tablaReservas($fila);
-    } else {
-        
+    }
+    
+    } else if( (isset($_POST['rechazar']))){ 
+        $selecionadas = $_POST['confirmado'];
+        foreach ($selecionadas as $a) {
+            $reserva = "denegada";
+            $id = $a;
+            $consulta->actualizarReservas($id, $reserva);
+        } 
+        $fila = $consulta->comprobarReservas();
+
+        $formularios->tablaReservas($fila);
+         
     }
 } else {
 
@@ -35,10 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($fila)) {
         $formularios->tablaReservas($fila, "pendientes");
     } else {
-        $consulta2 = new consultasAdministrador;
-        $fila = $consulta2->comprobarReservas();
-         
-        $formularios->tablaReservas($fila);
+       echo "<h1 class='  text-center'>No hay reservas por validar </h1>";
     }
 }
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");

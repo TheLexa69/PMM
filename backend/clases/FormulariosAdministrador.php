@@ -14,7 +14,8 @@ class FormulariosAdministrador {
         echo "<a href='altaTrabajador.php'><input type='button' class='btn btn-outline-success' value='Añadir Trabajador'></a>";
         echo "<a href='trabajadores.php'><input type='button' class='btn btn-outline-success' value='Listar Trabajadores'></a>";
         echo "<a href='productos.php'><input type='button' class='btn btn-outline-success' value='Modificar Productos'></a>";
-        echo "<a href='consultaReservas.php'><input type='button' class='btn btn-outline-success' value='Reservas'></a>";
+        echo "<a href='consultaReservas.php'><input type='button' class='btn btn-outline-success' value='Reservas sin confirmar'></a>";
+        echo "<a href='reservasPorDias.php'><input type='button' class='btn btn-outline-success' value='Historico Reservas'></a>";
         echo "</div>";
         echo "</div>";
     }
@@ -427,6 +428,28 @@ class FormulariosAdministrador {
 
                 <?php
             }
+            
+            
+              public function FiltrarReservasFecha() {
+            ?>
+            <div class="container bg-light rounded mt-5 p-3">
+                <div class='d-flex justify-content-center text-center'>
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                        <h3>Ordenar por:</h3>
+                        <label for="c1"> Fecha de la reserva:</label>
+                        <input type="date" name="fecha"   class="form-check-input">
+                         
+                      
+                        <input type="submit" name=validar value="Filtrar" class="btn btn-default btn-outline-success">
+                        
+                    </form>
+                </div>
+             
+                <?php
+            }
+
+            
+            
 
             public function tablaReservas($fila, $tipoTabla = "") {
                 if (isset($_GET["mensaje"])) {
@@ -464,6 +487,7 @@ class FormulariosAdministrador {
                                 <div class="mt-3 text-center pb-3"> 
                                     <a href='indexAdministrador.php'><input type='button' value='Volver a inicio' class="btn btn-outline-warning"></a>
                                     <input class="btn btn-outline-success" type="submit" name="aceptar" value="Aceptar reservas selecionadas" >
+                                     <input class="btn btn-outline-success" type="submit" name="rechazar" value="Rechazar reservas selecionadas" >
                                 </div>
                             </form>
                         </div>

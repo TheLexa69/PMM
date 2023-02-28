@@ -165,7 +165,8 @@ CREATE TABLE if not exists ped_prod (
   id_ped int NOT NULL,
   id_prod int NOT NULL,
   cantidad int NOT NULL,
-  precio int NOT NULL
+  precio int NOT NULL,
+  constraint pk_id primary key (id_ped_prod)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 create table if not exists reservas (
@@ -175,7 +176,7 @@ id_restaurante varchar(10),
 id_mesa int,
 fecha_reserva date not null,
 turno enum('comer', 'cenar'),
-reservaAceptada enum('si', 'no')DEFAULT "no",
+reservaAceptada enum('si', 'no','denegada')DEFAULT "no",
 constraint pk_id primary key (id_reservas)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -391,22 +392,22 @@ INSERT INTO mesas (enumMesa) values ('S5');
 
 select * from mesas where (id_mesa not in (select id_mesa from reservas)); #limit 1
 select * from reservas;
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 13, "2023-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B28789542', 10, "2017-06-20",'cenar');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 4, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B28789542', 9, "2017-06-20",'cenar');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 12, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 1, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 2, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 3, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 4, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 5, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 6, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 7, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 8, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 11, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 14, "2017-06-20",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 15, "2017-06-20",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 1, "2023-02-28",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B28789542', 2, "2023-02-28",'cenar');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 3, "2023-02-28",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B28789542', 4, "2023-02-28",'cenar');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 5, "2023-02-28",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 6, "2023-02-28",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 7, "2023-02-28",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 8, "2023-02-28",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 9, "2023-02-28",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 10, "2023-02-28",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 11, "2023-02-28",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 12, "2023-02-28",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 13, "2023-02-28",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 1, "2023-02-27",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 2, "2023-02-27",'cenar');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 3, "2023-02-27",'comer');
 
 #insert into carrito (id_usuario, id_comida, cantidad) values (3, 4, 1);
 

@@ -6,6 +6,14 @@ use \clases\Carrito as carrito;
 
 $carta = new carta();
 $carrito = new carrito();
+
+if(isset($_SESSION['carrito'])) {
+    $array_carrito = $_SESSION['carrito'];
+} elseif (isset($_COOKIE['carrito'])) {
+    $array_carrito = unserialize($_COOKIE['carrito']);
+} else {
+    $array_carrito = [];
+}
     /* Realizamos la consulta que nos pide para enseñar los datos. */
     if (isset($_GET["tipo"])) {
         $tipo = $_GET["tipo"];
@@ -16,7 +24,20 @@ $carrito = new carrito();
         $url = "";
     }
     ?>
-
+<script>
+    function updateCantidad(id_comida, cantidad) {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '../cart/actualizar_carrito.php', true);
+		xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+			// Actualizar la página para reflejar los cambios
+			window.location.reload();
+			}
+		};
+		xhr.send('id_comida=' + id_comida + '&cantidad=' + cantidad);
+	}
+</script>
     <div class="row mt-5">
         <div class="col-4">
             <div class="layered box container d-flex flex-column mt-2">
@@ -132,11 +153,13 @@ $carrito = new carrito();
                         </div>
                     </div>
                     <?php
-                    echo $carrito->printCarritoCarta(1,1);
+                    foreach($array_carrito as $comida => $cant) {
+                        echo $carrito->printCarritoCarta($comida, $cant);
+                    }
                     ?>
                     <div class="d-flex justify-content-around pt-5">
-                        <button type='button' class='btn btn-outline-success '>Realizar Compra</button>
-                        <h4>Total: $precio €</h4>
+                        <a href='<?php echo  DIRECTORY_SEPARATOR ."proyecto".DIRECTORY_SEPARATOR ."backend". DIRECTORY_SEPARATOR . "cart". DIRECTORY_SEPARATOR."index_carrito.php"; ?>'><button type='button' class='btn btn-outline-success'>Realizar Compra</button></a>
+                        <h4>Total: <?php echo $carrito->getTotalPrice($array_carrito) ?> </h4>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,6 @@
 <?php
 /*Elimina el producto de la cesta */
 session_start();
-require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "nav.php"); 
 //require "../clases_carrito/carrito.php";
 use clases\Carrito as carrito;
 $cod_comida = $_GET["cod"];
@@ -41,6 +40,8 @@ if (!isset($_SESSION['usuario'])) {
         $_SESSION['carrito'] = $arr_carrito;
 	}
 }
-
-header("Location: index_carrito.php");
-require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "footer.php"); 
+if ($_GET['red']) {
+	header("Location: ../carta/index_carta.php");
+} else {
+	header("Location: index_carrito.php");
+}

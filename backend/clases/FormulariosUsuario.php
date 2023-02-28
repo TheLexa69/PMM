@@ -4,12 +4,12 @@ namespace clases;
 
 class FormulariosUsuario {
 
-    public function redirecionesUsuario() {
+    /*public function redirecionesUsuario() {
 
         echo "<br><a href='modificarDatosUsuario.php'><input type='button' value='Actualiza tus datos'></a><br>";
         //  echo "<br><a href='trabajadores.php'><input type='button' value='Trabajadores'></a><br>";
         //  echo "<br><a href='productos.php'><input type='button' value='Productos'></a><br>";
-    }
+    }*/
 
     public function registroDatosPorUsuario($id, $necesarios = "") {
         ?>

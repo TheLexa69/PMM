@@ -139,21 +139,6 @@ create table if not exists modo_pago(
   nombre varchar(50) not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
-create table if not exists factura(
-id_factura int auto_increment,
-id_usuario int not null,
-cif_empresa varchar(10) not null,
-precio float not null,
-fecha TIMESTAMP not null,
-id_comida int not null,
-total int not null,
-modo_pago enum('efectivo','tarjeta','otro modo') not null default 'efectivo',
-
-constraint pk_id_factura primary key (id_factura),
-constraint ck_pago check (modo_pago in ('efectivo','tarjeta','otro modo'))
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 create table if not exists empresa(
 cif varchar(10) not null,
 nombreLocal varchar(120) not null,
@@ -182,14 +167,6 @@ CREATE TABLE if not exists ped_prod (
   cantidad int NOT NULL,
   precio int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-create table if not exists carrito (
-id_carro int auto_increment,
-id_usuario int not null,
-comida_cantidad longtext not null,
-id_ped int,
-constraint pk_id primary key (id_carro)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table if not exists reservas (
 id_reservas	int auto_increment,

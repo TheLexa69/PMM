@@ -9,6 +9,6 @@ use \clases\FormulariosUsuario as formulariosUsuario;
 
 $formularios = new formulariosUsuario;
 
-$formularios->redirecionesUsuario();
+/*$formularios->redirecionesUsuario();*/
 
 include(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");

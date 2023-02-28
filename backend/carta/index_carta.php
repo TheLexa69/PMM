@@ -16,36 +16,31 @@ if (isset($_GET["tipo"])) {
     $url = "";
 }
 ?>
+<div class="layered box container mt-2 d-flex justify-content-center">
+    
+    <div class="container">
+        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/altramuces.svg" alt="">
+        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/apio.svg"
+             alt="Responsive image">
+        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/cacahuete.svg" alt="">
+        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/crustaceos.svg" alt="">
+        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/huevo.svg" alt="">
+        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/lacteos.svg" alt="">
+        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/molusco.svg" alt="">
+        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/mostaza.svg" alt="">
 
-<div class="row mt-5">
-    <div class="col-4">
-        <div class="layered box container d-flex flex-column mt-2">
-            <h2>Alergenos</h2>
-            <div class="row">
-                <div class="col-6">
-                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/altramuces.svg" alt="">
-                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/apio.svg"
-                         alt="Responsive image">
-                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/cacahuete.svg" alt="">
-                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/crustaceos.svg" alt="">
-                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/huevo.svg" alt="">
-                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/lacteos.svg" alt="">
-                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/molusco.svg" alt="">
-                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/mostaza.svg" alt="">
-
-                </div>
-                <div class="col-6">
-                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/pescado.svg" alt="">
-                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/soja.svg" alt="">
-                    <img width="100px" height="auto" class="img-responsive" src="../../frontend/img/sulfitos.svg" alt="">
-                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/sesamo.svg" alt="">
-                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/frutoscascara.svg" alt="">
-                    <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/gluten.svg" alt="">
-                </div>
-            </div>
-        </div>
+        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/pescado.svg" alt="">
+        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/soja.svg" alt="">
+        <img width="100px" height="auto" class="img-responsive" src="../../frontend/img/sulfitos.svg" alt="">
+        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/sesamo.svg" alt="">
+        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/frutoscascara.svg" alt="">
+        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/gluten.svg" alt="">
     </div>
-    <div class="col-4">
+
+</div>
+<div class="row mt-5">
+
+    <div class="col-8">
         <div class="layered box row">
             <div class="col-3">
                 <h2>Filtros:</h2>
@@ -105,9 +100,10 @@ if (isset($_GET["tipo"])) {
                                         <button class="btn-add-cart btn btn-outline-secondary" id="compra" type="submit">Comprar</button></form>
                                     </div>
                                     </div>
-    <?php }
-}
-?>
+                                    <?php
+                                }
+                            }
+                            ?>
                             </div>
                             </div>
                             <div class="col-4">
@@ -207,5 +203,6 @@ if (isset($_GET["tipo"])) {
                                     }
                                 }
                             </script>
-<?php
-require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");
+                            <?php
+                            require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");
+                            

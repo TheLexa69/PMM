@@ -18,9 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $restaurante = $_POST['restaurante'];
     $turno = $_POST['turno'];
     $id = $_SESSION['usuario'];
-    var_dump($_POST['mesa']);
     $mesa = !empty($_POST['mesa']) ? $_POST['mesa'] : 0;
-    var_dump($mesa);
     if ($mesa == 0) {
         echo 'No hay mesas disponibles';
         ?>

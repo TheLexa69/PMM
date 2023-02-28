@@ -1,7 +1,6 @@
 <?php
 /* Suma productos a la cesta si eliges el mismo al añadir producto */
 session_start();
-require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "nav.php"); 
 use clases_carrito\Carrito as carrito;
 //require "../clases_carrito/carrito.php";
 
@@ -53,8 +52,7 @@ if (!isset($_SESSION['usuario'])) {
 	}
 }
 if ($tipo) {
-header("Location: ../carta/index_carta.php?tipo=$tipo");
+	header("Location: ../carta/index_carta.php?tipo=$tipo");
 } else {
 	header("Location: ../carta/index_carta.php");
 }
-require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "footer.php"); 

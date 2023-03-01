@@ -127,7 +127,7 @@ class Pedido extends Conexion {
             $array_carrito .=  "<tr><td>" .$result['nombre']. "</td><td>$cantidad</td><td>".$result['precio']."€</td><td> </tr>";
         }
         $array_carrito .= "<tr><td colspan=3>_________________</td></tr></tr>
-                            <tr><td>Precio Total</td><td colspan=2>$precio_total €</td> </tr>
+                            <tr><td>Precio Total</td><td colspan=2>$precio_total </td> </tr>
                             <tr><td colspan=3>_________________</td></tr>
                             <tr><td>Especificaciones del cliente: </td><td colspan=2>$especif</td> </tr>"; 
         return $array_carrito;
@@ -143,7 +143,7 @@ class Pedido extends Conexion {
         $texto .= "<table>"; //abrir la tabla
         $texto .= "<tr><th>Nombre</th><th>Unidades</th><th>Precio</th></tr>";
         $texto .= $carrito;
-        $texto .= "</table> </br> Su pedido se está cocinando...";
+        $texto .= "<tr><td colspan=3> Su pedido se está cocinando... </td></tr></table>";
         return $texto;
     }
     function enviar($email, $cuerpo) {

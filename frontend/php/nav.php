@@ -1,6 +1,10 @@
 <?php
 include dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "autoloadClasesLogin.php";
+
 //echo"../../autoloadClasesLogin.php";
+use \clases\Carta as carta;
+$c = new carta();
+$categorias = $c->getCategorias();
 ?>
 <!DOCTYPE html>
 <html lang="Es">
@@ -32,12 +36,15 @@ include dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "autoloadClasesLogin.php";
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Carta</a>
                 <ul class="dropdown-menu ">   
-                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "carta" . DIRECTORY_SEPARATOR . "index_carta.php?tipo=cachopo"; ?> '>Cachopo</a></li>
-                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "carta" . DIRECTORY_SEPARATOR . "index_carta.php?tipo=arroz"; ?>'>Arroz</a></li>
-                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "carta" . DIRECTORY_SEPARATOR . "index_carta.php?tipo=carne"; ?>'>Carnes</a></li>
-                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "carta" . DIRECTORY_SEPARATOR . "index_carta.php?tipo=pescado"; ?>'>Pescados</a></li>
-                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "carta" . DIRECTORY_SEPARATOR . "index_carta.php?tipo=postre"; ?>'>Postres</a></li>
-                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "carta" . DIRECTORY_SEPARATOR . "index_carta.php?tipo=bebida"; ?>'>Bebidas</a></li>
+                    <?php
+                   foreach ($categorias as $nombre) {
+                        $tipo = $nombre['nombre_tipo'];
+                    ?>
+                        <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "carta" . DIRECTORY_SEPARATOR . "index_carta.php?tipo=" . strtolower($tipo); ?>'><?php echo  $tipo ?></a></li>
+                    <?php
+                    }
+                
+                    ?>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "carta" . DIRECTORY_SEPARATOR . "index_carta.php"; ?>'>Carta</a></li>
                 </ul>
@@ -54,10 +61,13 @@ include dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "autoloadClasesLogin.php";
 
 
             <?php
-            if (!empty($_SESSION['usuario'])) {
+            if (!empty($_SESSION['usuario'])  && isset($_SESSION)) {
+                 if (!empty($_SESSION['carrito'])){
+                    setcookie('carrito', null, 1, "/");
+                 }
+
                 ?> 
-
-
+            
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Usuario</a>
                     <ul class="dropdown-menu ">   

@@ -14,6 +14,7 @@ if(isset($_SESSION['carrito'])) {
 } else {
     $array_carrito = [];
 }
+
     /* Realizamos la consulta que nos pide para enseñar los datos. */
     if (isset($_GET["tipo"])) {
         $tipo = $_GET["tipo"];
@@ -25,6 +26,52 @@ if(isset($_SESSION['carrito'])) {
     }
     ?>
 <script>
+    var radios = document.getElementsByName('inlineRadioOptions');
+    var mostrar = true;
+    function reset() {
+        console.log("a")
+        mostrar = !mostrar;
+        console.log(radios);
+
+        if (mostrar) {
+            radios[0].checked = false;
+            radios[1].checked = false;
+        }
+    }
+
+
+    // Obtener todos los elementos <img> del documento
+    const imagenes = document.getElementsByTagName("img");
+
+    // Crear un array vacío para almacenar los nombres de las imágenes seleccionadas
+    let seleccionadas = [];
+
+    // Recorrer todas las imágenes y agregar un listener de click a cada una
+    for (let i = 0; i < imagenes.length; i++) {
+        imagenes[i].addEventListener("click", function () {
+            // Obtener el valor del atributo "alt" de la imagen
+            const nombre = this.getAttribute("alt");
+
+            // Si el nombre ya está en el array, eliminarlo
+            if (seleccionadas.includes(nombre)) {
+                seleccionadas = seleccionadas.filter(n => n !== nombre);
+                imagenes[i].style.border = 'none';
+            }
+            // Si no está en el array, agregarlo
+            else {
+                seleccionadas.push(nombre);
+                imagenes[i].style.border = '1px solid red';
+            }
+
+            // Actualizar el contenido del contenedor de alérgenos
+            const contenedor = document.getElementById("contenedorAlergenos");
+            contenedor.innerHTML = seleccionadas.join(", ");
+        });
+
+        // Obtener todas las imágenes
+
+    }
+
     function updateCantidad(id_comida, cantidad) {
 		var xhr = new XMLHttpRequest();
 		xhr.open('POST', '../cart/actualizar_carrito.php', true);
@@ -38,32 +85,36 @@ if(isset($_SESSION['carrito'])) {
 		xhr.send('id_comida=' + id_comida + '&cantidad=' + cantidad);
 	}
 </script>
-    <div class="row mt-5">
-        <div class="col-4">
-            <div class="layered box container d-flex flex-column mt-2">
+        <div class="container">
+            <div class="text-center mt-3">
                 <h2>Alergenos</h2>
-                <div class="row">
-                    <div class="col-6">
-                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/altramuces.svg" alt="">
-                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/apio.svg"
-                            alt="Responsive image">
-                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/cacahuete.svg" alt="">
-                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/crustaceos.svg" alt="">
-                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/huevo.svg" alt="">
-                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/lacteos.svg" alt="">
-                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/molusco.svg" alt="">
-                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/mostaza.svg" alt="">
-
-                    </div>
-                    <div class="col-6">
-                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/pescado.svg" alt="">
-                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/soja.svg" alt="">
-                        <img width="100px" height="auto" class="img-responsive" src="../../frontend/img/sulfitos.svg" alt="">
-                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/sesamo.svg" alt="">
-                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/frutoscascara.svg" alt="">
-                        <img width="80px" height="auto" class="img-responsive" src="../../frontend/img/gluten.svg" alt="">
-                    </div>
-                </div>
+                <hr>
+            </div>
+            <div class="text-center">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/2.svg" alt="2">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/3.svg" alt="3">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/4.svg" alt="4">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/5.svg" alt="5">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/6.svg" alt="6">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/7.svg" alt="7">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/8.svg" alt="8">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/9.svg" alt="9">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/10.svg" alt="10">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/11.svg" alt="11">
+                <img class="img-select" width="100px" height="auto" src="../../frontend/img/12.svg" alt="12">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/13.svg" alt="13">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/14.svg" alt="14">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/15.svg" alt="15">
+            </div>
+            <div class="text-center mt-3">
+                <h2>Filtros</h2>
+                <hr>
+            </div>
+            <div id="contenedorAlergenos">
+            </div>
+            <div class="d-flex justify-content-center pb-3" id="reset">
+                <input class="btn btn-outline-dark" type="button" value="Filtrar">
+                <input class="btn btn-outline-dark" type="reset" value="Reset">
             </div>
         </div>
         <div class="col-4">
@@ -168,18 +219,4 @@ if(isset($_SESSION['carrito'])) {
 
 
     </div>
-    <script>
-        var radios = document.getElementsByName('inlineRadioOptions');
-        var mostrar = true;
-        function reset() {
-            console.log("a")
-            mostrar = !mostrar;
-            console.log(radios);
-
-            if (mostrar) {
-                radios[0].checked = false;
-                radios[1].checked = false;
-            }
-        }
-    </script>
 <?php require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "footer.php"); 

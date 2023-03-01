@@ -34,9 +34,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $img = $_FILES['imagen'];
     }
 
-    $campos = array("nombre" => $nombre, "apellido1" => $apellido1, "telefono" => $telefono, "email" => $mail, "nif" => $nif, "direcion" => $direccion, "cp" => $cp); //mail base de datos y contraseña
+    $campos = array("nombre" => $nombre, "apellido1" => $apellido1, "telefono" => $telefono, "email" => $mail,  "direcion" => $direccion, "cp" => $cp); //mail base de datos y contraseña
 
-    $necesarios = $funciones->campos(['nombre', 'apellido1', 'telefono', 'email', 'nif', 'direcion', 'cp'], $campos);
+    $necesarios = $funciones->campos(['nombre', 'apellido1', 'telefono', 'email', 'direcion', 'cp'], $campos);
 
     if (!isset($_POST['registro']) || (isset($_POST['registro']) && !is_string($necesarios))) {
         //Consulta de update

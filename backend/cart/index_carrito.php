@@ -74,14 +74,13 @@ if (isset($_SESSION['usuario'])) {
 			$cantidad = (int) $cant;
 			print ($carrito->printCarroSes($id_comida, $cantidad));
 		}
-
-
+ 
+ 
  
 		$precio_total = $carrito->getTotalPrice($_SESSION['carrito']);
 		echo  '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-end">Total: '. $precio_total .'</h2>';
 		echo '<div class="col-2 d-flex justify-content-right"><a href="realizar_pedido.php"<button type="button" class="btn btn-outline-success">Finalizar compra</button></a></div></div>';
  
-
 	}
 	
 	
@@ -96,9 +95,6 @@ if (isset($_SESSION['usuario'])) {
 				$cantidad = (int) $cant;
 				echo ($carrito->printCarroSes($id_comida, $cantidad));
 			}
-
-	
-
 	$precio_total = $carrito->getTotalPrice(unserialize($_COOKIE['carrito'], []));
 			echo  '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-end">Total: '. $precio_total .'</h2>';
 		echo '<div class="col-2 d-flex justify-content-right"><a id="log" href="../login/indexLogin.php"><button type="button" class="btn btn-outline-success">Finalizar compra</button></a></div></div>';
@@ -106,7 +102,7 @@ if (isset($_SESSION['usuario'])) {
 		}
  
 		 
-
+ 
 	} else {
         echo "<div class='warning'>No tienes productos en tu cesta todavía.</div>";
     }

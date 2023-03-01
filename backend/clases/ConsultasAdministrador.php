@@ -506,16 +506,11 @@ class ConsultasAdministrador extends Conexion {
     }
     
     
-    
-    public function comprobarPedidosPorFecha($fecha = "") {
-
-          if(empty($fecha)){
-              $fecha= date("Y-m-d ");
-          }else{
-              $fecha=$fecha;
-          }
+    public function comprobarPedidosPorFecha($fecha ) {
+ 
+      
         try { 
-             echo     $sql = "select p.id_ped,p.id_usuario, p.fecha , p.enviado, p.restaurante ,u.nombre, u.apellido1, u.correo,u.num_telef, u.direccion, u.cp ,e.nombreLocal from pedidos  as p inner join usuario as u on p.id_usuario = u.id_usuario inner join empresa as e on e.cif = p.restaurante where p.fecha ='$fecha' and p.enviado ='no'";
+            $sql = "select p.id_ped,p.id_usuario, p.fecha , p.enviado, p.restaurante ,u.nombre, u.apellido1, u.correo,u.num_telef, u.direccion, u.cp ,e.nombreLocal from pedidos  as p inner join usuario as u on p.id_usuario = u.id_usuario inner join empresa as e on e.cif = p.restaurante where p.fecha ='$fecha' and p.enviado ='no'";
             
             $stmt = $this->conexion->prepare($sql);
 
@@ -531,6 +526,26 @@ class ConsultasAdministrador extends Conexion {
         }
     }
     
+    
+    
+     public function actualizarPedidos($id,$reserva ) {
+ 
+      
+          try {
+            $sql = "UPDATE  pedidos  set enviado=:enviado where id_ped=$id ";
+
+            $stmt = $this->conexion->prepare($sql);
+
+        
+            $stmt->bindParam(':enviado', $reserva, PDO::PARAM_STR);
+            $stmt->execute();
+
+            return $stmt;
+        } catch (PDOException $e) {
+
+            die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
+        }
+    }
     
     
 }

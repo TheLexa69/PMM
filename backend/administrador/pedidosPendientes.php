@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 require dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "sesiones" . DIRECTORY_SEPARATOR . "sesiones.php";
 sesionAdministrador();
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
@@ -11,50 +12,39 @@ $formularios = new formulariosAdministrador;
 $consulta = new consultasAdministrador;
 $envioMail = new mailAdministrador;
 
+$formularios->FiltrarReservasFecha();
+$fecha = !empty(($_POST['fecha'])) ? $_POST['fecha'] : date("Y-m-d");
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['aceptar'])) {
-   
-        $selecionadas  = $_POST['confirmado'];
-        $email=$_POST['correo'];
-        $nombre=$_POST['nombre'];
-        foreach ($selecionadas  as $a) {
+
+        $selecionadas = $_POST['confirmado'];
+        foreach ($selecionadas as $a) {
             $reserva = "si";
             $id = $a;
-            $consulta->actualizarReservas($id, $reserva);
-        } 
-        $mensaje=$formularios->mensageReserva();
-        $envioMail->mailReservas($email, $nombre, $mensaje);
-        $fila = $consulta->comprobarReservas();
+            $consulta->actualizarPedidos($id,$reserva);
+        }
 
-        $formularios->tablaReservas($fila);
-  
-    
-    } else if( (isset($_POST['rechazar']))){ 
-        $selecionadas = $_POST['confirmado'];
-        $email=$_POST['correo'];
-         $nombre=$_POST['nombre'];
-        foreach ($selecionadas as $a) {
-            $reserva = "denegada";
-            $id = $a;
-            $consulta->actualizarReservas($id, $reserva);
-        } 
-        $mensaje=$formularios->mensageReserva("cancelada");
-        $envioMail->mailReservas($email, $nombre, $mensaje);
-        $fila = $consulta->comprobarReservas();
+       $fila = $consulta->comprobarPedidosPorFecha($fecha);
+        $formularios->tablaPedidos($fila);
+    } else {
 
-        $formularios->tablaReservas($fila);
-         
+       
+        
+        $fila = $consulta->comprobarPedidosPorFecha($fecha);
+        $formularios->tablaPedidos($fila);
     }
 } else {
-
-    $fila = $consulta->comprobarPedidosPorFecha();
+  
+ 
+    $fila = $consulta->comprobarPedidosPorFecha($fecha);
 
     if (!empty($fila)) {
         $formularios->tablaPedidos($fila);
     } else {
-       echo "<h1 class='  text-center'>No hay Pedidos pendientes </h1>";
+        $fecha1=date("j-m-y");
+        echo "<h1 class='  text-center'>No hay Pedidos pendientes para el dia $fecha1 </h1>";
     }
 }
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");
 
- 

@@ -12,10 +12,12 @@ $formularios = new formulariosAdministrador;
 $consulta = new consultasAdministrador;
 $envioMail = new mailAdministrador;
 
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['validar'])) {
         $fecha = $_POST['fecha'];
-
+ 
         $formularios->FiltrarReservasFecha();
         $fila = $consulta->comprobarReservasPorFecha($fecha);
          
@@ -30,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $formularios->tablaReservas($fila);
     }
 } else {
-
+  
     $formularios->FiltrarReservasFecha();
     $fila = $consulta->comprobarReservasPorFecha();
     $formularios->tablaReservas($fila);

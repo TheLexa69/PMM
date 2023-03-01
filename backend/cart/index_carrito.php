@@ -62,7 +62,7 @@ $win_loc = "../login/indexLogin.php";
 //require_once 'conexion.php';
 if (isset($_SESSION['usuario'])) {
 	$usuario = $_SESSION['usuario'];
-	if (!isset($_SESSION['carrito'])) {
+	/*if (!isset($_SESSION['carrito'])) {
 		$carrito_guardado = $carrito->getCarro($usuario);
 		//Sacamos el carrito de la base de datos y lo igualamos a la variable de sesión
 		//Si no encuentra nada en la base de datos va a mirar a las cookies y si no hay 
@@ -70,12 +70,22 @@ if (isset($_SESSION['usuario'])) {
 		//Mejora: elegir entre el carrito de la base de datos y el carrito de las cookies
 		if ($carrito_guardado) {
 			$_SESSION['carrito'] = unserialize($carrito_guardado['comida_cantidad'], []);
-		} elseif (isset($_COOKIE['carrito']) && !empty(unserialize($_COOKIE['carrito']))) {
+		} else*/
+		if (isset($_COOKIE['carrito']) && !empty(unserialize($_COOKIE['carrito']))) {
 			$_SESSION['carrito'] = unserialize($_COOKIE['carrito'], []);
 		} else {
-			$_SESSION['carrito'] = [];
+			$carrito_guardado = $carrito->getCarro($usuario);
+			//Sacamos el carrito de la base de datos y lo igualamos a la variable de sesión
+			//Si no encuentra nada en la base de datos va a mirar a las cookies y si no hay 
+			//nada en ninguno de los dos crear la variable de sesión como array vacío 
+			//Mejora: elegir entre el carrito de la base de datos y el carrito de las cookies
+			if ($carrito_guardado) {
+				$_SESSION['carrito'] = unserialize($carrito_guardado['comida_cantidad'], []);
+			}else {
+				$_SESSION['carrito'] = [];
+			}
 		}
-	}
+	
 	
 	
 	if(empty($_SESSION["carrito"])) {

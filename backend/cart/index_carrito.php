@@ -74,15 +74,14 @@ if (isset($_SESSION['usuario'])) {
 			$cantidad = (int) $cant;
 			print ($carrito->printCarroSes($id_comida, $cantidad));
 		}
-<<<<<<< Updated upstream
-		$precio_total = $carrito->getTotalPrice(serialize($_SESSION['carrito']));
-		echo $precio_total ."€";
-		echo '<br><a href="procesar_pedido.php">Realizar compra</a>	';
-=======
+
+
+ 
 		$precio_total = $carrito->getTotalPrice($_SESSION['carrito']);
 		echo  '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-end">Total: '. $precio_total .'</h2>';
 		echo '<div class="col-2 d-flex justify-content-right"><a href="realizar_pedido.php"<button type="button" class="btn btn-outline-success">Finalizar compra</button></a></div></div>';
->>>>>>> Stashed changes
+ 
+
 	}
 	
 	
@@ -97,17 +96,17 @@ if (isset($_SESSION['usuario'])) {
 				$cantidad = (int) $cant;
 				echo ($carrito->printCarroSes($id_comida, $cantidad));
 			}
-<<<<<<< Updated upstream
-			$precio_total = $carrito->getTotalPrice($_COOKIE['carrito']);
-			echo $precio_total . "€";
-			echo '</br><a href="#" id="log">Realizar compra</a>	'; //alert js que necesita iniciar sesión
-		}
-=======
-			$precio_total = $carrito->getTotalPrice(unserialize($_COOKIE['carrito'], []));
+
+	
+
+	$precio_total = $carrito->getTotalPrice(unserialize($_COOKIE['carrito'], []));
 			echo  '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-end">Total: '. $precio_total .'</h2>';
 		echo '<div class="col-2 d-flex justify-content-right"><a id="log" href="../login/indexLogin.php"><button type="button" class="btn btn-outline-success">Finalizar compra</button></a></div></div>';
-	}
->>>>>>> Stashed changes
+	
+		}
+ 
+		 
+
 	} else {
         echo "<div class='warning'>No tienes productos en tu cesta todavía.</div>";
     }

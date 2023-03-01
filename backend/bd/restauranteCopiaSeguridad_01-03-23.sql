@@ -350,6 +350,7 @@ INSERT INTO carta_alergenos (id_alergeno, id_comida) values (15,1);
 INSERT INTO carta_alergenos (id_alergeno, id_comida) values (6,1);
 INSERT INTO carta_alergenos (id_alergeno, id_comida) values (7,1);
 
+
 INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_usuario, NIF, direccion, cp, img, contraseña) VALUES ('Guillermo','André','','guille1insua@gmail.com',DATE(NOW()),'667821250',4,'activado', '54a','','','','$2y$10$xl8U8Xd6AHSYSnW5k4n0B.7lXk9HavWen43stDMlyg9EBpz13j6.O');
 INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_usuario, NIF, direccion, cp, img, contraseña) VALUES ('Gabriel','Domínguez','Borines','cambes6@gmail.com',DATE(NOW()),'699204155',4, 'activado','','','','','$2y$10$CWUoOkAv9YneiFlglkqoRuP28nVduK3aOUTOHW5onv7cAKk3Y.wGC');
 INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_usuario, NIF, direccion, cp, img, contraseña) VALUES ('Nuria','Buceta','García','nuriabuceta@gmail.com',DATE(NOW()),'622838028',4, 'activado','89j','','','','$2y$10$HxDSrQwOEEqVv4uloY5VDe0/NuZnStwORxLwUO..ORK1GmtzKom/.');
@@ -410,9 +411,11 @@ INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno)
 #select * from carta_comida;
 #select * from tipo;
 #select * from subtipo;
+
 select * from carta_comida as cc inner join carta_alergenos as ca on cc.id_comida = ca.id_comida inner join alergenos as a on ca.id_alergeno = a.id_alergeno;
 select * from carta_alergenos;
 select * from alergenos;
+
 #select img, nombre, descripcion, fecha_inicio, fecha_fin, precio from carta_comida;
 #select * from empresa;
 #select * from factura;
@@ -483,6 +486,12 @@ BEGIN
     VALUES (NEW.id_usuario, NEW.nombre, NEW.apellido1, NEW.apellido2, NOW(), NEW.num_telef, NEW.nif, NEW.direccion, NEW.cp);
 END$$
 DELIMITER ;
+
+SELECT * FROM carta_comida WHERE id_comida NOT IN (
+    SELECT id_comida
+    FROM carta_alergenos
+    WHERE id_alergeno = 15
+);
 
 ###########################################################################################
 #CREATE TABLE if not exists roles (

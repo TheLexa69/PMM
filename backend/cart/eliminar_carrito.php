@@ -1,8 +1,8 @@
 <?php
 /*Elimina el producto de la cesta */
-//use clases_carrito\carrito;
-require "../clases_carrito/carrito.php";
 session_start();
+//require "../clases_carrito/carrito.php";
+use clases\Carrito as carrito;
 $cod_comida = $_GET["cod"];
 if (!isset($_SESSION['usuario'])) { 
 	// Si no hay una sesión iniciada, comprobar si hay productos en la cookie
@@ -40,5 +40,8 @@ if (!isset($_SESSION['usuario'])) {
         $_SESSION['carrito'] = $arr_carrito;
 	}
 }
-
-header("Location: index_carrito.php");
+if ($_GET['red']) {
+	header("Location: ../carta/index_carta.php");
+} else {
+	header("Location: index_carrito.php");
+}

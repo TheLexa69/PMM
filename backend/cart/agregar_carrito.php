@@ -1,10 +1,12 @@
 <?php
 /* Suma productos a la cesta si eliges el mismo al añadir producto */
-//use clases_carrito\carrito;
-require "../clases_carrito/carrito.php";
 session_start();
+use clases_carrito\Carrito as carrito;
+//require "../clases_carrito/carrito.php";
+
 $cod_comida = $_GET["cod"];
 $cantidad = $_POST["cantidad"];
+$tipo = $_GET['tipo'];
 if (!isset($_SESSION['usuario'])) { 
 	// Si no hay una sesión iniciada, comprobar si hay productos en la cookie
 	if (isset($_COOKIE['carrito'])) {
@@ -49,5 +51,8 @@ if (!isset($_SESSION['usuario'])) {
             //$carrito->add($id_usuario, $cod_comida, $_POST["cantidad"]);
 	}
 }
-
-header("Location: index_carrito.php");
+if ($tipo) {
+	header("Location: ../carta/index_carta.php?tipo=$tipo");
+} else {
+	header("Location: ../carta/index_carta.php");
+}

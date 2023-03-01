@@ -4,12 +4,12 @@ namespace clases;
 
 class FormulariosUsuario {
 
-    /*public function redirecionesUsuario() {
+    public function redirecionesUsuario() {
 
         echo "<br><a href='modificarDatosUsuario.php'><input type='button' value='Actualiza tus datos'></a><br>";
         //  echo "<br><a href='trabajadores.php'><input type='button' value='Trabajadores'></a><br>";
         //  echo "<br><a href='productos.php'><input type='button' value='Productos'></a><br>";
-    }*/
+    }
 
     public function registroDatosPorUsuario($id, $necesarios = "") {
         ?>
@@ -118,7 +118,8 @@ class FormulariosUsuario {
                 </div>
 
                 <div class='mt-3'>
-                    <label for="c2" class="form-label">Mesas:</label>  
+                    <label for="c2" class="form-label">Mesas:</label>
+                    <?php var_dump($mesas["id_mesa"]);   ?>
                     <select name="mesas">
                         <option value = "<?php echo (!empty($mesas["id_mesa"])) ? $mesas["id_mesa"] : ""; ?>"><?php echo (!empty($mesas["id_mesa"])) ? "Hay mesas disponibles" : "No hay mesas disponibles"; ?></option>;
                     </select>

@@ -84,10 +84,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                           
                                             // session_start();
                                             // $usu tiene campos correo y codRes, correo 
-
+                                            //$_SESSION['rol'] = $datos["id_rol"];
+                                            $_SESSION['mail'] = $datos['correo'];
                                             $_SESSION['usuario'] = $id_usuario; //array de dos elementos
-                                            $_SESSION['carrito'] = [];
-
+                                           // $_SESSION['carrito'] = [];
                                             header("Location: /proyecto/index.php");
                                         } catch (PDOException $e) {
 

@@ -1,11 +1,18 @@
 <?php
-
 session_start();
-//use clases_carrito\carrito as carrito;
-require "../clases_carrito/carrito.php";
+//require "../clases_carrito/carrito.php";
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
+
+use clases\Carrito as carrito;
+
+$carrito = new carrito();
+$rol = isset($_SESSION['id_rol']) ? $_SESSION['id_rol'] : null;
+$win_loc = "../login/indexLogin.php";
 ?>
 <script>
+
+    const miEnlace = document.getElementById("log");
+
     function updateCantidad(id_comida, cantidad) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'actualizar_carrito.php', true);
@@ -18,12 +25,29 @@ require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPAR
         };
         xhr.send('id_comida=' + id_comida + '&cantidad=' + cantidad);
     }
+
+    document.addEventListener("DOMContentLoaded", function (event) {
+        if (<?php echo json_encode($rol); ?> == "null") {
+            miEnlace.addEventListener("click", function (event) {
+                event.preventDefault(); // evita que se recargue la página al hacer clic en el enlace
+                // muestra el mensaje de alerta durante 3 segundos
+                setTimeout(function () {
+                    alert("Necesitas iniciar sesión o registrarte");
+                }, 3000);
+
+                // redirige a la página después de hacer clic en "Aceptar"
+                setTimeout(function () {
+                    window.location.href = "<?php echo $win_loc ?>";
+                }, 3000);
+
+            });
+        }
+    });
+
 </script>
 <?php
-
 //fichero conexion (no hace falta al tenerlo en la clase)
 //require_once 'conexion.php';
-$carrito = new carrito();
 if (isset($_SESSION['usuario'])) {
     $usuario = $_SESSION['usuario'];
     if (!isset($_SESSION['carrito'])) {
@@ -36,12 +60,11 @@ if (isset($_SESSION['usuario'])) {
             $_SESSION['carrito'] = unserialize($carrito_guardado['comida_cantidad'], []);
         } elseif (isset($_COOKIE['carrito']) && !empty(unserialize($_COOKIE['carrito']))) {
             $_SESSION['carrito'] = unserialize($_COOKIE['carrito'], []);
-            setcookie('carrito', null, time() - 3600, "/");
+            setcookie('carrito', null, 1, "/");
         } else {
             $_SESSION['carrito'] = [];
         }
     }
-
 
     if (empty($_SESSION["carrito"])) {
         echo "<div class='warning'>No tienes productos en tu cesta todavía.</div>";
@@ -51,9 +74,10 @@ if (isset($_SESSION['usuario'])) {
             $cantidad = (int) $cant;
             print ($carrito->printCarroSes($id_comida, $cantidad));
         }
-        $precio_total = $carrito->getTotalPrice(serialize($_SESSION['carrito']));
-        print $precio_total;
-        echo '<br><a href="procesar_pedido.php">Realizar compra</a>	';
+
+        $precio_total = $carrito->getTotalPrice($_SESSION['carrito']);
+        echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-end">Total: ' . $precio_total . '</h2>';
+        echo '<div class="col-2 d-flex justify-content-right"><a href="realizar_pedido.php"<button type="button" class="btn btn-outline-success">Finalizar compra</button></a></div></div>';
     }
 } else {
     if (isset($_COOKIE['carrito'])) {
@@ -65,9 +89,12 @@ if (isset($_SESSION['usuario'])) {
                 $cantidad = (int) $cant;
                 echo ($carrito->printCarroSes($id_comida, $cantidad));
             }
-            $precio_total = $carrito->getTotalPrice($_COOKIE['carrito']);
-            print $precio_total;
-            echo '<a href="procesar_pedido.php">Realizar compra</a>	'; //alert js que necesita iniciar sesión
+
+
+
+            $precio_total = $carrito->getTotalPrice(unserialize($_COOKIE['carrito'], []));
+            echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-end">Total: ' . $precio_total . '</h2>';
+            echo '<div class="col-2 d-flex justify-content-right"><a id="log" href="../login/indexLogin.php"><button type="button" class="btn btn-outline-success">Finalizar compra</button></a></div></div>';
         }
     } else {
         echo "<div class='warning'>No tienes productos en tu cesta todavía.</div>";

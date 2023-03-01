@@ -419,8 +419,9 @@ class FormulariosAdministrador {
                             }
                             ?>
                         </table>
-                </div>
+              
                 </form>
+                      </div>
                 <div class="d-flex justify-content-center mt-3">
                     <a href='indexAdministrador.php'>
                         <input type='button' value='Volver a inicio' class="btn btn-outline-warning">
@@ -558,14 +559,14 @@ class FormulariosAdministrador {
         foreach ($fila as $a) {
             $id = $a["id_ped"];
            
-            echo "<tr class='border border-dark'><td class='text-center'><input type='checkbox' name='confirmado[]' value='$id'> <td class='text-center'>" . $a["id_ped"] . "</td> <td class='text-center'>" . $a["nombre"] . " " . $a["apellido1"] . "</td><td class='text-center'>" . $a["num_telef"] . "</td><td class='text-center'>" . $a["correo"] . "</td><td class='text-center'>" . $a["direccion"] . "</td><td class='text-center'>" . $a["cp"] . "</td>  <td class='text-center'>" . $a["nombreLocal"] . "</td><td class='text-center'>" . $a["fecha"] . "</td> </tr>";
+            echo "<tr class='border border-dark'><td class='text-center'> <input type='checkbox' name='confirmado[]' value='$id'> <td class='text-center'>" . $a["id_ped"] . "</td> <td class='text-center'>" . $a["nombre"] . " " . $a["apellido1"] . "</td><td class='text-center'>" . $a["num_telef"] . "</td><td class='text-center'>" . $a["correo"] . "</td><td class='text-center'>" . $a["direccion"] . "</td><td class='text-center'>" . $a["cp"] . "</td>  <td class='text-center'>" . $a["nombreLocal"] . "</td><td class='text-center'>" . $a["fecha"] . "</td> </tr>";
         }
         ?>
                             </table>
                             <div class="mt-3 text-center pb-3"> 
                                 <a href='indexAdministrador.php'><input type='button' value='Volver a inicio' class="btn btn-outline-warning"></a>
                                 <input class="btn btn-outline-success" type="submit" name="aceptar" value="Aceptar reservas selecionadas" >
-                                <input class="btn btn-outline-success" type="submit" name="rechazar" value="Rechazar reservas selecionadas" >
+                               
                             </div>
                         </form>
                     </div>

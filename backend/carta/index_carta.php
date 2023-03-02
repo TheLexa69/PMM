@@ -8,6 +8,10 @@ use \clases\Carrito as carrito;
 $carta = new carta();
 $carrito = new carrito();
 
+if($_POST['datos']){
+    
+}
+
 if (isset($_SESSION['carrito'])) {
     $array_carrito = $_SESSION['carrito'];
 } elseif (isset($_COOKIE['carrito'])) {
@@ -15,6 +19,7 @@ if (isset($_SESSION['carrito'])) {
 } else {
     $array_carrito = [];
 }
+
 /* Realizamos la consulta que nos pide para enseñar los datos. */
 if (isset($_GET["tipo"])) {
     $tipo = $_GET["tipo"];
@@ -40,7 +45,6 @@ if (isset($_GET["tipo"])) {
     }
 </script>
 <div class="container bg-light rounded mt-2 d-flex justify-content-center">
-
     <div class="container">
         <div class="text-center mt-3">
             <h2>Alergenos</h2>
@@ -62,22 +66,19 @@ if (isset($_GET["tipo"])) {
             <img class="img-select" width="80px" height="auto" src="../../frontend/img/14.svg" alt="14">
             <img class="img-select" width="80px" height="auto" src="../../frontend/img/15.svg" alt="15">
         </div>
-
         <div class="text-center mt-3">
             <h2>Filtros</h2>
             <hr>
         </div>
-
         <div id="contenedorAlergenos">
-
         </div>
         <div class="d-flex justify-content-center pb-3" id="reset">
             <input class="btn btn-outline-dark" type="button" value="Filtrar">
             <input class="btn btn-outline-dark" type="reset" value="Reset">
         </div>
     </div>
-
 </div>
+
 <div class="row mt-5">
     <div class="col-8">
         <div id="boton">
@@ -111,11 +112,11 @@ if (isset($_GET["tipo"])) {
                                     }
                                     ?> 
                                 </select>
+                                <div class="col-4 d-flex justify-content-center">
+                                    <!-- if session rol = admin button editar, deshabilitar -->     
+                                    <button class="btn-add-cart btn btn-outline-secondary" id="compra" type="submit">Añadir</button>
+                                </div>
                             </form>
-                        </div>
-                        <div class="col-4 d-flex justify-content-center">
-                            <!-- if session rol = admin button editar, deshabilitar -->     
-                            <button class="btn-add-cart btn btn-outline-secondary" id="compra" type="submit">Añadir</button></form>
                         </div>
                     </div>
                     <?php
@@ -160,35 +161,20 @@ if (isset($_GET["tipo"])) {
             </div>
         </div>
     </div> 
-
 </div>
 <script>
-    var radios = document.getElementsByName('inlineRadioOptions');
-    var mostrar = true;
-    function reset() {
-        console.log("a")
-        mostrar = !mostrar;
-        console.log(radios);
-
-        if (mostrar) {
-            radios[0].checked = false;
-            radios[1].checked = false;
-        }
-    }
-
 
     // Obtener todos los elementos <img> del documento
-    const imagenes = document.getElementsByTagName("img");
-
+    imagenes = document.getElementsByClassName('img-select');
     // Crear un array vacío para almacenar los nombres de las imágenes seleccionadas
     let seleccionadas = [];
+
 
     // Recorrer todas las imágenes y agregar un listener de click a cada una
     for (let i = 0; i < imagenes.length; i++) {
         imagenes[i].addEventListener("click", function () {
             // Obtener el valor del atributo "alt" de la imagen
             const nombre = this.getAttribute("alt");
-
             // Si el nombre ya está en el array, eliminarlo
             if (seleccionadas.includes(nombre)) {
                 seleccionadas = seleccionadas.filter(n => n !== nombre);
@@ -204,7 +190,26 @@ if (isset($_GET["tipo"])) {
             const contenedor = document.getElementById("contenedorAlergenos");
             contenedor.innerHTML = seleccionadas.join(", ");
         });
+    }
 
+    function enviarArray() {
+
+        // Crear objeto XMLHttpRequest
+        var xmlhttp = new XMLHttpRequest();
+        // Configurar solicitud AJAX
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert(this.responseText); // Recibimos la respuesta del servidor
+            }
+        };
+        xmlhttp.open("POST", "index_carta.php", true);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        // Convertir el array a una cadena JSON
+        var datos = JSON.stringify(alergenos);
+
+        // Enviar los datos al servidor
+        xmlhttp.send("datos=" + datos);
     }
 </script>
 <?php

@@ -1,6 +1,6 @@
 <!-- Footer -->
-<footer class='absolute-bottom bottom-0'> 
-    <!--position-fixed bottom-0-->
+<footer class='absolute-bottom'>
+    <!--<div id="visitor-counter">asd</div>-->
 
     <div class="datos_footer">
         <div class="footer_img">

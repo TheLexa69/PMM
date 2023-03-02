@@ -11,10 +11,6 @@
     --light-color: #666;
 }
 
-.nav {
-    min-height: 80px;
-}
-
 body {
     background: url(../img/local/terraza.png) no-repeat;
     background-size: cover;

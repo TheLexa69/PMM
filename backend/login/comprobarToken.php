@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //$contra= password_verify($token, $contra); //$token es el de base de datos //$contra es la de la cooki
     static $cont = 0;
     if (isset($_POST["testigo"]) && $cont = 0) {
-        echo "Registro correcto!!!   <br> <b>Rebise su Email para finalizar el proceso</b><br> ----No cierre el navegador gracias---";
+        echo "Registro correcto!!!   <br> <b>Revise su Email para finalizar el proceso</b><br> ----No cierre el navegador gracias---";
         $cont++;
     }
  

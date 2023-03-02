@@ -103,40 +103,9 @@ $categorias = $c->getCategorias();
                         <?php
                     }
                     ?>
+                </ul> 
             </div>
-
-            <div class="p-2">
-                <ol class="breadcrumb justify-content-start">
-                    <li class="breadcrumb-item"><a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>">Inicio</a></li>
-                        <?php
-                        $pagina_actual = basename($_SERVER['PHP_SELF']);
-                        if ($pagina_actual === 'index.php') {
-                            // No hay más breadcrumbs para la página de inicio
-                        } elseif ($pagina_actual === 'index_carta.php') {
-                            echo '<li class="breadcrumb-item"><a href="#">Carta</a></li>';
-                        } elseif (strpos($pagina_actual, 'index_carta.php') !== false) {
-                            echo '<li class="breadcrumb-item"><a href="' . DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . 'backend' . DIRECTORY_SEPARATOR . 'carta' . DIRECTORY_SEPARATOR . 'index_carta.php">Carta</a></li>';
-                            $tipo = $_GET['tipo'];
-                            echo '<li class="breadcrumb-item active" aria-current="page">' . ucfirst($tipo) . '</li>';
-                        } elseif ($pagina_actual === 'reservas.php') {
-                            echo '<li class="breadcrumb-item"><a href="#">Reservas</a></li>';
-                        } elseif ($pagina_actual === 'index_carrito.php') {
-                            echo '<li class="breadcrumb-item"><a href="#">Cesta</a></li>';
-                        } elseif ($pagina_actual === 'modificarDatosUsuario.php') {
-                            echo '<li class="breadcrumb-item"><a href="#">Usuario</a></li>';
-                            echo '<li class="breadcrumb-item active" aria-current="page">Modificar datos</li>';
-                        } elseif ($pagina_actual === 'indexAdministrador.php') {
-                            echo '<li class="breadcrumb-item"><a href="#">Administrador</a></li>';
-                        } else {
-                            // No hay breadcrumbs para otras páginas
-                        }
-                        ?>
-                </ol>
-            </div>
-        </ul> 
-
-    </div>
-
+        </div>
 
 
 

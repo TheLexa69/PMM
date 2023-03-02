@@ -8,9 +8,19 @@ use \clases\Carrito as carrito;
 $carta = new carta();
 $carrito = new carrito();
 
-if($_POST['datos']){
-    
+if (isset($_POST['datos'])) {
+    echo "asdasdasdasdasd";
+    foreach ($_POST['datos'] as $dato) {
+        // Procesar el dato
+    }
 }
+
+/* if (isset($_POST['datos'])) {
+  echo '0asdasdasd';
+  $consultaAlergenos = $carta->filterByAlergeno($_POST['datos']);
+  var_dump($consultaAlergenos);
+  } */
+var_dump($_POST);
 
 if (isset($_SESSION['carrito'])) {
     $array_carrito = $_SESSION['carrito'];
@@ -50,32 +60,34 @@ if (isset($_GET["tipo"])) {
             <h2>Alergenos</h2>
             <hr>
         </div>
-        <div class="text-center">
-            <img class="img-select" width="80px" height="auto" src="../../frontend/img/2.svg" alt="2">
-            <img class="img-select" width="80px" height="auto" src="../../frontend/img/3.svg" alt="3">
-            <img class="img-select" width="80px" height="auto" src="../../frontend/img/4.svg" alt="4">
-            <img class="img-select" width="80px" height="auto" src="../../frontend/img/5.svg" alt="5">
-            <img class="img-select" width="80px" height="auto" src="../../frontend/img/6.svg" alt="6">
-            <img class="img-select" width="80px" height="auto" src="../../frontend/img/7.svg" alt="7">
-            <img class="img-select" width="80px" height="auto" src="../../frontend/img/8.svg" alt="8">
-            <img class="img-select" width="80px" height="auto" src="../../frontend/img/9.svg" alt="9">
-            <img class="img-select" width="80px" height="auto" src="../../frontend/img/10.svg" alt="10">
-            <img class="img-select" width="80px" height="auto" src="../../frontend/img/11.svg" alt="11">
-            <img class="img-select" width="100px" height="auto" src="../../frontend/img/12.svg" alt="12">
-            <img class="img-select" width="80px" height="auto" src="../../frontend/img/13.svg" alt="13">
-            <img class="img-select" width="80px" height="auto" src="../../frontend/img/14.svg" alt="14">
-            <img class="img-select" width="80px" height="auto" src="../../frontend/img/15.svg" alt="15">
-        </div>
-        <div class="text-center mt-3">
-            <h2>Filtros</h2>
-            <hr>
-        </div>
-        <div id="contenedorAlergenos">
-        </div>
-        <div class="d-flex justify-content-center pb-3" id="reset">
-            <input class="btn btn-outline-dark" type="button" value="Filtrar">
-            <input class="btn btn-outline-dark" type="reset" value="Reset">
-        </div>
+        <form method="POST" action="index_carta.php">
+            <div class="text-center">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/2.svg" alt="2" name="datos[]" value="2">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/3.svg" alt="3" name="datos[]" value="3">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/4.svg" alt="4" name="datos[]" value="4">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/5.svg" alt="5" name="datos[]" value="5">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/6.svg" alt="6" name="datos[]" value="6">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/7.svg" alt="7" name="datos[]" value="7">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/8.svg" alt="8" name="datos[]" value="8">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/9.svg" alt="9" name="datos[]" value="9">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/10.svg" alt="10" name="datos[]" value="10">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/11.svg" alt="11" name="datos[]" value="11">
+                <img class="img-select" width="100px" height="auto" src="../../frontend/img/12.svg" alt="12" name="datos[]" value="12">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/13.svg" alt="13" name="datos[]" value="13">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/14.svg" alt="14" name="datos[]" value="14">
+                <img class="img-select" width="80px" height="auto" src="../../frontend/img/15.svg" alt="15" name="datos[]" value="15">
+            </div>
+            <div class="text-center mt-3">
+                <h2>Filtros</h2>
+                <hr>
+            </div>
+            <div id="contenedorAlergenos">
+            </div>
+            <div class="d-flex justify-content-center pb-3" id="reset">
+                <input class="btn btn-outline-dark" type="button" value="Filtrar" onclick="enviarArray();">
+                <input class="btn btn-outline-dark" type="reset" value="Reset">
+            </div>
+        </form>
     </div>
 </div>
 
@@ -83,8 +95,44 @@ if (isset($_GET["tipo"])) {
     <div class="col-8">
         <div id="boton">
             <?php
-            if ($rdo) {
+            if (isset($consultaAlergenos)) {
+                foreach ($consultaAlergenos as $fila) {
+                    ?>
+                    <div class="layered box row mr-2" id="producto">
+                        <div class="col-4">                        
+                            <img class="imagenes rounded img-fluid" id="producto_img" title="vaso" src="https://cdn.pixabay.com/photo/2020/12/15/13/44/children-5833685__340.jpg">
+                        </div>
+                        <div class="col-4 d-flex ml-2 flex-column">
+                            <h4 class="nombre-producto"><?php echo $fila[0] ?></h4>
+                            <p>Descripción:
+                                <a href="#" id="info">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+                                    </svg>
+                                </a>
+                            </p>
 
+                            <h5 class="precio-producto"> Precio: <?php echo number_format($fila[3], 2, '.', '') ?> €</h5>
+                            <form method="post" action="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "agregar_carrito.php?cod=" . $fila[6] . $url; ?>">
+                                <label for="cantidad">Cantidad:</label>
+                                <select id="cantidad" name="cantidad">'
+                                    <?php
+                                    for ($i = 1; $i <= 10; $i++) {
+                                        echo '<option value="' . $i . '">' . $i . '</option>';
+                                    }
+                                    ?> 
+                                </select>
+                                <div class="col-4 d-flex justify-content-center">
+                                    <!-- if session rol = admin button editar, deshabilitar -->     
+                                    <button class="btn-add-cart btn btn-outline-secondary" id="compra" type="submit">Añadir</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <?php
+                }
+            } else {
                 foreach ($rdo as $fila) {
                     ?>
                     <div class="layered box row mr-2" id="producto">
@@ -162,13 +210,12 @@ if (isset($_GET["tipo"])) {
         </div>
     </div> 
 </div>
+
 <script>
-
     // Obtener todos los elementos <img> del documento
-    imagenes = document.getElementsByClassName('img-select');
+    const imagenes = document.getElementsByClassName('img-select');
     // Crear un array vacío para almacenar los nombres de las imágenes seleccionadas
-    let seleccionadas = [];
-
+    const seleccionadas = [];
 
     // Recorrer todas las imágenes y agregar un listener de click a cada una
     for (let i = 0; i < imagenes.length; i++) {
@@ -177,13 +224,14 @@ if (isset($_GET["tipo"])) {
             const nombre = this.getAttribute("alt");
             // Si el nombre ya está en el array, eliminarlo
             if (seleccionadas.includes(nombre)) {
-                seleccionadas = seleccionadas.filter(n => n !== nombre);
+                seleccionadas.splice(seleccionadas.indexOf(nombre), 1);
                 imagenes[i].style.border = 'none';
             }
             // Si no está en el array, agregarlo
             else {
                 seleccionadas.push(nombre);
                 imagenes[i].style.border = '1px solid red';
+                imagenes[i].setAttribute('checked', '');
             }
 
             // Actualizar el contenido del contenedor de alérgenos
@@ -193,24 +241,68 @@ if (isset($_GET["tipo"])) {
     }
 
     function enviarArray() {
+        // Recoge los elementos del formulario con nombre "datos[]"
+        var datos = document.getElementsByName("datos[]");
+        var valores = [];
 
-        // Crear objeto XMLHttpRequest
-        var xmlhttp = new XMLHttpRequest();
-        // Configurar solicitud AJAX
-        xmlhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                alert(this.responseText); // Recibimos la respuesta del servidor
+        // Crea un array con los valores seleccionados
+        for (var i = 0; i < datos.length; i++) {
+            if (datos[i].checked) {
+                valores.push(datos[i].value);
+            }
+        }
+
+        // Realiza la petición AJAX al mismo archivo PHP
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", window.location.href, true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                // Recoge la respuesta del servidor y haz lo que necesites
+                //var respuesta = xhr.responseText;
+                //console.log(respuesta);
             }
         };
-        xmlhttp.open("POST", "index_carta.php", true);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-        // Convertir el array a una cadena JSON
-        var datos = JSON.stringify(alergenos);
-
-        // Enviar los datos al servidor
-        xmlhttp.send("datos=" + datos);
+        xhr.send("datos[]=" + encodeURIComponent(JSON.stringify(valores)));
     }
+    /*function enviarArray() {
+     imgSeleccionadas = [];
+     var alergenos = document.querySelectorAll('img[checked]');
+     for (var i = 0; i < alergenos.length; i++) {
+     //console.log(alergenos[i].getAttribute('value'));
+     imgSeleccionadas.push(alergenos[i].getAttribute('value'));
+     }
+     var xhr = new XMLHttpRequest();
+     xhr.open("POST", "index_carta.php", true);
+     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+     
+     xhr.onreadystatechange = function () {
+     if (xhr.readyState === 4 && xhr.status === 200) {
+     //window.location.reload();
+     }
+     };
+     console.log(JSON.stringify(imgSeleccionadas))
+     
+     xhr.send("datos=" + JSON.stringify(imgSeleccionadas));
+     }*/
+    /*function enviarArray() {
+     // Crear objeto XMLHttpRequest
+     const xmlhttp = new XMLHttpRequest();
+     xmlhttp.open("POST", "index_carta.php", true);
+     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+     
+     // Configurar solicitud AJAX
+     xmlhttp.onreadystatechange = function () {
+     if (xmlhttp.readyState === XMLHttpRequest.DONE && xmlhttp.status === 200) {
+     // Actualizar la página para reflejar los cambios
+     window.location.reload();
+     }
+     };
+     
+     // Convertir el array a una cadena JSON y enviar los datos al servidor
+     xmlhttp.send("datos=" + JSON.stringify(seleccionadas));
+     }*/
 </script>
+
 <?php
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");

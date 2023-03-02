@@ -70,8 +70,8 @@ class Carta extends Conexion {
                     $text .= "AND id_alergeno = ";
                 }
             }
+            $query = "SELECT * from $this->table WHERE id_comida NOT IN ( SELECT id_comida FROM carta_alergenos WHERE id_alergeno = $text)";
         }
-        $query = "SELECT * from $this->table WHERE id_comida NOT IN ( SELECT id_comida FROM carta_alergenos WHERE id_alergeno = $text)";
         $stmt = $this->conexion->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();

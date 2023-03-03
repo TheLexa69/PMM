@@ -8,20 +8,6 @@ use \clases\Carrito as carrito;
 $carta = new carta();
 $carrito = new carrito();
 
-if (isset($_POST['datos'])) {
-    echo "asdasdasdasdasd";
-    foreach ($_POST['datos'] as $dato) {
-        // Procesar el dato
-    }
-}
-
-/* if (isset($_POST['datos'])) {
-  echo '0asdasdasd';
-  $consultaAlergenos = $carta->filterByAlergeno($_POST['datos']);
-  var_dump($consultaAlergenos);
-  } */
-var_dump($_POST);
-
 if (isset($_SESSION['carrito'])) {
     $array_carrito = $_SESSION['carrito'];
 } elseif (isset($_COOKIE['carrito'])) {
@@ -30,8 +16,15 @@ if (isset($_SESSION['carrito'])) {
     $array_carrito = [];
 }
 
-/* Realizamos la consulta que nos pide para enseñar los datos. */
-if (isset($_GET["tipo"])) {
+if (isset($_POST['dato'])) {
+    $consultaAlergenos = $carta->filterByAlergeno($_POST['dato']);
+    if (isset($_GET["tipo"])) {
+        $tipo = $_GET["tipo"];
+        $url = "&tipo=$tipo";
+    } else {
+        $url = "";
+    }
+} else if (isset($_GET["tipo"])) {
     $tipo = $_GET["tipo"];
     $rdo = $carta->filterByTipo($tipo);
     $url = "&tipo=$tipo";
@@ -60,22 +53,78 @@ if (isset($_GET["tipo"])) {
             <h2>Alergenos</h2>
             <hr>
         </div>
-        <form method="POST" action="index_carta.php">
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
             <div class="text-center">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/2.svg" alt="2" name="datos[]" value="2">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/3.svg" alt="3" name="datos[]" value="3">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/4.svg" alt="4" name="datos[]" value="4">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/5.svg" alt="5" name="datos[]" value="5">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/6.svg" alt="6" name="datos[]" value="6">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/7.svg" alt="7" name="datos[]" value="7">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/8.svg" alt="8" name="datos[]" value="8">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/9.svg" alt="9" name="datos[]" value="9">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/10.svg" alt="10" name="datos[]" value="10">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/11.svg" alt="11" name="datos[]" value="11">
-                <img class="img-select" width="100px" height="auto" src="../../frontend/img/12.svg" alt="12" name="datos[]" value="12">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/13.svg" alt="13" name="datos[]" value="13">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/14.svg" alt="14" name="datos[]" value="14">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/15.svg" alt="15" name="datos[]" value="15">
+                <label class="checkeable">
+                    <input type="checkbox" name="dato[]" value="2">
+                    <img class="img-select" width="80px" height="auto" src="../../frontend/img/2.svg" alt="2" value="2">
+                    </input>
+                </label>
+                <label class="checkeable">
+                    <input type="checkbox" name="dato[]" value="3">
+                    <img class="img-select" width="80px" height="auto" src="../../frontend/img/3.svg" alt="3" value="3">
+                    </input>
+                </label>
+                <label class="checkeable">
+                    <input type="checkbox" name="dato[]" value="4">
+                    <img class="img-select" width="80px" height="auto" src="../../frontend/img/4.svg" alt="4" value="4">
+                    </input>
+                </label>
+                <label class="checkeable">
+                    <input type="checkbox" name="dato[]" value="5">
+                    <img class="img-select" width="80px" height="auto" src="../../frontend/img/5.svg" alt="5" value="5">
+                    </input>
+                </label>
+                <label class="checkeable">
+                    <input type="checkbox" name="dato[]" value="6">
+                    <img class="img-select" width="80px" height="auto" src="../../frontend/img/6.svg" alt="6" value="6">
+                    </input>
+                </label>
+                <label class="checkeable">
+                    <input type="checkbox" name="dato[]" value="7">
+                    <img class="img-select" width="80px" height="auto" src="../../frontend/img/7.svg" alt="7" value="7">
+                    </input>
+                </label>
+                <label class="checkeable">
+                    <input type="checkbox" name="dato[]" value="8">
+                    <img class="img-select" width="80px" height="auto" src="../../frontend/img/8.svg" alt="8" value="8">
+                    </input>
+                </label>
+                <label class="checkeable">
+                    <input type="checkbox" name="dato[]" value="9">
+                    <img class="img-select" width="80px" height="auto" src="../../frontend/img/9.svg" alt="9" value="9">
+                    </input>
+                </label>
+                <label class="checkeable">
+                    <input type="checkbox" name="dato[]" value="10">
+                    <img class="img-select" width="80px" height="auto" src="../../frontend/img/10.svg" alt="10" value="10">
+                    </input>
+                </label>
+                <label class="checkeable">
+                    <input type="checkbox" name="dato[]" value="11">
+                    <img class="img-select" width="80px" height="auto" src="../../frontend/img/11.svg" alt="11" value="11">
+                    </input>
+                </label>
+                <label class="checkeable">
+                    <input type="checkbox" name="dato[]" value="12">
+                    <img class="img-select" width="80px" height="auto" src="../../frontend/img/12.svg" alt="12" value="12">
+                    </input>
+                </label>
+                <label class="checkeable">
+                    <input type="checkbox" name="dato[]" value="13">
+                    <img class="img-select" width="80px" height="auto" src="../../frontend/img/13.svg" alt="13" value="13">
+                    </input>
+                </label>
+                <label class="checkeable">
+                    <input type="checkbox" name="dato[]" value="14">
+                    <img class="img-select" width="80px" height="auto" src="../../frontend/img/14.svg" alt="14" value="14">
+                    </input>
+                </label>
+                <label class="checkeable">
+                    <input type="checkbox" name="dato[]" value="15">
+                    <img class="img-select" width="80px" height="auto" src="../../frontend/img/15.svg" alt="15" value="15">
+                    </input>
+                </label>
             </div>
             <div class="text-center mt-3">
                 <h2>Filtros</h2>
@@ -84,7 +133,7 @@ if (isset($_GET["tipo"])) {
             <div id="contenedorAlergenos">
             </div>
             <div class="d-flex justify-content-center pb-3" id="reset">
-                <input class="btn btn-outline-dark" type="button" value="Filtrar" onclick="enviarArray();">
+                <input class="btn btn-outline-dark" type="submit" value="Filtrar" ">
                 <input class="btn btn-outline-dark" type="reset" value="Reset">
             </div>
         </form>
@@ -240,31 +289,6 @@ if (isset($_GET["tipo"])) {
         });
     }
 
-    function enviarArray() {
-        // Recoge los elementos del formulario con nombre "datos[]"
-        var datos = document.getElementsByName("datos[]");
-        var valores = [];
-
-        // Crea un array con los valores seleccionados
-        for (var i = 0; i < datos.length; i++) {
-            if (datos[i].checked) {
-                valores.push(datos[i].value);
-            }
-        }
-
-        // Realiza la petición AJAX al mismo archivo PHP
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", window.location.href, true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                // Recoge la respuesta del servidor y haz lo que necesites
-                //var respuesta = xhr.responseText;
-                //console.log(respuesta);
-            }
-        };
-        xhr.send("datos[]=" + encodeURIComponent(JSON.stringify(valores)));
-    }
     /*function enviarArray() {
      imgSeleccionadas = [];
      var alergenos = document.querySelectorAll('img[checked]');
@@ -282,25 +306,7 @@ if (isset($_GET["tipo"])) {
      }
      };
      console.log(JSON.stringify(imgSeleccionadas))
-     
      xhr.send("datos=" + JSON.stringify(imgSeleccionadas));
-     }*/
-    /*function enviarArray() {
-     // Crear objeto XMLHttpRequest
-     const xmlhttp = new XMLHttpRequest();
-     xmlhttp.open("POST", "index_carta.php", true);
-     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-     
-     // Configurar solicitud AJAX
-     xmlhttp.onreadystatechange = function () {
-     if (xmlhttp.readyState === XMLHttpRequest.DONE && xmlhttp.status === 200) {
-     // Actualizar la página para reflejar los cambios
-     window.location.reload();
-     }
-     };
-     
-     // Convertir el array a una cadena JSON y enviar los datos al servidor
-     xmlhttp.send("datos=" + JSON.stringify(seleccionadas));
      }*/
 </script>
 

@@ -45,6 +45,7 @@ class Carta extends Conexion {
         $query = "SELECT nombre, descripcion, tipo, precio, img, disponible, id_comida from $this->table WHERE fecha_inicio <= :fecha_hoy AND (fecha_fin >= :fecha_hoy OR fecha_fin IS NULL) AND disponible = 'si'";
         $stmt = $this->conexion->prepare($query);
         $stmt->bindParam(':fecha_hoy', $fecha_hoy);
+
         $stmt->execute();
         return $stmt->fetchAll();
     }
@@ -58,8 +59,13 @@ class Carta extends Conexion {
 
     public function filterByAlergeno($alergenos) {
         $text = "";
+        //var_dump($alergenos);
         if (count($alergenos) == 1) {
-            $query = "SELECT * from $this->table WHERE id_comida NOT IN ( SELECT id_comida FROM carta_alergenos WHERE id_alergeno = $alergenos[0])";
+            $a;
+            foreach ($alergenos as $id) {
+                $a = $id;
+            }
+            $query = "SELECT nombre, descripcion, tipo, precio, img, disponible, id_comida from $this->table WHERE id_comida NOT IN ( SELECT id_comida FROM carta_alergenos WHERE id_alergeno = $a)";
         } else {
             $cantidad = count($alergenos);
             //$alergenos = implode(',', $alergenos);
@@ -67,10 +73,10 @@ class Carta extends Conexion {
                 $text .= $id;
                 --$cantidad;
                 if ($cantidad != 0) {
-                    $text .= "AND id_alergeno = ";
+                    $text .= ", ";
                 }
             }
-            $query = "SELECT * from $this->table WHERE id_comida NOT IN ( SELECT id_comida FROM carta_alergenos WHERE id_alergeno = $text)";
+            echo $query = "SELECT nombre, descripcion, tipo, precio, img, disponible, id_comida from $this->table WHERE id_comida NOT IN ( SELECT id_comida FROM carta_alergenos WHERE id_alergeno IN ($text))";
         }
         $stmt = $this->conexion->prepare($query);
         $stmt->execute();

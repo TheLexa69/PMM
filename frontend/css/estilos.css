@@ -11,6 +11,10 @@
     --light-color: #666;
 }
 
+.checkeable input[type=checkbox] {
+    display: none;
+}
+
 body {
     background: url(../img/local/terraza.png) no-repeat;
     background-size: cover;

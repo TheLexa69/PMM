@@ -88,7 +88,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             $_SESSION['mail'] = $datos['correo'];
                                             $_SESSION['usuario'] = $id_usuario; //array de dos elementos
                                            // $_SESSION['carrito'] = [];
+                                            if(isset($_GET['redirigido'])){
+                                                header("Location: /proyecto/backend/cart/index_carrito.php");
+                                            }else{
                                             header("Location: /proyecto/index.php");
+                                            }
                                         } catch (PDOException $e) {
 
                                             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());

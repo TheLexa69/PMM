@@ -23,7 +23,7 @@ if($pedido) {
     $p->enviar($_SESSION['mail'], $cuerpo);
     echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-center">Pedido realizado con éxito, te hemos enviado un correo.</h2></div>';
     $_SESSION['carrito'] = [];
-    $c->add($id_usuario, serialize($_SESSION['carrito']));
+    $c->add($id_usuario, NULL);
 } else {
     echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-center">Ocurrió algún error y no se pudo realizar el pedido</h2></div>';
 }

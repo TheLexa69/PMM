@@ -3,7 +3,7 @@ namespace clases;
 /**
  * Description of carta
  *
- * @author Nuria
+ * @author Nuria y Guillermo
  */
 
 
@@ -39,7 +39,6 @@ class Carta extends Conexion {
         $stmt->execute();
         return $stmt->fetchAll();
     }
-    
 
     public function printCarta() {
         $fecha_hoy = date('Y-m-d', time());
@@ -56,8 +55,31 @@ class Carta extends Conexion {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function filterByAlergeno($alergenos) {
+        $text = "";
+        //var_dump($alergenos);
+        if (count($alergenos) == 1) {
+            $a;
+            foreach ($alergenos as $id) {
+                $a = $id;
+            }
+            $query = "SELECT nombre, descripcion, tipo, precio, img, disponible, id_comida from $this->table WHERE id_comida NOT IN ( SELECT id_comida FROM carta_alergenos WHERE id_alergeno = $a)";
+        } else {
+            $cantidad = count($alergenos);
+            //$alergenos = implode(',', $alergenos);
+            foreach ($alergenos as $id) {
+                $text .= $id;
+                --$cantidad;
+                if ($cantidad != 0) {
+                    $text .= ", ";
+                }
+            }
+            echo $query = "SELECT nombre, descripcion, tipo, precio, img, disponible, id_comida from $this->table WHERE id_comida NOT IN ( SELECT id_comida FROM carta_alergenos WHERE id_alergeno IN ($text))";
+        }
+        $stmt = $this->conexion->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
 }
-
-
-
-

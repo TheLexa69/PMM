@@ -23,87 +23,86 @@ $categorias = $c->getCategorias();
         <title>Carta</title>
     </head>
 
-    <body> 
+    <body>
+        <div class="d-flex flex-column bg-dark sticky-top bg-gradient">
+            <div class="p-2">
+                <ul class="nav nav-tabs justify-content-end ">
 
-        <ul class="nav nav-tabs justify-content-end sticky-top bg-dark bg-gradient">
-            <li class="mr-10">
-
-
-            </li>
-            <li class="nav-item"> 
-                <a class="nav-link active" aria-current="page" href= '<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>' >Inicio</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Carta</a>
-                <ul class="dropdown-menu ">   
+                    <li class="nav-item"> 
+                        <a class="nav-link active" aria-current="page" href= '<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>' >Inicio</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Carta</a>
+                        <ul class="dropdown-menu ">   
+                            <?php
+                            foreach ($categorias as $nombre) {
+                                $tipo = $nombre['nombre_tipo'];
+                                ?>
+                                <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "carta" . DIRECTORY_SEPARATOR . "index_carta.php?tipo=" . strtolower($tipo); ?>'><?php echo $tipo ?></a></li>
+                                <?php
+                            }
+                            ?>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "carta" . DIRECTORY_SEPARATOR . "index_carta.php"; ?>'>Carta</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "reservas.php"; ?>'>Reservas</a>
+                    </li>
+                    <li class="nav-item">  
+                        <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "index_carrito.php"; ?>'>Cesta</a>
+                    </li>
                     <?php
-                   foreach ($categorias as $nombre) {
-                        $tipo = $nombre['nombre_tipo'];
-                    ?>
-                        <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "carta" . DIRECTORY_SEPARATOR . "index_carta.php?tipo=" . strtolower($tipo); ?>'><?php echo  $tipo ?></a></li>
-                    <?php
-                    }
-                
-                    ?>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "carta" . DIRECTORY_SEPARATOR . "index_carta.php"; ?>'>Carta</a></li>
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Contacto</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "reservas.php"; ?>'>Reservas</a>
-            </li>
-            <li class="nav-item">  
-                <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "index_carrito.php"; ?>'>Cesta</a>
-            </li>
-
-
-            <?php
-            if (!empty($_SESSION['usuario'])  && isset($_SESSION)) {
-                 if (!empty($_SESSION['carrito'])){
-                    setcookie('carrito', null, 1, "/");
-                 }
-
-                ?> 
-            
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Usuario</a>
-                    <ul class="dropdown-menu ">   
-                        <li class="nav-item">
-                            <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "modificarDatosUsuario.php"; ?>'>Datos Usuario</a>
-                        </li> 
-                        <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "carta" . DIRECTORY_SEPARATOR . "index_carta.php?tipo=arroz"; ?>'>Arroz</a></li>
-                        <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "carta" . DIRECTORY_SEPARATOR . "index_carta.php?tipo=carne"; ?>'>Carnes</a></li>
-                        <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "carta" . DIRECTORY_SEPARATOR . "index_carta.php?tipo=pescado"; ?>'>Pescados</a></li>
-                        <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "carta" . DIRECTORY_SEPARATOR . "index_carta.php?tipo=postre"; ?>'>Postres</a></li>
-                        <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "carta" . DIRECTORY_SEPARATOR . "index_carta.php?tipo=bebida"; ?>'>Bebidas</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li class="nav-item">
-                            <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "login" . DIRECTORY_SEPARATOR . "logout.php"; ?>'>Cerrar Session</a>
+                    if (!empty($_SESSION['usuario']) && isset($_SESSION)) {
+                        if (!empty($_COOKIE['carrito'])) {
+                            $carrito = $_COOKIE['carrito'];
+                            foreach (unserialize($_COOKIE['carrito'],[]) as $key => $value) {
+                                unset($key);
+                            }
+                        }
+                        ?> 
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Usuario</a>
+                            <ul class="dropdown-menu ">   
+                                <li class="nav-item">
+                                    <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "modificarDatosUsuario.php"; ?>'>Cambiar Perfil</a>
+                                </li> 
+                                <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "index_carta.php?tipo=arroz"; ?>'>Pedidos</a></li>
+                                <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "index_carta.php?tipo=carne"; ?>'>Facturas</a></li>
+                                <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "verCambios.php"; ?>'>Histórico Datos</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "login" . DIRECTORY_SEPARATOR . "logout.php"; ?>'>Cerrar Session</a>
+                                </li>
+                            </ul>
                         </li>
-                    </ul>
-                </li>
 
 
-                <?php
-            } elseif (!empty($_SESSION['administrador'])) {
-                ?> 
-                <li class="nav-item">
-                    <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "login" . DIRECTORY_SEPARATOR . "logoutAdministrador.php"; ?>'>Cerrar Session</a>
-                </li>
+                        <?php
+                    } elseif (!empty($_SESSION['administrador'])) {
+                        ?> 
+                        <li class="nav-item">
+                            <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "login" . DIRECTORY_SEPARATOR . "logoutAdministrador.php"; ?>'>Cerrar Session</a>
+                        </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "administrador" . DIRECTORY_SEPARATOR . "indexAdministrador.php"; ?>'>Administrador </a>
-                </li>
-                <?php
-            } else {
-                ?> 
-                <li class="nav-item">
-                    <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "login" . DIRECTORY_SEPARATOR . "indexLogin.php"; ?>'>Login</a>
-                </li>
-                <?php
-            }
-            ?>
-        </ul> 
+                        <li class="nav-item">
+                            <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "administrador" . DIRECTORY_SEPARATOR . "indexAdministrador.php"; ?>'>Administrador </a>
+                        </li>
+                        <?php
+                    } else {
+                        ?> 
+                        <li class="nav-item">
+                            <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "login" . DIRECTORY_SEPARATOR . "indexLogin.php"; ?>'>Login</a>
+                        </li>
+                        <?php
+                    }
+                    ?>
+                </ul> 
+            </div>
+        </div>
+
+
+

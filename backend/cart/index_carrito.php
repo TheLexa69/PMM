@@ -9,7 +9,6 @@ $win_loc = "../login/indexLogin.php";
 ?>
 <script>
 
-
 	function updateCantidad(id_comida, cantidad) {
 		var xhr = new XMLHttpRequest();
 		xhr.open('POST', 'actualizar_carrito.php', true);

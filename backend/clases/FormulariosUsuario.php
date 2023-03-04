@@ -119,7 +119,7 @@ class FormulariosUsuario {
 
                 <div class='mt-3'>
                     <label for="c2" class="form-label">Mesas:</label>
-                    <?php var_dump($mesas["id_mesa"]);   ?>
+                  
                     <select name="mesas">
                         <option value = "<?php echo (!empty($mesas["id_mesa"])) ? $mesas["id_mesa"] : ""; ?>"><?php echo (!empty($mesas["id_mesa"])) ? "Hay mesas disponibles" : "No hay mesas disponibles"; ?></option>;
                     </select>
@@ -139,6 +139,51 @@ class FormulariosUsuario {
                 </div>
 
             </form>
+        </div>
+        <?php
+    }
+
+    public function formularioCambiosPerfil($id) {
+        ?>
+        <div class="container bg-light rounded mt-5 w-60 p-3">
+            <div class="text-center">
+                <h2>Cambios realizados:</h2>
+                <hr>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Número de Teléfono</th>
+                        <th scope="col">NIF</th>
+                        <th scope="col">Dirección</th>
+                        <th scope="col">Código Postal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($id as $key => $id) { ?>
+                        <tr>
+                            <th scope="row"><?php echo $id["nombre"]; ?></th>
+                            <td><?php echo $id["apellido1"]; ?></td>
+                            <td><?php echo $id["apellido2"]; ?></td>
+                            <td><?php echo $id["fecha"]; ?></td>
+                            <td><?php echo $id["num_telef"]; ?></td>
+                            <td><?php echo $id["NIF"]; ?></td>
+                            <td><?php echo $id["direccion"]; ?></td>
+                            <td><?php echo $id["cp"]; ?></td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                </tbody>
+            </table>
+
+            <div class="text-center mt-3">
+                <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>" id="cancel" name="cancel" class="btn btn-default btn-outline-danger">Volver</a>
+            </div>
         </div>
         <?php
     }

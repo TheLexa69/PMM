@@ -341,7 +341,14 @@ class ConsultasAdministrador extends Conexion {
     public function actualizarDatosProductos($id, $nombre, $descripcion, $tipo, $subtipo, $desde, $hasta, $precio, $disponible, $img) {
 
         try {
-            $sql = "UPDATE carta_comida  set nombre=:nombre, descripcion=:descripcion, tipo=:tipo, subtipo=:subtipo, fecha_inicio=:desde, fecha_fin=:hasta, precio=:precio, disponible=:disponible, img=:img where id_comida = :id";
+            if ($img == 0) {
+                $sql = "UPDATE carta_comida  set nombre=:nombre, descripcion=:descripcion, tipo=:tipo, subtipo=:subtipo, fecha_inicio=:desde, fecha_fin=:hasta, precio=:precio, disponible=:disponible where id_comida = :id";
+            } else {
+                $img = '../imagenes/imgProductos/' . $img;
+
+                $sql = "UPDATE carta_comida  set nombre=:nombre, descripcion=:descripcion, tipo=:tipo, subtipo=:subtipo, fecha_inicio=:desde, fecha_fin=:hasta, precio=:precio, disponible=:disponible, img=:img where id_comida = :id";
+            }
+
 
             $stmt = $this->conexion->prepare($sql);
 
@@ -354,7 +361,12 @@ class ConsultasAdministrador extends Conexion {
             $stmt->bindParam(':hasta', $hasta, PDO::PARAM_STR);
             $stmt->bindParam(':precio', $precio, PDO::PARAM_STR);
             $stmt->bindParam(':disponible', $disponible, PDO::PARAM_STR);
-            $stmt->bindParam(':img', $img, PDO::PARAM_STR);
+           
+              if (!$img == 0) {
+                $stmt->bindParam(':img', $img, PDO::PARAM_STR);
+            }
+
+            
 
             $stmt->execute();
 
@@ -444,7 +456,7 @@ class ConsultasAdministrador extends Conexion {
             } else {
                 $sql = "select r.id_reservas,r.id_usuario,r.id_restaurante,r.id_mesa,r.fecha_reserva,r.turno ,r.reservaAceptada,u.nombre,u.apellido1,u.num_telef,u.correo,e.nombreLocal from reservas  as r inner join usuario as u on r.id_usuario = u.id_usuario inner join empresa as e on e.cif = r.id_restaurante where reservaAceptada ='si'";
             }
- 
+
             $stmt = $this->conexion->prepare($sql);
 
             $stmt->execute();
@@ -476,21 +488,20 @@ class ConsultasAdministrador extends Conexion {
         }
     }
 
-    
-      public function comprobarReservasPorFecha($fecha = "") {
+    public function comprobarReservasPorFecha($fecha = "") {
 
-          if(empty($fecha)){
-              $fecha= date("Y-m-d");
-          }else{
-              $fecha=$fecha;
-          }
+        if (empty($fecha)) {
+            $fecha = date("Y-m-d");
+        } else {
+            $fecha = $fecha;
+        }
         try {
             if ($fecha) {
                 $sql = "select r.id_reservas,r.id_usuario,r.id_restaurante,r.id_mesa,r.fecha_reserva,r.turno ,r.reservaAceptada,u.nombre,u.apellido1,u.num_telef,u.correo,e.nombreLocal from reservas  as r inner join usuario as u on r.id_usuario = u.id_usuario inner join empresa as e on e.cif = r.id_restaurante where fecha_reserva ='$fecha' and reservaAceptada ='si'";
             } else {
                 $sql = "select r.id_reservas,r.id_usuario,r.id_restaurante,r.id_mesa,r.fecha_reserva,r.turno ,r.reservaAceptada,u.nombre,u.apellido1,u.num_telef,u.correo,e.nombreLocal from reservas  as r inner join usuario as u on r.id_usuario = u.id_usuario inner join empresa as e on e.cif = r.id_restaurante where fecha_reserva ='$fecha' and reservaAceptada ='si'";
             }
- 
+
             $stmt = $this->conexion->prepare($sql);
 
             $stmt->execute();
@@ -504,14 +515,13 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-    
-    
-    public function comprobarPedidosPorFecha($fecha ) {
- 
-      
-        try { 
+
+    public function comprobarPedidosPorFecha($fecha) {
+
+
+        try {
             $sql = "select p.id_ped,p.id_usuario, p.fecha , p.enviado, p.restaurante ,u.nombre, u.apellido1, u.correo,u.num_telef, u.direccion, u.cp ,e.nombreLocal from pedidos  as p inner join usuario as u on p.id_usuario = u.id_usuario inner join empresa as e on e.cif = p.restaurante where p.fecha ='$fecha' and p.enviado ='no'";
-            
+
             $stmt = $this->conexion->prepare($sql);
 
             $stmt->execute();
@@ -525,18 +535,15 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-    
-    
-    
-     public function actualizarPedidos($id,$reserva ) {
- 
-      
-          try {
+
+    public function actualizarPedidos($id, $reserva) {
+
+
+        try {
             $sql = "UPDATE  pedidos  set enviado=:enviado where id_ped=$id ";
 
             $stmt = $this->conexion->prepare($sql);
 
-        
             $stmt->bindParam(':enviado', $reserva, PDO::PARAM_STR);
             $stmt->execute();
 
@@ -546,6 +553,5 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-    
-    
+
 }

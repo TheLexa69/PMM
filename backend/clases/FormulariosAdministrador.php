@@ -276,7 +276,28 @@ class FormulariosAdministrador {
                 </div>
                 <div class='d-flex justify-content-center text-center'>
                     <div class="d-flex justify-content-center text-center">
-                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                        <form enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                           
+                            <div class="row">
+                    <div class="col-4 mt-3 d-flex justify-content-center">
+                        <?php
+                        // Ruta de la imagen
+                        $ruta_imagen = $id['img'];
+                        // Comprobar si la imagen existe
+                        if (file_exists($ruta_imagen)) {
+                            // Mostrar la imagen
+                            echo '<img class="rounded-circle border border-dark" src="' . $ruta_imagen . '" width="200" height="200">';
+                        } else {
+                            echo '<img class="rounded-circle border border-dark" src="../imagenes/imgProductos/defecto.jpg" title="perfil" width="200" height="200">';
+                        }
+                        ?>
+                    </div>
+                    <div class="col-8">
+                       </div>
+                </div>
+                            
+                            
+                            
                             <table class="edicion">
                                 <tr>
                                     <td>Nombre: </td>
@@ -314,11 +335,11 @@ class FormulariosAdministrador {
                                 </tr>
                                 <tr>
                                     <td>Disponible Desde:</td>
-                                    <td><input type=datetime-local name="desde" value="<?php echo $id["fecha_inicio"]; ?>" class="form-control"  pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"></td>
+                                    <td><input type=date name="desde" value="<?php echo $id["fecha_inicio"]; ?>" class="form-control"  pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"></td>
                                 </tr>    
                                 <tr>
                                     <td>Disponible Hasta:</td>
-                                    <td><input type=datetime-local name="hasta" value="<?php echo $id["fecha_fin"]; ?>" class="form-control" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"></td>
+                                    <td><input type=date name="hasta" value="<?php echo $id["fecha_fin"]; ?>" class="form-control" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"></td>
                                 </tr>    
 
                                 <tr>
@@ -338,7 +359,10 @@ class FormulariosAdministrador {
                                 <tr>
                                     <td>Nombre Imagen:</td>
                                     <td>
-                                        <input type="text" name="img" value="<?php echo $id["img"]; ?>" class="form-control">
+
+                                      
+                                        <input type="file" name="imagen[]" class="form-control" id="c9">
+
                                     </td>
                                 </tr>  
                             </table>
@@ -419,9 +443,9 @@ class FormulariosAdministrador {
                             }
                             ?>
                         </table>
-              
-                </form>
-                      </div>
+
+                    </form>
+                </div>
                 <div class="d-flex justify-content-center mt-3">
                     <a href='indexAdministrador.php'>
                         <input type='button' value='Volver a inicio' class="btn btn-outline-warning">
@@ -532,8 +556,7 @@ class FormulariosAdministrador {
                 return $mensaje;
             }
 
-            public function tablaPedidos($fila ) {
-               
+            public function tablaPedidos($fila) {
                 ?>
                 <div class="container bg-light rounded mt-5">
                     <div class="mt-3 d-flex justify-content-center">
@@ -553,25 +576,26 @@ class FormulariosAdministrador {
                                     <th>Codigo Postal</th>
                                     <th>Restaurante</th>
                                     <th>Fecha Pedido</th>
-                                                                 
+
                                 </tr>
-        <?php                                                                                                        
-        foreach ($fila as $a) {
-            $id = $a["id_ped"];
-           
-            echo "<tr class='border border-dark'><td class='text-center'> <input type='checkbox' name='confirmado[]' value='$id'> <td class='text-center'>" . $a["id_ped"] . "</td> <td class='text-center'>" . $a["nombre"] . " " . $a["apellido1"] . "</td><td class='text-center'>" . $a["num_telef"] . "</td><td class='text-center'>" . $a["correo"] . "</td><td class='text-center'>" . $a["direccion"] . "</td><td class='text-center'>" . $a["cp"] . "</td>  <td class='text-center'>" . $a["nombreLocal"] . "</td><td class='text-center'>" . $a["fecha"] . "</td> </tr>";
-        }
-        ?>
+                                <?php
+                                foreach ($fila as $a) {
+                                    $id = $a["id_ped"];
+
+                                    echo "<tr class='border border-dark'><td class='text-center'> <input type='checkbox' name='confirmado[]' value='$id'> <td class='text-center'>" . $a["id_ped"] . "</td> <td class='text-center'>" . $a["nombre"] . " " . $a["apellido1"] . "</td><td class='text-center'>" . $a["num_telef"] . "</td><td class='text-center'>" . $a["correo"] . "</td><td class='text-center'>" . $a["direccion"] . "</td><td class='text-center'>" . $a["cp"] . "</td>  <td class='text-center'>" . $a["nombreLocal"] . "</td><td class='text-center'>" . $a["fecha"] . "</td> </tr>";
+                                }
+                                ?>
                             </table>
                             <div class="mt-3 text-center pb-3"> 
                                 <a href='indexAdministrador.php'><input type='button' value='Volver a inicio' class="btn btn-outline-warning"></a>
                                 <input class="btn btn-outline-success" type="submit" name="aceptar" value="Aceptar reservas selecionadas" >
-                               
+
                             </div>
                         </form>
                     </div>
                 </div>
-    <?php
-    }
+                <?php
+            }
 
-}
+        }
+        

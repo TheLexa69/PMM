@@ -11,7 +11,7 @@ nombre varchar(40) not null,
 apellido1 varchar(40) not null,
 apellido2 varchar(40) null,
 correo varchar(40) not null unique,
-fecha DATE not null,
+fecha TIMESTAMP not null,
 num_telef varchar(9) not null,
 id_rol int not null,
 estado_trabajador enum('activado','desactivado') not null default 'desactivado',
@@ -26,7 +26,7 @@ nombre varchar(40) not null,
 apellido1 varchar(40) not null,
 apellido2 varchar(40) null,
 correo varchar(40) not null unique,
-fecha DATE not null,
+fecha TIMESTAMP not null,
 num_telef varchar(9) not null,
 id_rol int not null,
 estado_usuario enum('activado','desactivado') not null default 'desactivado',
@@ -46,19 +46,13 @@ id_usuario int,
 nombre varchar(40) not null,
 apellido1 varchar(40) not null,
 apellido2 varchar(40) null,
-correo varchar(40) not null unique,
-fecha DATE not null,
+fecha TIMESTAMP not null,
 num_telef varchar(9) not null,
-NIF varchar(9)  null unique,
+NIF varchar(9)  null,
 direccion varchar(1000) null,
 cp varchar(5) null,
-img varchar(100) not null,
 constraint pk_id primary key (id_datos_usuario)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
-
 
 
 create table if not exists roles(
@@ -74,8 +68,8 @@ nombre varchar(100) not null,
 descripcion varchar(300) null,
 tipo int not null,
 subtipo int null,
-fecha_inicio DATE not null,
-fecha_fin DATE null,
+fecha_inicio TIMESTAMP not null,
+fecha_fin TIMESTAMP null,
 precio float not null,
 disponible  enum('si','no') not null default 'si',
 img varchar(100) not null,
@@ -109,13 +103,13 @@ constraint pk_idAlergeno primary key (id_alergeno)
 create table if not exists carta_alergenos(
 id_alergeno int not null,
 id_comida int not null
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE IF NOT EXISTS pedidos (
   id_ped INT NOT NULL AUTO_INCREMENT,
   id_usuario int not null,
-  fecha DATE NOT NULL,
+  fecha TIMESTAMP NOT NULL,
   enviado enum('si', 'no') NOT NULL default "no",
   restaurante VARCHAR(10) NOT NULL,
   PRIMARY KEY (id_ped)
@@ -126,7 +120,7 @@ create table if not exists factura(
 id_factura int auto_increment,
 id_usuario int not null,
 cif_empresa varchar(10) not null,
-fecha DATE not null,
+fecha TIMESTAMP not null,
 total int not null,
 modo_pago int not null,
 id_ped int not null,
@@ -155,7 +149,7 @@ constraint pk_cif primary key (cif)
 create table if not exists carrito (
 id_carro int auto_increment,
 id_usuario int not null,
-comida_cantidad longtext not null,
+comida_cantidad longtext,
 id_ped int,
 constraint pk_id primary key (id_carro)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -166,8 +160,8 @@ CREATE TABLE if not exists ped_prod (
   id_prod int NOT NULL,
   cantidad int NOT NULL,
   precio int NOT NULL,
-  constraint pk_id primary key (id_ped_prod)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  constraint pk_id_ped_prod primary key (id_ped_prod)
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 create table if not exists reservas (
 id_reservas	int auto_increment,
@@ -176,7 +170,7 @@ id_restaurante varchar(10),
 id_mesa int,
 fecha_reserva date not null,
 turno enum('comer', 'cenar'),
-reservaAceptada enum('si', 'no','denegada')DEFAULT "no",
+reservaAceptada enum('si', 'no')DEFAULT "no",
 constraint pk_id primary key (id_reservas)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -261,11 +255,11 @@ INSERT INTO alergenos (nombre_alergeno, descripcion, img) values ('frutoscascara
 INSERT INTO alergenos (nombre_alergeno, descripcion, img) values ('gluten', 'Contiene Gluten', 'url');
 
 #FALTA AGREGAR LOS CAMPOS DE ALERGENOS !!!!!!!!
-INSERT INTO carta_comida (nombre, descripcion, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Surtido de Croquetas','Jamón, Cecina y Pulpo',1, 1,DATE(NOW()), DATE(NOW()),'13.50',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Pulpo',1, 1,DATE(NOW()),DATE(NOW()),'12.50',1,'url');
+INSERT INTO carta_comida (nombre, descripcion, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Surtido de Croquetas','Jamón, Cecina y Pulpo',1, 1,DATE(NOW()), null,'13.50',1,'url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Pulpo',1, 1,DATE(NOW()), null,'12.50',1,'url');
 INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Rulo de cabra y cebolla caramelizada',1, 1,DATE(NOW()), null,'12.00',1,'url');
 INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Cecina y Queso San Simón',1, 1,DATE(NOW()), null,'11.50',1,'url');
-INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón',1, 1,DATE(NOW()), DATE(NOW()),'10.00',1,'url');
+INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Jamón',1, 1,DATE(NOW()), null,'10.00',1,'url');
 
 INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Cesar con Pollo',1, 2,DATE(NOW()), null,'13.50',1,'url');
 INSERT INTO carta_comida (nombre, tipo, subtipo, fecha_inicio, fecha_fin, precio, disponible, img) VALUES ('Tomate, Ventresca y Anchoa',1, 2,DATE(NOW()), null,'12.50',1,'url');
@@ -356,6 +350,33 @@ INSERT INTO carta_alergenos (id_alergeno, id_comida) values (15,1);
 INSERT INTO carta_alergenos (id_alergeno, id_comida) values (6,1);
 INSERT INTO carta_alergenos (id_alergeno, id_comida) values (7,1);
 
+INSERT INTO carta_alergenos (id_alergeno, id_comida) values (8,2);
+
+INSERT INTO carta_alergenos (id_alergeno, id_comida) values (8,10);
+INSERT INTO carta_alergenos (id_alergeno, id_comida) values (7,10);
+
+INSERT INTO carta_alergenos (id_alergeno, id_comida) values (8,11);
+
+INSERT INTO carta_alergenos (id_alergeno, id_comida) values (7,41);
+INSERT INTO carta_alergenos (id_alergeno, id_comida) values (15,41);
+INSERT INTO carta_alergenos (id_alergeno, id_comida) values (6,41);
+INSERT INTO carta_alergenos (id_alergeno, id_comida) values (12,41);
+
+INSERT INTO carta_alergenos (id_alergeno, id_comida) values (7,42);
+INSERT INTO carta_alergenos (id_alergeno, id_comida) values (15,42);
+INSERT INTO carta_alergenos (id_alergeno, id_comida) values (6,42);
+INSERT INTO carta_alergenos (id_alergeno, id_comida) values (12,42);
+
+INSERT INTO carta_alergenos (id_alergeno, id_comida) values (7,43);
+INSERT INTO carta_alergenos (id_alergeno, id_comida) values (15,43);
+INSERT INTO carta_alergenos (id_alergeno, id_comida) values (6,43);
+INSERT INTO carta_alergenos (id_alergeno, id_comida) values (12,43);
+
+INSERT INTO carta_alergenos (id_alergeno, id_comida) values (7,44);
+INSERT INTO carta_alergenos (id_alergeno, id_comida) values (15,44);
+INSERT INTO carta_alergenos (id_alergeno, id_comida) values (6,44);
+INSERT INTO carta_alergenos (id_alergeno, id_comida) values (12,44);
+
 INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_usuario, NIF, direccion, cp, img, contraseña) VALUES ('Guillermo','André','','guille1insua@gmail.com',DATE(NOW()),'667821250',4,'activado', '54a','','','','$2y$10$xl8U8Xd6AHSYSnW5k4n0B.7lXk9HavWen43stDMlyg9EBpz13j6.O');
 INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_usuario, NIF, direccion, cp, img, contraseña) VALUES ('Gabriel','Domínguez','Borines','cambes6@gmail.com',DATE(NOW()),'699204155',4, 'activado','','','','','$2y$10$CWUoOkAv9YneiFlglkqoRuP28nVduK3aOUTOHW5onv7cAKk3Y.wGC');
 INSERT INTO usuario (nombre, apellido1, apellido2, correo, fecha, num_telef, id_rol, estado_usuario, NIF, direccion, cp, img, contraseña) VALUES ('Nuria','Buceta','García','nuriabuceta@gmail.com',DATE(NOW()),'622838028',4, 'activado','89j','','','','$2y$10$HxDSrQwOEEqVv4uloY5VDe0/NuZnStwORxLwUO..ORK1GmtzKom/.');
@@ -369,9 +390,7 @@ INSERT INTO trabajador (nombre, apellido1, apellido2, correo, fecha, num_telef, 
 INSERT INTO empresa (cif, nombreLocal, nombre_sociedad, direccion, ciudad, cp, telefono, logo) VALUES ('B27788272','Novo Lua Chea','LUENGOS ANDRE S.L.','Rua de Eduardo Cabello, 25','Vigo','36208','986132537','url');
 INSERT INTO empresa (cif, nombreLocal, nombre_sociedad, direccion, ciudad, cp, telefono, logo) VALUES ('B28789542','Viejo Lua Chea','LUENGOS ANDRES S.L.','Rua de Otero Pedrallo, 30','Vigo','36208','986132537','url');
 
-insert into pedidos (id_usuario, fecha, enviado,restaurante) values (3,DATE(NOW()), 'no','B27788272');
-insert into pedidos (id_usuario, fecha, enviado,restaurante) values (2,DATE(NOW()), 'no','B27788272');
-insert into pedidos (id_usuario, fecha, enviado,restaurante) values (1,DATE(NOW()), 'no','B27788272');
+#insert into pedidos (id_usuario, cif_empresa, fecha, total, modo_pago, id_ped) values (3,'B27788272', DATE(NOW()), 20, 1, 20, 1);
 #insert into factura (id_usuario, cif_empresa, fecha, total, modo_pago, id_ped) values (3,'B27788272', DATE(NOW()), 20, 1, 20, 1);
 #insert into factura (id_usuario, cif_empresa, fecha, total, modo_pago, id_ped) values (3,'B27788272', DATE(NOW()), 20, 1, 20, 1);
 #insert into factura (id_usuario, cif_empresa, fecha, total, modo_pago, id_ped) values (3,'B27788272', DATE(NOW()), 20, 1, 20, 1);
@@ -392,24 +411,22 @@ INSERT INTO mesas (enumMesa) values ('S3');
 INSERT INTO mesas (enumMesa) values ('S4');
 INSERT INTO mesas (enumMesa) values ('S5');
 
-select * from mesas where (id_mesa not in (select id_mesa from reservas)); #limit 1
-select * from reservas;
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 1, "2023-02-28",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B28789542', 2, "2023-02-28",'cenar');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 3, "2023-02-28",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B28789542', 4, "2023-02-28",'cenar');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 5, "2023-02-28",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 6, "2023-02-28",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 7, "2023-02-28",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 8, "2023-02-28",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 9, "2023-02-28",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 10, "2023-02-28",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 11, "2023-02-28",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 12, "2023-02-28",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 13, "2023-02-28",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 1, "2023-02-27",'comer');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 2, "2023-02-27",'cenar');
-INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 3, "2023-02-27",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 13, "2023-06-20",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B28789542', 10, "2017-06-20",'cenar');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 4, "2017-06-20",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B28789542', 9, "2017-06-20",'cenar');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 12, "2017-06-20",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 1, "2017-06-20",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 2, "2017-06-20",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 3, "2017-06-20",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 4, "2017-06-20",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 5, "2017-06-20",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 6, "2017-06-20",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 7, "2017-06-20",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 8, "2017-06-20",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 11, "2017-06-20",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 14, "2017-06-20",'comer');
+INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) values (2, 'B27788272', 15, "2017-06-20",'comer');
 
 #insert into carrito (id_usuario, id_comida, cantidad) values (3, 4, 1);
 
@@ -420,8 +437,11 @@ INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno)
 #select * from carta_comida;
 #select * from tipo;
 #select * from subtipo;
-#select * from carta_alergenos;
-#select * from alergenos;
+
+select * from carta_comida as cc inner join carta_alergenos as ca on cc.id_comida = ca.id_comida inner join alergenos as a on ca.id_alergeno = a.id_alergeno;
+select * from carta_alergenos;
+select * from alergenos;
+
 #select img, nombre, descripcion, fecha_inicio, fecha_fin, precio from carta_comida;
 #select * from empresa;
 #select * from factura;
@@ -469,6 +489,7 @@ INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno)
 #SHOW GRANTS;
 
 ###########################################################################################
+# HACERLO CON PROCEDURE
 DELIMITER $$
 CREATE TRIGGER asignar_fecha_usuario
 BEFORE INSERT ON usuario
@@ -484,11 +505,37 @@ BEGIN
     DELETE FROM usuario WHERE activado = 0 AND fecha < DATE_SUB(NOW, INTERVAL 10 DAY);
 END$$
 
+CREATE TRIGGER actualizar_usuario AFTER UPDATE ON usuario
+FOR EACH ROW
+BEGIN
+    INSERT INTO datos_usuario (id_usuario, nombre, apellido1, apellido2, fecha, num_telef, nif, direccion, cp)
+    VALUES (NEW.id_usuario, NEW.nombre, NEW.apellido1, NEW.apellido2, NOW(), NEW.num_telef, NEW.nif, NEW.direccion, NEW.cp);
+END$$
 DELIMITER ;
-###########################################################################################
 
-select id_mesa from reservas;
-select * from reservas;
+select * from alergenos;
+select id_comida from carta_alergenos where id_alergeno = 8;
+select * from carta_alergenos as ca inner join carta_comida as cc on cc.id_comida=ca.id_comida where id_alergeno != 8;
+select * from carta_comida as cc inner join carta_alergenos as ca on cc.id_comida=ca.id_comida inner join alergenos as a on ca.id_alergeno = a.id_alergeno;
+SELECT * FROM carta_comida WHERE id_comida NOT IN (
+    select id_comida from carta_alergenos where id_alergeno = 8
+);
+
+select * from alergenos;
+select * from carta_alergenos;
+select * from carta_comida;
+SELECT * FROM carta_comida WHERE id_comida NOT IN (
+    SELECT id_comida
+    FROM carta_alergenos
+    WHERE id_alergeno = 8
+);
+SELECT * from carta_comida WHERE id_comida NOT IN (
+	SELECT id_comida 
+	FROM carta_alergenos 
+	WHERE id_alergeno IN (7, 8)
+);
+
+SELECT nombre, descripcion, tipo, precio, img, disponible, id_comida from carta_comida WHERE id_comida NOT IN ( SELECT id_comida FROM carta_alergenos WHERE id_alergeno IN (7, 8));
 ###########################################################################################
 #CREATE TABLE if not exists roles (
 #   id INT PRIMARY KEY AUTO_INCREMENT,
@@ -509,7 +556,10 @@ select * from reservas;
 
 #UPDATE carta_comida SET subtipo='enum('','','','','','','')';
 
-
+select * from datos_usuario where id_usuario=1;
+select * from datos_usuario where id_usuario = 3;
+update usuario set nombre = "Nuria AA AA" where id_usuario=3;
+select * from usuario;
 
 #CREATE USER IF NOT EXISTS administrador IDENTIFIED BY 'renaido2023';
 

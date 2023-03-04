@@ -21,13 +21,19 @@ if($pedido) {
     $array_carrito = $p->array_carrito($carrito, $precio, $especif);
     $cuerpo = $p->crear_correo($array_carrito, $pedido);
     $p->enviar($_SESSION['mail'], $cuerpo);
-    echo "pedido realizado con éxito";
+    echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-center">Pedido realizado con éxito, te hemos enviado un correo.</h2></div>';
     $_SESSION['carrito'] = [];
+    $c->add($id_usuario, NULL);
 } else {
-    echo "ocurrió algún error y no se pudo realizar el pedido";
+    echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-center">Ocurrió algún error y no se pudo realizar el pedido</h2></div>';
 }
 ?>
 </br>
-<a href="../cart/index_carrito.php">Volver a la cesta</a>
+<div class="layered box row mr-2">
+        <div class="col-2 d-flex justify-content-right">
+        <a href="../login/indexLogin.php"><button type="button" class="btn btn-outline-success">Volver al inicio</button></a>
+        </div>
+      </div>
+
 <?php
 require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "footer.php"); 

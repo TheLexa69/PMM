@@ -10,12 +10,13 @@ session_start();
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-
+   
         <link rel="stylesheet" href='<?php echo "frontend" . DIRECTORY_SEPARATOR . "css" . DIRECTORY_SEPARATOR . "index.css"; ?>'/>
         <title>Inicio</title>
     </head>
     <body>
-        <?php require(__DIR__ . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php"); ?>
+        <?php require(__DIR__ . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php"); 
+        ?>
 
         <div id="carouselExampleDark" class="carousel carousel-dark slide">
             <div class="carousel-indicators">
@@ -41,14 +42,13 @@ session_start();
                                         <div class="image text_img">
                                             <img id="imagen_c1" src="<?php echo "frontend" . DIRECTORY_SEPARATOR . "img" . DIRECTORY_SEPARATOR . "comida" . DIRECTORY_SEPARATOR . "cachopo1.png"?>">
                                         </div>
-                                        <p id="descripcion_c1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
-                                            suscipit quod
-                                            beatae libero,
-                                            impedit voluptas laboriosam qui facilis eveniet neque earum ad culpa in
-                                            perspiciatis ipsum
-                                            quas reprehenderit amet labore?</p>
+                                        <p id="descripcion_c1">
+                                        ¿Quieres probar algo delicioso de Asturias? El cachopo es una comida típica que no puedes perderte. 
+                                        Hecho con jamón serrano, queso tetilla, cheddar, cebolla caramelizada y tomate, es una deliciosa combinación de sabores en una delgada pieza de carne. 
+                                        ¡No te pierdas la oportunidad de probar este plato asturiano imprescindible!
+                                        </p>
                                         <div class="d-grid gap-3">
-                                            <button class="btn btn-primary" type="button">Comprar</button>
+                                            <a class="btn btn-primary" href="./backend/carta/index_carta.php?tipo=cachopo">Pedir ya</a>
                                         </div>
                                     </div>
                                 </div>
@@ -70,14 +70,11 @@ session_start();
                                             <div class="image text_img">
                                                 <img id="imagen_c2" src="<?php echo "frontend" . DIRECTORY_SEPARATOR . "img" . DIRECTORY_SEPARATOR . "comida" . DIRECTORY_SEPARATOR . "brownie.jpg"?>">
                                             </div>
-                                            <p id="descripcion_c2">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                                Sunt suscipit quod
-                                                beatae libero,
-                                                impedit voluptas laboriosam qui facilis eveniet neque earum ad culpa in
-                                                perspiciatis ipsum
-                                                quas reprehenderit amet labore?</p>
+                                            <p id="descripcion_c2">¿Amante del chocolate? Prueba el brownie con chocolate fundido, nata y helado de vainilla. 
+                                                Este postre decadente combina un brownie suave con una bola de helado de vainilla cremoso y nata montada. 
+                                                Perfecto para aquellos que buscan una delicia dulce y seductora.
                                             <div class="d-grid gap-3">
-                                                <button class="btn btn-primary" type="button">Comprar</button>
+                                                <a class="btn btn-primary" href="./backend/carta/index_carta.php?tipo=postre">Pedir ya</a>
                                             </div>
                                         </div>
                                     </div>
@@ -100,14 +97,13 @@ session_start();
                                             <div class="image text_img">
                                                 <img id="imagen_c3" src="<?php echo "frontend" . DIRECTORY_SEPARATOR . "img" . DIRECTORY_SEPARATOR . "comida" . DIRECTORY_SEPARATOR . "fabada.jpg"?>">
                                             </div>
-                                            <p id="descripcion_c3">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                                Sunt suscipit quod
-                                                beatae libero,
-                                                impedit voluptas laboriosam qui facilis eveniet neque earum ad culpa in
-                                                perspiciatis ipsum
-                                                quas reprehenderit amet labore?</p>
+                                            <p id="descripcion_c3">¿Buscas una comida sabrosa y satisfactoria? Prueba la fabada, 
+                                                un plato típico de Galicia. Con <b>fabas, chorizo, panceta y morcilla, </b>
+                                                es perfecto para días fríos y lluviosos y para aquellos que buscan una comida 
+                                                abundante y sustanciosa. 
+                                                ¡No te pierdas la oportunidad de probar este plato gallego imprescindible!</p>
                                             <div class="d-grid gap-3">
-                                                <button class="btn btn-primary" type="button">Comprar</button>
+                                                <a class="btn btn-primary" href="./backend/carta/index_carta.php?tipo=entrantes">Pedir ya</a>
                                             </div>
                                         </div>
                                     </div>

@@ -11,8 +11,8 @@
     --light-color: #666;
 }
 
-.nav {
-    min-height: 80px;
+.checkeable input[type=checkbox] {
+    display: none;
 }
 
 body {

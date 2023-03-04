@@ -3,7 +3,7 @@ namespace clases;
 /**
  * Description of carta
  *
- * @author Nuria
+ * @author Nuria y Guillermo
  */
 
 
@@ -28,31 +28,58 @@ class Carta extends Conexion {
     }
 
     public function filterByTipo($tipo) {
-        $timestamp = time();
-        $fecha_hoy = gmdate('Y-m-d H:i:s', $timestamp);
-
+        $fecha_hoy = date('Y-m-d', time());
         $query = "SELECT nombre, descripcion, tipo, precio, img, disponible, id_comida 
-                    FROM $this->table c 
-                    INNER JOIN tipo t ON c.tipo = t.id_tipo
-                    WHERE t.nombre_tipo = :tipo AND fecha_inicio >= :fecha_hoy AND fecha_fin <= :fecha_hoy AND disponible = 'si'";
-                    $stmt = $this->conexion->prepare($query);
-                    $stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
-                    $stmt->bindParam(':fecha_hoy', $fecha_hoy);
-                    $stmt->execute();
-                    return $stmt->fetchAll();
+        FROM $this->table c 
+        INNER JOIN tipo t ON c.tipo = t.id_tipo
+        WHERE t.nombre_tipo = :tipo AND fecha_inicio <= :fecha_hoy AND (fecha_fin >= :fecha_hoy OR fecha_fin IS NULL) AND disponible = 'si'";
+        $stmt = $this->conexion->prepare($query);
+        $stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
+        $stmt->bindParam(':fecha_hoy', $fecha_hoy);
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 
     public function printCarta() {
-        $timestamp = time();
-        $fecha_hoy = gmdate('Y-m-d H:i:s', $timestamp);
-        $query = "select nombre, descripcion, tipo, precio, img, disponible, id_comida from $this->table WHERE fecha_inicio >= :fecha_hoy AND fecha_fin <= :fecha_hoy AND disponible = 'si'";
+        $fecha_hoy = date('Y-m-d', time());
+        $query = "SELECT nombre, descripcion, tipo, precio, img, disponible, id_comida from $this->table WHERE fecha_inicio <= :fecha_hoy AND (fecha_fin >= :fecha_hoy OR fecha_fin IS NULL) AND disponible = 'si'";
         $stmt = $this->conexion->prepare($query);
         $stmt->bindParam(':fecha_hoy', $fecha_hoy);
         $stmt->execute();
         return $stmt->fetchAll();
     }
+
+    public function getCategorias() {
+        $query = "select nombre_tipo from tipo;";
+        $stmt = $this->conexion->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function filterByAlergeno($alergenos) {
+        $text = "";
+        //var_dump($alergenos);
+        if (count($alergenos) == 1) {
+            $a;
+            foreach ($alergenos as $id) {
+                $a = $id;
+            }
+            $query = "SELECT nombre, descripcion, tipo, precio, img, disponible, id_comida from $this->table WHERE id_comida NOT IN ( SELECT id_comida FROM carta_alergenos WHERE id_alergeno = $a)";
+        } else {
+            $cantidad = count($alergenos);
+            //$alergenos = implode(',', $alergenos);
+            foreach ($alergenos as $id) {
+                $text .= $id;
+                --$cantidad;
+                if ($cantidad != 0) {
+                    $text .= ", ";
+                }
+            }
+            echo $query = "SELECT nombre, descripcion, tipo, precio, img, disponible, id_comida from $this->table WHERE id_comida NOT IN ( SELECT id_comida FROM carta_alergenos WHERE id_alergeno IN ($text))";
+        }
+        $stmt = $this->conexion->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
 }
-
-
-
-

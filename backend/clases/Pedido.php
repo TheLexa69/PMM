@@ -37,18 +37,22 @@ class Pedido extends Conexion {
         $fecha = date('Y-m-d H:i:s');
         try {
             $this->conexion->beginTransaction();
-            $stmt = $this->conexion->prepare("INSERT INTO $this->tabla_pedidos (id_usuario, fecha, enviado, restaurante) VALUES (?, ?, 'no', ?)");
-            $stmt->bindParam(1, $id_usuario, PDO::PARAM_INT);
-            $stmt->bindParam(2, $fecha);
-            $stmt->bindParam(3, $cif, PDO::PARAM_STR);
+            $stmt = $this->conexion->prepare("INSERT INTO $this->tabla_pedidos (id_usuario, fecha, enviado, restaurante) VALUES (:id_usuario, :fecha, 'no', :cif)");
+            $stmt->bindParam(":id_usuario", $id_usuario, PDO::PARAM_INT);
+            $stmt->bindParam(":fecha", $fecha);
+            $stmt->bindParam(":cif", $cif, PDO::PARAM_STR);
             $stmt->execute();
             $id_pedido = $this->conexion->lastInsertId();
             foreach ($carrito as $comida => $cant) {
-                $stmt = $this->conexion->prepare("INSERT INTO $this->tabla_productos (id_ped, id_prod, cantidad, precio) VALUES (?, ?, ?, ?)");
-                $stmt->bindParam(1, $id_pedido, PDO::PARAM_INT);
-                $stmt->bindParam(2, $comida, PDO::PARAM_INT);
-                $stmt->bindParam(3, $cant, PDO::PARAM_INT);
-                $stmt->bindParam(4, $precio, PDO::PARAM_INT);
+                $stmt = $this->conexion->prepare("SELECT precio FROM carta_comida WHERE id_comida = :comida");
+                $stmt->bindParam(":comida", $comida, PDO::PARAM_INT);
+                $stmt->execute();
+                $precio_por_unidad = $stmt->fetch(PDO::FETCH_ASSOC);
+                $stmt = $this->conexion->prepare("INSERT INTO $this->tabla_productos (id_ped, id_prod, cantidad, precio) VALUES (:id_ped, :id_prod, :cantidad, :precio)");
+                $stmt->bindParam(":id_ped", $id_pedido, PDO::PARAM_INT);
+                $stmt->bindParam(":id_prod", $comida, PDO::PARAM_INT);
+                $stmt->bindParam(":cantidad", $cant, PDO::PARAM_INT);
+                $stmt->bindParam(":precio", $precio_por_unidad['precio'], PDO::PARAM_INT);
                 $stmt->execute();
             }
             $stmt = $this->conexion->prepare("INSERT INTO $this->tabla_factura (id_usuario, cif_empresa, fecha, id_ped, total, modo_pago) VALUES (?, ?, ?, ?, ?, ?)");
@@ -98,7 +102,7 @@ class Pedido extends Conexion {
         $stmt = $this->conexion->prepare("SELECT * FROM $this->tabla_pedidos WHERE id = ?");
         $stmt->execute([$id_pedido]);
         $pedido = $stmt->fetch(PDO::FETCH_ASSOC);
-        $stmt = $this->conexion->prepare("SELECT $this->tabla_productos.nombre, pedidos_productos.cantidad, pedidos_productos.precio FROM pedidos_productos INNER JOIN $this->tabla_productos ON pedidos_productos.id_producto = $this->tabla_productos.id WHERE pedidos_productos.id_pedido = ?");
+        $stmt = $this->conexion->prepare("SELECT $this->tabla_productos.nombre, pedidos_productos.cantidad, ped_prod.precio FROM ped_prod INNER JOIN $this->tabla_productos ON ped_prod.id_producto = $this->tabla_productos.id WHERE ped_prof.id_pedido = ?");
         $stmt->execute([$id_pedido]);
         $pedido['productos'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $pedido;
@@ -127,7 +131,7 @@ class Pedido extends Conexion {
             $array_carrito .=  "<tr><td>" .$result['nombre']. "</td><td>$cantidad</td><td>".$result['precio']."€</td><td> </tr>";
         }
         $array_carrito .= "<tr><td colspan=3>_________________</td></tr></tr>
-                            <tr><td>Precio Total</td><td colspan=2>$precio_total €</td> </tr>
+                            <tr><td>Precio Total</td><td colspan=2>$precio_total </td> </tr>
                             <tr><td colspan=3>_________________</td></tr>
                             <tr><td>Especificaciones del cliente: </td><td colspan=2>$especif</td> </tr>"; 
         return $array_carrito;
@@ -137,13 +141,20 @@ class Pedido extends Conexion {
         /*
          * Crea la tabla HTML con los productos que se piden, incluyendo el peso
          */
+        $stmt = $this->conexion->prepare("SELECT e.nombreLocal, e.cif, e.nombre_sociedad, e.direccion, e.ciudad, e.cp, e.telefono, f.fecha, f.modo_pago
+                                    FROM factura f INNER JOIN empresa e WHERE id_ped = :pedido AND e.cif = f.cif_empresa");
+        $stmt->bindParam(':pedido', $pedido, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $pesoTotal = 0;
         $texto = "<h1>Pedido nº $pedido</h1>";
+        $texto .= "<p><h3>".$result["nombreLocal"]."</h3></p><p><h3>".$result["cif"]."</h3></p><p><h3>".$result["nombre_sociedad"]."</h3></p><p><h3>".$result["direccion"]."</h3></p><p><h3>".$result["ciudad"]."</h3></p><p><h3>".$result["cp"]."</h3></p><p><h3>".$result["fecha"]."</h3></p>";
         $texto .= "Detalle del pedido:";
         $texto .= "<table>"; //abrir la tabla
         $texto .= "<tr><th>Nombre</th><th>Unidades</th><th>Precio</th></tr>";
         $texto .= $carrito;
-        $texto .= "</table> </br> Su pedido se está cocinando...";
+        $texto .= "<tr><td colspan=3> Modo de pago: ".$result["modo_pago"]."</td></tr>";
+        $texto .= "<tr><td colspan=3> Su pedido se está cocinando... </td></tr></table>";
         return $texto;
     }
     function enviar($email, $cuerpo) {

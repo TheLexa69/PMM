@@ -1,14 +1,15 @@
 <?php
-
 require dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "sesiones" . DIRECTORY_SEPARATOR . "sesiones.php";
-//sesionAdministrador();
+sesionAdministrador();
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
 
 use \clases\FormulariosAdministrador as formulariosAdministrador;
 use \clases\ConsultasAdministrador as consultasAdministrador;
+use \clases\FuncionesAdministrador as funcionesAdministrador;
 
 $formularios = new formulariosAdministrador;
 $consulta = new consultasAdministrador;
+$funcion = new funcionesAdministrador;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET["codigo"])) {
     $numero = (isset($_POST["id"])) ? $_POST["id"] : $_GET["codigo"];
@@ -27,13 +28,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET["codigo"])) {
         $descripcion = ucfirst(trim(($_POST["descripcion"] == $fila["descripcion"]) ? $fila["descripcion"] : $_POST["descripcion"]));
         $tipo =  ($_POST["tipo"] == $fila["tipo"]) ? $fila["tipo"] : $_POST["tipo"];
         $subtipo =  ($_POST["subtipo"] == $fila["subtipo"]) ? $fila["subtipo"] : $_POST["subtipo"];
-        $desde = ($_POST["desde"] == $fila["fecha_inicio"]) ? $fila["fecha_inicio"].":00" : $_POST["desde"].":00";
+        $desde = ($_POST["desde"] == $fila["fecha_inicio"]) ? $fila["fecha_inicio"] : $_POST["desde"];
        
-        $hasta = ($_POST["hasta"] == $fila["fecha_fin"]) ? $fila["fecha_fin"].":00" : $_POST["hasta"].":00";
+        $hasta = ($_POST["hasta"] == $fila["fecha_fin"]) ? $fila["fecha_fin"] : $_POST["hasta"];
         
         $precio = round(($_POST["precio"] == $fila["precio"]) ? $fila["precio"] : $_POST["precio"],2);
         $disponible = ($_POST["disponible"] == $fila["disponible"]) ? $fila["disponible"] : $_POST["disponible"];
-        $img=trim(($_POST["img"] == $fila["img"]) ? $fila["img"] : $_POST["img"]);
+       
+        
+     
+           if (empty($_FILES['imagen']['name'][0])) {
+              $img = 0;
+           
+           } else {
+             
+               $img = $_FILES['imagen'];
+               $img = $funcion->anadirImagenProducto($id, $img);
+           }
+     
 
         $consulta->actualizarDatosProductos($id, $nombre, $descripcion, $tipo, $subtipo, $desde, $hasta, $precio, $disponible,$img );
         $fila2 = $consulta->comprobarDatosProducto($numero);

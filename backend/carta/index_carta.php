@@ -7,13 +7,27 @@ use \clases\Carrito as carrito;
 $carta = new carta();
 $carrito = new carrito();
 
-if(isset($_SESSION['carrito'])) {
-    $array_carrito = $_SESSION['carrito'];
+if (isset($_SESSION['usuario'])) {
+    $usuario = $_SESSION['usuario'];
+    if (isset($_SESSION['carrito'])) {
+        $array_carrito = $_SESSION['carrito'];
+    }elseif (isset($_COOKIE['carrito']) && !empty($_COOKIE['carrito'])) {
+        $array_carrito = $_SESSION['carrito'] = unserialize($_COOKIE['carrito'], ["allowed_classes" => false]);
+    } elseif (!isset($_SESSION['carrito'])) {
+        $carrito_guardado = $carrito->getCarro($usuario); 
+        if ($carrito_guardado) {
+            $array_carrito = unserialize($carrito_guardado['comida_cantidad'], ["allowed_classes" => false]);
+            $_SESSION['carrito'] = $array_carrito;
+        } else {
+            $array_carrito = [];
+        }
+    } 
 } elseif (isset($_COOKIE['carrito'])) {
-    $array_carrito = unserialize($_COOKIE['carrito']);
+    $array_carrito = unserialize($_COOKIE['carrito'], ["allowed_classes" => false]);
 } else {
     $array_carrito = [];
 }
+
 
     /* Realizamos la consulta que nos pide para enseñar los datos. */
     if (isset($_GET["tipo"])) {

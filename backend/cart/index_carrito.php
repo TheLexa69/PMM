@@ -71,17 +71,16 @@ if (isset($_SESSION['usuario'])) {
 		if ($carrito_guardado) {
 			$_SESSION['carrito'] = unserialize($carrito_guardado['comida_cantidad'], []);
 		} else*/
+        if (!isset($_SESSION['carrito'])) { 
 		if (isset($_COOKIE['carrito']) && !empty(unserialize($_COOKIE['carrito']))) {
-			$_SESSION['carrito'] = unserialize($_COOKIE['carrito'], []);
+			$_SESSION['carrito'] = unserialize($_COOKIE['carrito'], ["allowed_classes" => false]);
 		} elseif (!isset($_SESSION['carrito'])) {
 			$carrito_guardado = $carrito->getCarro($usuario); 
 			if ($carrito_guardado) {
-				$_SESSION['carrito'] = unserialize($carrito_guardado['comida_cantidad'], []);
+				$_SESSION['carrito'] = unserialize($carrito_guardado['comida_cantidad'], ["allowed_classes" => false]);
 			}
 		}
-		
-	
-	
+        }
 	
 	if(empty($_SESSION["carrito"])) {
 		echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-center">No tienes productos en tu cesta todavía.</h2></div>';
@@ -108,7 +107,7 @@ if (isset($_SESSION['usuario'])) {
 				$cantidad = (int) $cant;
 				echo ($carrito->printCarroSes($id_comida, $cantidad));
 			}
-			$precio_total = $carrito->getTotalPrice(unserialize($_COOKIE['carrito'], []));
+			$precio_total = $carrito->getTotalPrice(unserialize($_COOKIE['carrito'], ["allowed_classes" => false]));
 			echo  '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-end">Total: '. $precio_total .'</h2>';
 		echo '<div class="col-2 d-flex justify-content-right"><a href="#"><button id="log" type="button" class="btn btn-outline-success">Finalizar compra</button></a></div></div>';
 	}

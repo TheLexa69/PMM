@@ -154,7 +154,7 @@ if (isset($_POST['dato'])) {
 </div>
 
 <div class="row mt-5">
-    <div class="col-8">
+    <div class="col-8 d-flex justify-content-end">
         <div id="boton">
             <?php
             if (isset($consultaAlergenos)) {
@@ -197,7 +197,7 @@ if (isset($_POST['dato'])) {
             } else {
                 foreach ($rdo as $fila) {
                     ?>
-                    <div class="layered box row mr-2" id="producto">
+                    <div class="layered box row mr-2 w-50" id="producto">
                         <div class="col-4">                        
                             <img class="imagenes rounded img-fluid" id="producto_img" title="vaso" src="https://cdn.pixabay.com/photo/2020/12/15/13/44/children-5833685__340.jpg">
                         </div>

@@ -58,7 +58,12 @@ $categorias = $c->getCategorias();
                     </li>
                     <?php
                     if (!empty($_SESSION['usuario']) && isset($_SESSION)) {
-                        
+                        if (!empty($_COOKIE['carrito'])) {
+                            $carrito = $_COOKIE['carrito'];
+                            foreach (unserialize($_COOKIE['carrito'],[]) as $key => $value) {
+                                unset($key);
+                            }
+                        }
                         ?> 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Usuario</a>

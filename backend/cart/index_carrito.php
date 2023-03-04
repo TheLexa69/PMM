@@ -11,6 +11,8 @@ $rol = isset($_SESSION['id_rol']) ? $_SESSION['id_rol'] : null;
 $win_loc = "../login/indexLogin.php";
 ?>
 <script>
+
+
     function updateCantidad(id_comida, cantidad) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'actualizar_carrito.php', true);
@@ -73,22 +75,16 @@ if (isset($_SESSION['usuario'])) {
       if ($carrito_guardado) {
       $_SESSION['carrito'] = unserialize($carrito_guardado['comida_cantidad'], []);
       } else */
-    if (isset($_COOKIE['carrito']) && !empty(unserialize($_COOKIE['carrito']))) {
-        $_SESSION['carrito'] = unserialize($_COOKIE['carrito'], []);
-    } else {
-        $carrito_guardado = $carrito->getCarro($usuario);
-        //Sacamos el carrito de la base de datos y lo igualamos a la variable de sesión
-        //Si no encuentra nada en la base de datos va a mirar a las cookies y si no hay 
-        //nada en ninguno de los dos crear la variable de sesión como array vacío 
-        //Mejora: elegir entre el carrito de la base de datos y el carrito de las cookies
-        if ($carrito_guardado) {
-            $_SESSION['carrito'] = unserialize($carrito_guardado['comida_cantidad'], []);
-        } else {
-            $_SESSION['carrito'] = [];
+    if (!isset($_SESSION['carrito'])) {
+        if (isset($_COOKIE['carrito']) && !empty(unserialize($_COOKIE['carrito']))) {
+            $_SESSION['carrito'] = unserialize($_COOKIE['carrito'], ["allowed_classes" => false]);
+        } elseif (!isset($_SESSION['carrito'])) {
+            $carrito_guardado = $carrito->getCarro($usuario);
+            if ($carrito_guardado) {
+                $_SESSION['carrito'] = unserialize($carrito_guardado['comida_cantidad'], ["allowed_classes" => false]);
+            }
         }
     }
-
-
 
     if (empty($_SESSION["carrito"])) {
         echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-center">No tienes productos en tu cesta todavía.</h2></div>';
@@ -112,7 +108,7 @@ if (isset($_SESSION['usuario'])) {
                 $cantidad = (int) $cant;
                 echo ($carrito->printCarroSes($id_comida, $cantidad));
             }
-            $precio_total = $carrito->getTotalPrice(unserialize($_COOKIE['carrito'], []));
+            $precio_total = $carrito->getTotalPrice(unserialize($_COOKIE['carrito'], ["allowed_classes" => false]));
             echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-end">Total: ' . $precio_total . '</h2>';
             echo '<div class="col-2 d-flex justify-content-right"><a href="#"><button id="log" type="button" class="btn btn-outline-success">Finalizar compra</button></a></div></div>';
         }

@@ -8,10 +8,23 @@ use \clases\Carrito as carrito;
 $carta = new carta();
 $carrito = new carrito();
 
-if (isset($_SESSION['carrito'])) {
-    $array_carrito = $_SESSION['carrito'];
+if (isset($_SESSION['usuario'])) {
+    $usuario = $_SESSION['usuario'];
+    if (isset($_SESSION['carrito'])) {
+        $array_carrito = $_SESSION['carrito'];
+    } elseif (isset($_COOKIE['carrito']) && !empty($_COOKIE['carrito'])) {
+        $array_carrito = $_SESSION['carrito'] = unserialize($_COOKIE['carrito'], ["allowed_classes" => false]);
+    } elseif (!isset($_SESSION['carrito'])) {
+        $carrito_guardado = $carrito->getCarro($usuario);
+        if ($carrito_guardado) {
+            $array_carrito = unserialize($carrito_guardado['comida_cantidad'], ["allowed_classes" => false]);
+            $_SESSION['carrito'] = $array_carrito;
+        } else {
+            $array_carrito = [];
+        }
+    }
 } elseif (isset($_COOKIE['carrito'])) {
-    $array_carrito = unserialize($_COOKIE['carrito']);
+    $array_carrito = unserialize($_COOKIE['carrito'], ["allowed_classes" => false]);
 } else {
     $array_carrito = [];
 }
@@ -289,25 +302,6 @@ if (isset($_POST['dato'])) {
         });
     }
 
-    /*function enviarArray() {
-     imgSeleccionadas = [];
-     var alergenos = document.querySelectorAll('img[checked]');
-     for (var i = 0; i < alergenos.length; i++) {
-     //console.log(alergenos[i].getAttribute('value'));
-     imgSeleccionadas.push(alergenos[i].getAttribute('value'));
-     }
-     var xhr = new XMLHttpRequest();
-     xhr.open("POST", "index_carta.php", true);
-     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-     
-     xhr.onreadystatechange = function () {
-     if (xhr.readyState === 4 && xhr.status === 200) {
-     //window.location.reload();
-     }
-     };
-     console.log(JSON.stringify(imgSeleccionadas))
-     xhr.send("datos=" + JSON.stringify(imgSeleccionadas));
-     }*/
 </script>
 
 <?php

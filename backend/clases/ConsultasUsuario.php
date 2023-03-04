@@ -118,4 +118,18 @@ class ConsultasUsuario extends Conexion {
         }
     }
 
+    public function solicitarDatosCambiados($id) {
+        try {
+            $sql = "select * from datos_usuario where id_usuario=?";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute(array($id));
+            $dato = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            unset($stmt);
+            return $dato;
+        } catch (Exception $ex) {
+            
+        }
+    }
+
 }

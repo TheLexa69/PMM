@@ -5,10 +5,13 @@
         <h2>Error.</h2>
         <hr>
     </div>
-    <div class="text-center ">
+    <div class="text-center">
         <p>
             Lo sentimos, no hemos podido darte permiso a este sitio.
         </p>
+        <div class="mt-3">
+            <img src="../img/gif/errores.gif" class="rounded img-fluid" alt="alt"/>
+        </div>
     </div>
 </div>
 

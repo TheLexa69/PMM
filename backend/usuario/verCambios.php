@@ -16,13 +16,12 @@ $funcionesU = new funcionesUsuario;
 
 $id = $_SESSION["usuario"];
 
-$datos = $consulta->solicitarDatosCambiados($id);
+if (!empty($_POST['orden'])) {
+    $orden = $_POST['orden'];
+}
+$orden = (isset($orden)) ? $orden : "";
 
-$formularios ->formularioCambiosPerfil($datos);
-
-
-
-
-
+$datos = $consulta->solicitarDatosCambiados($id, $orden);
+$formularios->formularioCambiosPerfil($datos);
 
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");

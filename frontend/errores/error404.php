@@ -9,6 +9,9 @@
         <p>
             Lo sentimos, no hemos podido encontrar el sitio que buscas.
         </p>
+        <div class="mt-3">
+            <img src="../img/gif/error404.gif" class="rounded img-fluid w-25" alt="alt"/>
+        </div>
     </div>
 </div>
 

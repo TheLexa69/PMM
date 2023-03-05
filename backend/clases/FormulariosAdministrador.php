@@ -164,7 +164,6 @@ class FormulariosAdministrador {
                         <input type="submit" name=validar value="Filtrar" class='btn btn-default btn-outline-success'>
                     </div>
                 </form>
-
             </div>
             <div class="d-flex justify-content-center">
                 <h1>Lista de empleados registrados:</h1>

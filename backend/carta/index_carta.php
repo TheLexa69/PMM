@@ -1,7 +1,6 @@
-<?php
+<?php 
 session_start();
-require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
-
+require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "nav.php"); 
 use \clases\Carta as carta;
 use \clases\Carrito as carrito;
 
@@ -12,17 +11,17 @@ if (isset($_SESSION['usuario'])) {
     $usuario = $_SESSION['usuario'];
     if (isset($_SESSION['carrito'])) {
         $array_carrito = $_SESSION['carrito'];
-    } elseif (isset($_COOKIE['carrito']) && !empty($_COOKIE['carrito'])) {
+    }elseif (isset($_COOKIE['carrito']) && !empty($_COOKIE['carrito'])) {
         $array_carrito = $_SESSION['carrito'] = unserialize($_COOKIE['carrito'], ["allowed_classes" => false]);
     } elseif (!isset($_SESSION['carrito'])) {
-        $carrito_guardado = $carrito->getCarro($usuario);
+        $carrito_guardado = $carrito->getCarro($usuario); 
         if ($carrito_guardado) {
             $array_carrito = unserialize($carrito_guardado['comida_cantidad'], ["allowed_classes" => false]);
             $_SESSION['carrito'] = $array_carrito;
         } else {
             $array_carrito = [];
         }
-    }
+    } 
 } elseif (isset($_COOKIE['carrito'])) {
     $array_carrito = unserialize($_COOKIE['carrito'], ["allowed_classes" => false]);
 } else {

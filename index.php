@@ -43,7 +43,9 @@ session_start();
                                             <img id="imagen_c1" src="<?php echo "frontend" . DIRECTORY_SEPARATOR . "img" . DIRECTORY_SEPARATOR . "comida" . DIRECTORY_SEPARATOR . "cachopo1.png"?>">
                                         </div>
                                         <p id="descripcion_c1">
-                                        ¿Quieres probar algo delicioso de Asturias? El cachopo es una comida típica que no puedes perderte. Hecho con jamón serrano, queso tetilla, cheddar, cebolla caramelizada y tomate, es una deliciosa combinación de sabores en una delgada pieza de carne. ¡No te pierdas la oportunidad de probar este plato asturiano imprescindible!
+                                        ¿Quieres probar algo delicioso de Asturias? El cachopo es una comida típica que no puedes perderte. 
+                                        Hecho con jamón serrano, queso tetilla, cheddar, cebolla caramelizada y tomate, es una deliciosa combinación de sabores en una delgada pieza de carne. 
+                                        ¡No te pierdas la oportunidad de probar este plato asturiano imprescindible!
                                         </p>
                                         <div class="d-grid gap-3">
                                             <a class="btn btn-primary" href="./backend/carta/index_carta.php?tipo=cachopo">Pedir ya</a>

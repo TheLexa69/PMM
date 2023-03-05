@@ -1,28 +1,28 @@
 <?php
-
 namespace clases;
-
 /**
  * Description of carta
  *
- * @author Nuria
+ * @author Nuria y Guillermo
  */
+
+
 use \PDO;
 use \PDOException;
 
 class Carta extends Conexion {
-
+    
     private $table = 'carta_comida';
 
     public function __construct() {
-        // Conexión a la base de datos
-        //  $this->pdo = conexion();
-        //} catch(PDOException $e) {
-        //    die("Error de conexión: " . $e->getMessage());
-        //}
-        parent::__construct();
+                // Conexión a la base de datos
+              //  $this->pdo = conexion();
+            //} catch(PDOException $e) {
+            //    die("Error de conexión: " . $e->getMessage());
+            //}
+            parent::__construct();
+        
     }
-
     public function __destruct() {
         $this->conexion = null;
     }
@@ -45,7 +45,6 @@ class Carta extends Conexion {
         $query = "SELECT nombre, descripcion, tipo, precio, img, disponible, id_comida from $this->table WHERE fecha_inicio <= :fecha_hoy AND (fecha_fin >= :fecha_hoy OR fecha_fin IS NULL) AND disponible = 'si'";
         $stmt = $this->conexion->prepare($query);
         $stmt->bindParam(':fecha_hoy', $fecha_hoy);
-
         $stmt->execute();
         return $stmt->fetchAll();
     }

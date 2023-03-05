@@ -7,8 +7,8 @@ class FormulariosUsuario {
     public function redirecionesUsuario() {
 
         echo "<br><a href='modificarDatosUsuario.php'><input type='button' value='Actualiza tus datos'></a><br>";
-//  echo "<br><a href='trabajadores.php'><input type='button' value='Trabajadores'></a><br>";
-//  echo "<br><a href='productos.php'><input type='button' value='Productos'></a><br>";
+        //  echo "<br><a href='trabajadores.php'><input type='button' value='Trabajadores'></a><br>";
+        //  echo "<br><a href='productos.php'><input type='button' value='Productos'></a><br>";
     }
 
     public function registroDatosPorUsuario($id, $necesarios = "") {
@@ -112,23 +112,24 @@ class FormulariosUsuario {
                     <label for="c2" class="form-label">Restaurante:</label>  
                     <select name="restaurante">
                         <?php foreach ($restaurante as $res) { ?>
-                            <option value = "<?php echo ($res["nombreLocal"]) ? $res["nombreLocal"] : "no"; ?>"><?php echo ($res["nombreLocal"]) ? $res["nombreLocal"] : "Restaurante no disponible"; ?></option>
+                            <option value = "<?php echo ($res["nombreLocal"]) ? $res["nombreLocal"] : "no"; ?>"><?php echo ($res["nombreLocal"]) ? $res["nombreLocal"] : "Restaurante no disponible"; ?></option>;
                         <?php } ?>
                     </select>
                 </div>
 
                 <div class='mt-3'>
                     <label for="c2" class="form-label">Mesas:</label>
+                  
                     <select name="mesas">
-                        <option value = "<?php echo (!empty($mesas["id_mesa"])) ? $mesas["id_mesa"] : ""; ?>"><?php echo (!empty($mesas["id_mesa"])) ? "Hay mesas disponibles" : "No hay mesas disponibles"; ?></option>
+                        <option value = "<?php echo (!empty($mesas["id_mesa"])) ? $mesas["id_mesa"] : ""; ?>"><?php echo (!empty($mesas["id_mesa"])) ? "Hay mesas disponibles" : "No hay mesas disponibles"; ?></option>;
                     </select>
                 </div>
 
                 <div class='mt-3'>
                     <label for="c2" class="form-label">Turno:</label>  
                     <select name="turno">
-                        <option value = "comer" selected>Comer</option>
-                        <option value = "cenar">Cenar</option>
+                        <option value = "comer" selected>Comer</option>;
+                        <option value = "cenar">Cenar</option>;
                     </select>
                 </div>
 

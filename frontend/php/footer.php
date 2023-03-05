@@ -4,7 +4,7 @@
 
     <div class="datos_footer">
         <div class="footer_img">
-            <img <img src="<?php echo "frontend" . DIRECTORY_SEPARATOR . "img" . DIRECTORY_SEPARATOR . "logo" . DIRECTORY_SEPARATOR . "LuaChea_con_nombre.svg" ?>" alt="logo">
+            <img <img src="http://drive.google.com/uc?export=view&id=1rpkYNh2TKDNhgcrXpAuyVCwUUCR-BFMq" alt="logo">
         </div>
         <div class="footer_grid">
             <div class="table_grid">
@@ -21,12 +21,12 @@
                     </tr>
                     <tr>
                         <td>
-                            <h4>Martes: 12:00-16:00&nbsp;&nbsp;&nbsp;&nbsp;20:30-23:30</h4>
+                            <h4>Martes: 12:00-16:00&nbsp;&nbsp;&nbsp;&nbsp;Cerrado</h4>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h4>Miercoles: 12:00-16:00&nbsp;&nbsp;&nbsp;&nbsp;20:30-23:30</h4>
+                            <h4>Miercoles:&nbsp;&nbsp;&nbsp;&nbsp;Cerrado</h4>
                         </td>
                     </tr>
                     <tr>
@@ -58,13 +58,13 @@
                 <h4>(Pontevedra, España)</h4>
                 <div class="email">
                     <div id="circulo">
-                        <img src="<?php echo "frontend" . DIRECTORY_SEPARATOR . "img" . DIRECTORY_SEPARATOR . "iconos" . DIRECTORY_SEPARATOR . "correoElectronico.png" ?>" width="40px" alt="correoElectronico">
+                        <img src="http://drive.google.com/uc?export=view&id=1V6Et_TNQpO_UdEq4AxllYkA_PX38Zuer" width="40px" alt="correoElectronico">
                     </div>
                     <h4 id="email_grid">luachea@iesdeteis.com</h4>
                 </div>
                 <div class="numero">
                     <div id="circulo">
-                        <img src="<?php echo "frontend" . DIRECTORY_SEPARATOR . "img" . DIRECTORY_SEPARATOR . "iconos" . DIRECTORY_SEPARATOR . "telefono.png" ?>" width="40px" alt="telefono">
+                        <img src="http://drive.google.com/uc?export=view&id=1qUABVAqbCyuYGrdohBlJS3EofHBTCFuk" width="40px" alt="telefono">
                     </div>
                     <h4 id="numero_grid">986 13 25 37</h4>
                 </div>

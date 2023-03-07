@@ -9,6 +9,9 @@ include dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "autoloadClasesLogin.php";
 use \clases\Carta as carta;
 $c = new carta();
 $categorias = $c->getCategorias();
+if (isset($_GET['red'])) {
+    setcookie("carrito", null, 1, "/");
+}
 ?>
 <!DOCTYPE html>
 <html lang="Es">
@@ -44,8 +47,48 @@ $categorias = $c->getCategorias();
 =======
                 <ul class="dropdown-menu ">   
                     <?php
+<<<<<<< Updated upstream
                    foreach ($categorias as $nombre) {
                         $tipo = $nombre['nombre_tipo'];
+=======
+                    if (!empty($_SESSION['usuario']) && isset($_SESSION)) {
+                        ?> 
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Usuario</a>
+                            <ul class="dropdown-menu ">   
+                                <li class="nav-item">
+                                    <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "modificarDatosUsuario.php"; ?>'>Cambiar Perfil</a>
+                                </li> 
+                                <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "index_carta.php?tipo=arroz"; ?>'>Pedidos</a></li>
+                                <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "index_carta.php?tipo=carne"; ?>'>Facturas</a></li>
+                                <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "verCambios.php"; ?>'>Histórico Datos</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "login" . DIRECTORY_SEPARATOR . "logout.php"; ?>'>Cerrar Session</a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <?php
+                    } elseif (!empty($_SESSION['administrador'])) {
+                        ?> 
+                        <li class="nav-item">
+                            <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "login" . DIRECTORY_SEPARATOR . "logoutAdministrador.php"; ?>'>Cerrar Session</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "administrador" . DIRECTORY_SEPARATOR . "indexAdministrador.php"; ?>'>Administrador </a>
+                        </li>
+                        <?php
+                    } else {
+                        ?> 
+                        <li class="nav-item">
+                            <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "login" . DIRECTORY_SEPARATOR . "indexLogin.php"; ?>'>Login</a>
+                        </li>
+                        <?php
+                    }
+>>>>>>> Stashed changes
                     ?>
                         <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "carta" . DIRECTORY_SEPARATOR . "index_carta.php?tipo=" . strtolower($tipo); ?>'><?php echo  $tipo ?></a></li>
                     <?php

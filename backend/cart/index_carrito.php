@@ -32,8 +32,13 @@ $win_loc = "../login/indexLogin.php";
 		// Comprobar si el usuario ha iniciado sesión
 		if (!usuarioIniciado()) {
 			// Mostrar un alerta y redirigir a la página de inicio de sesión
+<<<<<<< Updated upstream
 			alert("Tienes que iniciar sesión");
 			window.location.href = "../login/indexLogin.php";
+=======
+			confirm("Tienes que iniciar sesión");
+			window.location.href = "../login/indexLogin.php?redirigido=si";
+>>>>>>> Stashed changes
 		} 
 		});
 

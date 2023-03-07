@@ -31,8 +31,8 @@ if (!isset($_SESSION['usuario'])) {
 } else {
 	
     if (isset($_SESSION['carrito'])) {
-                    // Si hay productos, deserializar los datos y guardarlos en una variable
-                    $arr_carrito = $_SESSION['carrito'];
+		// Si hay productos, deserializar los datos y guardarlos en una variable
+		$arr_carrito = $_SESSION['carrito'];
     } else {
         // Si no hay productos se crea un array vacío para guardarlos
         $arr_carrito = array();

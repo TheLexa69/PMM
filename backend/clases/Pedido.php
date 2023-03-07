@@ -141,8 +141,8 @@ class Pedido extends Conexion {
         /*
          * Crea la tabla HTML con los productos que se piden, incluyendo el peso
          */
-        $stmt = $this->conexion->prepare("SELECT e.nombreLocal, e.cif, e.nombre_sociedad, e.direccion, e.ciudad, e.cp, e.telefono, f.fecha, f.modo_pago
-                                    FROM factura f INNER JOIN empresa e WHERE id_ped = :pedido AND e.cif = f.cif_empresa");
+        $stmt = $this->conexion->prepare("SELECT e.nombreLocal, e.cif, e.nombre_sociedad, e.direccion, e.ciudad, e.cp, e.telefono, f.fecha, m.nombre
+                                    FROM factura f INNER JOIN empresa e INNER JOIN modo_pago m WHERE id_ped = :pedido AND e.cif = f.cif_empresa AND f.modo_pago = m.id_modo_pago");
         $stmt->bindParam(':pedido', $pedido, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -153,7 +153,7 @@ class Pedido extends Conexion {
         $texto .= "<table>"; //abrir la tabla
         $texto .= "<tr><th>Nombre</th><th>Unidades</th><th>Precio</th></tr>";
         $texto .= $carrito;
-        $texto .= "<tr><td colspan=3> Modo de pago: ".$result["modo_pago"]."</td></tr>";
+        $texto .= "<tr><td colspan=3> Modo de pago: ".$result["nombre"]."</td></tr>";
         $texto .= "<tr><td colspan=3> Su pedido se está cocinando... </td></tr></table>";
         return $texto;
     }

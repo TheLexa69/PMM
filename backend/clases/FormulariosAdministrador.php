@@ -406,7 +406,7 @@ class FormulariosAdministrador {
                         <div class="mt-2 d-flex align-items-center">
                             <input type="radio" name="orden" value="ASC" class="form-check-input"> Ascendente
                             <input type="radio" name="orden" value="DESC" class="form-check-input"> Descendente
-                            <input type="submit" name=validar value="Filtrar" class="btn btn-default btn-outline-success">
+                            <input type="submit" name=validar2 value="Filtrar" class="btn btn-default btn-outline-success">
                         </div>
                     </form>
                 </div>

@@ -38,8 +38,8 @@ if (isset($_GET['red'])) {
                         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Carta</a>
                         <ul class="dropdown-menu ">   
                             <?php
-                            foreach ($categorias as $nombre) {
-                                $tipo = $nombre['nombre_tipo'];
+                            foreach ($categorias as $nombre11) {
+                                $tipo = $nombre11['nombre_tipo'];
                                 ?>
                                 <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "carta" . DIRECTORY_SEPARATOR . "index_carta.php?tipo=" . strtolower($tipo); ?>'><?php echo $tipo ?></a></li>
                                 <?php

@@ -376,6 +376,20 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
+    
+    
+     public function productos() {
+        try {
+            $sql = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo  ";
+            $stmt = $this->conexion->query($sql);
+            return $stmt->fetchall();
+        } catch (PDOException $e) {
+
+            die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
+        }
+    }
+
+    
 
     public function productosActivos() {
         try {

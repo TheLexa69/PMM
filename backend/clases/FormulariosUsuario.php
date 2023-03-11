@@ -3,14 +3,20 @@
 namespace clases;
 
 class FormulariosUsuario {
-
+/**
+ * Metodo que muestra las redireciones disponibles para el usuario
+ */
     public function redirecionesUsuario() {
 
         echo "<br><a href='modificarDatosUsuario.php'><input type='button' value='Actualiza tus datos'></a><br>";
         //  echo "<br><a href='trabajadores.php'><input type='button' value='Trabajadores'></a><br>";
         //  echo "<br><a href='productos.php'><input type='button' value='Productos'></a><br>";
     }
-
+/**
+ *  Metodo que muestra los datos del usuario precargado con los metidos en la base de datos 
+ * @param type $id
+ * @param type $necesarios   Campos obligatorios
+ */
     public function registroDatosPorUsuario($id, $necesarios = "") {
         ?>
         <div class="container bg-light rounded mt-5 w-60 p-3">
@@ -94,7 +100,12 @@ class FormulariosUsuario {
         </div>
         <?php
     }
-
+/**
+ * Metodo que muestra el formulario de reservas de las mesas al usuario
+ * @param type $restaurante    Restaurantes disponibles
+ * @param type $mesas          Mesas disponibles o no
+ * @param type $necesarios     Campos obligatorios
+ */
     public function formularioReserva($restaurante, $mesas, $necesarios = "") {
         ?>
         <div class="container bg-light rounded mt-5 w-60 p-3">
@@ -142,7 +153,10 @@ class FormulariosUsuario {
         </div>
         <?php
     }
-
+/**
+ *  Metodo que muestra un formulario con los datos modificados del usuario
+ * @param type $id
+ */
     public function formularioCambiosPerfil($id) {
         ?>
         <div class="container bg-light rounded mt-5 w-60 p-3">

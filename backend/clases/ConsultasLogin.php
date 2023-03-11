@@ -6,13 +6,34 @@ use \PDO;
 use \PDOException;
 
 class ConsultasLogin extends Conexion {
-
+   
+    /**
+     * Constructor que recive la conexion de la clase padre
+     */
     public function __construct() {
-        //  var_dump ($this->conexion= $this->conectar());
-        //$this->conexion= $this->conectar();
+      
         parent::__construct();
     }
-
+    /**
+     * Destructor d ela conexion
+     */
+     public function __destruct() {
+        $this->conexion = null;
+    }
+/**
+ *  Metodo par añadir los datos de un usuario las variables son referenciadas al dato
+ * @param type $nombre
+ * @param type $apellido1
+ * @param type $apellido2
+ * @param type $token2          Es el numero generado aleatoriamente y pasado a hash que se guarda en la base de datos en el registro
+ * @param type $mail
+ * @param type $telefono
+ * @param type $privilegios     Es  rol del usuario que puede ser Administrador Gestor Administrador o Trabajador
+ * @param type $fecha           Fecha en la cual hace loggin o en este caso se inserta en la tabla
+ * @param type $nif             Nif
+ * @param type $direccion       Direccion donde vive
+ * @param type $cp              Codigo postal
+ */
     public function añadirUsuario($nombre, $apellido1, $apellido2, $token2, $mail, $telefono, $rol, $fecha, $nif, $direccion, $cp) {
 
         try {
@@ -41,7 +62,11 @@ class ConsultasLogin extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-
+/**
+ * Metodo que devuelve los datos de un usuario pasandole el mail
+ * @param type $mail
+ * @return type
+ */
     public function comprobarDatos($mail) {
 
         $sql = "select * from usuario where correo=?";
@@ -59,7 +84,12 @@ class ConsultasLogin extends Conexion {
         unset($stmt);
         return $datos;
     }
-    
+    /**
+     * Metodo que registra la hora en la cual se loggeo el usuario
+     * @param type $id
+     * @param type $fecha
+     * @return type
+     */
       public function registroHoraSession($id,$fecha) {
  
 
@@ -77,7 +107,12 @@ class ConsultasLogin extends Conexion {
     }
     
     
-
+/**
+ * Metodo para poner la contraseña al usuario dado su correo
+ * @param type $mail
+ * @param type $contra
+ * @return type
+ */
     public function nuevaContraseña($mail, $contra) {
 
         $sql = "select * from usuario where correo=?";
@@ -113,7 +148,12 @@ class ConsultasLogin extends Conexion {
         
         return $stmt;
     }
-
+/**
+ * Metodo que deshabilita la cuenta cuando se pide cambio de contraseña
+ * @param type $mail
+ * @param type $contra
+ * @return type
+ */
     public function quitarActivacion($mail, $contra) {
 
         $sql = "select * from usuario where correo=?";

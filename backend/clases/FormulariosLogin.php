@@ -4,7 +4,11 @@ namespace clases;
 
 class FormulariosLogin {
 
-//funcion que recoge loggin
+/**
+ * Metodo que muestra el formulario de loggin 
+ * @param type $err  En caso de errar en contraseña muestra un mensaje personalizado
+ * @param type $num  Contador de intentos al 6 no deja logearse   
+ */
     public function html($err = " ", $num = " ") {
         ?>
         <link rel="stylesheet" href="../../frontend/css/login.css"/>
@@ -33,8 +37,7 @@ class FormulariosLogin {
                         <div class="text-center mt-3">
                             <button type="submit" class="btn btn-outline-success" name="login">Login</button>
                         </div>
-        <!--<input type="radio" id="trabajo" name="trabajo" value="NO" checked>  <label for="trabajo"> NO </label> <br>
-        <input type="radio" id="trabajo" name="trabajo" value="SI" >  <label for="trabajo"> SI </label>-->
+      
 
                     </div>
                     <div class="col-md-8">
@@ -72,7 +75,10 @@ class FormulariosLogin {
 
         <?php
     }
-
+/**
+ * Metodo que muestra formulario de registro  
+ * @param type $necesarios  En caso de no completarse todos los campos se muestra cuales faltan
+ */
     public function htmlRegistro($necesarios = "") {
         ?>
 
@@ -129,7 +135,10 @@ class FormulariosLogin {
 
         <?php
     }
-
+/**
+ * Metodo que muestra el formulario de recuperacion de contraseña
+ * @param type $mensaje   Muestra en caso de no existir que el mail dado no esta registrado
+ */
     public function recuperar($mensaje = "") {
         ?>
 
@@ -155,7 +164,11 @@ class FormulariosLogin {
 
         <?php
     }
-
+/**
+ *  Metodo que saca formulario para contrastar que el token enviado al usuario sea el mismo que esta introduciendo
+ * @param type $mail
+ * @param type $rol
+ */
     public function contrastaToken($mail, $rol) {
         ?> 
 
@@ -181,7 +194,11 @@ class FormulariosLogin {
 
         <?php
     }
-
+/**
+ * Metodo que muestra un formulario en caso de poner mal el token recibido en el mail
+ * @param type $mail
+ * @param type $rol
+ */
     public function tokenMal($mail, $rol) {
         ?>  
 
@@ -205,7 +222,11 @@ class FormulariosLogin {
 
         <?php
     }
-
+/**
+ * Metodo que muestra formulario par poner la contraseña
+ * @param type $mail
+ * @param type $rol
+ */
     public function contrasena($mail, $rol) {
         ?>
 
@@ -228,7 +249,11 @@ class FormulariosLogin {
 
         <?php
     }
-
+/**
+ * Metodo que muestra formulario par poner la contraseña  en caso de no poner las dos iguales
+ * @param type $mail
+ * @param type $rol
+ */
     public function contraMail($mail, $rol) {
         ?>
 

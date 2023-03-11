@@ -5,7 +5,13 @@ namespace clases;
 use \RuntimeException;
 
 class FuncionesUsuario {
-
+/**
+ *  Metodo que añade la imagen del usuario 
+ * @param type $id
+ * @param type $imagen
+ * @return string
+ * @throws RuntimeException
+ */
     public function anadirImagen($id, $imagen) {
         try {
             $_FILES['imagen'] = $imagen;

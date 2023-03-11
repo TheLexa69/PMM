@@ -4,6 +4,9 @@ namespace clases;
 
 class FormulariosAdministrador {
 
+    /**
+     * Metodo que muestra los botones de redirecion del administrador
+     */
     public function redirecionesAdministrador() {
         echo "<div class='container bg-light rounded mt-5 p-5'>";
         echo "<div class='text-center'>
@@ -20,7 +23,11 @@ class FormulariosAdministrador {
         echo "</div>";
         echo "</div>";
     }
-
+/**
+ * Metodo que muestra el formulario de Registro de los empleados
+ * @param type $necesarios  En caso de faltar algun campo se le manda cual
+ * @param type $mensaje     Mensaje que mostrara cual es el empleado al cual hace referencia el formulario  
+ */
     public function htmlRegistroEmpleados($necesarios = "", $mensaje = "") {
         ?>
         <div class='container bg-light rounded mt-5 p-3'>
@@ -138,7 +145,10 @@ class FormulariosAdministrador {
 
         <?php
     }
-
+/**
+ * Metodo que carga el formulario para  filtrar los empleados
+ * Por Nombre,Rol , Si esta activa la cuenta , Fecha de ultimo loggin  orden Ascendente o Descendente
+ */
     public function listaFiltradaEmpleados() {
         ?>
         <div class='container bg-light rounded mt-5 p-3'>
@@ -171,7 +181,10 @@ class FormulariosAdministrador {
             </div>
             <?php
         }
-
+/**
+ * Metodo que carga los empleados en una tabla en caso de no tener ninguno saldra un mensaje alert avisando de ello
+ * @param type $fila  Datos de  la consulta de empleados
+ */
         public function tablaEmpleados($fila) {
             if (isset($_GET["mensaje"])) {
                 echo "<script> alert('" . $_GET["mensaje"] . "'); </script>";
@@ -206,7 +219,12 @@ class FormulariosAdministrador {
             </div>
             <?php
         }
-
+/**
+ * Metodo que muestra los datos de un empleado precargandolos en un formulario
+ * @param type $id      id del empleado
+ * @param type $rol
+ * @param type $mensaje   Mensaje mostrando nombre de empleado en caso de hacer alguna modificacion
+ */
         public function datosEmpleado($id, $rol, $mensaje = "") {
             ?>
                         
@@ -273,7 +291,12 @@ class FormulariosAdministrador {
             </div>
             <?php
         }
-
+/**
+ * Metodo  que precarga los datos de los Productos en un formulario  en caso de tener imagen la carga y si no la tiene pone una por defecto
+ * @param type $id
+ * @param type $tipobd
+ * @param type $subtipobd
+ */
         public function datosProducto($id, $tipobd, $subtipobd) {
             ?>
             <div class="container bg-light rounded mt-5 p-3">
@@ -389,7 +412,9 @@ class FormulariosAdministrador {
 
             <?php
         }
-
+/**
+ * Metodo que filtra los productos  por  Disponivilidad  (stock o fechas dadas), Nombre , precio
+ */
         public function listaFiltradaProductos() {
             ?>
             <div class="container bg-light rounded mt-5 p-3">
@@ -423,7 +448,10 @@ class FormulariosAdministrador {
                 </div>
                 <?php
             }
-
+/**
+ * Metodo que precarga los datos de los productos en un formulario para su posterior tratamiento 
+ * @param type $fila  Continene los productos
+ */
             public function tablaProductos($fila) {
                 if (isset($_GET["mensaje"])) {
                     echo "<script> alert('" . $_GET["mensaje"] . "'); </script>";
@@ -461,7 +489,9 @@ class FormulariosAdministrador {
 
                 <?php
             }
-
+/**
+ * Metodo que muestra formulario de filtrado por fechas para las reservas
+ */
             public function FiltrarReservasFecha() {
                 ?>
                 <div class="container bg-light rounded mt-5 p-3">
@@ -480,6 +510,11 @@ class FormulariosAdministrador {
                     <?php
                 }
 
+                /**
+                 *  Metodo que precarga las reservas que estan pendientes y las que no
+                 * @param type $fila
+                 * @param type $tipoTabla    Si recive pendientes muestra las pendientes   si no recive nada muestra las que ya se hicieron
+                 */
                 public function tablaReservas($fila, $tipoTabla = "") {
                     if (isset($_GET["mensaje"])) {
                         echo "<script> alert('" . $_GET["mensaje"] . "'); </script>";
@@ -553,7 +588,11 @@ class FormulariosAdministrador {
                     <?php
                 }
             }
-
+/**
+ * Metodo para mandar un tipo de mensaje  dependiendo de la aceptacion o el rechazo de la reserva
+ * @param type $tipo
+ * @return string
+ */
             public function mensageReserva($tipo = "") {
                 if ($tipo == "cancelada") {
                     $mensaje = "<h1>Estimado cliente su solicitud de reserva <b>ha sido cancelada</b> </h1>";
@@ -562,7 +601,10 @@ class FormulariosAdministrador {
                 }
                 return $mensaje;
             }
-
+/**
+ * Metodo que muestra los pedidos pendientes  dentro de un formulario en formato tabla
+ * @param type $fila
+ */
             public function tablaPedidos($fila) {
                 ?>
                 <div class="container bg-light rounded mt-5">

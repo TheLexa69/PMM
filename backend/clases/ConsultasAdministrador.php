@@ -21,16 +21,16 @@ class ConsultasAdministrador extends Conexion {
         $this->conexion = null;
     }
 /**
- *  Metodo par añadir los datos de un trabajador
+ *  Metodo par añadir los datos de un trabajador las variables son referenciadas al dato
  * @param type $nombre
  * @param type $apellido1
  * @param type $apellido2
- * @param type $token2
+ * @param type $token2        es el numero generado aleatoriamente y pasado a hash que se guarda en la base de datos en el registro
  * @param type $mail
  * @param type $telefono
- * @param type $privilegios
- * @param type $fecha
- * @param type $nie
+ * @param type $privilegios    es  rol del usuario que puede ser Administrador Gestor Administrador o Trabajador
+ * @param type $fecha           Fecha en la cual hace loggin o en este caso se inserta en la tabla
+ * @param type $nie             
  * @param type $pasaporte
  */
     public function añadirTrabajador($nombre, $apellido1, $apellido2, $token2, $mail, $telefono, $privilegios, $fecha, $nie, $pasaporte) {
@@ -61,8 +61,8 @@ class ConsultasAdministrador extends Conexion {
     }
 
     /**
-     * 
-     * @param type $mail  segun donde se use puede recibir un mail o un id
+     * Metodo para comprobar los datos del trbajador ya sea por que recive: 
+     * @param type      el ID  o el correo
      * @return type
      */
     public function comprobarDatosTrabajador($dato) {
@@ -91,7 +91,21 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-
+/**
+ *  Metodo para actualizar los datos del trabajador
+ * @param type $id
+ * @param type $nie
+ * @param type $pasaporte
+ * @param type $nombre
+ * @param type $apellido1
+ * @param type $apellido2
+ * @param type $correo
+ * @param type $telefono
+ * @param type $rol   
+ * @param type $estado
+ * @param type $trabajando   Si sigue en activo o no dado de alta
+ * @return type
+ */
     public function actualizarDatosTrabajador($id, $nie, $pasaporte, $nombre, $apellido1, $apellido2, $correo, $telefono, $rol, $estado, $trabajando) {
 
         try {
@@ -119,7 +133,10 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-
+/**
+ *  Metodo que devuelve los roles de los trabajadores
+ * @return type
+ */
     public function rolesTrabajadores() {
 
         try {
@@ -138,7 +155,11 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-
+/**
+ * Metodo que elimina el trabajador segun su id
+ * @param type $id
+ * @return type
+ */
     public function eliminarTrabajador($id) {
 
         try {
@@ -155,6 +176,12 @@ class ConsultasAdministrador extends Conexion {
         }
     }
 
+    /**
+     *  Metodo que registra la fecha en el trabajador al hacer loggin
+     * @param type $id  de usuario
+     * @param type $fecha  dia actual y hora
+     * @return type
+     */
     public function registroHoraSessionTrabajador($id, $fecha) {
 
         try {
@@ -173,7 +200,12 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-
+/**
+ *  Metodo para añadir la contraseña al trabajador
+ * @param type $mail
+ * @param type $contra
+ * @return type
+ */
     public function nuevaContraseñaTrabajador($mail, $contra) {
 
         try {
@@ -214,7 +246,12 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-
+/**
+ * Metodo para quitar la activacion de la cuenta del trabajador  cuando este solicite cambiar la contraseña
+ * @param type $mail
+ * @param type $contra  Este es el nuevo hash qeu se guarda hasta que se active la cuenta y se meta una nueva contraseña
+ * @return type
+ */
     public function quitarActivacionTrabajador($mail, $contra) {
 
         try {
@@ -249,7 +286,15 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-
+/**
+ *  Metodo para filtrar los trabajadores  ya sea por:
+ * @param type $paginaInicio   pagina actual
+ * @param type $cantidadResultados  cantidad de datos a mostrar
+ * @param type $nombre      nombre por el que filtrar
+ * @param type $opcion      Nombre, Ultimo login, Rol, Activos en la empresa
+ * @param type $orden       orden ascendente o descendente
+ * @return type
+ */
     public function filtradoTrabajadores($paginaInicio, $cantidadResultados, $nombre, $opcion, $orden) {
         try {
 
@@ -293,7 +338,10 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-
+/**
+ * Metodo que devuelve la cantidad de trabajadores
+ * @return type
+ */
     public function trabajadoresActivos() {
         try {
             $sql = "select count(*) from trabajador ";
@@ -304,7 +352,11 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-
+/**
+ * Metodo que devuelve el producto de la tabla carta_comida con tipo y subtipo en formato testo de las tablas  tipo y subtipo
+ * @param type $dato
+ * @return type
+ */
     public function comprobarDatosProducto($dato) {
 
         try {
@@ -328,7 +380,11 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-
+/**
+ * Metodo que devuelve los datos de  la tabla subtipo si recibe un 1  o la de tipo si recibe otro numero
+ * @param type $dato
+ * @return type
+ */
     public function comprobarTipoSubtipo($dato) {
 
         try {
@@ -351,7 +407,20 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-
+/**
+ * Metodo para actualizar los datos de los productos 
+ * @param type $id
+ * @param type $nombre
+ * @param type $descripcion  descripcion de los productos 
+ * @param type $tipo
+ * @param type $subtipo
+ * @param type $desde  disponible desde
+ * @param type $hasta  disponible hasta
+ * @param type $precio
+ * @param type $disponible   Si esta visible para los usuarios  independientemente de que la fecha sea disponible
+ * @param string $img
+ * @return type
+ */
     public function actualizarDatosProductos($id, $nombre, $descripcion, $tipo, $subtipo, $desde, $hasta, $precio, $disponible, $img) {
 
         try {
@@ -389,7 +458,10 @@ class ConsultasAdministrador extends Conexion {
         }
     }
     
-    
+    /**
+     * Metodo que devuelve todos los productos de la tabla carta_comida con el tipo y el subtipo ntanto en numero como string para precargar el formulario de productos del administrador
+     * @return type
+     */
      public function productos() {
         try {
             $sql = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo  ";
@@ -401,7 +473,10 @@ class ConsultasAdministrador extends Conexion {
     }
 
     
-
+/**
+ * Metodo que devuelve la cantidad de productos
+ * @return type
+ */
     public function productosActivos() {
         try {
             $sql = "select count(*) from carta_comida ";
@@ -412,7 +487,15 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-
+/**
+ *  Metodo para filtrar los productos  ya sea por:
+ * @param type $paginaInicio   pagina actual
+ * @param type $cantidadResultados  cantidad de datos a mostrar
+ * @param type $nombre      nombre por el que filtrar
+ * @param type $opcion      Nombre, Precio,En Stock , Disponibiliadad  desde  o hasta
+ * @param type $orden       orden ascendente o descendente
+ * @return type
+ */
     public function filtradoProductos($paginaInicio, $cantidadResultados, $nombre, $opcion, $orden) {
         try {
 
@@ -455,7 +538,11 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-
+/**
+ * Metodo que elimina el producto  que tenga ese id
+ * @param type $id
+ * @return type
+ */
     public function eliminarProducto($id) {
 
         try {
@@ -471,7 +558,11 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-
+/**
+ * Metodo que muestra las reservas  si se le pasa un 0 muestra las que  no estan aceptadas si no se pasa nada muesta las que ya fueron aceptadas
+ * @param type $comprobante
+ * @return type
+ */
     public function comprobarReservas($comprobante = "") {
 
         try {
@@ -494,7 +585,12 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-
+/**
+ * Metodo que le cambia el valor reservaAceptada a si si es aceptada
+ * @param type $id
+ * @param type $reserva   Estado de la reserva por defecto  no    si se acepta si y si se deniega pondra cancelada
+ * @return type
+ */
     public function actualizarReservas($id, $reserva) {
         try {
             $sql = "UPDATE reservas  set reservaAceptada=:reserva  where id_reservas = :id";
@@ -511,7 +607,11 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-
+/**
+ * Metodo que muestra las reservas de una fecha dada  en caso de no pasarle ninguna cojera la fecha del dia de hoy
+ * @param type $fecha
+ * @return type
+ */
     public function comprobarReservasPorFecha($fecha = "") {
 
         if (empty($fecha)) {
@@ -539,7 +639,11 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-
+/**
+ * Metodo que muestra los pedidos realizados en una fecha determinada  y que no hayan sido realizados
+ * @param type $fecha
+ * @return type
+ */
     public function comprobarPedidosPorFecha($fecha) {
 
 
@@ -559,7 +663,12 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-
+/**
+ * Metodo que actualiza el estado de envio de un pedido por su id
+ * @param type $id
+ * @param type $reserva
+ * @return type
+ */
     public function actualizarPedidos($id, $reserva) {
 
 

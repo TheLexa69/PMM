@@ -119,7 +119,7 @@ class FormulariosUsuario {
 
                 <div class='mt-3'>
                     <label for="c2" class="form-label">Mesas:</label>
-                  
+
                     <select name="mesas">
                         <option value = "<?php echo (!empty($mesas["id_mesa"])) ? $mesas["id_mesa"] : ""; ?>"><?php echo (!empty($mesas["id_mesa"])) ? "Hay mesas disponibles" : "No hay mesas disponibles"; ?></option>;
                     </select>
@@ -146,6 +146,29 @@ class FormulariosUsuario {
     public function formularioCambiosPerfil($id) {
         ?>
         <div class="container bg-light rounded mt-5 w-60 p-3">
+            <div class="d-flex justify-content-center text-center">
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                    <h3>Filtrar por:</h3>
+
+                    <div class="mt-2 d-flex align-items-center">
+                        <div class="form-check m-3">
+                            <input type="radio" name="orden" value="ASC" class="form-check-input" id="asc"> 
+                            <label class="form-check-label" for="asc">
+                                Ascendente
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" name="orden" value="DESC" class="form-check-input"> 
+                            <label class="form-check-label" for="desc">
+                                Descendente
+                            </label>
+                        </div>
+                        <div class=" m-3">
+                            <input type="submit" name=validar value="Filtrar" class='btn btn-default btn-outline-success'>
+                        </div>
+                    </div>
+                </form>
+            </div>
             <div class="text-center">
                 <h2>Cambios realizados:</h2>
                 <hr>

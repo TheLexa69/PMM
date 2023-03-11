@@ -118,9 +118,13 @@ class ConsultasUsuario extends Conexion {
         }
     }
 
-    public function solicitarDatosCambiados($id) {
+    public function solicitarDatosCambiados($id, $orden) {
         try {
-            $sql = "select * from datos_usuario where id_usuario=?";
+            if (empty($orden)) {
+                $sql = "select * from datos_usuario where id_usuario=?";
+            } else {
+                $sql = "select * from datos_usuario where id_usuario=? ORDER BY fecha $orden";
+            }
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute(array($id));
             $dato = $stmt->fetchAll(PDO::FETCH_ASSOC);

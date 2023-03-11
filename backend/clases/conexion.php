@@ -10,7 +10,10 @@ use \PDOException;
 class Conexion {
 
     protected $conexion;
-
+ /**
+  * 
+  * @return metodo constructor de la conexion validando los datos 
+  */
     protected function __construct() {
 
         try {
@@ -27,7 +30,9 @@ class Conexion {
         }
         
     }
-
+/**
+ *  metodo destructor de la conexion  
+ */
     public function __destruct() {
         $this->conexion = null;
     }

@@ -6,26 +6,47 @@ require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPAR
 
 use \clases\FormulariosAdministrador as formulariosAdministrador;
 use \clases\ConsultasAdministrador as consultasAdministrador;
+use \clases\FiltroDatos as filtrado;
+use \clases\FuncionesLogin as funciones;
 
+$funciones = new funciones;
+$filtro = new filtrado;
 $formularios = new formulariosAdministrador;
 $consulta = new consultasAdministrador;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET["codigo"])) {
+
     $numero = (isset($_POST["id"])) ? $_POST["id"] : $_GET["codigo"];
+    if (isset($_POST["id"])) {
+        $_POST = $filtro->validarPost($_POST);
+    }
 
     $fila = $consulta->comprobarDatosTrabajador($numero);
-    $rol= $consulta->rolesTrabajadores();
+    $rol = $consulta->rolesTrabajadores();
     if (isset($_POST["actualizar"])) {
-
+        
         $id = ($_POST["id"] == $fila["id_trabajador"]) ? $fila["id_trabajador"] : $_POST["id"];
-        $nie = trim(($_POST["nie"] == $fila["nie_trabajador"]) ? $fila["nie_trabajador"] : $_POST["nie"]);
-        $pasaporte = trim(($_POST["pasaporte"] == $fila["pasaporte_trabajador"]) ? $fila["pasaporte_trabajador"] : $_POST["pasaporte"]);
-        $nombre = ucfirst(trim(($_POST["nombre"] == $fila["nombre"]) ? $fila["nombre"] : $_POST["nombre"]));
-        $apellido1 = ucfirst(trim(($_POST["apellido1"] == $fila["apellido1"]) ? $fila["apellido1"] : $_POST["apellido1"]));
-        $apellido2 = ucfirst(trim(($_POST["apellido2"] == $fila["apellido2"]) ? $fila["apellido2"] : $_POST["apellido2"]));
-        $telefono = trim(($_POST["telefono"] == $fila["num_telef"]) ? $fila["num_telef"] : $_POST["telefono"]);
-        $trabajando = trim(($_POST["trabajando"] == $fila["trabajando"]) ? $fila["trabajando"] : $_POST["trabajando"]);
+        $nombre = ucfirst(($_POST["nombre"] == $fila["nombre"]) ? $fila["nombre"] : $_POST["nombre"]);
+        $apellido1 = ucfirst(($_POST["apellido1"] == $fila["apellido1"]) ? $fila["apellido1"] : $_POST["apellido1"]);
+        $apellido2 = ucfirst(($_POST["apellido2"] == $fila["apellido2"]) ? $fila["apellido2"] : $_POST["apellido2"]);
+        $telefono = ($_POST["telefono"] == $fila["num_telef"]) ? $fila["num_telef"] : $_POST["telefono"];
+        $trabajando = ($_POST["trabajando"] == $fila["trabajando"]) ? $fila["trabajando"] : $_POST["trabajando"];
         $privilegios = ($_POST["privilegios"] == $fila["id_rol"]) ? $fila["id_rol"] : $_POST["privilegios"];
+        $pasaporte = ($_POST["pasaporte"] == $fila["pasaporte_trabajador"]) ? $fila["pasaporte_trabajador"] : $_POST["pasaporte"];
+        $nie = ( $_POST['nie'] == $fila["nie_trabajador"]) ? $fila["nie_trabajador"] : "";      
+     
+          $nie2=0;
+        if($nie==""){
+                if($filtro->validaDniCifNie($_POST['nie'])){
+                $nie=$_POST['nie']; 
+            
+        }else{
+         
+           $nie2=1;
+           $mensaje3 = "<h2> Empleado<b> $nombre </b> <a style='color:red'>NIE INCORRECTO</a>.</h2>";
+            }                  
+             
+        } 
 
         if ($_POST["correo"] == $fila["correo"]) {
             $correo = trim($fila["correo"]);
@@ -34,21 +55,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET["codigo"])) {
             echo $correo = trim($_POST["correo"]);
             $estado = "desactivado";
         }
+      
+       
+        if (empty($nie) || empty($pasaporte)||!empty($nie) || !empty($pasaporte) ) {
 
-        $consulta->actualizarDatosTrabajador($id, $nie, $pasaporte, $nombre, $apellido1, $apellido2, $correo, $telefono, $privilegios, $estado, $trabajando);
-        $fila2 = $consulta->comprobarDatosTrabajador($numero);
-        echo "<center><h1><b>Datos actualizados<b></h1></center>";
-        $formularios->datosEmpleado($fila2,$rol);
-        
+            if (!empty($nie) && !empty($pasaporte)) {
+
+                $campos = array("nombre" => $nombre, "apellido1" => $apellido1, "telefono" => $telefono, "nie" => $nie, "pasaporte" => $pasaporte, "privilegios" => $privilegios);
+                $necesarios = $funciones->campos(['nombre', 'apellido1', 'telefono', 'nie', 'pasaporte', 'privilegios'], $campos);
+            } else {
+                if (empty($nie) ) {
+ 
+                    $campos = array("nombre" => $nombre, "apellido1" => $apellido1, "telefono" => $telefono, "pasaporte" => $pasaporte, "privilegios" => $privilegios);
+                    $necesarios = $funciones->campos(['nombre', 'apellido1', 'telefono', 'pasaporte', 'privilegios'], $campos);
+                } else if (empty($pasaporte)|| !$nie2==1 || !empty($nie)) {
+
+                    $campos = array("nombre" => $nombre, "apellido1" => $apellido1, "telefono" => $telefono, "nie" => $nie, "privilegios" => $privilegios);
+                    $necesarios = $funciones->campos(['nombre', 'apellido1', 'telefono', 'nie', 'privilegios'], $campos);
+                }
+            }
+        } 
+
+        if (!is_string($necesarios)) {
+
+            $consulta->actualizarDatosTrabajador($id, $nie, $pasaporte, $nombre, $apellido1, $apellido2, $correo, $telefono, $privilegios, $estado, $trabajando);
+            $fila2 = $consulta->comprobarDatosTrabajador($numero);
+            $mensaje = "Datos actualizados";
+            $formularios->datosEmpleado($fila2, $rol, $mensaje);
+        } else {
+            $fila2 = $consulta->comprobarDatosTrabajador($numero);
+            if($mensaje3){
+                $mensaje=$mensaje3;
+            }else{
+            $mensaje = "Datos incorrectos";
+            
+            }
+            $formularios->datosEmpleado($fila2, $rol, $mensaje);
+        }
     } else if (isset($_POST["eliminar"])) {
-        $nombre=$_POST["nombre"];
+        $nombre = $_POST["nombre"];
         $consulta->eliminarTrabajador($numero);
-     
-         header("Location:/proyecto/backend/administrador/trabajadores.php?mensaje=Empleado $nombre fue eliminad@");
-        
+
+        header("Location:/proyecto/backend/administrador/trabajadores.php?mensaje=Empleado $nombre fue eliminad@");
     } else {
-       // $numero = $_GET["codigo"];
-        $formularios->datosEmpleado($fila,$rol);
+        // $numero = $_GET["codigo"];
+        $formularios->datosEmpleado($fila, $rol);
     }
 } else {
     header("Location:/proyecto/backend/administrador/indexAdministrador.php");

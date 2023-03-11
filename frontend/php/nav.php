@@ -5,6 +5,9 @@ include dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "autoloadClasesLogin.php";
 use \clases\Carta as carta;
 $c = new carta();
 $categorias = $c->getCategorias();
+if (isset($_GET['red'])) {
+    setcookie("carrito", null, 1, "/");
+}
 ?>
 <!DOCTYPE html>
 <html lang="Es">
@@ -35,8 +38,8 @@ $categorias = $c->getCategorias();
                         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Carta</a>
                         <ul class="dropdown-menu ">   
                             <?php
-                            foreach ($categorias as $nombre) {
-                                $tipo = $nombre['nombre_tipo'];
+                            foreach ($categorias as $nombre11) {
+                                $tipo = $nombre11['nombre_tipo'];
                                 ?>
                                 <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "carta" . DIRECTORY_SEPARATOR . "index_carta.php?tipo=" . strtolower($tipo); ?>'><?php echo $tipo ?></a></li>
                                 <?php
@@ -47,7 +50,7 @@ $categorias = $c->getCategorias();
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contacto</a>
+                        <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "contacto.php"; ?>'>Contacto</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "reservas.php"; ?>'>Reservas</a>
@@ -57,12 +60,6 @@ $categorias = $c->getCategorias();
                     </li>
                     <?php
                     if (!empty($_SESSION['usuario']) && isset($_SESSION)) {
-                        if (!empty($_COOKIE['carrito'])) {
-                            $carrito = $_COOKIE['carrito'];
-                            foreach (unserialize($_COOKIE['carrito'],[]) as $key => $value) {
-                                unset($key);
-                            }
-                        }
                         ?> 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Usuario</a>

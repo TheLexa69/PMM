@@ -7,12 +7,25 @@ use \PDOException;
 
 class ConsultasUsuario extends Conexion {
 
+   /**
+     * Constructor que recive la conexion de la clase padre
+     */
     public function __construct() {
-        //  var_dump ($this->conexion= $this->conectar());
-        //$this->conexion= $this->conectar();
+      
         parent::__construct();
     }
-
+    /**
+     * Destructor d ela conexion
+     */
+     public function __destruct() {
+        $this->conexion = null;
+    }
+    
+    /**
+     *  Metodo que retorna los datos de un usuario dado su id
+     * @param type $id
+     * @return type
+     */
     public function datosUsuario($id) {
         try {
             $sql = "select * from usuario where id_usuario=?";
@@ -27,7 +40,20 @@ class ConsultasUsuario extends Conexion {
             
         }
     }
-
+/**
+ * Metodo que actualiza los datos de un usuario 
+ * @param type $id
+ * @param type $nombre
+ * @param type $apellido1
+ * @param type $apellido2
+ * @param type $telefono    
+ * @param type $mail        
+ * @param type $nif         Dni
+ * @param type $direccion   Direcion donde vive
+ * @param type $cp          Codigo postal
+ * @param type $rutaImg     Ruta en la cual esta la imagen que tendra por nombre (id.formato imagen) 
+ * @return type
+ */
     public function actualizarDatosUsuario($id, $nombre, $apellido1, $apellido2, $telefono, $mail, $nif, $direccion, $cp, $rutaImg) {
         try {
             if ($rutaImg == 0) {
@@ -60,7 +86,10 @@ class ConsultasUsuario extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-
+/**
+ * Metodo que devuelve los restaurantes disponibles
+ * @return type
+ */
     public function restaurantes() {
         try {
             $sql = "select * from empresa";
@@ -77,7 +106,10 @@ class ConsultasUsuario extends Conexion {
             
         }
     }
-
+/**
+ * Metodo que devuelve las mesas disponibles sin selecionar en la tabla de reservas
+ * @return type
+ */
     public function mesas() {
         try {
             $sql = "select * from mesas where (id_mesa not in (select id_mesa from reservas))";
@@ -98,7 +130,15 @@ class ConsultasUsuario extends Conexion {
             
         }
     }
-
+/**
+ *  Metodo para resever una mesa en un determinado dia
+ * @param type $id
+ * @param type $restaurante    Que restaurante
+ * @param type $mesa           Mesa que se asigna 
+ * @param type $fecha          Fecha para la cual se solicita
+ * @param type $turno          Turno de comida o Cena
+ * @return type
+ */
     public function hacerReserva($id, $restaurante, $mesa, $fecha, $turno) {
         try {
             $sql = "UPDATE reservas SET id_usuario=:id, id_restaurante=:restaurante, id_mesa=:mesa, fecha_reserva=:fecha, turno=:turno";
@@ -117,7 +157,12 @@ class ConsultasUsuario extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-
+/**
+ * Metodo que muestra los datos cambiados de los usuarios
+ * @param type $id
+ * @param type $orden
+ * @return type
+ */
     public function solicitarDatosCambiados($id, $orden) {
         try {
             if (empty($orden)) {

@@ -4,6 +4,9 @@ namespace clases;
 
 class FormulariosAdministrador {
 
+    /**
+     * Metodo que muestra los botones de redirecion del administrador
+     */
     public function redirecionesAdministrador() {
         echo "<div class='container bg-light rounded mt-5 p-5'>";
         echo "<div class='text-center'>
@@ -21,7 +24,12 @@ class FormulariosAdministrador {
         echo "</div>";
     }
 
-    public function htmlRegistroEmpleados($necesarios = "", $mensaje = "") {
+    /**
+     * Metodo que muestra el formulario de Registro de los empleados
+     * @param type $necesarios  En caso de faltar algun campo se le manda cual
+     * @param type $mensaje     Mensaje que mostrara cual es el empleado al cual hace referencia el formulario  
+     */
+    public function htmlRegistroEmpleados($necesarios, $mensaje = "") {
         ?>
         <div class='container bg-light rounded mt-5 p-3'>
             <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
@@ -139,6 +147,10 @@ class FormulariosAdministrador {
         <?php
     }
 
+    /**
+     * Metodo que carga el formulario para  filtrar los empleados
+     * Por Nombre,Rol , Si esta activa la cuenta , Fecha de ultimo loggin  orden Ascendente o Descendente
+     */
     public function listaFiltradaEmpleados() {
         ?>
         <div class='container bg-light rounded mt-5 p-3'>
@@ -172,6 +184,10 @@ class FormulariosAdministrador {
             <?php
         }
 
+        /**
+         * Metodo que carga los empleados en una tabla en caso de no tener ninguno saldra un mensaje alert avisando de ello
+         * @param type $fila  Datos de  la consulta de empleados
+         */
         public function tablaEmpleados($fila) {
             if (isset($_GET["mensaje"])) {
                 echo "<script> alert('" . $_GET["mensaje"] . "'); </script>";
@@ -207,9 +223,15 @@ class FormulariosAdministrador {
             <?php
         }
 
-        public function datosEmpleado($id, $rol, $mensaje = "") {
+        /**
+         * Metodo que muestra los datos de un empleado precargandolos en un formulario
+         * @param type $id      id del empleado
+         * @param type $rol
+         * @param type $mensaje   Mensaje mostrando nombre de empleado en caso de hacer alguna modificacion
+         */
+        public function datosEmpleado($id, $rol, $necesarios, $mensaje = "") {
             ?>
-                        
+
             <div class='container bg-light rounded mt-5 p-3'>
                 <div class="d-flex justify-content-center">
                     <h1>Editar Empleado <?php echo $id["nombre"] ?></h1><br>
@@ -263,17 +285,36 @@ class FormulariosAdministrador {
                     <div class="mt-3 d-flex justify-content-center">
                         <input type="hidden" name="id" value="<?php echo $id["id_trabajador"]; ?>" class="pr-3">
                         <input type="submit" name="actualizar" value="Actualizar" class="btn btn-outline-info">
-                            <input type="submit" name="eliminar" value="Eliminar" class="btn btn-outline-danger"> 
+                        <input type="submit" name="eliminar" value="Eliminar" class="btn btn-outline-danger"> 
                         <a href="trabajadores.php"><input type="button" value="Modificar Otro Trabajador" class="btn btn-outline-success"></a>
                         <a href="indexAdministrador.php"><input type="button" value="Volver a inicio" class="btn btn-outline-warning"></a>
                     </div>
 
+                    <?php
+                    if (!empty($_POST["actualizar"]) && $necesarios !== true) {
+                        //Enseña los campos que faltan al usuario
+                        $necesarios = str_replace('nombre', 'Nombre', $necesarios);
+                        $necesarios = str_replace('telefono', 'Telefono', $necesarios);
+                        $necesarios = str_replace('apellido1', 'Primer apellido', $necesarios);
+                        $necesarios = str_replace('email', 'Correo', $necesarios);
+                        $necesarios = str_replace('nie', 'Nie', $necesarios);
+                        $necesarios = str_replace('pasaporte', 'Pasaporte', $necesarios);
+
+                        echo "<br><br><b style=color:red>Faltan campos obligatorios para completar el registro:</b> <br>$necesarios";
+                    }
+                    ?>               
 
                 </form> 
             </div>
             <?php
         }
 
+        /**
+         * Metodo  que precarga los datos de los Productos en un formulario  en caso de tener imagen la carga y si no la tiene pone una por defecto
+         * @param type $id
+         * @param type $tipobd
+         * @param type $subtipobd
+         */
         public function datosProducto($id, $tipobd, $subtipobd) {
             ?>
             <div class="container bg-light rounded mt-5 p-3">
@@ -390,6 +431,9 @@ class FormulariosAdministrador {
             <?php
         }
 
+        /**
+         * Metodo que filtra los productos  por  Disponivilidad  (stock o fechas dadas), Nombre , precio
+         */
         public function listaFiltradaProductos() {
             ?>
             <div class="container bg-light rounded mt-5 p-3">
@@ -398,10 +442,10 @@ class FormulariosAdministrador {
                         <h3>Filtrar por:</h3>
                         <label for="c1">Nombre:</label>
                         <input class="form-control mt-2" type="text" id="c1" name="nombre"<?php
-        if (!empty($_POST['nombre'])) {
-            echo " value='" . $_POST['nombre'] . "'";
-        }
-            ?>>
+                        if (!empty($_POST['nombre'])) {
+                            echo " value='" . $_POST['nombre'] . "'";
+                        }
+                        ?>>
                         <label for="v">Ordenados por:</label> 
                         <select name="opcion" class="form-select mt-2">           
                             <option value="disponible">En stock</option> 
@@ -424,6 +468,10 @@ class FormulariosAdministrador {
                 <?php
             }
 
+            /**
+             * Metodo que precarga los datos de los productos en un formulario para su posterior tratamiento 
+             * @param type $fila  Continene los productos
+             */
             public function tablaProductos($fila) {
                 if (isset($_GET["mensaje"])) {
                     echo "<script> alert('" . $_GET["mensaje"] . "'); </script>";
@@ -462,6 +510,9 @@ class FormulariosAdministrador {
                 <?php
             }
 
+            /**
+             * Metodo que muestra formulario de filtrado por fechas para las reservas
+             */
             public function FiltrarReservasFecha() {
                 ?>
                 <div class="container bg-light rounded mt-5 p-3">
@@ -480,6 +531,11 @@ class FormulariosAdministrador {
                     <?php
                 }
 
+                /**
+                 *  Metodo que precarga las reservas que estan pendientes y las que no
+                 * @param type $fila
+                 * @param type $tipoTabla    Si recive pendientes muestra las pendientes   si no recive nada muestra las que ya se hicieron
+                 */
                 public function tablaReservas($fila, $tipoTabla = "") {
                     if (isset($_GET["mensaje"])) {
                         echo "<script> alert('" . $_GET["mensaje"] . "'); </script>";
@@ -554,6 +610,11 @@ class FormulariosAdministrador {
                 }
             }
 
+            /**
+             * Metodo para mandar un tipo de mensaje  dependiendo de la aceptacion o el rechazo de la reserva
+             * @param type $tipo
+             * @return string
+             */
             public function mensageReserva($tipo = "") {
                 if ($tipo == "cancelada") {
                     $mensaje = "<h1>Estimado cliente su solicitud de reserva <b>ha sido cancelada</b> </h1>";
@@ -563,6 +624,10 @@ class FormulariosAdministrador {
                 return $mensaje;
             }
 
+            /**
+             * Metodo que muestra los pedidos pendientes  dentro de un formulario en formato tabla
+             * @param type $fila
+             */
             public function tablaPedidos($fila) {
                 ?>
                 <div class="container bg-light rounded mt-5">

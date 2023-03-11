@@ -60,15 +60,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $formularios->contrastaToken($mailBd, $rol);
                 } else {
 
-
-
                     if (isset($_COOKIE['access_error']) && $_COOKIE['access_error'] >= 6) {
-                        //al 7º intento de sesion se manda aqui
-                        // header("Location: index.php");
-                        $formularios->html("No puede entrar por 5 min por superar el maximo numero de intentos hora local " . $funciones->hora());
-
+                       
+                        $formularios->html("No puede entrar por 5 min por superar el maximo numero de intentos hora local " . $funciones->hora()." Si hace otro intento el contador se reinicia");
                         exit();
-                        // echo"No puede entrar por 5 min por superar el maximo numero de intentos";
                     }
 
                     if (isset($_POST['mail']) && isset($_POST['pass'])) {
@@ -79,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         if (!isset($_POST['login']) || (isset($_POST['login']) && !is_string($necesarios))) {
 
-                            $tiempo = 300;
+                            $tiempo = 370;
 
                             if ($rol == 4 && $trabajas == "NO") {
                                 if (password_verify($_POST['pass'], $hash) && $funciones->correo($mail) == $mailBd) {  ////sql mail y contraseña sql

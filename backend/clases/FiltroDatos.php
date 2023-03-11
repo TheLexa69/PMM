@@ -23,7 +23,7 @@ class FiltroDatos {
 
     /**
      * 
-     * @param type $datos recive el post de los datos los recorre los filtra y los guarda en un array asociativo para usarlos tal cual estaban ya y no tener que renombrar nada
+     * @param type $datos recibe el post de los datos los recorre los filtra y los guarda en un array asociativo para usarlos tal cual estaban ya y no tener que renombrar nada
      * @return type  $datosLimpios retorna el post limpio de inyeccion
      */
     function validarPost($datos) {

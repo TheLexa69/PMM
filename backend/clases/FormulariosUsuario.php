@@ -17,13 +17,16 @@ class FormulariosUsuario {
  * @param type $id
  * @param type $necesarios   Campos obligatorios
  */
-    public function registroDatosPorUsuario($id, $necesarios = "") {
+    public function registroDatosPorUsuario($id, $necesarios ,$mensaje ="") {
         ?>
         <div class="container bg-light rounded mt-5 w-60 p-3">
             <form enctype="multipart/form-data" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
                 <div class="text-center">
                     <h2>Modifica tus datos:</h2>
-                    <hr>
+                    <hr><br>
+                </div>
+                  <div class="d-flex justify-content-center">
+                    <h1><b><?php echo $mensaje ?></b></h1>
                 </div>
                 <div class="row">
                     <div class="col-4 mt-3 d-flex justify-content-center">
@@ -80,22 +83,26 @@ class FormulariosUsuario {
                     <input type="file" name="imagen[]" class="form-control" id="c9">
                 </div>
                 <div class="text-center mt-3">
-                    <button type="submit" class="btn btn-outline-success" name="registro">Actualizar</button>
+                    <button type="submit"  name="registro" class="btn btn-outline-success">Actualizar</button>
                     <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>" id="cancel" name="cancel" class="btn btn-default btn-outline-danger">Cancelar</a>
                 </div>
-                <!--<input type="submit" name="registro">-->
+               
                 <?php
-                if (!empty($_POST['registro']) && $necesarios !== true) {
+          
+ 
+                if (empty($_POST["registro"]) && $necesarios !== true) {
                     //Enseña los campos que faltan al usuario
-                    $necesarios = str_replace('apellido1', 'primer apellido', $necesarios);
-                    $necesarios = str_replace('password', 'contraseña', $necesarios);
-                    $necesarios = str_replace('email', 'correo', $necesarios);
+                    $necesarios = str_replace('nombre', 'Nombre', $necesarios);
+                    $necesarios = str_replace('telefono', 'Telefono', $necesarios);
+                    $necesarios = str_replace('apellido1', 'Primer apellido', $necesarios);
+                    $necesarios = str_replace('email', 'Correo', $necesarios);
                     $necesarios = str_replace('nif', 'NIF', $necesarios);
                     $necesarios = str_replace('direcion', 'Direccion', $necesarios);
                     $necesarios = str_replace('cp', 'Codigo Postal', $necesarios);
                     echo "<br><br><b style=color:red>Faltan campos obligatorios para completar el registro:</b> <br>$necesarios";
                 }
-                ?>
+                ?>               
+                
             </form>
         </div>
         <?php
@@ -106,7 +113,7 @@ class FormulariosUsuario {
  * @param type $mesas          Mesas disponibles o no
  * @param type $necesarios     Campos obligatorios
  */
-    public function formularioReserva($restaurante, $mesas, $necesarios = "") {
+    public function formularioReserva($restaurante, $mesas) {
         ?>
         <div class="container bg-light rounded mt-5 w-60 p-3">
             <form enctype="multipart/form-data" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >

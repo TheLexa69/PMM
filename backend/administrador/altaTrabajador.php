@@ -83,7 +83,7 @@ if(!$nie2){
     }}
 } else {
 
-    $formularios->htmlRegistroEmpleados();
+    $formularios->htmlRegistroEmpleados($necesarios=true);
 }
 
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");

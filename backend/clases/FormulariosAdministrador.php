@@ -122,8 +122,8 @@ class FormulariosAdministrador {
                 if (!empty($_POST['registro']) && $necesarios !== true) {
                     //Enseña los campos que faltan al usuario
                     $necesarios = str_replace('apellido1', 'primer apellido', $necesarios);
-                    $necesarios = str_replace('nie', 'nie', $necesarios);
-                    $necesarios = str_replace('pasaporte', 'pasaporte', $necesarios);
+                    $necesarios = str_replace('nie', 'nie incorrecto', $necesarios);
+                    $necesarios = str_replace('pasaporte', 'pasaporte o NIE', $necesarios);
                     $necesarios = str_replace('privilegios', 'privilegios', $necesarios);
                     $necesarios = str_replace('password', 'contraseña', $necesarios);
                     // $necesarios = str_replace('password2', 'confirmación de la contraseña',$necesarios);
@@ -207,15 +207,21 @@ class FormulariosAdministrador {
             <?php
         }
 
-        public function datosEmpleado($id, $rol) {
+        public function datosEmpleado($id, $rol, $mensaje = "") {
             ?>
+                        
             <div class='container bg-light rounded mt-5 p-3'>
                 <div class="d-flex justify-content-center">
-                    <h1>Editar Empleado <?php echo $id["nombre"] ?></h1>
+                    <h1>Editar Empleado <?php echo $id["nombre"] ?></h1><br>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <h1><b><?php echo $mensaje ?></b></h1>
                 </div>
                 <hr>
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+
                     <div class="d-flex justify-content-center text-center">
+
                         <table class="edicion">
                             <tr>
                                 <td>Nie: </td>
@@ -257,10 +263,12 @@ class FormulariosAdministrador {
                     <div class="mt-3 d-flex justify-content-center">
                         <input type="hidden" name="id" value="<?php echo $id["id_trabajador"]; ?>" class="pr-3">
                         <input type="submit" name="actualizar" value="Actualizar" class="btn btn-outline-info">
-                        <input type="submit" name="eliminar" value="Eliminar" class="btn btn-outline-danger"> 
+                            <input type="submit" name="eliminar" value="Eliminar" class="btn btn-outline-danger"> 
                         <a href="trabajadores.php"><input type="button" value="Modificar Otro Trabajador" class="btn btn-outline-success"></a>
                         <a href="indexAdministrador.php"><input type="button" value="Volver a inicio" class="btn btn-outline-warning"></a>
                     </div>
+
+
                 </form> 
             </div>
             <?php
@@ -276,27 +284,27 @@ class FormulariosAdministrador {
                 <div class='d-flex justify-content-center text-center'>
                     <div class="d-flex justify-content-center text-center">
                         <form enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-                           
+
                             <div class="row">
-                    <div class="col-4 mt-3 d-flex justify-content-center">
-                        <?php
-                        // Ruta de la imagen
-                        $ruta_imagen = $id['img'];
-                        // Comprobar si la imagen existe
-                        if (file_exists($ruta_imagen)) {
-                            // Mostrar la imagen
-                            echo '<img class="rounded-circle border border-dark" src="' . $ruta_imagen . '" width="200" height="200">';
-                        } else {
-                            echo '<img class="rounded-circle border border-dark" src="../imagenes/imgProductos/defecto.jpg" title="perfil" width="200" height="200">';
-                        }
-                        ?>
-                    </div>
-                    <div class="col-8">
-                       </div>
-                </div>
-                            
-                            
-                            
+                                <div class="col-4 mt-3 d-flex justify-content-center">
+                                    <?php
+                                    // Ruta de la imagen
+                                    $ruta_imagen = $id['img'];
+                                    // Comprobar si la imagen existe
+                                    if (file_exists($ruta_imagen)) {
+                                        // Mostrar la imagen
+                                        echo '<img class="rounded-circle border border-dark" src="' . $ruta_imagen . '" width="200" height="200">';
+                                    } else {
+                                        echo '<img class="rounded-circle border border-dark" src="../imagenes/imgProductos/defecto.jpg" title="perfil" width="200" height="200">';
+                                    }
+                                    ?>
+                                </div>
+                                <div class="col-8">
+                                </div>
+                            </div>
+
+
+
                             <table class="edicion">
                                 <tr>
                                     <td>Nombre: </td>
@@ -359,7 +367,7 @@ class FormulariosAdministrador {
                                     <td>Nombre Imagen:</td>
                                     <td>
 
-                                      
+
                                         <input type="file" name="imagen[]" class="form-control" id="c9">
 
                                     </td>
@@ -390,10 +398,10 @@ class FormulariosAdministrador {
                         <h3>Filtrar por:</h3>
                         <label for="c1">Nombre:</label>
                         <input class="form-control mt-2" type="text" id="c1" name="nombre"<?php
-                        if (!empty($_POST['nombre'])) {
-                            echo " value='" . $_POST['nombre'] . "'";
-                        }
-                        ?>>
+        if (!empty($_POST['nombre'])) {
+            echo " value='" . $_POST['nombre'] . "'";
+        }
+            ?>>
                         <label for="v">Ordenados por:</label> 
                         <select name="opcion" class="form-select mt-2">           
                             <option value="disponible">En stock</option> 

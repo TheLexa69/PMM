@@ -8,7 +8,9 @@ use \clases\FormulariosLogin as formulariosLogin;
 use \clases\FuncionesLogin as funcionesLogin;
 use \clases\ConsultasLogin as consultasLogin;
 use \clases\ConsultasAdministrador as consultasAdministrador;
+use \clases\FiltroDatos as filtrado;
 
+$filtro = new filtrado;
 $formularios = new formulariosLogin;
 $funciones = new funcionesLogin;
 $consulta = new consultasLogin;
@@ -16,10 +18,15 @@ $consultaTrabajador = new consultasAdministrador;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+
     if (isset($_POST['mail'])) {
+
+        $_POST = $filtro->validarPost($_POST);
+
         $trabajas = $_POST['trabajo'];
-        $mail = $_POST['mail'];
+        $mail = ($funciones->correo($_POST['mail'])) ? $funciones->correo($_POST['mail']) : "";
         $contra = $_POST['pass'];
+        // echo $contra;
         Try {
 
             $datos = $consulta->comprobarDatos($mail);
@@ -41,125 +48,127 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (!empty($datos["correo"]) || !empty($datosTrabajador["correo"])) {
 
 
-        
-                    $TrabajadorVerificado = (!empty($TrabajadorVerificado)) ? $TrabajadorVerificado : "";
-                    $verificado = (!empty($verificado)) ? $verificado : "";
-                    
-                    if ($TrabajadorVerificado == "desactivado" && $trabajas == "SI") {
 
-                        $formularios->contrastaToken($mailBdTrabajador, $roltrabajador);
-                    } else if ($verificado == "desactivado" && $trabajas == "NO") {
+                $TrabajadorVerificado = (!empty($TrabajadorVerificado)) ? $TrabajadorVerificado : "";
+                $verificado = (!empty($verificado)) ? $verificado : "";
 
-                        $formularios->contrastaToken($mailBd, $rol);
-                    } else {
+                if ($TrabajadorVerificado == "desactivado" && $trabajas == "SI") {
 
+                    $formularios->contrastaToken($mailBdTrabajador, $roltrabajador);
+                } else if ($verificado == "desactivado" && $trabajas == "NO") {
 
-
-                        if (isset($_COOKIE['access_error']) && $_COOKIE['access_error'] > 6) {
-                            //al 7º intento de sesion se manda aqui
-                            // header("Location: index.php");
-                            echo"No puede entrar por 5 min por superar el maximo numero de intentos";
-                        }
-
-                        if (isset($_POST['mail']) && isset($_POST['pass'])) {
+                    $formularios->contrastaToken($mailBd, $rol);
+                } else {
 
 
-                            $campos = array("email" => $mail, "password" => $contra); //mail base de datos y contraseña
-                            $necesarios = $funciones->campos(['email', 'password'], $campos);
 
-                            if (!isset($_POST['login']) || (isset($_POST['login']) && !is_string($necesarios))) {
+                    if (isset($_COOKIE['access_error']) && $_COOKIE['access_error'] >= 6) {
+                        //al 7º intento de sesion se manda aqui
+                        // header("Location: index.php");
+                        $formularios->html("No puede entrar por 5 min por superar el maximo numero de intentos hora local " . $funciones->hora());
 
-                                $tiempo = 300;
+                        exit();
+                        // echo"No puede entrar por 5 min por superar el maximo numero de intentos";
+                    }
 
-                                if ($rol == 4 && $trabajas == "NO") {
-                                    if (password_verify($_POST['pass'], $hash) && $funciones->correo($mail) == $mailBd) {  ////sql mail y contraseña sql
-                                        // cookis($nombre, $valor, $tiempo);
-                                        try {
-                                            $datos = $consulta->comprobarDatos($mail);
+                    if (isset($_POST['mail']) && isset($_POST['pass'])) {
 
-                                            $id_usuario = $datos["id_usuario"];
-                                            $rol = $datos ["id_rol"];
-                                            $fecha = $funciones->fechaHoraActual();
-                                            $consulta->registroHoraSession($id_usuario, $fecha);
-                                          
-                                            // session_start();
-                                            // $usu tiene campos correo y codRes, correo 
-                                            //$_SESSION['rol'] = $datos["id_rol"];
-                                            $_SESSION['mail'] = $datos['correo'];
-                                            $_SESSION['usuario'] = $id_usuario; //array de dos elementos
-                                           // $_SESSION['carrito'] = [];
-                                            if(isset($_GET['redirigido'])){
-                                                header("Location: /proyecto/backend/cart/index_carrito.php");
-                                            }else{
-                                            header("Location: /proyecto/index.php");
-                                            }
-                                        } catch (PDOException $e) {
 
-                                            die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
-                                        }
-                                    } else {
+                        $campos = array("email" => $mail, "password" => $contra); //mail base de datos y contraseña
+                        $necesarios = $funciones->campos(['email', 'password'], $campos);
 
-                                        if (isset($_COOKIE['access_error'])) {
-                                            // Caduca en un año 
-                                            setcookie('access_error', $_COOKIE['access_error'] + 1, time() + $tiempo);
-                                            $access_error = $_COOKIE['access_error'];
+                        if (!isset($_POST['login']) || (isset($_POST['login']) && !is_string($necesarios))) {
 
-                                            $formularios->html("Revisa contraseña y correo", "Numero de intentos maximos 6 lleva: " . $access_error . " Si alcanza el maximo no podra ingresar en 5 min");
+                            $tiempo = 300;
+
+                            if ($rol == 4 && $trabajas == "NO") {
+                                if (password_verify($_POST['pass'], $hash) && $funciones->correo($mail) == $mailBd) {  ////sql mail y contraseña sql
+                                    // cookis($nombre, $valor, $tiempo);
+                                    try {
+                                        $datos = $consulta->comprobarDatos($mail);
+
+                                        $id_usuario = $datos["id_usuario"];
+                                        $rol = $datos ["id_rol"];
+                                        $fecha = $funciones->fechaHoraActual();
+                                        $consulta->registroHoraSession($id_usuario, $fecha);
+
+                                        // session_start();
+                                        // $usu tiene campos correo y codRes, correo 
+                                        //$_SESSION['rol'] = $datos["id_rol"];
+                                        $_SESSION['mail'] = $datos['correo'];
+                                        $_SESSION['usuario'] = $id_usuario; //array de dos elementos
+                                        // $_SESSION['carrito'] = [];
+                                        if (isset($_GET['redirigido'])) {
+                                            header("Location: /proyecto/backend/cart/index_carrito.php");
                                         } else {
-
-                                            setcookie('access_error', 2, time() + $tiempo);
-                                            $formularios->html("Revisa contraseña y correo");
+                                            header("Location: /proyecto/index.php");
                                         }
+                                    } catch (PDOException $e) {
+
+                                        die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
                                     }
                                 } else {
 
+                                    if (isset($_COOKIE['access_error'])) {
+                                        // Caduca en un año 
+                                        setcookie('access_error', $_COOKIE['access_error'] + 1, time() + $tiempo);
+                                        $access_error = $_COOKIE['access_error'];
 
-
-
-                                    if (password_verify($_POST['pass'], $hashTrabajador) && $funciones->correo($mail) == $mailBdTrabajador) {  ////sql mail y contraseña sql
-                                        try {
-
-                                            $datosTrabajador = $consultaTrabajador->comprobarDatosTrabajador($mailBdTrabajador);
-
-                                            $id_trabajador = $datosTrabajador["id_trabajador"];
-                                            $roltrabajador = $datosTrabajador["id_rol"];
-                                            $fecha = $funciones->fechaHoraActual();
-                                            $consultaTrabajador->registroHoraSessionTrabajador($id_trabajador, $fecha);
-                                            
-                                            //   session_start();
-                                            // $usu tiene campos correo y codRes, correo 
-
-                                            $_SESSION['administrador'] = array($id_trabajador, $roltrabajador); //array de dos elementos
-
-
-                                            header("Location: /proyecto/index.php");
-                                        } catch (PDOException $e) {
-
-                                            die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
-                                        }
+                                        $formularios->html("Revisa contraseña y correo", "Numero de intentos maximos 6 lleva: " . $access_error . " Si alcanza el maximo no podra ingresar en 5 min");
                                     } else {
 
-                                        if (isset($_COOKIE['access_error'])) {
-                                            // Caduca en un año 
-                                            setcookie('access_error', $_COOKIE['access_error'] + 1, time() + $tiempo);
-                                            $access_error = $_COOKIE['access_error'];
-
-                                            $formularios->html("Revisa contraseña y correo", "Numero de intentos maximos 6 lleva: " . $access_error . " Si alcanza el maximo no podra ingresar en 5 min");
-                                        } else {
-
-                                            setcookie('access_error', 2, time() + $tiempo);
-                                            $formularios->html("Revisa contraseña y correo");
-                                        }
+                                        setcookie('access_error', 2, time() + $tiempo);
+                                        $formularios->html("Revisa contraseña y correo");
                                     }
                                 }
                             } else {
-                                $formularios->html("No ha puesto datos de loggin");
+
+
+
+
+                                if (password_verify($_POST['pass'], $hashTrabajador) && $funciones->correo($mail) == $mailBdTrabajador) {  ////sql mail y contraseña sql
+                                    try {
+
+                                        $datosTrabajador = $consultaTrabajador->comprobarDatosTrabajador($mailBdTrabajador);
+
+                                        $id_trabajador = $datosTrabajador["id_trabajador"];
+                                        $roltrabajador = $datosTrabajador["id_rol"];
+                                        $fecha = $funciones->fechaHoraActual();
+                                        $consultaTrabajador->registroHoraSessionTrabajador($id_trabajador, $fecha);
+
+                                        //   session_start();
+                                        // $usu tiene campos correo y codRes, correo 
+
+                                        $_SESSION['administrador'] = array($id_trabajador, $roltrabajador); //array de dos elementos
+
+
+                                        header("Location: /proyecto/index.php");
+                                    } catch (PDOException $e) {
+
+                                        die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
+                                    }
+                                } else {
+
+                                    if (isset($_COOKIE['access_error'])) {
+                                        // Caduca en un año 
+                                        setcookie('access_error', $_COOKIE['access_error'] + 1, time() + $tiempo);
+                                        $access_error = $_COOKIE['access_error'];
+
+                                        $formularios->html("Revisa contraseña y correo", "Numero de intentos maximos 6 lleva: " . $access_error . " Si alcanza el maximo no podra ingresar en 5 min");
+                                    } else {
+
+                                        setcookie('access_error', 2, time() + $tiempo);
+                                        $formularios->html("Revisa contraseña y correo");
+                                    }
+                                }
                             }
                         } else {
-                            $formularios->html();
+                            $formularios->html("No ha puesto datos de loggin");
                         }
+                    } else {
+                        $formularios->html();
                     }
-                
+                }
             } else {
                 header("Location: /proyecto/backend/login/registro.php?registro=no");
             }

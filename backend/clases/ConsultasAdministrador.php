@@ -7,16 +7,32 @@ use \PDOException;
 
 class ConsultasAdministrador extends Conexion {
 
+    /**
+     * Constructor que recive la conexion de la clase padre
+     */
     public function __construct() {
-        //  var_dump ($this->conexion= $this->conectar());
-        //$this->conexion= $this->conectar();
+      
         parent::__construct();
     }
-
+    /**
+     * Destructor d ela conexion
+     */
     public function __destruct() {
         $this->conexion = null;
     }
-
+/**
+ *  Metodo par añadir los datos de un trabajador
+ * @param type $nombre
+ * @param type $apellido1
+ * @param type $apellido2
+ * @param type $token2
+ * @param type $mail
+ * @param type $telefono
+ * @param type $privilegios
+ * @param type $fecha
+ * @param type $nie
+ * @param type $pasaporte
+ */
     public function añadirTrabajador($nombre, $apellido1, $apellido2, $token2, $mail, $telefono, $privilegios, $fecha, $nie, $pasaporte) {
 
         try {
@@ -116,7 +132,7 @@ class ConsultasAdministrador extends Conexion {
             $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $fila;
-            unset($fila);
+           
         } catch (PDOException $e) {
 
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
@@ -271,9 +287,7 @@ class ConsultasAdministrador extends Conexion {
 
             $stmt->execute();
             return $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            unset($stmt);
-            unset($this->conexion);
+ 
         } catch (PDOException $e) {
 
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
@@ -307,7 +321,7 @@ class ConsultasAdministrador extends Conexion {
                 $datos = $fil;
             }
 
-            unset($stmt);
+            
             return $datos;
         } catch (PDOException $e) {
 
@@ -330,7 +344,7 @@ class ConsultasAdministrador extends Conexion {
 
             $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            unset($stmt);
+            
             return $fila;
         } catch (PDOException $e) {
 
@@ -364,10 +378,8 @@ class ConsultasAdministrador extends Conexion {
            
               if (!$img == 0) {
                 $stmt->bindParam(':img', $img, PDO::PARAM_STR);
-            }
-
+            } 
             
-
             $stmt->execute();
 
             return $stmt;
@@ -384,7 +396,6 @@ class ConsultasAdministrador extends Conexion {
             $stmt = $this->conexion->query($sql);
             return $stmt->fetchall();
         } catch (PDOException $e) {
-
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
@@ -425,7 +436,6 @@ class ConsultasAdministrador extends Conexion {
             } else {
                 $sql2 = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo LIMIT :paginaInicio, :cantidadResultados";
             }
-
 
             $stmt = $this->conexion->prepare($sql2);
             if (!empty($nombre)) {
@@ -477,7 +487,7 @@ class ConsultasAdministrador extends Conexion {
 
             $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            unset($stmt);
+         
             return $fila;
         } catch (PDOException $e) {
 
@@ -522,7 +532,7 @@ class ConsultasAdministrador extends Conexion {
 
             $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            unset($stmt);
+       
             return $fila;
         } catch (PDOException $e) {
 
@@ -542,7 +552,7 @@ class ConsultasAdministrador extends Conexion {
 
             $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            unset($stmt);
+           
             return $fila;
         } catch (PDOException $e) {
 

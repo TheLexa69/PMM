@@ -164,7 +164,7 @@ class FormulariosUsuario {
                             </label>
                         </div>
                         <div class=" m-3">
-                        <input type="submit" name=validar value="Filtrar" class='btn btn-default btn-outline-success'>
+                            <input type="submit" name=validar value="Filtrar" class='btn btn-default btn-outline-success'>
                         </div>
                     </div>
                 </form>

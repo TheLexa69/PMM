@@ -55,9 +55,9 @@ class FormulariosLogin {
                     </div>
                 </div>
 
-                                                                                <!--<input type="submit" name="login">-->
-                <br> <?php echo $err; ?>
-                <?php echo $num; ?>
+                                                                                        <!--<input type="submit" name="login">-->
+                <br> <?php echo $err; ?><br>
+                <?php echo $num; ?><br>
                 <div class=''>
                     <div class="text-center">
                         <p> <b>Haz click en </b> <a href='recuperarContra.php' style="color:red">Recuperar</a><b> para conseguir tu contraseña!  </b></p> 

@@ -1,77 +1,40 @@
 <?php
+
 namespace clases;
 
- class FuncionesLogin{
-     
-     
-public function campos(array $campos, $requeridos) {
-    $noCubiertos = [];
-    foreach ($campos as $campo) {
-        if (empty($requeridos[$campo])) {
-            $noCubiertos[] = $campo;
+class FuncionesLogin {
+
+    public function campos(array $campos, $requeridos) {
+        $noCubiertos = [];
+        foreach ($campos as $campo) {
+            if (empty($requeridos[$campo])) {
+                $noCubiertos[] = $campo;
+            }
         }
+        if (sizeof($noCubiertos) > 0) {
+            $respuesta = implode(', ', $noCubiertos);
+        } else {
+            $respuesta = true;
+        }
+        return $respuesta;
     }
-    if (sizeof($noCubiertos) > 0) {
-        $respuesta = implode(', ', $noCubiertos);
-    } else {
-        $respuesta = true;
+
+    public function correo($mail) {
+
+        return filter_var($mail, FILTER_SANITIZE_EMAIL);
     }
-    return $respuesta;
-}
 
-public function texto($texto) {
-    /*
-     * Función que compruebe que la cadena recibida sólo acepta letras, incluyendo tildes
-     */
-    $pattern = '/[a-zA-ZáéíóúÁÉÍÓÚñÑ]$/';
-    return preg_match($pattern, $texto);
-}
+    public function hora() {
+        $a = getdate(time());
+        return $a["hours"] . ":" . $a["minutes"] . ":" . $a["seconds"];
+    }
 
-public function correo($mail) {
+    public function fechaActual() {
+        return date("Y-m-d ");
+    }
 
-    return filter_var($mail, FILTER_SANITIZE_EMAIL);
-}
-
-
-
-public function hora() {
-    $a = getdate(time());
-    return $a["hours"] . ":" . $a["minutes"] . ":" . $a["seconds"];
-}
-
-public function fechaActual() {
-    return   date("Y-m-d ");
-}
-public function fechaHoraActual() {
-    return  date("Y-m-d H:i:s", time());
-}
-
+    public function fechaHoraActual() {
+        return date("Y-m-d H:i:s", time());
+    }
  
-
-     /*
-function contrasenas($pass, $pass2) {
-
-    if ($pass == $pass2) {
-        return true;
-    } else {
-        return false;
-    }
-}*/
-
-   /*
-  function cookis($var1, $var2 = " ", $var3 = " ") {
-
-  if (empty($var3)) {
-  $cook1 = setcookie($var1, $var2);
-  } else {
-  $cook1 = setcookie($var1, $var2, time() + $var3);
-
-  }
-
-  if ($cook1) {
-  echo "cookie creada<br>";
-  }
-  }
- */  
-     
- }
+}

@@ -8,24 +8,27 @@ use \clases\FormulariosLogin as formulariosLogin;
 use \clases\FuncionesLogin as funcionesLogin;
 use \clases\ConsultasLogin as consultasLogin;
 use \clases\Mails as mailLogin;
+use \clases\FiltroDatos as filtrado;
 
+$filtro= new filtrado;
 $formularios = new formulariosLogin;
 $funciones = new funcionesLogin;
 $consulta = new consultasLogin;
 $envioMail = new mailLogin;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombre = $_POST['nombre'];
-    $apellido1 = $_POST['apellido1'];
-    $apellido2 = ($_POST['apellido2']) ? $_POST['apellido2'] : null;
-    $telefono = $_POST['telefono'];
+     
+      $_POST= $filtro->validarPost($_POST);
+      
+    $nombre = $filtro->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]",$_POST['nombre']) ;
+    $apellido1 = $filtro->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]",$_POST['apellido1']);
+    $apellido2 = ($_POST['apellido2']) ? $filtro->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]",$_POST['apellido2']) : null;
     $mail = ($funciones->correo($_POST['mail'])) ? $funciones->correo($_POST['mail']) : "";
+    $telefono=$filtro->verificarDatos("[0-9]{9,9}",$_POST['telefono']);
     $telefono = (strlen($telefono) == 9) ? $telefono : "";
-    $telefono = (is_numeric($telefono)) ? $telefono : "";
     $nif = null;
     $direccion = null;
     $cp = null;
-
     $rol = 4;
     $fecha = $funciones->fechaHoraActual();
 

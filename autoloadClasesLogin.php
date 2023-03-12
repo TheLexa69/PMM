@@ -2,6 +2,11 @@
 
 define('DS', DIRECTORY_SEPARATOR);
 
+/**
+ * Función que se encarga de cargar automáticamente las clases del proyecto.
+ * @param string $clase Nombre de la clase a cargar.
+ * @return void.
+ */
 function autoloadClases($clase) {
     //   echo $fichero = __DIR__ . DS."backend".DS.str_replace('/','\\', DS, $clase). '.php';
     $fichero = __DIR__ . DS . "backend" . DS . str_replace('\\', DS, $clase) . '.php';
@@ -9,8 +14,6 @@ function autoloadClases($clase) {
     if (file_exists($fichero)) {
         include $fichero;
     } else {
-
-
         include __DIR__ . DS . "backend" . DS . "clases" . DS . str_replace('\\', DS, $clase) . '.php';
     }
 }

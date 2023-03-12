@@ -7,8 +7,8 @@ require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR
 //require "../clases_carrito/carrito.php";
 use \clases\Pedido as pedido;
 use \clases\Carrito as carrito;
-$c = new carrito();
-$p = new pedido();
+$c = new carrito( $_SESSION['rolUsusario'][0]);
+$p = new pedido( $_SESSION['rolUsusario'][0]);
 $id_usuario = $_SESSION['usuario'];
 $carrito = $_SESSION['carrito'];
 $precio = $c->getTotalPrice($_SESSION['carrito']);

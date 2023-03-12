@@ -1,38 +1,38 @@
 <?php
 
 namespace clases;
+
 /**
  * Description of pedido
  *
  * @author Nuria
  */
-
 //require_once 'conexion.php';
 //require "../clases/Conexion.php";
 //require "../clases/Mails.php";
 use \clases\Mails as mails;
-
 use \PDO;
 use \PDOException;
 
 class Pedido extends Conexion {
-    
+
     private $tabla_pedidos;
     private $tabla_productos;
     private $tabla_factura;
-    
+
     public function __construct() {
         parent::__construct();
         $this->tabla_pedidos = 'pedidos';
         $this->tabla_productos = 'ped_prod';
         $this->tabla_factura = 'factura';
     }
-    
+
     public function __destruct() {
         $this->conexion = null;
     }
-    
+
     /* Método para crear un nuevo pedido */
+
     public function crearPedido($id_usuario, $carrito, $precio, $cif, $modo_pago) {
         $fecha = date('Y-m-d H:i:s');
         try {
@@ -71,8 +71,9 @@ class Pedido extends Conexion {
             return false;
         }
     }
-    
+
     /* Método para obtener todos los pedidos de un usuario */
+
     public function obtenerPedidos($id_usuario) {
         $stmt = $this->conexion->prepare("SELECT * FROM $this->tabla_pedidos WHERE id_usuario = ? ORDER BY fecha DESC");
         $stmt->execute([$id_usuario]);
@@ -96,8 +97,9 @@ class Pedido extends Conexion {
         }
         return $pedidos;
     }
-    
+
     /* Método para obtener un pedido en particular */
+
     public function obtenerPedido($id_pedido) {
         $stmt = $this->conexion->prepare("SELECT * FROM $this->tabla_pedidos WHERE id = ?");
         $stmt->execute([$id_pedido]);
@@ -113,7 +115,7 @@ class Pedido extends Conexion {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
     public function getModoPago() {
         $stmt = $this->conexion->prepare("SELECT * FROM modo_pago");
         $stmt->execute();
@@ -128,12 +130,12 @@ class Pedido extends Conexion {
             $stmt->bindParam(':id_comida', $id_comida, PDO::PARAM_INT);
             $stmt->execute();
             $result = $stmt->fetch();
-            $array_carrito .=  "<tr><td>" .$result['nombre']. "</td><td>$cantidad</td><td>".$result['precio']."€</td><td> </tr>";
+            $array_carrito .= "<tr><td>" . $result['nombre'] . "</td><td>$cantidad</td><td>" . $result['precio'] . "€</td><td> </tr>";
         }
         $array_carrito .= "<tr><td colspan=3>_________________</td></tr></tr>
                             <tr><td>Precio Total</td><td colspan=2>$precio_total </td> </tr>
                             <tr><td colspan=3>_________________</td></tr>
-                            <tr><td>Especificaciones del cliente: </td><td colspan=2>$especif</td> </tr>"; 
+                            <tr><td>Especificaciones del cliente: </td><td colspan=2>$especif</td> </tr>";
         return $array_carrito;
     }
 
@@ -148,17 +150,19 @@ class Pedido extends Conexion {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $pesoTotal = 0;
         $texto = "<h1>Pedido nº $pedido</h1>";
-        $texto .= "<p><h3>".$result["nombreLocal"]."</h3></p><p><h3>".$result["cif"]."</h3></p><p><h3>".$result["nombre_sociedad"]."</h3></p><p><h3>".$result["direccion"]."</h3></p><p><h3>".$result["ciudad"]."</h3></p><p><h3>".$result["cp"]."</h3></p><p><h3>".$result["fecha"]."</h3></p>";
+        $texto .= "<p><h3>" . $result["nombreLocal"] . "</h3></p><p><h3>" . $result["cif"] . "</h3></p><p><h3>" . $result["nombre_sociedad"] . "</h3></p><p><h3>" . $result["direccion"] . "</h3></p><p><h3>" . $result["ciudad"] . "</h3></p><p><h3>" . $result["cp"] . "</h3></p><p><h3>" . $result["fecha"] . "</h3></p>";
         $texto .= "Detalle del pedido:";
         $texto .= "<table>"; //abrir la tabla
         $texto .= "<tr><th>Nombre</th><th>Unidades</th><th>Precio</th></tr>";
         $texto .= $carrito;
-        $texto .= "<tr><td colspan=3> Modo de pago: ".$result["nombre"]."</td></tr>";
+        $texto .= "<tr><td colspan=3> Modo de pago: " . $result["nombre"] . "</td></tr>";
         $texto .= "<tr><td colspan=3> Su pedido se está cocinando... </td></tr></table>";
         return $texto;
     }
+
     function enviar($email, $cuerpo) {
         $c_envio = new mails;
         $c_envio->enviar_correo_pedidos($email, $cuerpo);
     }
+
 }

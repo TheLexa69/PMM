@@ -463,11 +463,12 @@ class FormulariosAdministrador {
             if (isset($_GET["mensaje"])) {
                 echo "<script> alert('" . $_GET["mensaje"] . "'); </script>";
             }
-            ?>    <div class='d-flex justify-content-center'>
-                <h1>Lista de Productos registrados:</h1>
-            </div>
+            ?>    
 
             <div class="container bg-light rounded p-3">
+                <div class='d-flex justify-content-center'>
+                <h1>Lista de Productos registrados:</h1>
+            </div>
                 <div class="d-flex justify-content-center mt-4">
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                         <table class="text-center">

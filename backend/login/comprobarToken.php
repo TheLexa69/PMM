@@ -14,7 +14,7 @@ $filtro = new filtrado;
 $formularios = new formulariosLogin;
 $funciones = new funcionesLogin;
 $consulta = new consultasLogin;
-$consultaAdministrador = new consultasAdministrador;
+$consultaAdministrador = new consultasAdministrador();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_POST = $filtro->validarPost($_POST);

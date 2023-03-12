@@ -7,9 +7,6 @@ namespace clases;
  *
  * @author Nuria
  */
-//require_once 'conexion.php';
-//require "../clases/Conexion.php";
-//require "../clases/Mails.php";
 use \clases\Mails as mails;
 use \PDO;
 use \PDOException;
@@ -30,9 +27,16 @@ class Pedido extends Conexion {
     public function __destruct() {
         $this->conexion = null;
     }
-
-    /* Método para crear un nuevo pedido */
-
+    
+    /**
+     * Método para crear un nuevo pedido
+     * @param int $id_usuario El id del usuario que hace el pedido
+     * @param array $carrito El carrito de la compra, que contiene la lista de id productos y la cantidad de cada uno
+     * @param float $precio El precio total del pedido
+     * @param string $cif El CIF de la empresa que envía el pedido
+     * @param string $modo_pago El modo de pago utilizado para hacer el pedido
+     * @return int|false El id del pedido creado, o false si hubo algún problema
+     */
     public function crearPedido($id_usuario, $carrito, $precio, $cif, $modo_pago) {
         $fecha = date('Y-m-d H:i:s');
         try {
@@ -71,9 +75,14 @@ class Pedido extends Conexion {
             return false;
         }
     }
-
-    /* Método para obtener todos los pedidos de un usuario */
-
+    
+    /**
+     * Método para obtener todos los pedidos de un usuario
+     *
+     * @param int $id_usuario ID del usuario del que se quieren obtener los pedidos
+     * 
+     * @return array Array con todos los pedidos del usuario
+     */
     public function obtenerPedidos($id_usuario) {
         $stmt = $this->conexion->prepare("SELECT * FROM $this->tabla_pedidos WHERE id_usuario = ? ORDER BY fecha DESC");
         $stmt->execute([$id_usuario]);
@@ -86,6 +95,11 @@ class Pedido extends Conexion {
         return $pedidos;
     }
 
+    /**
+     * Método para obtener todos los pedidos (de todos los usuarios)
+     *
+     * @return array Array con todos los pedidos de todos los usuarios
+     */
     public function obtenerPedidosAdmin($id_usuario) {
         $stmt = $this->conexion->prepare("SELECT * FROM $this->tabla_pedidos ORDER BY fecha DESC");
         $stmt->execute([$id_usuario]);
@@ -97,9 +111,14 @@ class Pedido extends Conexion {
         }
         return $pedidos;
     }
-
-    /* Método para obtener un pedido en particular */
-
+    
+    /**
+     * Método para obtener un pedido en particular
+     *
+     * @param int $id_pedido ID del pedido que se quiere obtener
+     * 
+     * @return array Array con la información del pedido y los productos que se pidieron
+     */
     public function obtenerPedido($id_pedido) {
         $stmt = $this->conexion->prepare("SELECT * FROM $this->tabla_pedidos WHERE id = ?");
         $stmt->execute([$id_pedido]);
@@ -110,18 +129,36 @@ class Pedido extends Conexion {
         return $pedido;
     }
 
+    /**
+     * Método para obtener todas las empresas
+     *
+     * @return array Array con la información de todas las empresas
+     */
     public function getEmpresas() {
         $stmt = $this->conexion->prepare("SELECT cif, nombreLocal, direccion FROM empresa");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
+    
+    /**
+     * Método para obtener todos los modos de pago
+     *
+     * @return array Array con la información de todos los modos de pago
+     */
     public function getModoPago() {
         $stmt = $this->conexion->prepare("SELECT * FROM modo_pago");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+    *
+    * Genera una tabla HTML con los productos del carrito y su precio total, incluyendo las especificaciones del cliente.
+    * @param array $carrito Un array asociativo con los IDs de los productos como clave y la cantidad como valor.
+    * @param float $precio_total El precio total del carrito.
+    * @param string $especif Las especificaciones del cliente.
+    * @return string Una cadena de caracteres que representa la tabla HTML con los productos del carrito y su precio total, incluyendo las especificaciones del cliente.
+    */
     function array_carrito($carrito, $precio_total, $especif) {
         $array_carrito = "";
         foreach ($carrito as $id_comida => $cantidad) {
@@ -139,6 +176,13 @@ class Pedido extends Conexion {
         return $array_carrito;
     }
 
+    /**
+    *
+    * Crea el contenido del correo electrónico para enviar el pedido.
+    * @param array $carrito Un array asociativo con los IDs de los productos como clave y la cantidad como valor.
+    * @param int $pedido El ID del pedido.
+    * @return string Una cadena de caracteres que representa el contenido del correo electrónico para enviar el pedido.
+    */
     function crear_correo($carrito, $pedido) {
         /*
          * Crea la tabla HTML con los productos que se piden, incluyendo el peso
@@ -160,6 +204,12 @@ class Pedido extends Conexion {
         return $texto;
     }
 
+    /**
+
+    * Envía el correo electrónico con el contenido proporcionado.
+    * @param string $email La dirección de correo electrónico a la que se enviará el correo.
+    * @param string $cuerpo El contenido del correo electrónico.
+    */
     function enviar($email, $cuerpo) {
         $c_envio = new mails;
         $c_envio->enviar_correo_pedidos($email, $cuerpo);

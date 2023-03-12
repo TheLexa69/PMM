@@ -10,10 +10,10 @@ use \clases\FuncionesLogin as funcionesLogin;
 use \clases\FuncionesUsuario as funcionesUsuario;
 
 $formularios = new formulariosUsuario;
-$consulta = new consultasUsuario($_SESSION['rolUsusario'][0]);
+$consulta = new consultasUsuario;
 $funciones = new funcionesLogin;
 $funcionesU = new funcionesUsuario;
- 
+
 $id = $_SESSION["usuario"];
 
 if (!empty($_POST['orden'])) {

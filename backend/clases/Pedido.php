@@ -215,7 +215,6 @@ class Pedido extends Conexion {
     }
 
     /**
-
     * Envía el correo electrónico con el contenido proporcionado.
     * @param string $email La dirección de correo electrónico a la que se enviará el correo.
     * @param string $cuerpo El contenido del correo electrónico.

@@ -3,10 +3,20 @@
     <xs:element name="configuracion">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="host" type="xs:string"/>
-                <xs:element name="bd" type="xs:string"/>
-                <xs:element name="usuario" type="xs:string"/>
-                <xs:element name="clave" type="xs:string"/>
+                <xs:element name="usuario" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="host" type="xs:string"/>
+                            <xs:element name="bd" type="xs:string"/>
+                            <xs:element name="nombre" type="xs:string"/>
+                            <xs:element name="clave" type="xs:string"/>
+                            <xs:element name="rol" type="xs:string"/>
+                     </xs:sequence>
+                  
+                    </xs:complexType>
+              
+                </xs:element>
+
             </xs:sequence>
         </xs:complexType>
     </xs:element>

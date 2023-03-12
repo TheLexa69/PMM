@@ -1,6 +1,7 @@
 <?php
 require   dirname(dirname(__DIR__)).DIRECTORY_SEPARATOR."backend".DIRECTORY_SEPARATOR."sesiones".DIRECTORY_SEPARATOR."sesiones.php";
  sesionAdministrador();
+ 
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
 
  
@@ -9,7 +10,7 @@ use \clases\FormulariosAdministrador as formulariosAdministrador;
 use \clases\ConsultasAdministrador as consultasAdministrador;
 
 $formularios = new formulariosAdministrador;
-$consulta = new consultasAdministrador;
+$consulta = new consultasAdministrador($_SESSION['administrador'][1]);
 
 $cantidadResultados = 15;
 $paginaActual = isset($_GET["pagina"]) ? (int) $_GET["pagina"] : 1;

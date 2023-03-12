@@ -17,8 +17,8 @@ class Pedido extends Conexion {
     private $tabla_productos;
     private $tabla_factura;
 
-    public function __construct($rol = 5) {
-        parent::__construct($rol);
+    public function __construct() {
+        parent::__construct();
         $this->tabla_pedidos = 'pedidos';
         $this->tabla_productos = 'ped_prod';
         $this->tabla_factura = 'factura';

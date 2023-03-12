@@ -4,7 +4,7 @@
 
     <div class="datos_footer">
         <div class="footer_img">
-            <img <img src="http://drive.google.com/uc?export=view&id=1rpkYNh2TKDNhgcrXpAuyVCwUUCR-BFMq" alt="logo">
+            <img src="http://drive.google.com/uc?export=view&id=1rpkYNh2TKDNhgcrXpAuyVCwUUCR-BFMq" alt="logo">
         </div>
         <div class="footer_grid">
             <div class="table_grid">

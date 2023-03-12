@@ -80,6 +80,7 @@ class Pedido extends Conexion {
      * Método para obtener todos los pedidos de un usuario
      *
      * @param int $id_usuario ID del usuario del que se quieren obtener los pedidos
+     * @param string $orden ASC/DESC
      * 
      * @return array Array con todos los pedidos del usuario
      */
@@ -91,7 +92,7 @@ class Pedido extends Conexion {
             $stmt->bindParam(":orden", $orden, PDO::PARAM_STR);
         }
         $stmt->bindParam(":id_usuario", $id_usuario, PDO::PARAM_INT);
-
+        
         $stmt->execute();
         $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($pedidos as &$pedido) {
@@ -106,8 +107,8 @@ class Pedido extends Conexion {
     }
 
   /**
-     * Método para obtener todos los pedidos (de todos los usuarios)
-     *
+     * Método para obtener todos los pedidos (de todos los usuarios) NO SE USA ES GENERAL
+     * @param int $id_usuario ID del usuario para controlar que sea admin
      * @return array Array con todos los pedidos de todos los usuarios
      */
     public function obtenerPedidosAdmin($id_usuario) {

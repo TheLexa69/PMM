@@ -14,8 +14,8 @@ class Carrito extends Conexion {
 
     private $table = 'carrito';
 
-    public function __construct() {
-        parent::__construct();
+    public function __construct($rol=5) {
+        parent::__construct($rol);
     }
 
     public function __destruct() {

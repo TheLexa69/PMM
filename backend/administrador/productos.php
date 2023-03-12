@@ -8,7 +8,7 @@ use \clases\FormulariosAdministrador as formulariosAdministrador;
 use \clases\ConsultasAdministrador as consultasAdministrador;
 
 $formularios = new formulariosAdministrador;
-$consulta = new consultasAdministrador($_SESSION['administrador'][1]);
+$consulta = new consultasAdministrador;
 
 if (isset($_GET["todos"])) {
     $cantidadResultados = $_GET["todos"];

@@ -13,8 +13,8 @@ use \clases\FiltroDatos as filtrado;
 $filtro = new filtrado;
 $formularios = new formulariosLogin;
 $funciones = new funcionesLogin;
-$consulta = new consultasLogin(4);
-$consultaAdministrador = new consultasAdministrador(4);
+$consulta = new consultasLogin;
+$consultaAdministrador = new consultasAdministrador;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_POST = $filtro->validarPost($_POST);

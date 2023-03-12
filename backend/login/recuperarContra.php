@@ -14,9 +14,9 @@ use \clases\FiltroDatos as filtrado;
 $filtro = new filtrado;
 $formularios = new formulariosLogin;
 $funciones = new funcionesLogin;
-$consulta = new consultasLogin(4);
+$consulta = new consultasLogin;
 $envioMail = new mailLogin;
-$consultaTrabajador = new consultasAdministrador(4);
+$consultaTrabajador = new consultasAdministrador;
 
 if (isset($_POST['mailr'])) {
     $_POST = $filtro->validarPost($_POST);

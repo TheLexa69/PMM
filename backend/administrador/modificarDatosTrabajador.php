@@ -1,7 +1,7 @@
 <?php
 
 require dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "sesiones" . DIRECTORY_SEPARATOR . "sesiones.php";
-sesionAdministrador(); 
+sesionAdministrador();
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
 
 use \clases\FormulariosAdministrador as formulariosAdministrador;
@@ -12,7 +12,7 @@ use \clases\FuncionesLogin as funciones;
 $funciones = new funciones;
 $filtro = new filtrado;
 $formularios = new formulariosAdministrador;
-$consulta = new consultasAdministrador($_SESSION['administrador'][1]);
+$consulta = new consultasAdministrador;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET["codigo"])) {
 

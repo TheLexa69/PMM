@@ -1,9 +1,7 @@
 <?php
-
 session_start();
 require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "nav.php"); 
 use clases\Carrito as carrito;
-
 $carrito = new carrito();
 $rol = isset($_SESSION['id_rol']) ? $_SESSION['id_rol'] : null;
 $win_loc = "../login/indexLogin.php";
@@ -29,23 +27,23 @@ $win_loc = "../login/indexLogin.php";
 		xhr.send('id_comida=' + id_comida + '&cantidad=' + cantidad);
 	}
 
-    document.addEventListener("DOMContentLoaded", function (event) {
-        // Obtener el botón de realizar compra
-        const miEnlace = document.getElementById("log");
+	document.addEventListener("DOMContentLoaded", function(event) {
+	// Obtener el botón de realizar compra
+	const miEnlace = document.getElementById("log");
 
-        // Añadir un evento de clic al botón
-        miEnlace.addEventListener("click", function () {
-            // Comprobar si el usuario ha iniciado sesión
-            if (!usuarioIniciado()) {
-                // Mostrar un alerta y redirigir a la página de inicio de sesión
+		// Añadir un evento de clic al botón
+		miEnlace.addEventListener("click", function() {
+		// Comprobar si el usuario ha iniciado sesión
+		if (!usuarioIniciado()) {
+			// Mostrar un alerta y redirigir a la página de inicio de sesión
 
-                window.location.href = "../login/indexLogin.php";
+			window.location.href = "../login/indexLogin.php";
 
-                confirm("Tienes que iniciar sesión");
-                window.location.href = "../login/indexLogin.php?redirigido=si";
+			confirm("Tienes que iniciar sesión");
+			window.location.href = "../login/indexLogin.php?redirigido=si";
 
-            }
-        });
+		} 
+		});
 
 		/**
 		*
@@ -57,19 +55,19 @@ $win_loc = "../login/indexLogin.php";
 			// Obtener todas las cookies del sitio
 			var cookies = document.cookie.split(";");
 
-            // Buscar la cookie de sesión específica
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = cookies[i].trim();
-                if (cookie.indexOf("carrito=") == 0) {
-                    // La cookie de sesión específica existe
-                    return false;
-                }
-            }
+			// Buscar la cookie de sesión específica
+			for (var i = 0; i < cookies.length; i++) {
+			var cookie = cookies[i].trim();
+			if (cookie.indexOf("carrito=") == 0) {
+				// La cookie de sesión específica existe
+				return false;
+			}
+			}
 
-            // Si no, el usuario no ha iniciado sesión
-            return true;
-        }
-    });
+			// Si no, el usuario no ha iniciado sesión
+			return true;
+		}
+});
 
 </script>
 <?php
@@ -90,37 +88,39 @@ if (isset($_SESSION['usuario'])) {
 			}
 		}
         }
-    }
-
-    if (empty($_SESSION["carrito"])) {
-        echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-center">No tienes productos en tu cesta todavía.</h2></div>';
-    } else {
-        foreach ($_SESSION['carrito'] as $comida => $cant) {
-            $id_comida = $comida;
-            $cantidad = (int) $cant;
-            print ($carrito->printCarroSes($id_comida, $cantidad));
-        }
-        $precio_total = $carrito->getTotalPrice($_SESSION['carrito']);
-        echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-end">Total: ' . $precio_total . '</h2>';
-        echo '<div class="col-2 d-flex justify-content-right"><a href="realizar_pedido.php"><button type="button" class="btn btn-outline-success">Finalizar compra</button></a></div></div>';
-    }
-} else {
+	
+	if(empty($_SESSION["carrito"])) {
+		echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-center">No tienes productos en tu cesta todavía.</h2></div>';
+	} else {
+		foreach($_SESSION['carrito'] as $comida => $cant) {
+			$id_comida = $comida;
+			$cantidad = (int) $cant;
+			print ($carrito->printCarroSes($id_comida, $cantidad));
+		}
+		$precio_total = $carrito->getTotalPrice($_SESSION['carrito']);
+		echo  '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-end">Total: '. $precio_total .'</h2>';
+		echo '<div class="col-2 d-flex justify-content-right"><a href="realizar_pedido.php"><button type="button" class="btn btn-outline-success">Finalizar compra</button></a></div></div>';
+	}
+	
+	
+		
+} else { 
     if (isset($_COOKIE['carrito'])) {
-        if (empty(unserialize($_COOKIE['carrito']))) {
-            echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-center">No tienes productos en tu cesta todavía.</h2></div>';
-        } else {
-            foreach (unserialize($_COOKIE['carrito'], []) as $comida => $cant) {
-                $id_comida = $comida;
-                $cantidad = (int) $cant;
-                echo ($carrito->printCarroSes($id_comida, $cantidad));
-            }
-            $precio_total = $carrito->getTotalPrice(unserialize($_COOKIE['carrito'], ["allowed_classes" => false]));
-            echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-end">Total: ' . $precio_total . '</h2>';
-            echo '<div class="col-2 d-flex justify-content-right"><a href="#"><button id="log" type="button" class="btn btn-outline-success">Finalizar compra</button></a></div></div>';
-        }
-    } else {
-        echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-center">No tienes productos en tu cesta todavía.</h2></div>';
+		if (empty(unserialize($_COOKIE['carrito']))) {
+			echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-center">No tienes productos en tu cesta todavía.</h2></div>';
+		} else {
+			foreach(unserialize($_COOKIE['carrito'], []) as $comida => $cant) {
+				$id_comida = $comida;
+				$cantidad = (int) $cant;
+				echo ($carrito->printCarroSes($id_comida, $cantidad));
+			}
+			$precio_total = $carrito->getTotalPrice(unserialize($_COOKIE['carrito'], ["allowed_classes" => false]));
+			echo  '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-end">Total: '. $precio_total .'</h2>';
+		echo '<div class="col-2 d-flex justify-content-right"><a href="#"><button id="log" type="button" class="btn btn-outline-success">Finalizar compra</button></a></div></div>';
+	}
+	} else {
+		echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-center">No tienes productos en tu cesta todavía.</h2></div>';
     }
 }
-require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");
+require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "footer.php"); 
 ?>

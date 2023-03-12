@@ -13,8 +13,8 @@ use \clases\FiltroDatos as filtrado;
 $filtro = new filtrado;
 $formularios = new formulariosLogin;
 $funciones = new funcionesLogin;
-$consulta = new consultasLogin();
-$consultaTrabajador = new consultasAdministrador();
+$consulta = new consultasLogin;
+$consultaTrabajador = new consultasAdministrador;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -75,15 +75,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         $id_usuario = $datos["id_usuario"];
                                         $rol = $datos ["id_rol"];
                                         $fecha = $funciones->fechaHoraActual();
-                                        $consulta2 = new consultasLogin($rol);
-                                        $consulta2->registroHoraSession($id_usuario, $fecha);
-                                        
+                                        $consulta->registroHoraSession($id_usuario, $fecha);
+
                                         // session_start();
                                         // $usu tiene campos correo y codRes, correo 
                                         //$_SESSION['rol'] = $datos["id_rol"];
                                         $_SESSION['mail'] = $datos['correo'];
                                         $_SESSION['usuario'] = $id_usuario; //array de dos elementos
-                                        $_SESSION['rolUsusario'] =$rol;
                                         // $_SESSION['carrito'] = [];
                                         if (isset($_GET['redirigido'])) {
                                             header("Location: /proyecto/backend/cart/index_carrito.php");
@@ -116,13 +114,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         $id_trabajador = $datosTrabajador["id_trabajador"];
                                         $roltrabajador = $datosTrabajador["id_rol"];
                                         $fecha = $funciones->fechaHoraActual();
-                                        $consultaTrabajador2 = new consultasAdministrador($roltrabajador);
-                                        $consultaTrabajador2->registroHoraSessionTrabajador($id_trabajador, $fecha);
+                                        $consultaTrabajador->registroHoraSessionTrabajador($id_trabajador, $fecha);
 
                                         //   session_start();
                                         // $usu tiene campos correo y codRes, correo 
                                         $_SESSION['administrador'] = array($id_trabajador, $roltrabajador); //array de dos elementos
-                                        
+
                                         header("Location: /proyecto/index.php");
                                     } catch (PDOException $e) {
                                         die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());

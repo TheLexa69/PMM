@@ -14,20 +14,14 @@ class Carrito extends Conexion {
 
     private $table = 'carrito';
 
-    public function __construct() {
-        parent::__construct();
+    public function __construct($rol = 5) {
+        parent::__construct($rol);
     }
 
     public function __destruct() {
         $this->conexion = null;
     }
 
-    /**
-     * Devuelve la cantidad de cada producto en el carrito del usuario con sesión iniciada
-     *
-     * @param int $id_usuario El ID del usuario
-     * @return mixed Un array con la cantidad de cada producto en el carrito del usuario, o false si hay un error
-     */
     public function getCarro($id_usuario) {
         /* saca todas las filas de la cesta del usuario con el que tenemos sesión */
         $stmt = $this->conexion->prepare("SELECT comida_cantidad FROM $this->table WHERE id_usuario = :id_usuario AND id_ped IS NULL");
@@ -35,21 +29,33 @@ class Carrito extends Conexion {
         $stmt->execute();
         return $stmt->fetch();
     }
-    
-    /**
-     * Devuelve el HTML para mostrar un producto en el carrito con su imagen, nombre, precio y cantidad
-     *
-     * @param int $id_comida El ID del producto
-     * @param int $cantidad La cantidad del producto
-     * @return string El HTML para mostrar el producto en el carrito
-     */
+
+    /* Saca cada producto que tiene en la cesta con esos campos, parecido al de arriba */
+    /* Sin utilidad, anteriormente para mostrar cada fila x producto, base de datos cambiada */
+    /* public function printCarro($id_usuario) {
+      $rows = "";
+      $stmt = $this->conexion->prepare("SELECT c.id_comida, p.img, p.nombre, precio, c.id_usuario, c.cantidad
+      FROM carta_comida p
+      INNER JOIN $this->table c ON p.id_comida = c.id_comida
+      WHERE c.id_usuario = :id_usuario");
+      $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+      $stmt->execute();
+      $result = $stmt->fetchAll();
+      foreach ($result as $row) {
+      $rows .= 'id comida:' .$row['id_comida']. 'Imagen: ' . $row['img'] . ', Nombre: ' . $row['nombre'] . ', Precio: ' . $row['precio'] . ', ID usuario: ' . $row['id_usuario'] . ', cantidad: ' . $row['cantidad'] . '<br>';
+      }
+      return $rows;
+      //Código para visualizar el carro
+      } */
+
     public function printCarroSes($id_comida, $cantidad) {
         $stmt = $this->conexion->prepare("SELECT id_comida, img, nombre, precio
                                             FROM carta_comida WHERE id_comida = :id_comida");
         $stmt->bindParam(':id_comida', $id_comida, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetch();
-        
+        //$row = 'id comida:' .$result['id_comida']. 'Imagen: ' . $result['img'] . ', Nombre: ' . $result['nombre'] . ', Precio: ' . $result['precio'] . ', cantidad: ' . $cantidad . '<br>';
+        //return $row;
         //Código para visualizar el carro
         $url = DIRECTORY_SEPARATOR . 'proyecto' . DIRECTORY_SEPARATOR . 'backend' . DIRECTORY_SEPARATOR . 'cart' . DIRECTORY_SEPARATOR . 'eliminar_carrito.php?cod=' . $result['id_comida'];
         $html_code = "<div class=\"layered box row mr-2\" id=\"producto\">
@@ -79,14 +85,6 @@ class Carrito extends Conexion {
         return $html_code;
     }
 
-    /**
-    *
-    * @param int $id_comida El id de la comida que se desea agregar al carrito
-    * @param int $cantidad La cantidad de la comida que se desea agregar al carrito
-    *
-    * @return string El fragmento de HTML generado para mostrar la información
-    * de la comida en el carrito de compras
-    */
     function printCarritoCarta($id_comida, $cantidad) {
         $stmt = $this->conexion->prepare("SELECT id_comida, nombre, precio
                                         FROM carta_comida WHERE id_comida = :id_comida");
@@ -115,19 +113,10 @@ class Carrito extends Conexion {
             </div>';
 
         return $html_code;
-
     }
-    
-    /**
-    *
-    * Añadir productos al carrito del usuario en la base de datos.
-    *
-    * @param int $id_usuario El ID del usuario al que se va a añadir productos al carrito.
-    *
-    * @param array $carrito El array que contiene los detalles de los productos que se van a añadir.
-    *
-    * @return bool Devuelve true si se ha añadido correctamente el producto al carrito, de lo contrario devuelve false.
-    */
+
+    /* Añadir productos al carro */
+
     public function add($id_usuario, $carrito) {
         $comida_cantidad = serialize($carrito);
         try {
@@ -154,15 +143,16 @@ class Carrito extends Conexion {
             return false;
         }
     }
-    
-    /**
-    *
-    * Calcula el precio total de los productos en el carrito
-    *
-    * @param array $carrito Array de productos en el carrito con su cantidad correspondiente
-    *
-    * @return string Precio total con formato de moneda (€)
-    */
+
+    /* public function getTotalPrice($id_usuario) {
+      $query = "select sum(precio) from carta_comida p, $this->table c, usuario u where (c.id_usuario = :id_usuario) and (p.id_comida = c.id_comida)";
+      $stmt = $this->conexion->prepare($query);
+      $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_STR);
+      $stmt->execute();
+      return $stmt->fetch();
+      //guardar en variable y return en html
+      } */
+
     public function getTotalPrice($carrito) {
         $precio = 0;
         // Obtener todos los productos en el carrito
@@ -178,13 +168,7 @@ class Carrito extends Conexion {
 
         return number_format($precio, 2) . "€";
     }
-    
-    /**
-    *
-    * Busca el ID de un usuario por su dirección de correo electrónico
-    * @param string $email Dirección de correo electrónico del usuario
-    * @return array|false Devuelve un array con el ID de usuario si existe, o false si no existe
-    */
+
     function searchId($email) {
         $query = "SELECT id_usuario FROM usuario WHERE correo = :email";
         $stmt = $this->conexion->prepare($query);
@@ -193,12 +177,6 @@ class Carrito extends Conexion {
         return $stmt->fetch();
     }
 
-    /**
-    *
-    * Busca el rol de un usuario por su ID de usuario
-    * @param int $id_usuario ID de usuario
-    * @return array|false Devuelve un array con el ID de rol del usuario si existe, o false si no existe
-    */
     function searchRol($id_usuario) {
         $query = "SELECT id_rol FROM usuario WHERE id_usuario = :id_usuario";
         $stmt = $this->conexion->prepare($query);

@@ -93,25 +93,6 @@ if (isset($_POST['dato'])) {
                 <h2>Alergenos</h2>
                 <hr>
             </div>
-            <div class="text-center">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/2.svg" alt="2">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/3.svg" alt="3">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/4.svg" alt="4">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/5.svg" alt="5">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/6.svg" alt="6">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/7.svg" alt="7">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/8.svg" alt="8">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/9.svg" alt="9">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/10.svg" alt="10">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/11.svg" alt="11">
-                <img class="img-select" width="100px" height="auto" src="../../frontend/img/12.svg" alt="12">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/13.svg" alt="13">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/14.svg" alt="14">
-                <img class="img-select" width="80px" height="auto" src="../../frontend/img/15.svg" alt="15">
-            </div>
-            <div class="text-center mt-3">
-                <h2>Filtros</h2>
-
             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
                 <div class="text-center">
                     <label class="checkeable">
@@ -192,7 +173,7 @@ if (isset($_POST['dato'])) {
                 <div id="contenedorAlergenos">
                 </div>
                 <div class="d-flex justify-content-center pb-3" id="reset">
-                    <input class="btn btn-outline-dark" type="submit" value="Filtrar" >
+                    <input class="btn btn-outline-dark" type="submit" value="Filtrar" ">
                 </div>
             </form>
         </div>
@@ -202,7 +183,6 @@ if (isset($_POST['dato'])) {
                 <div class="mt-3 mb-3">
                     <h2 class="d-flex justify-content-center">Cesta</h2>
                 </div>
-
                 <hr>
                 <div class="row">
                     <div class="col">

@@ -83,19 +83,29 @@ class Pedido extends Conexion {
      * 
      * @return array Array con todos los pedidos del usuario
      */
-    public function obtenerPedidos($id_usuario) {
-        $stmt = $this->conexion->prepare("SELECT * FROM $this->tabla_pedidos WHERE id_usuario = ? ORDER BY fecha DESC");
-        $stmt->execute([$id_usuario]);
+    public function obtenerPedidos($id_usuario, $orden) {
+        if (!empty($orden)) {
+            $stmt = $this->conexion->prepare("SELECT id_ped, fecha FROM $this->tabla_pedidos WHERE id_usuario = :id_usuario ORDER BY fecha DESC");
+        } else {
+            $stmt = $this->conexion->prepare("SELECT id_ped, fecha, restaurante FROM $this->tabla_pedidos WHERE id_usuario = :id_usuario ORDER BY fecha :orden");
+            $stmt->bindParam(":orden", $orden, PDO::PARAM_STR);
+        }
+        $stmt->bindParam(":id_usuario", $id_usuario, PDO::PARAM_INT);
+
+        $stmt->execute();
         $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($pedidos as &$pedido) {
-            $stmt = $this->conexion->prepare("SELECT $this->tabla_productos.nombre, pedidos_productos.cantidad, pedidos_productos.precio FROM pedidos_productos INNER JOIN $this->tabla_productos ON pedidos_productos.id_producto = $this->tabla_productos.id WHERE pedidos_productos.id_pedido = ?");
-            $stmt->execute([$pedido['id']]);
+            $stmt = $this->conexion->prepare("SELECT cc.nombre, pp.cantidad, pp.precio FROM ped_prod AS pp INNER JOIN carta_comida AS cc  ON pp.id_prod = cc.id_comida WHERE pp.id_ped = ?");
+            $stmt->execute([$pedido['id_ped']]);
             $pedido['productos'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt = $this->conexion->prepare("SELECT total FROM factura WHERE id_ped = ?");
+            $stmt->execute([$pedido['id_ped']]);
+            $pedido['total'] = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
         }
         return $pedidos;
     }
 
-    /**
+  /**
      * Método para obtener todos los pedidos (de todos los usuarios)
      *
      * @return array Array con todos los pedidos de todos los usuarios
@@ -111,7 +121,6 @@ class Pedido extends Conexion {
         }
         return $pedidos;
     }
-    
     /**
      * Método para obtener un pedido en particular
      *

@@ -16,19 +16,23 @@ if (isset($_SESSION['usuario'])) {
     // Si hay un carrito en la sesión actual, lo guarda en una variable
     if (isset($_SESSION['carrito'])) {
         $array_carrito = $_SESSION['carrito'];
-    } elseif (isset($_COOKIE['carrito']) && !empty($_COOKIE['carrito'])) {
+
+    // Si no hay un carrito en la sesión actual, pero hay uno en una cookie, lo guarda en una variable
+    }elseif (isset($_COOKIE['carrito']) && !empty($_COOKIE['carrito'])) {
         $array_carrito = $_SESSION['carrito'] = unserialize($_COOKIE['carrito'], ["allowed_classes" => false]);
 
     // Si no hay un carrito en la sesión actual ni en una cookie, pero hay uno en la base de datos, lo recupera y lo guarda en una variable
     } elseif (!isset($_SESSION['carrito'])) {
-        $carrito_guardado = $carrito->getCarro($usuario);
+        $carrito_guardado = $carrito->getCarro($usuario); 
         if ($carrito_guardado) {
             $array_carrito = unserialize($carrito_guardado['comida_cantidad'], ["allowed_classes" => false]);
             $_SESSION['carrito'] = $array_carrito;
         } else {
             $array_carrito = [];
         }
-    }
+    } 
+
+// Si no hay un usuario autenticado en la sesión actual, pero hay un carrito en una cookie, lo guarda en una variable
 } elseif (isset($_COOKIE['carrito'])) {
     $array_carrito = unserialize($_COOKIE['carrito'], ["allowed_classes" => false]);
 

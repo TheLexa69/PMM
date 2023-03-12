@@ -1,4 +1,6 @@
-<?php require (dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php"); ?>
+<?php
+session_start();
+ require (dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php"); ?>
 
 <div class="container bg-light rounded mt-5 w-60 p-3">
     <div class="text-center mb-5">

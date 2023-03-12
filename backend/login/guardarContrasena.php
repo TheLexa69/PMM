@@ -22,27 +22,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail = $_POST["mail"];
     }
 
-
-
     if ($_POST["pass"] == $_POST["pass2"]) {
         $contranueva = $_POST["pass"];
         $contra = password_hash($contranueva, PASSWORD_DEFAULT);
         $rol = $_POST["rol"];
         try {
-
-
             if ($rol == 4) {
                 $stmt = $consulta->nuevaContraseña($mail, $contra);
             } else {
                 $stmt = $consultaAdministrador->nuevaContraseñaTrabajador($mail, $contra);
             }
 
-
             if ($stmt->rowCount() > 0) {
                 unset($conexion);
                 unset($stmt);
                 header("Location:/proyecto/backend/login/indexLogin.php");
-                //  echo "falla la ruta XD";
             }
 
             unset($conexion);

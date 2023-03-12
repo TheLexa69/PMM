@@ -12,7 +12,7 @@ use \clases\FiltroDatos as filtrado;
 
 $filtro = new filtrado;
 $formularios = new formulariosUsuario;
-$consulta = new consultasUsuario;
+$consulta = new consultasUsuario($_SESSION['rolUsusario'][0]);
 $funciones = new funcionesLogin;
 $funcionesU = new funcionesUsuario;
 $id = $_SESSION["usuario"];

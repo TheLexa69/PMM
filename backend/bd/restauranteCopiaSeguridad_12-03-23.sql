@@ -121,7 +121,7 @@ id_factura int auto_increment,
 id_usuario int not null,
 cif_empresa varchar(10) not null,
 fecha TIMESTAMP not null,
-total int not null,
+total float not null,
 modo_pago int not null,
 id_ped int not null,
 
@@ -159,7 +159,7 @@ CREATE TABLE if not exists ped_prod (
   id_ped int NOT NULL,
   id_prod int NOT NULL,
   cantidad int NOT NULL,
-  precio int NOT NULL,
+  precio float NOT NULL,
   constraint pk_id_ped_prod primary key (id_ped_prod)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

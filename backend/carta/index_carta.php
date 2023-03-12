@@ -7,12 +7,20 @@ use \clases\Carrito as carrito;
 $carta = new carta();
 $carrito = new carrito();
 
+// Comprueba si hay un usuario autenticado en la sesión actual y si existe un carrito en la sesión o en una cookie
 if (isset($_SESSION['usuario'])) {
+    // Si hay un usuario autenticado en la sesión actual, lo guarda en una variable
     $usuario = $_SESSION['usuario'];
+
+    // Si hay un carrito en la sesión actual, lo guarda en una variable
     if (isset($_SESSION['carrito'])) {
         $array_carrito = $_SESSION['carrito'];
+
+    // Si no hay un carrito en la sesión actual, pero hay uno en una cookie, lo guarda en una variable
     }elseif (isset($_COOKIE['carrito']) && !empty($_COOKIE['carrito'])) {
         $array_carrito = $_SESSION['carrito'] = unserialize($_COOKIE['carrito'], ["allowed_classes" => false]);
+
+    // Si no hay un carrito en la sesión actual ni en una cookie, pero hay uno en la base de datos, lo recupera y lo guarda en una variable
     } elseif (!isset($_SESSION['carrito'])) {
         $carrito_guardado = $carrito->getCarro($usuario); 
         if ($carrito_guardado) {
@@ -22,12 +30,17 @@ if (isset($_SESSION['usuario'])) {
             $array_carrito = [];
         }
     } 
+
+// Si no hay un usuario autenticado en la sesión actual, pero hay un carrito en una cookie, lo guarda en una variable
 } elseif (isset($_COOKIE['carrito'])) {
     $array_carrito = unserialize($_COOKIE['carrito'], ["allowed_classes" => false]);
+
+// Si no hay un usuario autenticado ni un carrito en una cookie, guarda un array vacío en una variable
 } else {
     $array_carrito = [];
 }
 
+// Si se recibe un valor en el parámetro POST llamado "dato", filtra la lista de artículos en la carta por alérgenos
 if (isset($_POST['dato'])) {
     $consultaAlergenos = $carta->filterByAlergeno($_POST['dato']);
     if (isset($_GET["tipo"])) {
@@ -36,21 +49,33 @@ if (isset($_POST['dato'])) {
     } else {
         $url = "";
     }
+
+// Si se recibe un valor en el parámetro GET llamado "tipo", filtra la lista de artículos en la carta por tipo
 } else if (isset($_GET["tipo"])) {
     $tipo = $_GET["tipo"];
     $rdo = $carta->filterByTipo($tipo);
     $url = "&tipo=$tipo";
+
+// Si no se recibe ningún valor en los parámetros POST o GET, muestra la lista completa de artículos en la carta
 } else {
     $rdo = $carta->printCarta();
     $url = "";
 }
 ?>
 <script>
+
+    /**
+	*
+	* Actualiza la cantidad de un producto en el carrito a través de una petición AJAX
+	* @param {number} id_comida - El ID del producto a actualizar
+	* @param {number} cantidad - La nueva cantidad del producto
+	* @return {void}
+	*/
     function updateCantidad(id_comida, cantidad) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '../cart/actualizar_carrito.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function () {
+        xhr.onreadystatechange =  () => {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 // Actualizar la página para reflejar los cambios
                 window.location.reload();

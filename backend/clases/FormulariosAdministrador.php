@@ -191,6 +191,7 @@ class FormulariosAdministrador {
             echo "<script> alert('" . $_GET["mensaje"] . "'); </script>";
         }
         ?> 
+<div class='container bg-light rounded  p-3'>
         <div class="d-flex justify-content-center mt-3">
             <table class="text-center">
                 <tr>
@@ -449,9 +450,7 @@ class FormulariosAdministrador {
                     </div>
                 </form>
             </div>
-            <div class='d-flex justify-content-center'>
-                <h1>Lista de Productos registrados:</h1>
-            </div>
+        
         </div>
         <?php
     }
@@ -464,8 +463,11 @@ class FormulariosAdministrador {
         if (isset($_GET["mensaje"])) {
             echo "<script> alert('" . $_GET["mensaje"] . "'); </script>";
         }
-        ?>
-        <hr>
+        ?>    <div class='d-flex justify-content-center'>
+                <h1>Lista de Productos registrados:</h1>
+            </div>
+        
+            <div class="container bg-light rounded p-3">
         <div class="d-flex justify-content-center mt-4">
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                 <table class="text-center">
@@ -494,6 +496,7 @@ class FormulariosAdministrador {
                 <input type='button' value='Volver a inicio' class="btn btn-outline-warning">
             </a>
         </div>
+           
         <?php
     }
 

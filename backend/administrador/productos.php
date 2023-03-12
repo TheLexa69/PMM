@@ -60,7 +60,7 @@ $contador = $consulta->productosActivos();
 $total = ceil($contador / $cantidadResultados);
 
 
-echo '<div class="paginado" style="text-align:center">';
+echo '<div class="paginado" bg-light style="text-align:center">';
 for ($i = 1; $i <= $total; $i++) {
     echo "<a href='productos.php?pagina=" . $i . "' > " . $i . "</a>";
 }

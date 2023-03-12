@@ -14,8 +14,8 @@ class Carta extends Conexion {
 
     private $table = 'carta_comida';
 
-    public function __construct() {
-            parent::__construct();
+    public function __construct($rol=5) {
+            parent::__construct($rol);
         
     }
 

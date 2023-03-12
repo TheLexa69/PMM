@@ -23,8 +23,37 @@ body {
     background-attachment: fixed;
 }
 
+/*----------------- CARTA -----------------*/
+.bg-light.rounded.mt-2 {
+    height: 500px;
+    overflow: auto;
+}
+
+/* Estilo del scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Fondo del scrollbar */
+::-webkit-scrollbar-track {
+    background-color: #f5f5f5;
+}
+
+/* Estilo de la barra del scrollbar */
+::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    border-radius: 20px;
+}
+
+/* Hover del scrollbar */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+/*--------------------------------------*/
+
 .layered.box {
     min-width: 400px;
+    height: 50vh;
     padding: 20px;
     background-color: white;
     box-shadow:
@@ -35,11 +64,21 @@ body {
         0 16px 16px hsl(0deg 0% 0% / 0.075);
     border-radius: 6px;
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     margin: 10px 1em;
     align-items: center;
     flex: 0 1 20%;
 }
 
+#botonCompra{
+    margin: 0 auto;
+    display: block;
+}
+
+#totalFixed {
+    margin-top: 2vh;
+}
 
 /*PIE DE PAGINA PEGADO ABAJO*/
 footer {
@@ -110,4 +149,10 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+@media (max-width: 768px) {
+    .layered.box {
+        height: 30vh; /* altura del 30% del viewport height */
+    }
 }

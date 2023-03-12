@@ -13,13 +13,13 @@ use \clases\FiltroDatos as filtrado;
 $filtro = new filtrado;
 $formularios = new formulariosLogin;
 $funciones = new funcionesLogin;
-$consulta = new consultasLogin;
+$consulta = new consultasLogin(4);
 $envioMail = new mailLogin;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
+    
     $_POST = $filtro->validarPost($_POST);
-
+ 
     $nombre = $filtro->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]", $_POST['nombre']);
     $apellido1 = $filtro->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]", $_POST['apellido1']);
     $apellido2 = ($_POST['apellido2']) ? $filtro->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]", $_POST['apellido2']) : null;
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nif = null;
     $direccion = null;
     $cp = null;
-    $rol = 4;
+    $rol =4;
     $fecha = $funciones->fechaHoraActual();
 
     $campos = array("nombre" => $nombre, "apellido1" => $apellido1, "telefono" => $telefono, "email" => $mail); //mail base de datos y contraseña

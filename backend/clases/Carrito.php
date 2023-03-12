@@ -1,30 +1,23 @@
 <?php
+
 namespace clases;
+
 /**
  * Description of carrito
  *
  * @author Nuria
  */
-
-
 use \PDO;
 use \PDOException;
 
-
-//namespace clases_carrito;
 class Carrito extends Conexion {
-    
+
     private $table = 'carrito';
 
     public function __construct() {
-                // Conexión a la base de datos
-              //  $this->pdo = conexion();
-            //} catch(PDOException $e) {
-            //    die("Error de conexión: " . $e->getMessage());
-            //}
-            parent::__construct();
-        
+        parent::__construct();
     }
+
     public function __destruct() {
         $this->conexion = null;
     }
@@ -36,6 +29,7 @@ class Carrito extends Conexion {
      * @return mixed Un array con la cantidad de cada producto en el carrito del usuario, o false si hay un error
      */
     public function getCarro($id_usuario) {
+        /* saca todas las filas de la cesta del usuario con el que tenemos sesión */
         $stmt = $this->conexion->prepare("SELECT comida_cantidad FROM $this->table WHERE id_usuario = :id_usuario AND id_ped IS NULL");
         $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
         $stmt->execute();
@@ -57,13 +51,13 @@ class Carrito extends Conexion {
         $result = $stmt->fetch();
         
         //Código para visualizar el carro
-        $url = DIRECTORY_SEPARATOR .'proyecto'.DIRECTORY_SEPARATOR .'backend'. DIRECTORY_SEPARATOR . 'cart'. DIRECTORY_SEPARATOR.'eliminar_carrito.php?cod='. $result['id_comida'];
+        $url = DIRECTORY_SEPARATOR . 'proyecto' . DIRECTORY_SEPARATOR . 'backend' . DIRECTORY_SEPARATOR . 'cart' . DIRECTORY_SEPARATOR . 'eliminar_carrito.php?cod=' . $result['id_comida'];
         $html_code = "<div class=\"layered box row mr-2\" id=\"producto\">
                         <div class=\"col-4\">                        
                                 <img class=\"imagenes rounded img-fluid\" id=\"producto_img\" title=\"vaso\" src=\"https://cdn.pixabay.com/photo/2020/12/15/13/44/children-5833685__340.jpg\">
                                 </div>
                         <div class=\"col-4 d-flex ml-2 flex-column\">
-                            <h4 class=\"nombre-producto\">" .  $result['nombre'] . "</h4>
+                            <h4 class=\"nombre-producto\">" . $result['nombre'] . "</h4>
                             <p>Descripción:
                             <a href=\"#\" id=\"info\">
                                 <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" class=\"bi bi-exclamation-circle\" viewBox=\"0 0 16 16\">
@@ -73,8 +67,8 @@ class Carrito extends Conexion {
                             </a>
                             </p>
 
-                            <h5 class=\"precio-producto\"> Precio: ". $result['precio'] ."€</h5>
-                            <form method=\"post\" action=\"". $url  ."\">
+                            <h5 class=\"precio-producto\"> Precio: " . $result['precio'] . "€</h5>
+                            <form method=\"post\" action=\"" . $url . "\">
                             <label for=\"cantidad\">Cantidad:</label>
                             <input type=\"number\" name=\"cantidad\" value=\"" . $cantidad . "\" min=\"1\" max=\"10\" onchange=\"updateCantidad(" . $id_comida . ", this.value)\">
 
@@ -83,8 +77,6 @@ class Carrito extends Conexion {
                 <button class=\"btn-add-cart btn btn-outline-secondary\" id=\"eliminar\" type=\"submit\">Eliminar</button></form></div></div>";
 
         return $html_code;
-
-
     }
 
     /**
@@ -103,14 +95,14 @@ class Carrito extends Conexion {
         $result = $stmt->fetch();
 
         //Código para visualizar el carro
-        $url = DIRECTORY_SEPARATOR .'proyecto'.DIRECTORY_SEPARATOR .'backend'. DIRECTORY_SEPARATOR . 'cart'. DIRECTORY_SEPARATOR.'eliminar_carrito.php?cod='. $result['id_comida'] . '&red=1';
+        $url = DIRECTORY_SEPARATOR . 'proyecto' . DIRECTORY_SEPARATOR . 'backend' . DIRECTORY_SEPARATOR . 'cart' . DIRECTORY_SEPARATOR . 'eliminar_carrito.php?cod=' . $result['id_comida'] . '&red=1';
         $html_code = '<div class="row align-items-center border-bottom pt-2 pb-2">
-                <div class="col-3">'.$result['nombre'].'</div>
-                <div class="col-3">'.$result['precio'].'</div>
+                <div class="col-3">' . $result['nombre'] . '</div>
+                <div class="col-3">' . $result['precio'] . '</div>
                 <div class="col-3">
-                <input type="number" name="cantidad" size="5" value="'. $cantidad . '" min="1" max="10" onchange="updateCantidad(\'' . $id_comida . '\', this.value)"></div>
+                <input type="number" name="cantidad" size="5" value="' . $cantidad . '" min="1" max="10" onchange="updateCantidad(\'' . $id_comida . '\', this.value)"></div>
                 <div class="col-3 d-flex justify-content-center align-items-center">
-                    <a href="'.$url.'">
+                    <a href="' . $url . '">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-trash" viewBox="0 0 16 16">
                             <path
@@ -140,24 +132,24 @@ class Carrito extends Conexion {
         $comida_cantidad = serialize($carrito);
         try {
             // Iniciar transacción
-                $this->conexion->beginTransaction();
+            $this->conexion->beginTransaction();
 
-                if ($this->getCarro($id_usuario)) {
-                    $stmt = $this->conexion->prepare("UPDATE $this->table SET comida_cantidad = :comida_cantidad WHERE id_usuario = :id_usuario AND id_ped IS NULL");
-                    $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
-                    $stmt->bindParam(':comida_cantidad', $comida_cantidad, PDO::PARAM_STR);
-                    $stmt->execute();
-                } else {
-                    $stmt = $this->conexion->prepare("INSERT INTO $this->table (id_usuario, comida_cantidad) VALUES (:id_usuario, :comida_cantidad)");
-                    $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
-                    $stmt->bindParam(':comida_cantidad', $comida_cantidad, PDO::PARAM_STR);
-                    $stmt->execute();
-                }
+            if ($this->getCarro($id_usuario)) {
+                $stmt = $this->conexion->prepare("UPDATE $this->table SET comida_cantidad = :comida_cantidad WHERE id_usuario = :id_usuario AND id_ped IS NULL");
+                $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+                $stmt->bindParam(':comida_cantidad', $comida_cantidad, PDO::PARAM_STR);
+                $stmt->execute();
+            } else {
+                $stmt = $this->conexion->prepare("INSERT INTO $this->table (id_usuario, comida_cantidad) VALUES (:id_usuario, :comida_cantidad)");
+                $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+                $stmt->bindParam(':comida_cantidad', $comida_cantidad, PDO::PARAM_STR);
+                $stmt->execute();
+            }
             // Si la consulta de inserción o actualización se ejecuta correctamente
             // se confirma la transacción, de lo contrario se hace un rollback
             $this->conexion->commit();
             return true;
-        } catch(PDOException $e) {
+        } catch (PDOException $e) {
             $this->conexion->rollBack();
             return false;
         }
@@ -174,17 +166,17 @@ class Carrito extends Conexion {
     public function getTotalPrice($carrito) {
         $precio = 0;
         // Obtener todos los productos en el carrito
-        foreach($carrito as $cod => $cant) {
+        foreach ($carrito as $cod => $cant) {
             $stmt = $this->conexion->prepare("SELECT precio FROM carta_comida WHERE id_comida = ?");
             $stmt->bindParam(1, $cod, PDO::PARAM_INT);
             $stmt->execute();
             $productos = $stmt->fetch();
             if ($productos) {
-                $precio += (double)$productos['precio'] * (double)$cant;
+                $precio += (double) $productos['precio'] * (double) $cant;
             }
         }
-    
-        return number_format($precio,2) . "€";
+
+        return number_format($precio, 2) . "€";
     }
     
     /**
@@ -215,9 +207,4 @@ class Carrito extends Conexion {
         return $stmt->fetch();
     }
 
-
 }
-
-
-
-

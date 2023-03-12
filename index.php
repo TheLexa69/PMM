@@ -16,8 +16,8 @@ session_start();
     </head>
     <body>
         <?php require(__DIR__ . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php"); 
+ 
         ?>
-
         <div id="carouselExampleDark" class="carousel carousel-dark slide">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"

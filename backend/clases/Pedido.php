@@ -1,29 +1,29 @@
 <?php
 
 namespace clases;
+
 /**
  * Description of pedido
  *
  * @author Nuria
  */
 use \clases\Mails as mails;
-
 use \PDO;
 use \PDOException;
 
 class Pedido extends Conexion {
-    
+
     private $tabla_pedidos;
     private $tabla_productos;
     private $tabla_factura;
-    
+
     public function __construct() {
         parent::__construct();
         $this->tabla_pedidos = 'pedidos';
         $this->tabla_productos = 'ped_prod';
         $this->tabla_factura = 'factura';
     }
-    
+
     public function __destruct() {
         $this->conexion = null;
     }
@@ -167,12 +167,12 @@ class Pedido extends Conexion {
             $stmt->bindParam(':id_comida', $id_comida, PDO::PARAM_INT);
             $stmt->execute();
             $result = $stmt->fetch();
-            $array_carrito .=  "<tr><td>" .$result['nombre']. "</td><td>$cantidad</td><td>".$result['precio']."€</td><td> </tr>";
+            $array_carrito .= "<tr><td>" . $result['nombre'] . "</td><td>$cantidad</td><td>" . $result['precio'] . "€</td><td> </tr>";
         }
         $array_carrito .= "<tr><td colspan=3>_________________</td></tr></tr>
                             <tr><td>Precio Total</td><td colspan=2>$precio_total </td> </tr>
                             <tr><td colspan=3>_________________</td></tr>
-                            <tr><td>Especificaciones del cliente: </td><td colspan=2>$especif</td> </tr>"; 
+                            <tr><td>Especificaciones del cliente: </td><td colspan=2>$especif</td> </tr>";
         return $array_carrito;
     }
 
@@ -194,12 +194,12 @@ class Pedido extends Conexion {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $pesoTotal = 0;
         $texto = "<h1>Pedido nº $pedido</h1>";
-        $texto .= "<p><h3>".$result["nombreLocal"]."</h3></p><p><h3>".$result["cif"]."</h3></p><p><h3>".$result["nombre_sociedad"]."</h3></p><p><h3>".$result["direccion"]."</h3></p><p><h3>".$result["ciudad"]."</h3></p><p><h3>".$result["cp"]."</h3></p><p><h3>".$result["fecha"]."</h3></p>";
+        $texto .= "<p><h3>" . $result["nombreLocal"] . "</h3></p><p><h3>" . $result["cif"] . "</h3></p><p><h3>" . $result["nombre_sociedad"] . "</h3></p><p><h3>" . $result["direccion"] . "</h3></p><p><h3>" . $result["ciudad"] . "</h3></p><p><h3>" . $result["cp"] . "</h3></p><p><h3>" . $result["fecha"] . "</h3></p>";
         $texto .= "Detalle del pedido:";
         $texto .= "<table>"; //abrir la tabla
         $texto .= "<tr><th>Nombre</th><th>Unidades</th><th>Precio</th></tr>";
         $texto .= $carrito;
-        $texto .= "<tr><td colspan=3> Modo de pago: ".$result["nombre"]."</td></tr>";
+        $texto .= "<tr><td colspan=3> Modo de pago: " . $result["nombre"] . "</td></tr>";
         $texto .= "<tr><td colspan=3> Su pedido se está cocinando... </td></tr></table>";
         return $texto;
     }
@@ -214,4 +214,5 @@ class Pedido extends Conexion {
         $c_envio = new mails;
         $c_envio->enviar_correo_pedidos($email, $cuerpo);
     }
+
 }

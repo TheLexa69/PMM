@@ -1,23 +1,24 @@
 <?php
+
 namespace clases;
+
 /**
  * Description of carta
  *
  * @author Nuria y Guillermo
  */
-
-
 use \PDO;
 use \PDOException;
 
 class Carta extends Conexion {
-    
+
     private $table = 'carta_comida';
 
     public function __construct() {
             parent::__construct();
         
     }
+
     public function __destruct() {
         $this->conexion = null;
     }

@@ -11,9 +11,9 @@ class ConsultasLogin extends Conexion {
      * Método contruct que al extender de la clase padre Conexión hereda
      * su constructor que es el puntero de conexión.
      */
-    public function __construct() {
+    public function __construct($rol=5) {
 
-        parent::__construct();
+        parent::__construct($rol);
     }
 
     /**

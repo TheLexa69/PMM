@@ -3,6 +3,7 @@ include dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "autoloadClasesLogin.php";
 
 //echo"../../autoloadClasesLogin.php";
 use \clases\Carta as carta;
+
 $c = new carta();
 $categorias = $c->getCategorias();
 if (isset($_GET['red'])) {

@@ -1,10 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuracion>
-    <host>mysql-5707.dinaserver.com</host>
-    <bd>LuaChea</bd>
-    <usuario>Raul</usuario>
-    <clave>oSyh36033^(/</clave>    
+    <usuario>  
+        <host>mysql-5707.dinaserver.com</host>
+        <bd>LuaChea</bd>
+        <nombre>Raul</nombre>
+        <clave>oSyh36033^(/</clave>
+        <rol>10</rol>   
+    </usuario>  
+    <usuario>
+        <host>mysql-5707.dinaserver.com</host>
+        <bd>LuaChea</bd>
+        <nombre>Administrador1</nombre>
+        <clave>GIbf1y;67%6%</clave>
+        <rol>1</rol>   
+    </usuario>  
+    <usuario>
+        <host>mysql-5707.dinaserver.com</host>
+        <bd>LuaChea</bd>
+        <nombre>Defecto</nombre>
+        <clave>GfnO0n4]#%33</clave>
+        <rol>4</rol>   
+    </usuario>  
+     <usuario>
+        <host>mysql-5707.dinaserver.com</host>
+        <bd>LuaChea</bd>
+        <nombre>curioso</nombre>
+        <clave>HAqV0m4^-7*4</clave>
+        <rol>5</rol>   
+    </usuario> 
 </configuracion>
- 
-
- 

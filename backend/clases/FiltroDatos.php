@@ -5,39 +5,36 @@ namespace clases;
 class FiltroDatos {
 
     /**
-     * 
-     * @param type $filtro expresion regular recibida
-     * @param type $cadena texto que se quiere comprobar que cumple con la expresion regular
+     * Método que verifica la cadena recibida.
+     * @param $filtro expresion regular recibida
+     * @param $cadena texto que se quiere comprobar que cumple con la expresion regular
      * @return boolean 
      */
     function verificarDatos($filtro, $cadena) {
-
         if (preg_match("/" . $filtro . "$/", $cadena)) {
-            //  echo "entro";
             return $cadena;
         } else {
-            //  echo "Nooooooooooooooooooooo";
             return "";
         }
     }
 
     /**
-     * 
-     * @param type $datos recibe el post de los datos los recorre los filtra y los guarda en un array asociativo para usarlos tal cual estaban ya y no tener que renombrar nada
-     * @return type  $datosLimpios retorna el post limpio de inyeccion
+     * Método para validar el post y limpiar la cadena.
+     * @param $datos. Recibe el post de los datos los recorre los filtra y los guarda en un array asociativo para usarlos tal cual estaban ya y no tener que renombrar nada
+     * @return $datosLimpios POST. Retorna el post limpio de inyeccion
      */
     function validarPost($datos) {
-
         foreach ($datos as $key => $contenido) {
             $datosLimpios[$key] = $this->limpiar_cadena($contenido);
         }
+
         return $datosLimpios;
     }
 
     /**
-     * 
+     * Método que limpia la cadena de texto para inyección de código. 
      * @param type $cadena texto que se quiere comprobar para evitar intrusiones
-     * @return  $cadena limpia de codigo de inyeccion
+     * @return $cadena limpia de codigo de inyeccion
      */
     function limpiar_cadena($cadena) {
         $cadena = trim($cadena);
@@ -77,7 +74,6 @@ class FiltroDatos {
      * @return bool Si es ok(true) o no(false)
      */
     function validaDniCifNie($dni) {
-
         $cif = strtoupper($dni);
         for ($i = 0; $i < 9; $i++) {
             $num[$i] = substr($cif, $i, 1);

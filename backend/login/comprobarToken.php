@@ -14,7 +14,7 @@ $filtro = new filtrado;
 $formularios = new formulariosLogin;
 $funciones = new funcionesLogin;
 $consulta = new consultasLogin;
-$consultaAdministrador = new consultasAdministrador;
+$consultaAdministrador = new consultasAdministrador();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_POST = $filtro->validarPost($_POST);
@@ -29,11 +29,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     try {
-
         //   $token = $_POST['token']; // token que se envio al mail
-
         if ($rol == 4) {
-
             $datos = $consulta->comprobarDatos($mail);
             $datos["id_usuario"];
         } else {
@@ -42,7 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         $hash = $datos["contraseña"]; //contiene hash base de datos
-
         $bool = false;
 
         if (password_verify($token, $hash)) { //$token es el del formulario // $hash es el de base de datos
@@ -54,10 +50,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         unset($conexion);
 
         if (isset($boll)) {
-
             $formularios->contrasena($mail, $rol);
         } else {
-
             $formularios->tokenMal($mail, $rol);
         }
     } catch (PDOException $e) {

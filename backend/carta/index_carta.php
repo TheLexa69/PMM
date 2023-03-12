@@ -29,8 +29,12 @@ if (isset($_SESSION['usuario'])) {
         } else {
             $array_carrito = [];
         }
+<<<<<<< Updated upstream
     } 
 
+=======
+    }
+>>>>>>> Stashed changes
 // Si no hay un usuario autenticado en la sesión actual, pero hay un carrito en una cookie, lo guarda en una variable
 } elseif (isset($_COOKIE['carrito'])) {
     $array_carrito = unserialize($_COOKIE['carrito'], ["allowed_classes" => false]);
@@ -158,6 +162,7 @@ if (isset($_POST['dato'])) {
                 <h2>Alergenos</h2>
                 <hr>
             </div>
+<<<<<<< Updated upstream
             <div class="text-center">
                 <img class="img-select" width="80px" height="auto" src="../../frontend/img/2.svg" alt="2">
                 <img class="img-select" width="80px" height="auto" src="../../frontend/img/3.svg" alt="3">
@@ -176,6 +181,98 @@ if (isset($_POST['dato'])) {
             </div>
             <div class="text-center mt-3">
                 <h2>Filtros</h2>
+=======
+            <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
+                <div class="text-center">
+                    <label class="checkeable">
+                        <input type="checkbox" name="dato[]" value="2">
+                        <img class="img-select" width="80px" height="auto" src="../../frontend/img/2.svg" alt="2" value="2">
+                        </input>
+                    </label>
+                    <label class="checkeable">
+                        <input type="checkbox" name="dato[]" value="3">
+                        <img class="img-select" width="80px" height="auto" src="../../frontend/img/3.svg" alt="3" value="3">
+                        </input>
+                    </label>
+                    <label class="checkeable">
+                        <input type="checkbox" name="dato[]" value="4">
+                        <img class="img-select" width="80px" height="auto" src="../../frontend/img/4.svg" alt="4" value="4">
+                        </input>
+                    </label>
+                    <label class="checkeable">
+                        <input type="checkbox" name="dato[]" value="5">
+                        <img class="img-select" width="80px" height="auto" src="../../frontend/img/5.svg" alt="5" value="5">
+                        </input>
+                    </label>
+                    <label class="checkeable">
+                        <input type="checkbox" name="dato[]" value="6">
+                        <img class="img-select" width="80px" height="auto" src="../../frontend/img/6.svg" alt="6" value="6">
+                        </input>
+                    </label>
+                    <label class="checkeable">
+                        <input type="checkbox" name="dato[]" value="7">
+                        <img class="img-select" width="80px" height="auto" src="../../frontend/img/7.svg" alt="7" value="7">
+                        </input>
+                    </label>
+                    <label class="checkeable">
+                        <input type="checkbox" name="dato[]" value="8">
+                        <img class="img-select" width="80px" height="auto" src="../../frontend/img/8.svg" alt="8" value="8">
+                        </input>
+                    </label>
+                    <label class="checkeable">
+                        <input type="checkbox" name="dato[]" value="9">
+                        <img class="img-select" width="80px" height="auto" src="../../frontend/img/9.svg" alt="9" value="9">
+                        </input>
+                    </label>
+                    <label class="checkeable">
+                        <input type="checkbox" name="dato[]" value="10">
+                        <img class="img-select" width="80px" height="auto" src="../../frontend/img/10.svg" alt="10" value="10">
+                        </input>
+                    </label>
+                    <label class="checkeable">
+                        <input type="checkbox" name="dato[]" value="11">
+                        <img class="img-select" width="80px" height="auto" src="../../frontend/img/11.svg" alt="11" value="11">
+                        </input>
+                    </label>
+                    <label class="checkeable">
+                        <input type="checkbox" name="dato[]" value="12">
+                        <img class="img-select" width="80px" height="auto" src="../../frontend/img/12.svg" alt="12" value="12">
+                        </input>
+                    </label>
+                    <label class="checkeable">
+                        <input type="checkbox" name="dato[]" value="13">
+                        <img class="img-select" width="80px" height="auto" src="../../frontend/img/13.svg" alt="13" value="13">
+                        </input>
+                    </label>
+                    <label class="checkeable">
+                        <input type="checkbox" name="dato[]" value="14">
+                        <img class="img-select" width="80px" height="auto" src="../../frontend/img/14.svg" alt="14" value="14">
+                        </input>
+                    </label>
+                    <label class="checkeable">
+                        <input type="checkbox" name="dato[]" value="15">
+                        <img class="img-select" width="80px" height="auto" src="../../frontend/img/15.svg" alt="15" value="15">
+                        </input>
+                    </label>
+                </div>
+                <div class="text-center mt-3">
+                    <h2>Filtros</h2>
+                    <hr>
+                </div>
+                <div id="contenedorAlergenos">
+                </div>
+                <div class="d-flex justify-content-center pb-3" id="reset">
+                    <input class="btn btn-outline-dark" type="submit" value="Filtrar" >
+                </div>
+            </form>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-3 bg-light rounded mt-2 ml-auto mr-3">
+            <div  id="producto">
+                <div class="mt-3 mb-3">
+                    <h2 class="d-flex justify-content-center">Cesta</h2>
+                </div>
+>>>>>>> Stashed changes
                 <hr>
             </div>
             <div id="contenedorAlergenos">

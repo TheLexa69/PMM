@@ -1,15 +1,11 @@
 <?php
 require "../sesiones/sesiones.php";
-//session_start();
 comprobar_sesion();
 require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "nav.php"); 
-//require "../clases/Pedido.php";
 use \clases\Pedido as pedido;
 $p = new pedido();
 $res = $p->getEmpresas();
 $modo_pago = $p->getModoPago();
-/* crear pedido, añadir last insert id a carrito, $rdo = $carrito->add if true se vacia el carrito
-if false print error */
 
 if (isset($_SESSION['usuario'])) {
     ?>

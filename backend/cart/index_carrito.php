@@ -1,6 +1,5 @@
 <?php
 session_start();
-//require "../clases_carrito/carrito.php";
 require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "nav.php"); 
 use clases\Carrito as carrito;
 $carrito = new carrito();
@@ -8,12 +7,18 @@ $rol = isset($_SESSION['id_rol']) ? $_SESSION['id_rol'] : null;
 $win_loc = "../login/indexLogin.php";
 ?>
 <script>
-
+	/**
+	*
+	* Actualiza la cantidad de un producto en el carrito a través de una petición AJAX
+	* @param {number} id_comida - El ID del producto a actualizar
+	* @param {number} cantidad - La nueva cantidad del producto
+	* @return {void}
+	*/
 	function updateCantidad(id_comida, cantidad) {
 		var xhr = new XMLHttpRequest();
 		xhr.open('POST', 'actualizar_carrito.php', true);
 		xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		xhr.onreadystatechange = function() {
+		xhr.onreadystatechange = () => {
 			if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
 			// Actualizar la página para reflejar los cambios
 			window.location.reload();
@@ -40,7 +45,12 @@ $win_loc = "../login/indexLogin.php";
 		} 
 		});
 
-		// Función para comprobar si el usuario ha iniciado sesión
+		/**
+		*
+		* Verifica si el usuario ha iniciado sesión.
+		*
+		* @return {boolean} true si el usuario no ha iniciado sesión, false si ha iniciado sesión.
+		*/
 		function usuarioIniciado() {
 			// Obtener todas las cookies del sitio
 			var cookies = document.cookie.split(";");
@@ -61,19 +71,13 @@ $win_loc = "../login/indexLogin.php";
 
 </script>
 <?php
-//fichero conexion (no hace falta al tenerlo en la clase)
-//require_once 'conexion.php';
 if (isset($_SESSION['usuario'])) {
 	$usuario = $_SESSION['usuario'];
-	/*if (!isset($_SESSION['carrito'])) {
-		$carrito_guardado = $carrito->getCarro($usuario);
 		//Sacamos el carrito de la base de datos y lo igualamos a la variable de sesión
 		//Si no encuentra nada en la base de datos va a mirar a las cookies y si no hay 
 		//nada en ninguno de los dos crear la variable de sesión como array vacío 
 		//Mejora: elegir entre el carrito de la base de datos y el carrito de las cookies
-		if ($carrito_guardado) {
-			$_SESSION['carrito'] = unserialize($carrito_guardado['comida_cantidad'], []);
-		} else*/
+		
         if (!isset($_SESSION['carrito'])) { 
 		if (isset($_COOKIE['carrito']) && !empty(unserialize($_COOKIE['carrito']))) {
 			$_SESSION['carrito'] = unserialize($_COOKIE['carrito'], ["allowed_classes" => false]);

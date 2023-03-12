@@ -2,7 +2,6 @@
 /* Suma productos a la cesta si eliges el mismo al añadir producto */
 session_start();
 use clases_carrito\Carrito as carrito;
-//require "../clases_carrito/carrito.php";
 
 $cod_comida = $_GET["cod"];
 $cantidad = $_POST["cantidad"];
@@ -12,7 +11,6 @@ if (!isset($_SESSION['usuario'])) {
 	if (isset($_COOKIE['carrito'])) {
 		// Si hay productos, deserializar los datos y guardarlos en una variable
 		$arr_carrito = unserialize($_COOKIE['carrito'], ["allowed_classes" => false]);
-                //$arr_carrito = $_COOKIE['carrito'];
 	} else {
 		// Si no hay productos se crea un array vacío para guardarlos
 		$arr_carrito = array();
@@ -47,8 +45,6 @@ if (!isset($_SESSION['usuario'])) {
 		}
         // Actualizar la variable de sesión con los cambios realizados
         $_SESSION['carrito'] = $arr_carrito;
-            //$carrito = new carrito();
-            //$carrito->add($id_usuario, $cod_comida, $_POST["cantidad"]);
 	}
 }
 if ($tipo) {

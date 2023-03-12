@@ -65,24 +65,29 @@ class Mails {
      */
     function enviar_correo_pedidos($correo, $cuerpo, $asunto = "Pedido realizado") {
         //$res = leer_configCorreo(dirname(__FILE__) . "/config/correo.xml", dirname(__FILE__) . "/config/correo.xsd");
-        $mail = new PHPMailer();
-        $mail->CharSet = 'UTF-8';
-        $mail->Encoding = 'base64';
-        $mail->IsSMTP();
-        $mail->SMTPDebug = 0;  // cambiar a 1 o 2 para ver errores
-        $mail->SMTPAuth = true;
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-        $mail->Host = "b01-daw2d-iesteis-gal.correoseguro.dinaserver.com";
-        $mail->Port = 465;
-        $mail->Username = 'restaurante@b01.daw2d.iesteis.gal';  //usuario de gmail
-        $mail->Password = 'Restaurante@1'; //contraseña de gmail          
-        $mail->SetFrom('restaurante@b01.daw2d.iesteis.gal', 'NovoLuaChea');
-        $mail->isHTML(true);
-        $mail->Subject = mb_convert_encoding($asunto, 'UTF-8');
-        $mail->Body = $cuerpo;
-        $mail->AddAddress($correo, $correo);
+        try {
+            $mail = new PHPMailer();
+            $mail->CharSet = 'UTF-8';
+            $mail->Encoding = 'base64';
+            $mail->IsSMTP();
+            $mail->SMTPDebug = 0;  // cambiar a 1 o 2 para ver errores
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Host = "b01-daw2d-iesteis-gal.correoseguro.dinaserver.com";
+            $mail->Port = 465;
+            $mail->Username = 'restaurante@b01.daw2d.iesteis.gal';  //usuario de gmail
+            $mail->Password = 'Restaurante@1'; //contraseña de gmail          
+            $mail->SetFrom('restaurante@b01.daw2d.iesteis.gal', 'NovoLuaChea');
+            $mail->isHTML(true);
+            $mail->Subject = mb_convert_encoding($asunto, 'UTF-8');
+            $mail->Body = $cuerpo;
+            $mail->AddAddress($correo, $correo);
 
-        $mail->send();
+            $mail->send();
+        } catch (Exception $e) {
+
+            echo "Mensaje no enviado Error : {$mail->ErrorInfo}";
+        }
     }
 
     /**

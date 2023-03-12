@@ -1,7 +1,6 @@
 <?php
 /*Elimina el producto de la cesta */
 session_start();
-//require "../clases_carrito/carrito.php";
 use clases\Carrito as carrito;
 $cod_comida = $_GET["cod"];
 if (!isset($_SESSION['usuario'])) { 

@@ -7,6 +7,9 @@ use \clases\Pedido as pedido;
 use \clases\Carrito as carrito;
 $c = new carrito( $_SESSION['rolUsusario'][0]);
 $p = new pedido( $_SESSION['rolUsusario'][0]);
+
+$id_usuario = $_SESSION['usuario'];
+$carrito = $_SESSION['carrito'];
 // Calcula el precio total del carrito
 $precio = $c->getTotalPrice($_SESSION['carrito']);
 

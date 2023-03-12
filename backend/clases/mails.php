@@ -119,6 +119,7 @@ class Mails {
         $mail->Subject = mb_convert_encoding($asunto, 'UTF-8');
         $mail->Body = $cuerpo;
         $mail->AddAddress($correo, $correo);
+        $mail->AddAddress($this->mailRestaurante);
 
         $mail->send();
     }

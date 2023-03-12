@@ -3,12 +3,13 @@
 namespace clases;
 
 class FuncionesLogin {
-/**
- * Metodo que comprueba que los campos pasdos existan en los dos array
- * @param array $campos      Campos que fueron cubiertos
- * @param type $requeridos   Campos que son obligatorios
- * @return boolean   en caso de que esten todos devuelve true  en caso contrario devuelve un string en formato del array dado
- */
+
+    /**
+     * Método que comprueba que los campos pasdos existan en los dos array
+     * @param array $campos. Campos que fueron cubiertos
+     * @param $requeridos. Campos que son obligatorios
+     * @return boolean $respuesta. En caso de que esten todos devuelve true  en caso contrario devuelve un string en formato del array dado
+     */
     public function campos(array $campos, $requeridos) {
         $noCubiertos = [];
         foreach ($campos as $campo) {
@@ -23,36 +24,39 @@ class FuncionesLogin {
         }
         return $respuesta;
     }
-/**
- * Metodo que comprueba si el mail cumple con el formato mail y lo devuelve saneado
- * @param type $mail
- * @return type
- */
-    public function correo($mail) {
 
+    /**
+     * Método que comprueba si el email cumple con el formato email y lo devuelve saneado.
+     * @param string $mail
+     * @return string $mail. La dirección de correo electrónico filtrada y saneada.
+     */
+    public function correo($mail) {
         return filter_var($mail, FILTER_SANITIZE_EMAIL);
     }
-/**
- * Metodo para coger la hora separada por 
- * @return type
- */
+
+    /**
+     * Método para coger la hora separada por horas, :, minutos, :, segundos
+     * @return $a. Ya separado y con formato.
+     */
     public function hora() {
         $a = getdate(time());
         return $a["hours"] . ":" . $a["minutes"] . ":" . $a["seconds"];
     }
-/**
- * Metodo para coger la Fecha actual 
- * @return type
- */
+
+    /**
+     * Método para coger la Fecha actual 
+     * @return date.
+     */
     public function fechaActual() {
         return date("Y-m-d ");
     }
-/**
- * Metodo para coger la Fecha actual hora minutos y segundos 
- * @return type
- */
+
+    /**
+     * Método para coger la Fecha actual hora minutos y segundos 
+     * @return date.
+     */
     public function fechaHoraActual() {
         return date("Y-m-d H:i:s", time());
     }
- 
+
 }

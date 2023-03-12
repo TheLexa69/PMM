@@ -1,19 +1,19 @@
 <?php
+
 namespace clases;
 
-use \RuntimeException;  
+use \RuntimeException;
 
 class FuncionesAdministrador {
-  
 
-/**
- * Metodo para añadir la imagen a los productos
- * @param type $id
- * @param type $imagen
- * @return string
- * @throws RuntimeException
- */
-public function anadirImagenProducto($id, $imagen) {
+    /**
+     * Método para añadir la imagen a los productos.
+     * @param $id
+     * @param $imagen
+     * @return string
+     * @throws RuntimeException
+     */
+    public function anadirImagenProducto($id, $imagen) {
         try {
             $_FILES['imagen'] = $imagen;
 
@@ -63,4 +63,5 @@ public function anadirImagenProducto($id, $imagen) {
             echo $e->getMessage();
         }
     }
+
 }

@@ -3,21 +3,22 @@
 namespace clases;
 
 class FormulariosUsuario {
-/**
- * Metodo que muestra las redireciones disponibles para el usuario
- */
-    public function redirecionesUsuario() {
 
+    /**
+     * Método que muestra las redireciones disponibles para el usuario
+     */
+    public function redirecionesUsuario() {
         echo "<br><a href='modificarDatosUsuario.php'><input type='button' value='Actualiza tus datos'></a><br>";
         //  echo "<br><a href='trabajadores.php'><input type='button' value='Trabajadores'></a><br>";
         //  echo "<br><a href='productos.php'><input type='button' value='Productos'></a><br>";
     }
-/**
- *  Metodo que muestra los datos del usuario precargado con los metidos en la base de datos 
- * @param type $id
- * @param type $necesarios   Campos obligatorios
- */
-    public function registroDatosPorUsuario($id, $necesarios ,$mensaje ="") {
+
+    /**
+     * Método que muestra los datos del usuario precargado con los metidos en la base de datos.
+     * @param $id
+     * @param $necesarios   Campos obligatorios
+     */
+    public function registroDatosPorUsuario($id, $necesarios, $mensaje = "") {
         ?>
         <div class="container bg-light rounded mt-5 w-60 p-3">
             <form enctype="multipart/form-data" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
@@ -25,7 +26,7 @@ class FormulariosUsuario {
                     <h2>Modifica tus datos:</h2>
                     <hr><br>
                 </div>
-                  <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center">
                     <h1><b><?php echo $mensaje ?></b></h1>
                 </div>
                 <div class="row">
@@ -86,10 +87,8 @@ class FormulariosUsuario {
                     <button type="submit"  name="registro" class="btn btn-outline-success">Actualizar</button>
                     <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>" id="cancel" name="cancel" class="btn btn-default btn-outline-danger">Cancelar</a>
                 </div>
-               
+
                 <?php
-          
- 
                 if (empty($_POST["registro"]) && $necesarios !== true) {
                     //Enseña los campos que faltan al usuario
                     $necesarios = str_replace('nombre', 'Nombre', $necesarios);
@@ -102,17 +101,18 @@ class FormulariosUsuario {
                     echo "<br><br><b style=color:red>Faltan campos obligatorios para completar el registro:</b> <br>$necesarios";
                 }
                 ?>               
-                
+
             </form>
         </div>
         <?php
     }
-/**
- * Metodo que muestra el formulario de reservas de las mesas al usuario
- * @param type $restaurante    Restaurantes disponibles
- * @param type $mesas          Mesas disponibles o no
- * @param type $necesarios     Campos obligatorios
- */
+
+    /**
+     * Método que muestra el formulario de reservas de las mesas al usuario
+     * @param $restaurante    Restaurantes disponibles
+     * @param $mesas          Mesas disponibles o no
+     * @param $necesarios     Campos obligatorios
+     */
     public function formularioReserva($restaurante, $mesas) {
         ?>
         <div class="container bg-light rounded mt-5 w-60 p-3">
@@ -160,10 +160,11 @@ class FormulariosUsuario {
         </div>
         <?php
     }
-/**
- *  Metodo que muestra un formulario con los datos modificados del usuario
- * @param type $id
- */
+
+    /**
+     * Método que muestra un formulario con los datos modificados del usuario
+     * @param type $id
+     */
     public function formularioCambiosPerfil($id) {
         ?>
         <div class="container bg-light rounded mt-5 w-60 p-3">

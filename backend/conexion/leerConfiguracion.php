@@ -1,12 +1,19 @@
 <?php
 
+/**
+ * Lee el archivo de configuración de la base de datos y devuelve los datos de conexión.
+ * @param string $fichero_config_BBDD Ruta del archivo de configuración de la base de datos.
+ * @param string $esquema Ruta del archivo XSD para validar la estructura del archivo de configuración.
+ * @return array Un array con tres valores: cadena de conexión, nombre de usuario y clave.
+ * @throws InvalidArgumentException Si el archivo de configuración no existe o no es válido.
+ */
 function leer_config($fichero_config_BBDD, $esquema) {
     /*
-     * $fichero_config_BBDD es la ruta del fichero con los datos de conexión a la BBDD
-     * $esquema es la ruta del fichero XSD para validar la estructura del fichero anterior
-     * Si el fichero de configuración existe y es válido, devuelve un array con tres
-     * valores: la cadena de conexión, el nombre de usuario y la clave.
-     * Si no encuentra el fichero o no es válido, lanza una excepción.
+      $fichero_config_BBDD es la ruta del fichero con los datos de conexión a la BBDD
+      $esquema es la ruta del fichero XSD para validar la estructura del fichero anterior
+      Si el fichero de configuración existe y es válido, devuelve un array con tres
+      valores: la cadena de conexión, el nombre de usuario y la clave.
+      Si no encuentra el fichero o no es válido, lanza una excepción.
      */
 
     $config = new DOMDocument();

@@ -6,47 +6,50 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 require"../vendor/autoload.php";
- 
+
 class Mails {
- 
-    
+
     protected $host;
     protected $mailRestaurante;
     protected $clave;
- 
-      function __construct() {
-      
-            $datos = $this->leerConfigMail(dirname(__DIR__, 1) . DIRECTORY_SEPARATOR . "conexion" . DIRECTORY_SEPARATOR . "configuracionMail.xml", dirname(__DIR__, 1) . DIRECTORY_SEPARATOR . "conexion" . DIRECTORY_SEPARATOR . "configuracionMail.xsd");
-            
-           $this->host = $datos[0];
-           $this->mailRestaurante = $datos[1];
-           $this->clave = $datos[2];
-            
+
+    function __construct() {
+
+        $datos = $this->leerConfigMail(dirname(__DIR__, 1) . DIRECTORY_SEPARATOR . "conexion" . DIRECTORY_SEPARATOR . "configuracionMail.xml", dirname(__DIR__, 1) . DIRECTORY_SEPARATOR . "conexion" . DIRECTORY_SEPARATOR . "configuracionMail.xsd");
+
+        $this->host = $datos[0];
+        $this->mailRestaurante = $datos[1];
+        $this->clave = $datos[2];
     }
-     
-    
+
+    /**
+     * Lee el archivo de configuración del correo y devuelve los datos Para poder mandarlo.
+     * @param string $xmlMail el xml.
+     * @param string $xsd  XSD que valida la estructura del archivo xml.
+     * @return datosMail Es un array con tres valores: hostMail, correo y password.
+     * @throws InvalidArgumentException Si el archivo XSD no existe o no es válido para ese XML.
+     */
     function leerConfigMail($xlmMail, $xsd) {
-   
-    $config = new \DOMDocument();
-    $config->load($xlmMail);
-    $res = $config->schemaValidate($xsd);
-    if ($res === FALSE) {
-        throw new InvalidArgumentException("Revise el fichero de configuración de mail");
+
+        $config = new \DOMDocument();
+        $config->load($xlmMail);
+        $res = $config->schemaValidate($xsd);
+        if ($res === FALSE) {
+            throw new InvalidArgumentException("Revise el fichero de configuración de mail");
+        }
+        $datos = simplexml_load_file($xlmMail);
+
+        $host = $datos->xpath("//host");
+        $mail = $datos->xpath("//mail");
+        $clave = $datos->xpath("//clave");
+
+        $datosMail = [];
+        $datosMail[] = $host[0];
+        $datosMail[] = $mail[0];
+        $datosMail[] = $clave[0];
+        return $datosMail;
     }
-    $datos = simplexml_load_file($xlmMail);
-    
-    $host = $datos->xpath("//host");
-    $mail = $datos->xpath("//mail");
-    $clave = $datos->xpath("//clave");
-   
-    $datosMail=[];
-    $datosMail[]=$host[0];
-    $datosMail[]=$mail[0];
-    $datosMail[]=$clave[0];
-    return $datosMail;
-}
-     
-    
+
     /**
      * Envía un correo electrónico de verificación de cuenta a un destinatario dado.
      * @param string $email La dirección de correo electrónico del destinatario.
@@ -59,7 +62,7 @@ class Mails {
         //Create an instance; passing `true` enables exceptions
         $mail = new PHPMailer(true);
 
-        try {    
+        try {
             //Server settings
             // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
             $mail->isSMTP();                                            //Send using SMTP

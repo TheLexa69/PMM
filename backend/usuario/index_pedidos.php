@@ -13,25 +13,25 @@ $id = $_SESSION["usuario"];
 if (!empty($_POST['orden'])) {
     $orden = $_POST['orden'];
 }
-$orden = (isset($orden)) ? $orden : " ";
+$orden = (isset($orden)) ? $orden : false;
 $ped = $pedidos->obtenerPedidos($id, $orden);
 ?>
 <div class="container bg-light rounded mt-5 w-60 p-3">
 <div class="d-flex justify-content-center text-center">
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-        <h3>Filtrar por fecha:</h3>
+        <h3>Ordenar por fecha:</h3>
 
         <div class="mt-2 d-flex align-items-center">
             <div class="form-check m-3">
                 <input type="radio" name="orden" value="ASC" class="form-check-input" id="asc"> 
                 <label class="form-check-label" for="asc">
-                    Antiguas
+                    Antiguas primero
                 </label>
             </div>
             <div class="form-check">
                 <input type="radio" name="orden" value="DESC" class="form-check-input"> 
                 <label class="form-check-label" for="desc">
-                    Recientes
+                    Recientes primero
                 </label>
             </div>
             <div class=" m-3">

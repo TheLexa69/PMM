@@ -6,13 +6,6 @@ namespace clases;
  *
  * @author Nuria
  */
-<<<<<<< Updated upstream
-
-//require_once 'conexion.php';
-//require "../clases/Conexion.php";
-//require "../clases/Mails.php";
-=======
->>>>>>> Stashed changes
 use \clases\Mails as mails;
 
 use \PDO;
@@ -35,9 +28,6 @@ class Pedido extends Conexion {
         $this->conexion = null;
     }
     
-<<<<<<< Updated upstream
-    /* Método para crear un nuevo pedido */
-=======
     /**
      * Método para crear un nuevo pedido
      * @param int $id_usuario El id del usuario que hace el pedido
@@ -47,7 +37,6 @@ class Pedido extends Conexion {
      * @param string $modo_pago El modo de pago utilizado para hacer el pedido
      * @return int|false El id del pedido creado, o false si hubo algún problema
      */
->>>>>>> Stashed changes
     public function crearPedido($id_usuario, $carrito, $precio, $cif, $modo_pago) {
         $fecha = date('Y-m-d H:i:s');
         try {
@@ -87,9 +76,6 @@ class Pedido extends Conexion {
         }
     }
     
-<<<<<<< Updated upstream
-    /* Método para obtener todos los pedidos de un usuario */
-=======
     /**
      * Método para obtener todos los pedidos de un usuario
      *
@@ -98,23 +84,16 @@ class Pedido extends Conexion {
      * 
      * @return array Array con todos los pedidos del usuario
      */
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-    public function obtenerPedidos($id_usuario) {
-        $stmt = $this->conexion->prepare("SELECT * FROM $this->tabla_pedidos WHERE id_usuario = ? ORDER BY fecha DESC");
-        $stmt->execute([$id_usuario]);
-=======
+
     public function obtenerPedidos($id_usuario, $orden) {
-        if (!empty($orden)) {
+        if (empty($orden)) {
             $stmt = $this->conexion->prepare("SELECT id_ped, fecha FROM $this->tabla_pedidos WHERE id_usuario = :id_usuario ORDER BY fecha DESC");
         } else {
-            $stmt = $this->conexion->prepare("SELECT id_ped, fecha, restaurante FROM $this->tabla_pedidos WHERE id_usuario = :id_usuario ORDER BY fecha :orden");
-            $stmt->bindParam(":orden", $orden, PDO::PARAM_STR);
+            $stmt = $this->conexion->prepare("SELECT id_ped, fecha, restaurante FROM $this->tabla_pedidos WHERE id_usuario = :id_usuario ORDER BY fecha $orden");
         }
         $stmt->bindParam(":id_usuario", $id_usuario, PDO::PARAM_INT);
         
         $stmt->execute();
->>>>>>> Stashed changes
         $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($pedidos as &$pedido) {
             $stmt = $this->conexion->prepare("SELECT cc.nombre, pp.cantidad, pp.precio FROM ped_prod AS pp INNER JOIN carta_comida AS cc  ON pp.id_prod = cc.id_comida WHERE pp.id_ped = ?");
@@ -144,9 +123,6 @@ class Pedido extends Conexion {
         return $pedidos;
     }
     
-<<<<<<< Updated upstream
-    /* Método para obtener un pedido en particular */
-=======
     /**
      * Método para obtener un pedido en particular
      *
@@ -154,7 +130,6 @@ class Pedido extends Conexion {
      * 
      * @return array Array con la información del pedido y los productos que se pidieron
      */
->>>>>>> Stashed changes
     public function obtenerPedido($id_pedido) {
         $stmt = $this->conexion->prepare("SELECT * FROM $this->tabla_pedidos WHERE id = ?");
         $stmt->execute([$id_pedido]);
@@ -176,14 +151,11 @@ class Pedido extends Conexion {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
-<<<<<<< Updated upstream
-=======
     /**
      * Método para obtener todos los modos de pago
      *
      * @return array Array con la información de todos los modos de pago
      */
->>>>>>> Stashed changes
     public function getModoPago() {
         $stmt = $this->conexion->prepare("SELECT * FROM modo_pago");
         $stmt->execute();
@@ -242,8 +214,6 @@ class Pedido extends Conexion {
         $texto .= "<tr><td colspan=3> Su pedido se está cocinando... </td></tr></table>";
         return $texto;
     }
-<<<<<<< Updated upstream
-=======
 
     /**
 
@@ -251,7 +221,6 @@ class Pedido extends Conexion {
     * @param string $email La dirección de correo electrónico a la que se enviará el correo.
     * @param string $cuerpo El contenido del correo electrónico.
     */
->>>>>>> Stashed changes
     function enviar($email, $cuerpo) {
         $c_envio = new mails;
         $c_envio->enviar_correo_pedidos($email, $cuerpo);

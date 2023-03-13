@@ -85,11 +85,10 @@ class Pedido extends Conexion {
      * @return array Array con todos los pedidos del usuario
      */
     public function obtenerPedidos($id_usuario, $orden) {
-        if (!empty($orden)) {
+        if (empty($orden)) {
             $stmt = $this->conexion->prepare("SELECT id_ped, fecha FROM $this->tabla_pedidos WHERE id_usuario = :id_usuario ORDER BY fecha DESC");
         } else {
-            $stmt = $this->conexion->prepare("SELECT id_ped, fecha, restaurante FROM $this->tabla_pedidos WHERE id_usuario = :id_usuario ORDER BY fecha :orden");
-            $stmt->bindParam(":orden", $orden, PDO::PARAM_STR);
+            $stmt = $this->conexion->prepare("SELECT id_ped, fecha, restaurante FROM $this->tabla_pedidos WHERE id_usuario = :id_usuario ORDER BY fecha $orden");
         }
         $stmt->bindParam(":id_usuario", $id_usuario, PDO::PARAM_INT);
         
@@ -122,6 +121,7 @@ class Pedido extends Conexion {
         }
         return $pedidos;
     }
+    
     /**
      * Método para obtener un pedido en particular
      *

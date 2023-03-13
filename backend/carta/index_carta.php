@@ -17,20 +17,20 @@ if (isset($_SESSION['usuario'])) {
     if (isset($_SESSION['carrito'])) {
         $array_carrito = $_SESSION['carrito'];
 
-    // Si no hay un carrito en la sesión actual, pero hay uno en una cookie, lo guarda en una variable
-    }elseif (isset($_COOKIE['carrito']) && !empty($_COOKIE['carrito'])) {
+        // Si no hay un carrito en la sesión actual, pero hay uno en una cookie, lo guarda en una variable
+    } elseif (isset($_COOKIE['carrito']) && !empty($_COOKIE['carrito'])) {
         $array_carrito = $_SESSION['carrito'] = unserialize($_COOKIE['carrito'], ["allowed_classes" => false]);
 
-    // Si no hay un carrito en la sesión actual ni en una cookie, pero hay uno en la base de datos, lo recupera y lo guarda en una variable
+        // Si no hay un carrito en la sesión actual ni en una cookie, pero hay uno en la base de datos, lo recupera y lo guarda en una variable
     } elseif (!isset($_SESSION['carrito'])) {
-        $carrito_guardado = $carrito->getCarro($usuario); 
+        $carrito_guardado = $carrito->getCarro($usuario);
         if ($carrito_guardado) {
             $array_carrito = unserialize($carrito_guardado['comida_cantidad'], ["allowed_classes" => false]);
             $_SESSION['carrito'] = $array_carrito;
         } else {
             $array_carrito = [];
         }
-    } 
+    }
 
 // Si no hay un usuario autenticado en la sesión actual, pero hay un carrito en una cookie, lo guarda en una variable
 } elseif (isset($_COOKIE['carrito'])) {
@@ -66,17 +66,17 @@ if (isset($_POST['dato'])) {
 <script>
 
     /**
-	*
-	* Actualiza la cantidad de un producto en el carrito a través de una petición AJAX
-	* @param {number} id_comida - El ID del producto a actualizar
-	* @param {number} cantidad - La nueva cantidad del producto
-	* @return {void}
-	*/
+     *
+     * Actualiza la cantidad de un producto en el carrito a través de una petición AJAX
+     * @param {number} id_comida - El ID del producto a actualizar
+     * @param {number} cantidad - La nueva cantidad del producto
+     * @return {void}
+     */
     function updateCantidad(id_comida, cantidad) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '../cart/actualizar_carrito.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange =  () => {
+        xhr.onreadystatechange = () => {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 // Actualizar la página para reflejar los cambios
                 window.location.reload();
@@ -234,8 +234,12 @@ if (isset($_POST['dato'])) {
                 ?>
                 <div class="col-md-4">
                     <div class="layered box" id="producto">
-                        <div class="p-2">
-                            <img class="imagenes rounded img-fluid" id="producto_img" title="productoss" src="<?php echo $fila[4]?>">
+                        <div class="p-2  text-center"">
+                            <?php if (!empty($fila[4])) { ?>
+                                <img class="imagenes rounded img-fluid  w-50" id="producto_img" title="productoss" src="<?php echo $fila[4] ?>">
+                            <?php } else { ?>
+                                <img class="imagenes rounded img-fluid  w-50" id="producto_img" title="productoss" src="../imagenes/imgProductos/defecto.jpg">
+                            <?php } ?>
                         </div>
                         <div class="p-2 ml-2">
                             <h4 class="nombre-producto"><?php echo $fila[0] ?></h4>
@@ -279,8 +283,12 @@ if (isset($_POST['dato'])) {
                 ?>
                 <div class="col-md-4">
                     <div class="layered box" id="producto">
-                        <div class="p-2">
-                            <img class="imagenes rounded img-fluid" id="producto_img" title="productoss" src="<?php echo $fila[4]?>">
+                        <div class="p-2 text-center">
+                            <?php if (!empty($fila[4])) { ?>
+                                <img class="imagenes rounded img-fluid  w-50" id="producto_img" title="productoss" src="<?php echo $fila[4] ?>">
+                            <?php } else { ?>
+                                <img class="imagenes rounded img-fluid  w-50" id="producto_img" title="productoss" src="../imagenes/imgProductos/defecto.jpg">
+                            <?php } ?>
                         </div>
                         <div class="p-2 ml-2">
                             <h4 class="nombre-producto"><?php echo $fila[0] ?></h4>

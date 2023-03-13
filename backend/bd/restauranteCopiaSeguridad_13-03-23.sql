@@ -184,6 +184,9 @@ constraint pk_id primary key (id_mesa)
 
 ###########################################################################################
 #FOREIGN KEYS
+ALTER TABLE ped_prod ADD FOREIGN KEY (id_ped) REFERENCES pedidos(id_ped);
+ALTER TABLE ped_prod ADD FOREIGN KEY (id_prod) REFERENCES carta_comida(id_comida);
+
 ALTER TABLE factura ADD FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
 ALTER TABLE factura ADD FOREIGN KEY (cif_empresa) REFERENCES empresa(cif);
 ALTER TABLE factura ADD FOREIGN KEY (modo_pago) REFERENCES modo_pago(id_modo_pago);

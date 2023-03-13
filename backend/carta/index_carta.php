@@ -235,7 +235,7 @@ if (isset($_POST['dato'])) {
                 <div class="col-md-4">
                     <div class="layered box" id="producto">
                         <div class="p-2">
-                            <img class="imagenes rounded img-fluid" id="producto_img" title="vaso" src="https://cdn.pixabay.com/photo/2020/12/15/13/44/children-5833685__340.jpg">
+                            <img class="imagenes rounded img-fluid" id="producto_img" title="productoss" src="<?php echo $fila[4]?>">
                         </div>
                         <div class="p-2 ml-2">
                             <h4 class="nombre-producto"><?php echo $fila[0] ?></h4>
@@ -280,7 +280,7 @@ if (isset($_POST['dato'])) {
                 <div class="col-md-4">
                     <div class="layered box" id="producto">
                         <div class="p-2">
-                            <img class="imagenes rounded img-fluid" id="producto_img" title="vaso" src="https://cdn.pixabay.com/photo/2020/12/15/13/44/children-5833685__340.jpg">
+                            <img class="imagenes rounded img-fluid" id="producto_img" title="productoss" src="<?php echo $fila[4]?>">
                         </div>
                         <div class="p-2 ml-2">
                             <h4 class="nombre-producto"><?php echo $fila[0] ?></h4>

@@ -80,18 +80,18 @@ class Pedido extends Conexion {
      * Método para obtener todos los pedidos de un usuario
      *
      * @param int $id_usuario ID del usuario del que se quieren obtener los pedidos
+     * @param string $orden ASC/DESC
      * 
      * @return array Array con todos los pedidos del usuario
      */
     public function obtenerPedidos($id_usuario, $orden) {
-        if (!empty($orden)) {
+        if (empty($orden)) {
             $stmt = $this->conexion->prepare("SELECT id_ped, fecha FROM $this->tabla_pedidos WHERE id_usuario = :id_usuario ORDER BY fecha DESC");
         } else {
-            $stmt = $this->conexion->prepare("SELECT id_ped, fecha, restaurante FROM $this->tabla_pedidos WHERE id_usuario = :id_usuario ORDER BY fecha :orden");
-            $stmt->bindParam(":orden", $orden, PDO::PARAM_STR);
+            $stmt = $this->conexion->prepare("SELECT id_ped, fecha, restaurante FROM $this->tabla_pedidos WHERE id_usuario = :id_usuario ORDER BY fecha $orden");
         }
         $stmt->bindParam(":id_usuario", $id_usuario, PDO::PARAM_INT);
-
+        
         $stmt->execute();
         $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($pedidos as &$pedido) {
@@ -106,8 +106,8 @@ class Pedido extends Conexion {
     }
 
   /**
-     * Método para obtener todos los pedidos (de todos los usuarios)
-     *
+     * Método para obtener todos los pedidos (de todos los usuarios) NO SE USA ES GENERAL
+     * @param int $id_usuario ID del usuario para controlar que sea admin
      * @return array Array con todos los pedidos de todos los usuarios
      */
     public function obtenerPedidosAdmin($id_usuario) {
@@ -121,6 +121,7 @@ class Pedido extends Conexion {
         }
         return $pedidos;
     }
+    
     /**
      * Método para obtener un pedido en particular
      *
@@ -214,7 +215,6 @@ class Pedido extends Conexion {
     }
 
     /**
-
     * Envía el correo electrónico con el contenido proporcionado.
     * @param string $email La dirección de correo electrónico a la que se enviará el correo.
     * @param string $cuerpo El contenido del correo electrónico.

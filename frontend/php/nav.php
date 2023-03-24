@@ -7,7 +7,7 @@ use \clases\Carta as carta;
 $c = new carta();
 $categorias = $c->getCategorias();
 if (isset($_GET['red'])) {
-    setcookie("carrito", null, 1, "/");
+    setcookie("carrito",0, 1, "/");
 }
 ?>
 <!DOCTYPE html>

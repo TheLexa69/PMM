@@ -85,6 +85,7 @@ if (isset($_POST['dato'])) {
         xhr.send('id_comida=' + id_comida + '&cantidad=' + cantidad);
     }
 </script>
+<div class="main">
 <div class="container-fluid px-0">
     <div class="row mx-0 d-flex justify-content-between">
         <div class="col-md-1"></div>
@@ -219,29 +220,24 @@ if (isset($_POST['dato'])) {
         <div class="col-md-1"></div>
     </div>
 </div>
-
-
-
-<div class="container">
-    <div class="row mt-5">
+<div class="container d-flex flex-wrap justify-content-evenly mt-5">
+    <!--<div class="row mt-5">-->
         <?php
         if (isset($consultaAlergenos)) {
             $count = 0;
             foreach ($consultaAlergenos as $fila) {
                 if ($count % 3 == 0) {
-                    echo '</div><div class="row">';
+                    echo '</div><div class="d-flex flex-wrap justify-content-evenly">';
                 }
                 ?>
-                <div class="col-md-4">
-                    <div class="layered box" id="producto">
-                        <div class="p-2  text-center"">
-                            <?php if (!empty($fila[4])) { ?>
-                                <img class="imagenes rounded img-fluid  w-50" id="producto_img" title="productoss" src="<?php echo $fila[4] ?>">
-                            <?php } else { ?>
-                                <img class="imagenes rounded img-fluid  w-50" id="producto_img" title="productoss" src="../imagenes/imgProductos/defecto.jpg">
-                            <?php } ?>
-                        </div>
-                        <div class="p-2 ml-2">
+                <div class="d-flex flex-wrap justify-content-evenly">
+                    <div class="card p-2 mb-2" style="width: 20rem;">
+                        <?php if (!empty($fila[4])) { ?>
+                            <img src="<?php echo $fila[4] ?>" alt="Card image cap" class="card-img rounded">
+                        <?php } else { ?>
+                            <img src="../imagenes/imgProductos/defecto.jpg" alt="Card image cap" class="card-img rounded">
+                        <?php } ?>
+                        <div class="card-body text-center lh-sm">
                             <h4 class="nombre-producto"><?php echo $fila[0] ?></h4>
                             <div class="text-center">
                                 <p>Descripción:
@@ -325,10 +321,10 @@ if (isset($_POST['dato'])) {
             }
         }
         ?>
-    </div>
+    <!--</div>-->
 </div>
 
-
+</div>
 
 <script src="../../frontend/js/main.js"></script>
 

@@ -5,6 +5,11 @@
     box-sizing: border-box;
 }
 
+html {
+    min-height: 100%;
+    position: relative;
+}
+
 :root {
     --green: #27ae60;
     --black: #192a56;
@@ -16,10 +21,11 @@
 }
 
 body {
+    margin: 0;
     background: url(../img/local/terraza.png) no-repeat;
     background-size: cover;
     background-position: center center;
-    height: 100vw 100vh;
+    height: 100%;
     background-attachment: fixed;
 }
 
@@ -81,41 +87,25 @@ body {
 }
 
 /*PIE DE PAGINA PEGADO ABAJO*/
-footer {
-    /*position: fixed;*/
-    margin-top: 10vh;
+/*footer {
+    position: fixed;
     bottom: 0;
     width: 100%;
-    height: 480px;
-    text-align: center;
-    background: black;
-    /*opacity: 0.4;*/
+    height: 280px;
     color: white;
-    border-top-right-radius: 25%;
-    border-bottom-left-radius: 25%;
+}*/
+
+.main {
+  margin-bottom: 250px;
 }
 
-.datos_footer {
-    justify-content: center;
-    text-align: left;
-
-}
-
-.footer_grid {
-    display: grid;
-    justify-content: center;
-    grid-template-columns: repeat(2, 1fr);
-}
-
-.footer_img {
-    display: flex;
-    justify-content: center;
-
-}
-
-.footer_img img {
-    height: 100px;
-    margin-top: 20px;
+footer {
+    position: absolute;
+    width: 100%;
+    min-height: 200px;
+    bottom: 0px;
+    left: 0;
+    color: white;
 }
 
 .table_grid {
@@ -128,24 +118,7 @@ footer {
 
 }
 
-.email {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .numero {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#circulo {
-    height: 60px;
-    width: 60px;
-    background: var(--green);
-    border-radius: 50px;
-    margin-right: 10px;
     display: flex;
     justify-content: center;
     align-items: center;

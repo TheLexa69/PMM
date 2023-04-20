@@ -23,12 +23,13 @@ if (isset($_GET['red'])) {
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/bd61d050b0.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "css" . DIRECTORY_SEPARATOR . "estilos.css"; ?>'/>
         <title>Carta</title>
     </head>
 
     <body>
-        <div class="d-flex flex-column bg-dark sticky-top bg-gradient">
+        <div class="d-flex flex-column bg-dark sticky-top">
             <div class="p-2">
                 <ul class="nav nav-tabs justify-content-end ">
 

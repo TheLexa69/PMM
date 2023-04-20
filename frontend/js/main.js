@@ -1,4 +1,13 @@
 window.onload = function () {
+    document.querySelectorAll(".nav-link").forEach((link) => {
+        link.classList.remove("active");
+        if (link.href === window.location.href || link.href === window.location.href.split('?')[0]) {
+            link.classList.add("active");
+            link.setAttribute("aria-current", "page");
+        }
+    });
+
+
     console.log("hola")
     /**
      Obtiene los elementos del DOM que tienen el nombre "inlineRadioOptions" y asigna un manejador de eventos onclick
@@ -43,7 +52,7 @@ window.onload = function () {
 
             // Actualizar el contenido del contenedor de alérgenos
             /*const contenedor = document.getElementById("contenedorAlergenos");
-            contenedor.innerHTML = seleccionadas.join(", ");*/
+             contenedor.innerHTML = seleccionadas.join(", ");*/
         });
     }
 

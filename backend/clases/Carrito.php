@@ -52,10 +52,11 @@ class Carrito extends Conexion {
         
         //Código para visualizar el carro
         $url = DIRECTORY_SEPARATOR . 'proyecto' . DIRECTORY_SEPARATOR . 'backend' . DIRECTORY_SEPARATOR . 'cart' . DIRECTORY_SEPARATOR . 'eliminar_carrito.php?cod=' . $result['id_comida'];
-        $html_code = "<div class=\"layered box row mr-2\" id=\"producto\">
+        $html_code = "<div class=\"container my-5 py-3 bg-light rounded\">
+                        <div class=\"row\" id=\"producto\">
                         <div class=\"col-4\">                        
                                 <img class=\"imagenes rounded img-fluid\" id=\"producto_img\" title=\"vaso\" src=\"https://cdn.pixabay.com/photo/2020/12/15/13/44/children-5833685__340.jpg\">
-                                </div>
+                         </div>
                         <div class=\"col-4 d-flex ml-2 flex-column\">
                             <h4 class=\"nombre-producto\">" . $result['nombre'] . "</h4>
                             <p>Descripción:
@@ -69,12 +70,13 @@ class Carrito extends Conexion {
 
                             <h5 class=\"precio-producto\"> Precio: " . $result['precio'] . "€</h5>
                             <form method=\"post\" action=\"" . $url . "\">
-                            <label for=\"cantidad\">Cantidad:</label>
-                            <input type=\"number\" name=\"cantidad\" value=\"" . $cantidad . "\" min=\"1\" max=\"10\" onchange=\"updateCantidad(" . $id_comida . ", this.value)\">
+                                <label for=\"cantidad\">Cantidad:</label>
+                                <input type=\"number\" name=\"cantidad\" value=\"" . $cantidad . "\" min=\"1\" max=\"10\" onchange=\"updateCantidad(" . $id_comida . ", this.value)\">
 
-                </div>
-        <div class=\"col-4 d-flex justify-content-center\">    
-                <button class=\"btn-add-cart btn btn-outline-secondary\" id=\"eliminar\" type=\"submit\">Eliminar</button></form></div></div>";
+                            </div>
+                            <div class=\"col-4 d-flex justify-content-center align-items-center\">    
+                                <button class=\"btn-add-cart btn btn-outline-secondary\" id=\"eliminar\" type=\"submit\">Eliminar</button>
+                            </form></div></div> </div>";
 
         return $html_code;
     }

@@ -11,62 +11,60 @@ class FormulariosLogin {
      */
     public function html($err = " ", $num = " ") {
         ?>
-        <link rel="stylesheet" href="../../frontend/css/login.css"/>
-        <div class="container bg-light rounded mt-5 w-50 p-3">
-            <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
-                <div class="text-center">
-                    <h2>Login</h2>
-                    <hr>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <label for="trabajo"><b>¿Trabajas con nosotros?</b></label>
-
-                        <div class="form-check mt-3">
-                            <input class="form-check-input" type="radio" name="trabajo" id="trabajo1" value="NO" checked>
-                            <label class="form-check-label" for="trabajo1">
-                                Usuario.
-                            </label>
-                        </div>
-                        <div class="form-check mt-3">
-                            <input class="form-check-input" type="radio" name="trabajo" id="trabajo2" value="SI">
-                            <label class="form-check-label" for="trabajo2">
-                                Trabajador.
-                            </label>
-                        </div>
-                        <div class="text-center mt-3">
-                            <button type="submit" class="btn btn-outline-success" name="login">Login</button>
-                        </div>
+        <!--<link rel="stylesheet" href="../../frontend/css/login.css"/>-->
+        <div class='main d-flex justify-content-center'>
+            <div class="card bg-light rounded mt-5 w-50 pb-3">
+                <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
+                    <div class="card-header text-center">
+                        <h2>Login</h2>
                     </div>
-                    <div class="col-md-8">
-                        <div class="">
-                            <label for="c1" class="form-label"><b>Email:</b></label>
-                            <input type="email" name="mail" class="form-control" id="c1" placeholder="Email" <?php
-                            if (!empty($_POST['mail'])) {
-                                echo " value='" . $_POST['mail'] . "'";
-                            }
-                            ?>>
+                    <div class="card-body row">
+                        <div class="col-md-4 border-end">
+                            <label for="trabajo"><b>¿Trabajas con nosotros?</b></label>
+
+                            <div class="form-check mt-3">
+                                <input class="form-check-input" type="radio" name="trabajo" id="trabajo1" value="NO" checked>
+                                <label class="form-check-label" for="trabajo1">
+                                    Usuario.
+                                </label>
+                            </div>
+                            <div class="form-check mt-3">
+                                <input class="form-check-input" type="radio" name="trabajo" id="trabajo2" value="SI">
+                                <label class="form-check-label" for="trabajo2">
+                                    Trabajador.
+                                </label>
+                            </div>
+                            <div class="text-center mt-3">
+                                <button type="submit" class="btn btn-outline-success" name="login">Login</button>
+                            </div>
                         </div>
-                        <div class="mt-3">
-                            <label for="c2" class="form-label"><b>Contraseña:</b></label>
-                            <div class='col-xs-3'>
-                                <input type="password" name="pass" class="form-control" id="c2" placeholder="Contraseña">
+                        <div class="col-md-8 px-5">
+                            <div class="">
+                                <label for="c1" class="form-label"><b>Email:</b></label>
+                                <input type="email" name="mail" class="form-control" id="c1" placeholder="Email" <?php
+                                if (!empty($_POST['mail'])) {
+                                    echo " value='" . $_POST['mail'] . "'";
+                                }
+                                ?>>
+                            </div>
+                            <div class="mt-3">
+                                <label for="c2" class="form-label"><b>Contraseña:</b></label>
+                                <div class='col-xs-3'>
+                                    <input type="password" name="pass" class="form-control" id="c2" placeholder="Contraseña">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <br> <?php echo $err; ?><br>
-                <?php echo $num; ?><br>
-                <div class=''>
-                    <div class="text-center">
-                        <p> <b>Haz click en </b> <a href='recuperarContra.php' style="color:red">Recuperar</a><b> para conseguir tu contraseña!  </b></p> 
+                    <br> <?php echo $err; ?>
+                    <?php echo $num; ?>
+                    <div class='pt-3 text-center lh-sm text-center'>
+                        <span> Haz click en <a href='recuperarContra.php' style="color:red">Recuperar</a> para conseguir tu contraseña!</span><br>
+                        <span> Haz click en <a href='registro.php' style="color:blue">Registrarse</a> para obtener más ventajas!</span>
                     </div>
-                    <div class="text-center">
-                        <p> <b>Haz click en </b> <a href='registro.php' style="color:blue">Registrarse</a> <b> para obtener más ventajas!</b></p>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
+
         <?php
     }
 

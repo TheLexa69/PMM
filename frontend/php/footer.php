@@ -1,4 +1,4 @@
-<footer class='absolute-bottom align-items-center mt-5 pt-5 bg-dark text-center'>
+<footer class='absolute-bottom align-items-center mt-5 bg-dark text-center'>
     <div class="d-flex flex-wrap justify-content-around pt-5">
         <span class="pt-3"><i class="fa-solid fa-location-dot fa-xl"> Vigo, Galicia.</i></span>
         <img src="http://drive.google.com/uc?export=view&id=1rpkYNh2TKDNhgcrXpAuyVCwUUCR-BFMq" alt="logo" style="height: 100px">

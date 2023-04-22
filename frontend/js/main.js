@@ -6,9 +6,22 @@ window.onload = function () {
             link.setAttribute("aria-current", "page");
         }
     });
+    
+    var mensajeDiv2 = document.getElementById('cookie');
+    mensajeDiv2.style.top = '-20%';
+
+    console.log('asdasdasd');
+    function checkCookie() {
+        const cookieBox = document.querySelector(".cookie"), acceptBtn = cookieBox.querySelector("button");
+        if (document.cookie) { // Si la cookie está configurada
+            cookieBox.classList.add("d-none"); // Escondemos la caja de las cookies
+        } else { // Si la cookie no se puede configurar, se muestra el siguiente error
+            alert("¡No se puede configurar la cookie! Por favor, desbloquea este sitio desde la configuración de cookies de tu navegador.");
+            cookieBox.classList.remove("d-none");
+        }
+    }
 
 
-    console.log("hola")
     /**
      Obtiene los elementos del DOM que tienen el nombre "inlineRadioOptions" y asigna un manejador de eventos onclick
      que alterna entre dos estados de visualización. Si está visible, desactiva ambos botones de radio, y si está oculto,
@@ -28,12 +41,12 @@ window.onload = function () {
         }
     }
 
-    // Obtener todos los elementos <img> del documento
+// Obtener todos los elementos <img> del documento
     const imagenes = document.getElementsByClassName('img-select');
-    // Crear un array vacío para almacenar los nombres de las imágenes seleccionadas
+// Crear un array vacío para almacenar los nombres de las imágenes seleccionadas
     const seleccionadas = [];
 
-    // Recorrer todas las imágenes y agregar un listener de click a cada una
+// Recorrer todas las imágenes y agregar un listener de click a cada una
     for (let i = 0; i < imagenes.length; i++) {
         imagenes[i].addEventListener("click", function () {
             // Obtener el valor del atributo "alt" de la imagen

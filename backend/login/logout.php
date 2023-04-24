@@ -29,14 +29,18 @@ session_destroy(); // Eliminaa la sesion
         <title>Sesión cerrada</title>
     </head>
     <body>
-        <div class="container bg-light rounded mt-5 w-50 p-3">
-            <div class="text-center">
-                <p>La sesión se ha cerrado correctamente, hasta la próxima.</p>
+        <div class="container main mt-5">
+            <div class="card rounded">
+                <div class="card-header text-center">
+                    <h3>Cierre de sesión.</h3>
+                </div>
+                <div class="card-body text-center">
+                    <p>La sesión se ha cerrado correctamente, hasta la próxima.</p>
+                </div>
+                <div class="d-flex justify-content-center my-3">
+                    <a href = "/proyecto/index.php?red=true" class='btn btn-default btn-outline-success'>Ir a la página principal</a>
+                </div>
             </div>
-            <div class="d-flex justify-content-center">
-                <a href = "/proyecto/index.php?red=true" class='btn btn-default btn-outline-success'>Ir a la página principal</a>
-            </div>
-
         </div>
 
         <?php

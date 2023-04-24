@@ -17,9 +17,9 @@ $consulta = new consultasLogin(4);
 $envioMail = new mailLogin;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
+
     $_POST = $filtro->validarPost($_POST);
- 
+
     $nombre = $filtro->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]", $_POST['nombre']);
     $apellido1 = $filtro->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]", $_POST['apellido1']);
     $apellido2 = ($_POST['apellido2']) ? $filtro->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]", $_POST['apellido2']) : null;
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nif = null;
     $direccion = null;
     $cp = null;
-    $rol =4;
+    $rol = 4;
     $fecha = $funciones->fechaHoraActual();
 
     $campos = array("nombre" => $nombre, "apellido1" => $apellido1, "telefono" => $telefono, "email" => $mail); //mail base de datos y contraseña
@@ -59,7 +59,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 } else {
     if (isset($_GET['registro'])) {
-        echo $mensaje = "<h2><b>No estas registrado date de alta por favor</b></h2>";
+        echo $mensaje = '<div id="mensaje" class="rounded" style="z-index: 4; position: absolute; transition: top 0.5s; top: -150%; right: 0; background-color: #f44336; color: white; padding: 10px;">
+                        Fallo al iniciar sesión, por favor, registrese.
+                        </div>' . "<script defer>
+                                    window.onload = function() {
+                                    var mensajeDiv = document.getElementById('mensaje');
+                                    mensajeDiv.style.top = '20%';
+                                    setTimeout(function() {
+                                        mensajeDiv.style.top = '-150%';
+                                    }, 5000);
+                                    }
+                                    </script>";
     }
     $formularios->htmlRegistro();
 }

@@ -165,67 +165,64 @@ class FormulariosUsuario {
      */
     public function formularioCambiosPerfil($id) {
         ?>
-        <div class="container bg-light rounded mt-5 w-60 p-3">
-            <div class="d-flex justify-content-center text-center">
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-                    <h3>Filtrar por:</h3>
-
-                    <div class="mt-2 d-flex align-items-center">
-                        <div class="form-check m-3">
-                            <input type="radio" name="orden" value="ASC" class="form-check-input" id="asc"> 
-                            <label class="form-check-label" for="asc">
-                                Ascendente
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input type="radio" name="orden" value="DESC" class="form-check-input"> 
-                            <label class="form-check-label" for="desc">
-                                Descendente
-                            </label>
-                        </div>
-                        <div class=" m-3">
-                            <input type="submit" name=validar value="Filtrar" class='btn btn-default btn-outline-success'>
-                        </div>
+        <div class="container main mt-5">
+            <div class="card rounded">
+                <div class="card-header text-center">
+                    <h3>Lista de cambios realizados.</h3>
+                </div>
+                <div class="card-body text-center">
+                    <div class="d-flex justify-content-center">
+                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                            <h3>Filtrar por:</h3>
+                            <div class="mt-2 d-flex align-items-center justify-content-center">
+                                <input type="radio" name="orden" value="ASC" class="form-check-input" id="asc"> 
+                                <label class="form-check-label" for="asc">
+                                    Ascendente
+                                </label>
+                                <input type="radio" name="orden" value="DESC" class="form-check-input ms-2"> 
+                                <label class="form-check-label" for="desc">
+                                    Descendente
+                                </label>
+                            </div>
+                            <input type="submit" name=validar value="Filtrar" class='btn btn-default btn-outline-success mt-2'>
+                        </form>
                     </div>
-                </form>
-            </div>
-            <div class="text-center">
-                <h2>Cambios realizados:</h2>
-                <hr>
-            </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Apellido</th>
-                        <th scope="col">Apellido</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Número de Teléfono</th>
-                        <th scope="col">NIF</th>
-                        <th scope="col">Dirección</th>
-                        <th scope="col">Código Postal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($id as $key => $id) { ?>
-                        <tr>
-                            <th scope="row"><?php echo $id["nombre"]; ?></th>
-                            <td><?php echo $id["apellido1"]; ?></td>
-                            <td><?php echo $id["apellido2"]; ?></td>
-                            <td><?php echo $id["fecha"]; ?></td>
-                            <td><?php echo $id["num_telef"]; ?></td>
-                            <td><?php echo $id["NIF"]; ?></td>
-                            <td><?php echo $id["direccion"]; ?></td>
-                            <td><?php echo $id["cp"]; ?></td>
-                        </tr>
-                        <?php
-                    }
-                    ?>
-                </tbody>
-            </table>
-
-            <div class="text-center mt-3">
-                <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>" id="cancel" name="cancel" class="btn btn-default btn-outline-danger">Volver</a>
+                </div>
+                <div class="card-body table-responsive">
+                    <table class="table table-striped table-hover text-center">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope=" d-sm-table-cell">Nombre</th>
+                                <th scope=" d-sm-table-cell">Apellido</th>
+                                <th scope=" d-sm-table-cell">Apellido</th>
+                                <th scope=" d-sm-table-cell">Fecha</th>
+                                <th scope=" d-sm-table-cell">Teléfono</th>
+                                <th scope=" d-sm-table-cell">NIF</th>
+                                <th scope=" d-sm-table-cell">Dirección</th>
+                                <th scope=" d-sm-table-cell">Código Postal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($id as $key => $id) { ?>
+                                <tr>
+                                    <th scope="row"><?php echo $id["nombre"]; ?></th>
+                                    <td><?php echo $id["apellido1"]; ?></td>
+                                    <td><?php echo $id["apellido2"]; ?></td>
+                                    <td><?php echo $id["fecha"]; ?></td>
+                                    <td><?php echo $id["num_telef"]; ?></td>
+                                    <td><?php echo $id["NIF"]; ?></td>
+                                    <td><?php echo $id["direccion"]; ?></td>
+                                    <td><?php echo $id["cp"]; ?></td>
+                                </tr>
+                                <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center my-3">
+                    <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>" id="cancel" name="cancel" class="btn btn-default btn-outline-danger">Volver</a>
+                </div>
             </div>
         </div>
         <?php

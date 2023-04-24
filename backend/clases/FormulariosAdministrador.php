@@ -357,16 +357,16 @@ class FormulariosAdministrador {
                 </div>
                 <div class='card-body table-responsive'>
                     <form enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-                        <div class="mt-3 d-flex justify-content-center">
+                        <div class="my-3 d-flex justify-content-center">
                             <?php
                             // Ruta de la imagen
                             $ruta_imagen = $id['img'];
                             // Comprobar si la imagen existe
                             if (file_exists($ruta_imagen)) {
                                 // Mostrar la imagen
-                                echo '<img class="rounded-circle border border-dark" src="' . $ruta_imagen . '" width="200" height="200">';
+                                echo '<img class="rounded-circle border border-dark img-fluid" src="' . $ruta_imagen . '" width="200" height="200">';
                             } else {
-                                echo '<img class="rounded-circle border border-dark" src="../imagenes/imgProductos/defecto.jpg" title="perfil" width="200" height="200">';
+                                echo '<img class="rounded-circle border border-dark img-fluid" src="../imagenes/imgProductos/defecto.jpg" title="perfil" width="200" height="200">';
                             }
                             ?>
                         </div>
@@ -481,10 +481,12 @@ class FormulariosAdministrador {
                                 <option value="disponible">En stock</option> 
                             </select> 
                             <div class="mt-2 d-flex align-items-center justify-content-center">
-                                <input type="radio" name="orden" value="ASC" class="form-check-input"> Ascendente
-                                <input type="radio" name="orden" value="DESC" class="form-check-input"> Descendente
+                                <input type="radio" name="orden" value="ASC" class="form-check-input"> 
+                                <label class="form-check-label" for="ASC">Ascendente</label>
+                                <input type="radio" name="orden" value="DESC" class="form-check-input ms-2"> 
+                                <label class="form-check-label" for="DESC">Descendente</label>
                             </div>
-                            <input type="submit" name=validar2 value="Filtrar" class="btn btn-default btn-outline-success">
+                            <input type="submit" name=validar2 value="Filtrar" class="btn btn-default btn-outline-success mt-2">
                         </form>
                     </div>
                 </div>
@@ -508,16 +510,16 @@ class FormulariosAdministrador {
                     <table class="table table-striped table-hover">
                         <thead class="table-light text-center">
                             <tr>
-                                <th>Nombre</th>
-                                <th>Descripcion</th>
-                                <th class="d-none d-sm-table-cell">Tipo</th>
-                                <th class="d-none d-sm-table-cell">Subtipo</th>
-                                <th class="d-none d-sm-table-cell">Disponible desde</th>
-                                <th class="d-none d-sm-table-cell">Disponible hasta</th>
-                                <th class="d-none d-sm-table-cell">Precio</th>
-                                <th class="d-none d-sm-table-cell">Visible</th>
-                                <th class="d-none d-sm-table-cell">Imagen</th>
-                                <th class="d-none d-sm-table-cell">Editar</th>
+                                <th class=" d-sm-table-cell">Nombre</th>
+                                <th class=" d-sm-table-cell">Descripcion</th>
+                                <th class=" d-sm-table-cell">Tipo</th>
+                                <th class=" d-sm-table-cell">Subtipo</th>
+                                <th class=" d-sm-table-cell">Disponible desde</th>
+                                <th class=" d-sm-table-cell">Disponible hasta</th>
+                                <th class=" d-sm-table-cell">Precio</th>
+                                <th class=" d-sm-table-cell">Visible</th>
+                                <th class=" d-sm-table-cell">Imagen</th>
+                                <th class=" d-sm-table-cell">Editar</th>
                             </tr>
                         </thead>
                         <tbody class="text-center">
@@ -538,13 +540,13 @@ class FormulariosAdministrador {
                                 echo "<tr>"
                                 . "<td class='text-center'>" . $a["nombre"] . "</td> "
                                 . "<td class='text-center'>" . $a["descripcion"] . "</td> "
-                                . "<td class='d-none d-sm-table-cell text-center'>" . $a["nombre_tipo"] . "</td>"
-                                . "<td class='d-none d-sm-table-cell text-center'>" . $a["nombre_subtipo"] . "</td> "
-                                . "<td class='d-none d-sm-table-cell text-center'>" . $a["fecha_inicio"] . "</td>"
-                                . "<td class='d-none d-sm-table-cell text-center'>" . $a["fecha_fin"] . "</td>"
-                                . "<td class='d-none d-sm-table-cell text-center'>" . $a["precio"] . " €" . "</td>"
-                                . "<td class='d-none d-sm-table-cell text-center'>" . $a["disponible"] . "</td>"
-                                . "<td class='d-none d-sm-table-cell text-center'>" . ($a["img"] != '' ? 'tiene' : 'no tiene') . "</td>"
+                                . "<td class=' d-sm-table-cell text-center'>" . $a["nombre_tipo"] . "</td>"
+                                . "<td class=' d-sm-table-cell text-center'>" . $a["nombre_subtipo"] . "</td> "
+                                . "<td class=' d-sm-table-cell text-center'>" . $a["fecha_inicio"] . "</td>"
+                                . "<td class=' d-sm-table-cell text-center'>" . $a["fecha_fin"] . "</td>"
+                                . "<td class=' d-sm-table-cell text-center'>" . $a["precio"] . " €" . "</td>"
+                                . "<td class=' d-sm-table-cell text-center'>" . $a["disponible"] . "</td>"
+                                . "<td class=' d-sm-table-cell text-center'>" . ($a["img"] != '' ? 'tiene' : 'no tiene') . "</td>"
                                 . "<td class='text-center'>"
                                 . "<a href=modificarProductos.php?codigo=" . $a["id_comida"] . " class='btn btn-default btn-outline-info'>Modificar</a>"
                                 . "</td>"

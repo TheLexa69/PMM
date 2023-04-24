@@ -17,7 +17,8 @@ class FormulariosAdministrador {
                 <div class="card-body">
                     <h5 class="card-title">Panel administrador.</h5>
                     <p class="card-text">Aqui podrás añadir trabajadores o listarlos, modificar productos o añadirlos, ver las reservas y mucho más.</p>
-                    <div class="d-flex flex-wrap justify-content-center">
+                    <hr>
+                    <div class="d-flex flex-wrap justify-content-center pt-2">
                         <a href='altaTrabajador.php'><input type='button' class='btn btn-outline-success me-1 mb-2' value='Añadir Trabajador'></a>
                         <a href='trabajadores.php'><input type='button' class='btn btn-outline-success me-1 mb-2' value='Listar Trabajadores'></a>
                         <a href='productos.php'><input type='button' class='btn btn-outline-success me-1 mb-2' value='Modificar Productos'></a>
@@ -211,8 +212,8 @@ class FormulariosAdministrador {
         ?> 
         <div class="container">
             <div class="main card">
-                <div class="card-body">
-                    <table class="table">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
                         <thead class="table-light text-center">
                             <tr>
                                 <th scope="col">NIE</th>
@@ -223,6 +224,7 @@ class FormulariosAdministrador {
                                 <th scope="col">Privilegios</th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Trabajando</th>
+                                <th scope="col">Editar</th>
                             </tr>
                         </thead>
                         <tbody class="text-center">
@@ -231,18 +233,26 @@ class FormulariosAdministrador {
                                 if ($a["id_rol"]) {
                                     $b = $a["nombre_rol"];
                                 }
-                                echo "<tr><td class = 'text-center'>" . $a["nie_trabajador"] . "</td> <td class = 'text-center'>" . $a["pasaporte_trabajador"] . "</td> <td class = 'text-center'>" . $a["nombre"] . " " . $a["apellido1"] . " " . $a["apellido2"] . "</td><td class = 'text-center'>" . $a["fecha"] . "</td> <td class = 'text-center'>" . $a["num_telef"] . "</td><td class = 'text-center'>" . $b . "</td><td class = 'text-center'>" . $a["estado_trabajador"] . "</td><td class = 'text-center'>" . $a["trabajando"] . "</td><td class = 'text-center'><a href = modificarDatosTrabajador.php?codigo = " . $a["id_trabajador"] . " class = 'btn btn-default btn-outline-info'>Modificar</a></td></tr>";
+                                echo "<tr>"
+                                . "<td class = 'text-center'>" . $a["nie_trabajador"] . "</td> "
+                                . "<td class = 'text-center'>" . $a["pasaporte_trabajador"] . "</td> "
+                                . "<td class = 'text-center'>" . $a["nombre"] . " " . $a["apellido1"] . " " . $a["apellido2"] . "</td>"
+                                . "<td class = 'text-center'>" . $a["fecha"] . "</td> "
+                                . "<td class = 'text-center'>" . $a["num_telef"] . "</td>"
+                                . "<td class = 'text-center'>" . $b . "</td>"
+                                . "<td class = 'text-center'>" . $a["estado_trabajador"] . "</td>"
+                                . "<td class = 'text-center'>" . $a["trabajando"] . "</td>"
+                                . "<td class = 'text-center'><a href = modificarDatosTrabajador.php?codigo=" . $a["id_trabajador"] . " class = 'btn btn-default btn-outline-info'>Modificar</a></td></tr>";
                             }
                             ?>
                         </tbody>
                     </table>
-                    <div class="d-flex justify-content-center my-1">
+                    <div class="d-flex justify-content-center mb-2">
                         <a href='indexAdministrador.php'>
                             <input type='button' value='Volver a inicio' class="btn btn-outline-warning">
                         </a>
                     </div>
                 </div>
-
             </div>
         </div>
         <?php
@@ -256,79 +266,78 @@ class FormulariosAdministrador {
      */
     public function datosEmpleado($id, $rol, $necesarios, $mensaje = "") {
         ?>
-        <div class='container bg-light rounded mt-5 p-3'>
-            <div class="d-flex justify-content-center">
-                <h1>Editar Empleado <?php echo $id["nombre"] ?></h1><br>
-            </div>
-            <div class="d-flex justify-content-center">
-                <h1><b><?php echo $mensaje ?></b></h1>
-            </div>
-            <hr>
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);
-        ?>" method="POST">
-                <div class="d-flex justify-content-center text-center">
-                    <table class="edicion">
-                        <tr>
-                            <td>Nie: </td>
-                            <td><input type="text" name="nie" value="<?php echo $id["nie_trabajador"]; ?>" class="form-control"></td>
-                        </tr>
-                        <tr><td>Pasaporte: </td><td><input type="text" name="pasaporte" value="<?php echo $id["pasaporte_trabajador"]; ?>" class="form-control"></td></tr>
-                        <tr><td>Nombre: </td><td><input type="text" name="nombre" value="<?php echo $id["nombre"]; ?>" class="form-control"></td></tr>
-                        <tr><td>Apellidos:</td><td> <input type="text" name="apellido1" value="<?php echo $id["apellido1"]; ?>" class="form-control">  <input type="text" name="apellido2" value=" <?php echo $id["apellido2"]; ?>" class="form-control"></td></tr>     
-                        <tr><td>Correo:</td><td> <input type="text" name="correo" value="<?php echo $id["correo"]; ?>" class="form-control"></td></tr>
-                        <tr><td>Numero de telefono:</td><td> <input type="text" name="telefono" value="<?php echo $id["num_telef"]; ?>" class="form-control"></td></tr>
-                        <tr>
-                            <td>Trabajando:</td>
-                            <td> 
-                                <select name="trabajando" class="form-select"> 
-                                    <option value="<?php echo ($id["trabajando"] == 'si') ? 'si' : 'no'; ?>"><?php echo ($id["trabajando"] == 'si') ? 'ACTIVO Laboralmente' : 'Laboralmente De baja'; ?></option>
-                                    <option value="<?php echo ($id["trabajando"] == 'no') ? 'si' : 'no'; ?>"> <?php echo ($id["trabajando"] == 'si') ? 'Laboralmente De baja' : 'ACTIVO Laboralmente'; ?> </option> 
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Privilegios:</td>
-                            <td> 
-                                <select name="privilegios" class="form-select"> 
-                                    <option value="<?php echo ($id["id_rol"]) ? $id["id_rol"] : ''; ?>"><?php echo ($id["id_rol"]) ? $id["nombre_rol"] : ''; ?></option>
-                                    <?php
-                                    foreach ($rol as $id2 => $nombre) {
-                                        if ($id2 + 1 == 4 || $id2 + 1 == 5) {
-                                            
-                                        } else {
-                                            ?> <option value='<?php echo $id2 + 1 ?>'><?php echo $nombre["nombre_rol"] ?></option> <?php
+        <div class='container main mt-5'>
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>Editar Empleado <?php echo $id["nombre"] ?></h3>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <h1><b><?php echo $mensaje ?></b></h1>
+                </div>
+                <div class="card-body table-responsive">
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                        <table class="table table-striped table-hover">
+                            <tr>
+                                <td>Nie: </td>
+                                <td><input type="text" name="nie" value="<?php echo $id["nie_trabajador"]; ?>" class="form-control"></td>
+                            </tr>
+                            <tr><td>Pasaporte: </td><td><input type="text" name="pasaporte" value="<?php echo $id["pasaporte_trabajador"]; ?>" class="form-control"></td></tr>
+                            <tr><td>Nombre: </td><td><input type="text" name="nombre" value="<?php echo $id["nombre"]; ?>" class="form-control"></td></tr>
+                            <tr><td>Apellidos:</td><td> <input type="text" name="apellido1" value="<?php echo $id["apellido1"]; ?>" class="form-control">  <input type="text" name="apellido2" value=" <?php echo $id["apellido2"]; ?>" class="form-control"></td></tr>     
+                            <tr><td>Correo:</td><td> <input type="text" name="correo" value="<?php echo $id["correo"]; ?>" class="form-control"></td></tr>
+                            <tr><td>Numero de telefono:</td><td> <input type="text" name="telefono" value="<?php echo $id["num_telef"]; ?>" class="form-control"></td></tr>
+                            <tr>
+                                <td>Trabajando:</td>
+                                <td> 
+                                    <select name="trabajando" class="form-select"> 
+                                        <option value="<?php echo ($id["trabajando"] == 'si') ? 'si' : 'no'; ?>"><?php echo ($id["trabajando"] == 'si') ? 'ACTIVO Laboralmente' : 'Laboralmente De baja'; ?></option>
+                                        <option value="<?php echo ($id["trabajando"] == 'no') ? 'si' : 'no'; ?>"> <?php echo ($id["trabajando"] == 'si') ? 'Laboralmente De baja' : 'ACTIVO Laboralmente'; ?> </option> 
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Privilegios:</td>
+                                <td> 
+                                    <select name="privilegios" class="form-select"> 
+                                        <option value="<?php echo ($id["id_rol"]) ? $id["id_rol"] : ''; ?>"><?php echo ($id["id_rol"]) ? $id["nombre_rol"] : ''; ?></option>
+                                        <?php
+                                        foreach ($rol as $id2 => $nombre) {
+                                            if ($id2 + 1 == 4 || $id2 + 1 == 5) {
+                                                
+                                            } else {
+                                                ?> <option value='<?php echo $id2 + 1 ?>'><?php echo $nombre["nombre_rol"] ?></option> <?php
+                                            }
                                         }
-                                    }
-                                    ?>
+                                        ?>
 
-                                </select>
-                            </td>
-                        </tr>
-                    </table>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="mt-3 d-flex flex-wrap justify-content-evenly">
+                            <input type="hidden" name="id" value="<?php echo $id["id_trabajador"]; ?>" class="pr-3">
+                            <input type="submit" name="actualizar" value="Actualizar" class="btn btn-outline-info">
+                            <input type="submit" name="eliminar" value="Eliminar" class="btn btn-outline-danger"> 
+                            <a href="trabajadores.php"><input type="button" value="Modificar Otro Trabajador" class="btn btn-outline-success"></a>
+                            <a href="indexAdministrador.php"><input type="button" value="Volver a inicio" class="btn btn-outline-warning"></a>
+                        </div>
+
+                        <?php
+                        if (!empty($_POST["actualizar"]) && $necesarios !== true) {
+                            //Enseña los campos que faltan al usuario
+                            $necesarios = str_replace('nombre', 'Nombre', $necesarios);
+                            $necesarios = str_replace('telefono', 'Telefono', $necesarios);
+                            $necesarios = str_replace('apellido1', 'Primer apellido', $necesarios);
+                            $necesarios = str_replace('email', 'Correo', $necesarios);
+                            $necesarios = str_replace('nie', 'Nie', $necesarios);
+                            $necesarios = str_replace('pasaporte', 'Pasaporte', $necesarios);
+
+                            echo "<br><br><b style=color:red>Faltan campos obligatorios para completar el registro:</b> <br>$necesarios";
+                        }
+                        ?>               
+                    </form>
                 </div>
-                <div class="mt-3 d-flex justify-content-center">
-                    <input type="hidden" name="id" value="<?php echo $id["id_trabajador"]; ?>" class="pr-3">
-                    <input type="submit" name="actualizar" value="Actualizar" class="btn btn-outline-info">
-                    <input type="submit" name="eliminar" value="Eliminar" class="btn btn-outline-danger"> 
-                    <a href="trabajadores.php"><input type="button" value="Modificar Otro Trabajador" class="btn btn-outline-success"></a>
-                    <a href="indexAdministrador.php"><input type="button" value="Volver a inicio" class="btn btn-outline-warning"></a>
-                </div>
-
-                <?php
-                if (!empty($_POST["actualizar"]) && $necesarios !== true) {
-                    //Enseña los campos que faltan al usuario
-                    $necesarios = str_replace('nombre', 'Nombre', $necesarios);
-                    $necesarios = str_replace('telefono', 'Telefono', $necesarios);
-                    $necesarios = str_replace('apellido1', 'Primer apellido', $necesarios);
-                    $necesarios = str_replace('email', 'Correo', $necesarios);
-                    $necesarios = str_replace('nie', 'Nie', $necesarios);
-                    $necesarios = str_replace('pasaporte', 'Pasaporte', $necesarios);
-
-                    echo "<br><br><b style=color:red>Faltan campos obligatorios para completar el registro:</b> <br>$necesarios";
-                }
-                ?>               
-
-            </form> 
+            </div>
         </div>
         <?php
     }
@@ -508,7 +517,7 @@ class FormulariosAdministrador {
                                 <th class="d-none d-sm-table-cell">Precio</th>
                                 <th class="d-none d-sm-table-cell">Visible</th>
                                 <th class="d-none d-sm-table-cell">Imagen</th>
-                                <th>Modificar</th>
+                                <th class="d-none d-sm-table-cell">Editar</th>
                             </tr>
                         </thead>
                         <tbody class="text-center">
@@ -544,6 +553,11 @@ class FormulariosAdministrador {
                             ?>
                         </tbody>
                     </table>
+                    <div class="d-flex justify-content-center mb-2">
+                        <a href='indexAdministrador.php'>
+                            <input type='button' value='Volver a inicio' class="btn btn-outline-warning">
+                        </a>
+                    </div>
                 </div>
             </div>
             <div id="mensaje" class="rounded" style="z-index: 4; position: absolute; transition: top 0.5s; top: -150%; right: 0; background-color: #f44336; color: white; padding: 10px;">

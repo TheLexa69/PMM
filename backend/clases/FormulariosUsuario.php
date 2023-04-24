@@ -20,89 +20,87 @@ class FormulariosUsuario {
      */
     public function registroDatosPorUsuario($id, $necesarios, $mensaje = "") {
         ?>
-        <div class="container bg-light rounded mt-5 w-60 p-3">
-            <form enctype="multipart/form-data" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
-                <div class="text-center">
-                    <h2>Modifica tus datos:</h2>
-                    <hr><br>
+        <div class="container main mt-5">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>Modifica tus datos:</h3>
                 </div>
-                <div class="d-flex justify-content-center">
-                    <h1><b><?php echo $mensaje ?></b></h1>
-                </div>
-                <div class="row">
-                    <div class="col-4 mt-3 d-flex justify-content-center">
+                <div class="card-body table-responsive">
+                    <form enctype="multipart/form-data" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
+                        <div class="my-3 d-flex justify-content-center">
+                            <?php
+                            // Ruta de la imagen
+                            $ruta_imagen = $id['img'];
+                            // Comprobar si la imagen existe
+                            if (file_exists($ruta_imagen)) {
+                                // Mostrar la imagen
+                                echo '<img class="rounded-circle border border-dark img-fluid" width="200" height="200" src="' . $ruta_imagen . '" alt="Imagen de perfil">';
+                            } else {
+                                echo '<img class="rounded-circle border border-dark img-fluid" width="200" height="200" src="../imagenes/imgUsuarios/defecto.jpg" alt="Imagen de perfil predeterminada">';
+                            }
+                            ?>
+                        </div>
+                        <table class="table table-striped table-hover">
+                            <tr>
+                                <td>Nombre: </td>
+                                <td><input type="text" name="nombre" class="form-control" id="c1" value="<?php echo $id["nombre"]; ?>"></td>
+                            </tr>
+                            <tr>
+                                <td>Primer Apellido: </td>
+                                <td><input type="text" name="apellido1" class="form-control" id="c2" value="<?php echo $id["apellido1"]; ?>"></td>
+                            </tr>
+                            <tr>
+                                <td>Segundo Apellido: </td>
+                                <td><input type="text" name="apellido2" class="form-control" id="c3"  value="<?php echo $id["apellido2"]; ?>"></td>
+                            </tr>
+                            <tr>
+                                <td>Correo: </td>
+                                <td><input type="email" name="mail" class="form-control" id="c4" readonly value="<?php echo $id["correo"]; ?>"></td>
+                            </tr>
+                            <tr>
+                                <td>Teléfono: </td>
+                                <td><input type="text" name="telefono" class="form-control" id="c5"  value="<?php echo $id["num_telef"]; ?>"></td>
+                            </tr>
+                            <tr>
+                                <td>NIF: </td>
+                                <td><input type="text" name="nif" class="form-control" id="c6"  value="<?php echo $id["NIF"]; ?>"></td>
+                            </tr>
+                            <tr>
+                                <td>Dirección: </td>
+                                <td><input type="text" name="direcion" class="form-control" id="c7"  value="<?php echo $id["direccion"]; ?>"></td>
+                            </tr>
+                            <tr>
+                                <td>Código Postal: </td>
+                                <td><input type="text" name="cp" class="form-control" id="c8"  value="<?php echo $id["cp"]; ?>"></td>
+                            </tr>
+                            <tr>
+                                <td>Imagen: </td>
+                                <td><input type="file" name="imagen[]" class="form-control" id="c9"></td>
+                            </tr>
+                        </table>
+
+                        <div class="text-center my-3">
+                            <button type="submit"  name="registro" class="btn btn-outline-success">Actualizar</button>
+                            <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>" id="cancel" name="cancel" class="btn btn-default btn-outline-danger">Cancelar</a>
+                        </div>
+
                         <?php
-                        // Ruta de la imagen
-                        $ruta_imagen = $id['img'];
-                        // Comprobar si la imagen existe
-                        if (file_exists($ruta_imagen)) {
-                            // Mostrar la imagen
-                            echo '<img class="rounded-circle border border-dark" src="' . $ruta_imagen . '" width="200" height="200">';
-                        } else {
-                            echo '<img class="rounded-circle border border-dark" src="../imagenes/imgUsuarios/defecto.jpg" title="perfil" width="200" height="200">';
+                        if (empty($_POST["registro"]) && $necesarios !== true) {
+                            //Enseña los campos que faltan al usuario
+                            $necesarios = str_replace('nombre', 'Nombre', $necesarios);
+                            $necesarios = str_replace('telefono', 'Telefono', $necesarios);
+                            $necesarios = str_replace('apellido1', 'Primer apellido', $necesarios);
+                            $necesarios = str_replace('email', 'Correo', $necesarios);
+                            $necesarios = str_replace('nif', 'NIF', $necesarios);
+                            $necesarios = str_replace('direcion', 'Direccion', $necesarios);
+                            $necesarios = str_replace('cp', 'Codigo Postal', $necesarios);
+                            echo "<br><br><b style=color:red>Faltan campos obligatorios para completar el registro:</b> <br>$necesarios";
                         }
-                        ?>
-                    </div>
-                    <div class="col-8">
-                        <div class="mt-3">
-                            <label for="c1" class="form-label">Nombre:</label><br>
-                            <input type="text" name="nombre" class="form-control" id="c1" value="<?php echo $id["nombre"]; ?>">
-                        </div>
-                        <div class="mt-3">
-                            <label for="c2" class="form-label">Primer Apellido:</label>
-                            <input type="text" name="apellido1" class="form-control" id="c2" value="<?php echo $id["apellido1"]; ?>">
-                        </div>
-                        <div class="mt-3">
-                            <label for="c3" class="form-label">Segundo Apellido:</label>
-                            <input type="text" name="apellido2" class="form-control" id="c3"  value="<?php echo $id["apellido2"]; ?>">
-                        </div>
-                    </div>
-                </div>
+                        ?>               
 
-                <div class="mt-3">
-                    <label for="c4" class="form-label">Mail:</label>     
-                    <input type="email" name="mail" class="form-control" id="c4" readonly value="<?php echo $id["correo"]; ?>">
+                    </form>
                 </div>
-                <div class="mt-3">
-                    <label for="c5" class="form-label">Telefono:</label>
-                    <input type="text" name="telefono" class="form-control" id="c5"  value="<?php echo $id["num_telef"]; ?>">
-                </div>
-                <div class="mt-3">
-                    <label for="c6" class="form-label">Nif:</label><br>
-                    <input type="text" name="nif" class="form-control" id="c6"  value="<?php echo $id["NIF"]; ?>">
-                </div>
-                <div class="mt-3">
-                    <label for="c7" class="form-label">Dirección:</label><br>
-                    <input type="text" name="direcion" class="form-control" id="c7"  value="<?php echo $id["direccion"]; ?>">
-                </div>
-                <div class="mt-3">
-                    <label for="c8" class="form-label">Codigo Postal:</label><br>
-                    <input type="text" name="cp" class="form-control" id="c8"  value="<?php echo $id["cp"]; ?>">
-                </div>
-                <div class="mt-3">
-                    <label for="c9" class="form-label">Imagen:</label><br>
-                    <input type="file" name="imagen[]" class="form-control" id="c9">
-                </div>
-                <div class="text-center mt-3">
-                    <button type="submit"  name="registro" class="btn btn-outline-success">Actualizar</button>
-                    <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>" id="cancel" name="cancel" class="btn btn-default btn-outline-danger">Cancelar</a>
-                </div>
-
-                <?php
-                if (empty($_POST["registro"]) && $necesarios !== true) {
-                    //Enseña los campos que faltan al usuario
-                    $necesarios = str_replace('nombre', 'Nombre', $necesarios);
-                    $necesarios = str_replace('telefono', 'Telefono', $necesarios);
-                    $necesarios = str_replace('apellido1', 'Primer apellido', $necesarios);
-                    $necesarios = str_replace('email', 'Correo', $necesarios);
-                    $necesarios = str_replace('nif', 'NIF', $necesarios);
-                    $necesarios = str_replace('direcion', 'Direccion', $necesarios);
-                    $necesarios = str_replace('cp', 'Codigo Postal', $necesarios);
-                    echo "<br><br><b style=color:red>Faltan campos obligatorios para completar el registro:</b> <br>$necesarios";
-                }
-                ?>               
-
-            </form>
+            </div>
         </div>
         <?php
     }

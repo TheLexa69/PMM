@@ -318,7 +318,7 @@ class FormulariosLogin {
                         }
                         ?>">
                         <div class="mt-3 text-center">
-                            <input type="submit" name="contraMail" value="PULSAR PARA VERIFICAR">
+                            <input type="submit" name="contraMail" class="btn btn-success" value="PULSAR PARA VERIFICAR">
                         </div>
                     </form> 
                 </div>

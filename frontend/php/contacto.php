@@ -2,6 +2,10 @@
 session_start();
 require (dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
 ?>
+<head>
+    <title>Contacto</title>
+</head>
+
 <div class="container main">
     <div class="card mt-5">
         <div class="card-header">

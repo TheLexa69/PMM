@@ -1,13 +1,19 @@
 <?php
+
 namespace clases;
 
-use \RuntimeException;  
+use \RuntimeException;
 
 class FuncionesAdministrador {
-  
 
-
-public function anadirImagenProducto($id, $imagen) {
+    /**
+     * Método para añadir la imagen a los productos.
+     * @param $id
+     * @param $imagen
+     * @return string
+     * @throws RuntimeException
+     */
+    public function anadirImagenProducto($id, $imagen) {
         try {
             $_FILES['imagen'] = $imagen;
 
@@ -35,7 +41,7 @@ public function anadirImagenProducto($id, $imagen) {
                 }
                 // Comprobamos el tipo MIME del archivo
                 $finfo = finfo_open(FILEINFO_MIME_TYPE);
-                $extensiones = array('pdf' => 'application/pdf', 'jpg' => 'image/jpeg', 'png' => 'image/png');
+                $extensiones = array('jpg' => 'image/jpeg', 'png' => 'image/png');
                 $ext = array_search(finfo_file($finfo, $archivos['tmp_name'][$indice]), $extensiones);
                 // Importante cerrar el recurso
                 finfo_close($finfo);
@@ -57,4 +63,5 @@ public function anadirImagenProducto($id, $imagen) {
             echo $e->getMessage();
         }
     }
+
 }

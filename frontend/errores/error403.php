@@ -10,7 +10,7 @@
             Lo sentimos, no hemos podido darte permiso a este sitio.
         </p>
         <div class="mt-3">
-            <img src="../img/gif/errores.gif" class="rounded img-fluid" alt="alt"/>
+            <img src="http://drive.google.com/uc?export=view&id=1Xbtt3Mz2tc3hc29oeDUH70ua2U0gbixg" class="rounded img-fluid" alt="alt"/>
         </div>
     </div>
 </div>

@@ -4,251 +4,326 @@ namespace clases;
 
 class FormulariosLogin {
 
-//funcion que recoge loggin
+    /**
+     * Metodo que muestra el formulario de loggin 
+     * @param $err  En caso de errar en contraseña muestra un mensaje personalizado
+     * @param $num  Contador de intentos al 6 no deja logearse   
+     */
     public function html($err = " ", $num = " ") {
         ?>
-        <link rel="stylesheet" href="../../frontend/css/login.css"/>
-        <div class="container bg-light rounded mt-5 w-50 p-3">
-            <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
-                <div class="text-center">
-                    <h2>Login</h2>
-                    <hr>
+        <!--<link rel="stylesheet" href="../../frontend/css/login.css"/>-->
+        <div class='main d-flex justify-content-center'>
+            <div class="card rounded mt-5 pb-3">
+                <div class="card-header text-center">
+                    <h2 class="fw-bold">Inicia sesión en LuaChea</h2>
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <label for="trabajo"><b>¿Trabajas con nosotros?</b></label>
-
-                        <div class="form-check mt-3">
-                            <input class="form-check-input" type="radio" name="trabajo" id="trabajo1" value="NO" checked>
-                            <label class="form-check-label" for="trabajo1">
-                                Usuario.
-                            </label>
+                <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
+                    <div class="card-body">
+                        <div class="text-center border-bottom pb-2">
+                            <label for="trabajo"><b>¿Trabajas con nosotros?</b></label>
+                            <div class="form-check mt-3">
+                                <input class="form-check-input" type="radio" name="trabajo" id="trabajo1" value="NO" checked>
+                                <label class="form-check-label" for="trabajo1">
+                                    Usuario.
+                                </label>
+                            </div>
+                            <div class="form-check mt-3">
+                                <input class="form-check-input" type="radio" name="trabajo" id="trabajo2" value="SI">
+                                <label class="form-check-label" for="trabajo2">
+                                    Trabajador.
+                                </label>
+                            </div>
                         </div>
-                        <div class="form-check mt-3">
-                            <input class="form-check-input" type="radio" name="trabajo" id="trabajo2" value="SI">
-                            <label class="form-check-label" for="trabajo2">
-                                Trabajador.
-                            </label>
-                        </div>
-                        <div class="text-center mt-3">
-                            <button type="submit" class="btn btn-outline-success" name="login">Login</button>
-                        </div>
-        <!--<input type="radio" id="trabajo" name="trabajo" value="NO" checked>  <label for="trabajo"> NO </label> <br>
-        <input type="radio" id="trabajo" name="trabajo" value="SI" >  <label for="trabajo"> SI </label>-->
-
-                    </div>
-                    <div class="col-md-8">
-                        <div class="">
-                            <label for="c1" class="form-label"><b>Email:</b></label>
-                            <input type="email" name="mail" class="form-control" id="c1" placeholder="Email" <?php
-                            if (!empty($_POST['mail'])) {
-                                echo " value='" . $_POST['mail'] . "'";
-                            }
-                            ?>>
-                        </div>
-                        <div class="mt-3">
-                            <label for="c2" class="form-label"><b>Contraseña:</b></label>
-                            <div class='col-xs-3'>
-                                <input type="password" name="pass" class="form-control" id="c2" placeholder="Contraseña">
+                        <div class="pt-2">
+                            <div class="">
+                                <label for="c1" class="form-label"><b>Email:</b></label>
+                                <input type="email" name="mail" class="form-control" id="c1" placeholder="E-mail" <?php
+                                if (!empty($_POST['mail'])) {
+                                    echo " value='" . $_POST['mail'] . "'";
+                                }
+                                ?>>
+                            </div>
+                            <div class="mt-3">
+                                <label for="c2" class="form-label"><b>Contraseña:</b></label>
+                                <div class='col-xs-3'>
+                                    <input type="password" name="pass" class="form-control" id="c2" placeholder="Contraseña">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                                                                                <!--<input type="submit" name="login">-->
-                <br> <?php echo $err; ?>
-                <?php echo $num; ?>
-                <div class=''>
-                    <div class="text-center">
-                        <p> <b>Haz click en </b> <a href='recuperarContra.php' style="color:red">Recuperar</a><b> para conseguir tu contraseña!  </b></p> 
+                    <div class="text-center mt-3">
+                        <button type="submit" class="btn btn-outline-success" name="login">Iniciar sesión</button>
                     </div>
-                    <div class="text-center">
-                        <p> <b>Haz click en </b> <a href='registro.php' style="color:blue">Registrarse</a> <b> para obtener más ventajas!</b></p>
+                    <br> <?php echo $err; ?>
+                    <?php echo $num; ?>
+                    <div class='pt-3 text-center lh-sm text-center'>
+                        <span> Haz click en <a href='recuperarContra.php' style="color:red">Recuperar</a> para conseguir tu contraseña!</span><br>
+                        <span> Haz click en <a href='registro.php' style="color:blue">Registrarse</a> para obtener más ventajas!</span>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
 
-
         <?php
     }
 
+    /**
+     * Método que muestra formulario de registro  
+     * @param $necesarios  En caso de no completarse todos los campos se muestra cuales faltan
+     */
     public function htmlRegistro($necesarios = "") {
         ?>
+        <div class="container main mt-5">
+            <div class="card rounded">
+                <div class="card-header text-center">
+                    <h3 class="fw-bold">Regístrate en LuaChea.</h3>
+                </div>
+                <div class="card-body table-responsive">
+                    <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
+                        <table class="table table-striped table-hover">
+                            <tr>
+                                <td><h5>Nombre</h5></td>
+                                <td>
+                                    <input type="text" name="nombre" placeholder="Nombre" class="form-control" id="c1" <?php
+                                    if (!empty($_POST['nombre'])) {
+                                        echo " value='" . $_POST['nombre'] . "'";
+                                    }
+                                    ?> >
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><h5>Primer Apellido</h5></td>
+                                <td>
+                                    <input type="text" name="apellido1" placeholder="Primer Apellido" class="form-control" id="c2" <?php
+                                    if (!empty($_POST['apellido1'])) {
+                                        echo " value='" . $_POST['apellido1'] . "'";
+                                    }
+                                    ?> >
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><h5>Segundo Apellido</h5></td>
+                                <td>
+                                    <input type="text" name="apellido2" placeholder="Segundo Apellido" class="form-control" id="c3" <?php
+                                    if (!empty($_POST['apellido2'])) {
+                                        echo " value='" . $_POST['apellido2'] . "'";
+                                    }
+                                    ?> >
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><h5>Correo electrónico</h5></td>
+                                <td>
+                                    <input type="email" name="mail" placeholder="Correo electrónico" class="form-control" id="c4"  <?php
+                                    if (!empty($_POST['mail'])) {
+                                        echo " value='" . $_POST['mail'] . "'";
+                                    }
+                                    ?>>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><h5>Teléfono</h5></td>
+                                <td>
+                                    <input type="text" name="telefono" class="form-control" id="c5" <?php
+                                    if (!empty($_POST['telefono'])) {
+                                        echo " value='" . $_POST['telefono'] . "'";
+                                    }
+                                    ?>>
+                                </td>
+                            </tr>
+                        </table>
+                        <?php
+                        if (!empty($_POST['registro']) && $necesarios !== true) {
+                            //Enseña los campos que faltan al usuario
+                            $necesarios = str_replace('apellido1', 'primer apellido', $necesarios);
+                            // $necesarios = str_replace('apellido2', 'segundo apellido', $necesarios);
+                            $necesarios = str_replace('password', 'contraseña', $necesarios);
+                            // $necesarios = str_replace('password2', 'confirmación de la contraseña',$necesarios);
+                            $necesarios = str_replace('email', 'correo', $necesarios);
+                            echo "<br><b style=color:red>Faltan campos obligatorios:</b> <br>$necesarios";
+                        }
+                        ?>
+                        <div class="text-center"><input type="submit" class="btn btn-success" name="registro"></div>
 
-        <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
-            <h2>Registro:</h2>
-            <label for="c1" class="form-label">Nombre:</label><br>
-            <input type="text" name="nombre" class="form-control" id="c1" <?php
-            if (!empty($_POST['nombre'])) {
-                echo " value='" . $_POST['nombre'] . "'";
-            }
-            ?> ><br>
-            <label for="c2" class="form-label">Primer Apellido:</label><br>
-            <input type="text" name="apellido1" class="form-control" id="c2" <?php
-            if (!empty($_POST['apellido1'])) {
-                echo " value='" . $_POST['apellido1'] . "'";
-            }
-            ?> ><br>
-            <label for="c3" class="form-label">Segundo Apellido:</label><br>
-            <input type="text" name="apellido2" class="form-control" id="c3" <?php
-            if (!empty($_POST['apellido2'])) {
-                echo " value='" . $_POST['apellido2'] . "'";
-            }
-            ?> ><br>
-            <label for="c4" class="form-label">Email:</label><br>     
-            <input type="email" name="mail" class="form-control" id="c4"  <?php
-            if (!empty($_POST['mail'])) {
-                echo " value='" . $_POST['mail'] . "'";
-            }
-            ?>   ><br>
-            <label for="c5" class="form-label">Telefono:</label><br>
-            <input type="text" name="telefono" class="form-control" id="c5" <?php
-            if (!empty($_POST['telefono'])) {
-                echo " value='" . $_POST['telefono'] . "'";
-            }
-            ?>   ><br>
-            <br> 
-
-
-            <input type="submit" name="registro">
-            <?php
-            if (!empty($_POST['registro']) && $necesarios !== true) {
-                //Enseña los campos que faltan al usuario
-                $necesarios = str_replace('apellido1', 'primer apellido', $necesarios);
-                // $necesarios = str_replace('apellido2', 'segundo apellido', $necesarios);
-                $necesarios = str_replace('password', 'contraseña', $necesarios);
-                // $necesarios = str_replace('password2', 'confirmación de la contraseña',$necesarios);
-                $necesarios = str_replace('email', 'correo', $necesarios);
-                echo "<br><br><b style=color:red>Faltan campos obligatorios:</b> <br>$necesarios";
-            }
-            ?>
-
-        </form>
-
-
+                    </form>
+                </div>
+            </div>
+        </div>
         <?php
     }
 
+    /**
+     * Método que muestra el formulario de recuperacion de contraseña
+     * @param $mensaje   Muestra en caso de no existir que el mail dado no esta registrado
+     */
     public function recuperar($mensaje = "") {
         ?>
-
-
-        <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
-            <h2>Email con el que te diste de alta:</h2>
-            <?php echo $mensaje; ?><br> 
-            <label for="trabajo"><b>¿Trabajas con nosotros?</b></label> <br>
-            <input type="radio" id="trabajo" name="trabajo" value="NO" checked>  <label for="trabajo"> NO </label> <br> 
-            <input type="radio" id="trabajo" name="trabajo" value="SI" >  <label for="trabajo"> SI </label>
-            <br><br> 
-            <label for="c1" class="form-label">Correo electrónico :</label><br>     
-            <input type="email" name="mailr" class="form-control" id="c1"  <?php
-            if (!empty($_POST['mail'])) {
-                echo " value='" . $_POST['mail'] . "'";
-            }
-            ?>   > 
-
-            <input type="submit" name="ENVIAR MAIL">
-
-        </form>
-
-
+        <div class="container main mt-5">
+            <div class="card rounded">
+                <div class="card-header text-center">
+                    <h3>¿Has olvidado tu contraseña?</h3>
+                </div>
+                <div class="card-body">
+                    <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
+                        <?php echo $mensaje; ?><br> 
+                        <label for="trabajo"><b>¿Trabajas con nosotros?</b></label> <br>
+                        <input type="radio" id="trabajo" name="trabajo" value="NO" checked>  <label for="trabajo"> NO </label> <br> 
+                        <input type="radio" id="trabajo" name="trabajo" value="SI" >  <label for="trabajo"> SI </label>
+                        <br><br> 
+                        <label for="c1" class="form-label">Correo electrónico :</label><br>     
+                        <input type="email" placeholder="Correo Electrónico" name="mailr" class="form-control" id="c1"  <?php
+                        if (!empty($_POST['mail'])) {
+                            echo " value='" . $_POST['mail'] . "'";
+                        }
+                        ?>> 
+                        <div class="mt-3 text-center">
+                            <input type="submit" class="btn btn-success" name="ENVIAR MAIL">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <?php
     }
 
+    /**
+     *  Metodo que saca formulario para contrastar que el token enviado al usuario sea el mismo que esta introduciendo
+     * @param $mail
+     * @param $rol
+     */
     public function contrastaToken($mail, $rol) {
         ?> 
-
-        <form   action= "comprobarToken.php " method="POST">
-            <h2><b>Revise su Email y ponga el código de verificación para finalizar el proceso</b></h2>
-
-            <div  >
-                <label for="c" class="form-label">Codigo Mail:</label><br>
-                <input type="password" class="form-control" id="c" name="token"><br><br>
-                <input type="hidden" name="rol" value="<?php echo $rol ?>">
-                <input type="hidden" name="testigo" >
-
-                <input type="hidden" name="mail" value="<?php
-                if (!empty($mail)) {
-                    echo $mail;
-                }
-                ?>">
-
-
+        <div class="container main mt-3">
+            <div class="card rounded">
+                <div class="card-header text-center">
+                    <h3>Regístrate en LuaChea</h3>
+                </div>
+                <div class="card-body">
+                    <form action= "comprobarToken.php " method="POST">
+                        <h5 class="text-center">Para completar el proceso, por favor revise su bandeja de correo electrónico. Le hemos enviado un código de verificación.</h5>                
+                        <label for="c" class="form-label">Codigo Mail:</label>
+                        <input type="password" class="form-control" id="c" name="token">
+                        <input type="hidden" name="rol" value="<?php echo $rol ?>">
+                        <input type="hidden" name="testigo" >
+                        <input type="hidden" name="mail" value="<?php
+                        if (!empty($mail)) {
+                            echo $mail;
+                        }
+                        ?>">
+                        <div class="mt-3 text-center">
+                            <input type="submit" name="validar" class="btn btn-success " value="Activar Cuenta" >
+                        </div>
+                    </form> 
+                </div>
             </div>
-            <input type="submit" name="validar" value="Activar Cuenta" >
-        </form> 
+        </div>
 
         <?php
     }
 
+    /**
+     * Metodo que muestra un formulario en caso de poner mal el token recibido en el mail
+     * @param $mail
+     * @param $rol
+     */
     public function tokenMal($mail, $rol) {
-        ?>  
-
-        <form   action= "comprobarToken.php " method="POST">
-            <h2>Comprobar Mail</h2><br>
-
-            <div  >
-                <label for="c" class="form-label">Codigo Mail <b>INCORRECTO</b> vuelva a ponerlo:</label><br><br>
-                <input type="password" class="form-control" id="c" name="token"><br><br>
-                <input type="hidden" name="testigo"  >
-                <input type="hidden" name="rol" value="<?php echo $rol ?>">
-                <input type="hidden" name="mail" value="<?php
-                if (!empty($mail)) {
-                    echo $mail;
-                }
-                ?>">
-
+        ?> 
+        <div class="container main mt-3">
+            <div class="card rounded">
+                <div class="card-header text-center">
+                    <h3>Regístrate en LuaChea</h3>
+                </div>
+                <div class="card-body">
+                    <form action= "comprobarToken.php " method="POST">
+                        <h5><b>El código que ha introducido es incorrecto. Por favor, inténtelo de nuevo.</b></h5>
+                        <input type="password" class="form-control" id="c" name="token">
+                        <input type="hidden" name="testigo"  >
+                        <input type="hidden" name="rol" value="<?php echo $rol ?>">
+                        <input type="hidden" name="mail" value="<?php
+                        if (!empty($mail)) {
+                            echo $mail;
+                        }
+                        ?>">
+                        <div class="mt-3 text-center">
+                            <input type="submit" name="validar" class="btn btn-success" value="Activar Cuenta" >
+                        </div>
+                    </form> 
+                </div>
             </div>
-            <input type="submit" name="validar" value="Activar Cuenta" >
-        </form> 
-
+        </div>
         <?php
     }
 
+    /**
+     * Método que muestra formulario par poner la contraseña
+     * @param $mail
+     * @param $rol
+     */
     public function contrasena($mail, $rol) {
         ?>
-
-        <form   action="guardarContrasena.php" method="POST">
-
-            <label for="c2" class="form-label">Escriba su contraseña:</label><br>
-            <label for="c3" class="form-label">Contraseña:</label><br>
-            <input type="password" name="pass" class="form-control" id="c3"  ><br>
-            <label for="c4" class="form-label">Repite contraseña:</label><br>
-            <input type="password" name="pass2" class="form-control" id="c4"  ><br><br> 
-            <input type="hidden" name="mail" value="<?php
-            if (!empty($mail)) {
-                echo $mail;
-            }
-            ?>">
-            <input type="hidden" name="rol" value="<?php echo $rol ?>">
-
-            <input type="submit" name="contraMail" value="PULSAR PARA VERIFICAR">
-        </form> 
+        <div class="container main mt-3">
+            <div class="card rounded">
+                <div class="card-header text-center">
+                    <h3>Contraseña</h3>
+                </div>
+                <div class="card-body">
+                    <h5>Por favor, escriba su contraseña ahora.</h5>
+                    <form action="guardarContrasena.php" method="POST">
+                        <label for="c2" class="form-label">Escriba su contraseña:</label><br>
+                        <label for="c3" class="form-label">Contraseña:</label><br>
+                        <input type="password" name="pass" class="form-control" id="c3"  ><br>
+                        <label for="c4" class="form-label">Repite contraseña:</label><br>
+                        <input type="password" name="pass2" class="form-control" id="c4"  ><br><br> 
+                        <input type="hidden" name="mail" value="<?php
+                        if (!empty($mail)) {
+                            echo $mail;
+                        }
+                        ?>">
+                        <input type="hidden" name="rol" value="<?php echo $rol ?>">
+                        <div class="mt-3 text-center">
+                            <input type="submit" name="contraMail" class="btn btn-success" value="PULSAR PARA VERIFICAR">
+                        </div>
+                    </form> 
+                </div>
+            </div>
+        </div>
 
         <?php
     }
 
+    /**
+     * Método que muestra formulario par poner la contraseña  en caso de no poner las dos iguales
+     * @param $mail
+     * @param $rol
+     */
     public function contraMail($mail, $rol) {
         ?>
-
-        <form   action="guardarContrasena.php" method="POST">
-            <h1>Tienen que ser iguales</h1>   
-            <label for="c2" class="form-label">Escriba su contraseña:</label><br>
-            <label for="c3" class="form-label">Contraseña:</label><br>
-            <input type="password" name="pass" class="form-control" id="c3"  ><br>
-            <label for="c4" class="form-label">Repite contraseña:</label><br>
-            <input type="password" name="pass2" class="form-control" id="c4"><br><br>
-            <input type="hidden" name="rol" value="<?php echo $rol ?>">
-            <input type="hidden" name="mail" value="<?php
-            if (!empty($mail)) {
-                echo $mail;
-            }
-            ?>">
-
-            <input type="submit" name="contraMail" value="PULSAR PARA VERIFICAR">
-        </form> 
-
+        <div class="container main mt-3">
+            <div class="card rounded">
+                <div class="card-header text-center">
+                    <h3>Regístrate en LuaChea</h3>
+                </div>
+                <div class="card-body">
+                    <form action="guardarContrasena.php" method="POST">
+                        <h5 class="text-center">Lo siento, las contraseñas que ha introducido no coinciden. Por favor, inténtelo de nuevo.</h5>   
+                        <label for="c2" class="form-label">Escriba su contraseña:</label><br>
+                        <label for="c3" class="form-label">Contraseña:</label><br>
+                        <input type="password" name="pass" class="form-control" id="c3"  ><br>
+                        <label for="c4" class="form-label">Repite contraseña:</label><br>
+                        <input type="password" name="pass2" class="form-control" id="c4"><br><br>
+                        <input type="hidden" name="rol" value="<?php echo $rol ?>">
+                        <input type="hidden" name="mail" value="<?php
+                        if (!empty($mail)) {
+                            echo $mail;
+                        }
+                        ?>">
+                        <div class="mt-3 text-center">
+                            <input type="submit" name="contraMail" class="btn btn-success" value="PULSAR PARA VERIFICAR">
+                        </div>
+                    </form> 
+                </div>
+            </div>
+        </div>
         <?php
     }
 

@@ -1,5 +1,9 @@
 <?php
 
+/**
+  Función que comprueba que sólo pueden acceder a la aplicación los usuarios que hayan hecho login.
+  @return bool Devuelve true si el usuario ha iniciado sesión correctamente, o redirige al formulario de login si no.
+ */
 function comprobar_sesion() {
     /*
      * Para comprobar que sólo pueden acceder a la aplicación los usuarios que hayan hecho login.
@@ -15,8 +19,12 @@ function comprobar_sesion() {
     }
 }
 
+/**
+ * Función que comprueba que hayan iniciado sesión como administrador.
+ * @return bool Devuelve true si el administrador ha iniciado sesión correctamente, 
+ * o redirige al formulario de login si no.
+ */
 function comprobar_sesionAdministrador() {
-
     session_start();
     if (!isset($_SESSION['administrador'])) {
         header("Location:/proyecto/backend/login/indexLogin.php");
@@ -25,8 +33,13 @@ function comprobar_sesionAdministrador() {
     }
 }
 
+/**
+ *
+ * Función que comprueba que el administrador ha iniciado sesión correctamente y que tiene el tipo de sesión adecuado.
+ * @return bool Devuelve true si el administrador ha iniciado sesión correctamente y tiene el tipo de sesión adecuado, 
+ * o redirige a la página de inicio de sesión si no.
+ */
 function sesionAdministrador() {
-
     session_start();
     if (!isset($_SESSION['administrador'])) {
         header("Location:/proyecto/backend/login/indexLogin.php");
@@ -38,8 +51,11 @@ function sesionAdministrador() {
     }
 }
 
+/**
+  Función que comprueba que no haya sesiones iniciadas, para evitar que los usuarios inicien varias sesiones a la vez.
+  @return bool Devuelve true si no hay sesiones iniciadas, o redirige a la página de inicio de la aplicación si hay alguna.
+ */
 function comprobar_sesiones() {
-
     session_start();
     if (isset($_SESSION['usuario']) || isset($_SESSION['administrador'])) {
         header("Location:/proyecto/index.php");
@@ -48,8 +64,11 @@ function comprobar_sesiones() {
     }
 }
 
+/**
+  Función que devuelve el tipo de sesión del administrador que ha iniciado sesión correctamente.
+  @return int Devuelve el tipo de sesión del administrador (1, 2, 3 o 4), o redirige a la página de inicio de sesión si no ha iniciado sesión.
+ */
 function tipoDeSesionAdministrador() {
-
     session_start();
     if (!isset($_SESSION['administrador'])) {
         header("Location:/proyecto/backend/login/indexLogin.php");

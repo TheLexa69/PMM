@@ -9,7 +9,7 @@ use \clases\FuncionesLogin as funcionesLogin;
 use \clases\FuncionesUsuario as funcionesUsuario;
 
 $formularios = new formulariosUsuario;
-$consulta = new consultasUsuario;
+$consulta = new consultasUsuario($_SESSION['rolUsusario']);
 $funciones = new funcionesLogin;
 $funcionesU = new funcionesUsuario;
 

@@ -7,14 +7,38 @@ use \PDOException;
 
 class ConsultasLogin extends Conexion {
 
-    public function __construct() {
-        //  var_dump ($this->conexion= $this->conectar());
-        //$this->conexion= $this->conectar();
-        parent::__construct();
+    /**
+     * Método contruct que al extender de la clase padre Conexión hereda
+     * su constructor que es el puntero de conexión.
+     */
+    public function __construct($rol=5) {
+
+        parent::__construct($rol);
     }
 
-    public function añadirUsuario($nombre, $apellido1, $apellido2, $token2, $mail, $telefono, $rol, $fecha, $nif, $direccion, $cp) {
+    /**
+     * Método destructor de la clase que se encarga de destruir el objeto de conexión a la base de datos.
+     */
+    public function __destruct() {
+        $this->conexion = null;
+    }
 
+    /**
+     * Método par añadir los datos de un usuario las variables son referenciadas al dato
+     * @param $nombre
+     * @param $apellido1
+     * @param $apellido2
+     * @param $token2          Es el numero generado aleatoriamente y pasado a hash que se guarda en la base de datos en el registro
+     * @param $mail
+     * @param $telefono
+     * @param $privilegios     Es  rol del usuario que puede ser Administrador Gestor Administrador o Trabajador
+     * @param $fecha           Fecha en la cual hace loggin o en este caso se inserta en la tabla
+     * @param $nif             Nif
+     * @param $direccion       Direccion donde vive
+     * @param $cp              Codigo postal
+     * @throws PDOException Si hay algún error al ejecutar la consulta SQL.
+     */
+    public function añadirUsuario($nombre, $apellido1, $apellido2, $token2, $mail, $telefono, $rol, $fecha, $nif, $direccion, $cp) {
         try {
             $sql = "INSERT INTO usuario (nombre,apellido1 ,apellido2,contraseña,correo,num_telef, id_rol,fecha,NIF,direccion,cp) VALUES (:nombre,:apellido1,:apellido2,:contrasena,:correo,:num_telef,:rol,:fecha,:nif,:direccion,:cp)";
 
@@ -37,13 +61,16 @@ class ConsultasLogin extends Conexion {
             unset($stmt);
             unset($this->conexion);
         } catch (PDOException $e) {
-
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
 
+    /**
+     * Método que devuelve los datos de un usuario pasandole el email
+     * @param $mail
+     * @return $datos
+     */
     public function comprobarDatos($mail) {
-
         $sql = "select * from usuario where correo=?";
 
         $stmt = $this->conexion->prepare($sql);
@@ -51,35 +78,42 @@ class ConsultasLogin extends Conexion {
         $stmt->execute(array($mail));
 
         $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
         $datos = array();
         foreach ($fila as $fil) {
             $datos = $fil;
         }
-      
+
         unset($stmt);
         return $datos;
     }
-    
-      public function registroHoraSession($id,$fecha) {
- 
 
+    /**
+     * Método que registra la hora en la cual el usuario hizo el login
+     * @param $id
+     * @param $fecha
+     * @return $stmt
+     */
+    public function registroHoraSession($id, $fecha) {
         $sql1 = "UPDATE usuario SET  fecha=:fecha where id_usuario = :id";
 
         $stmt = $this->conexion->prepare($sql1);
 
         $stmt->bindParam(':id', $id, PDO::PARAM_STR, 25);
         $stmt->bindParam(':fecha', $fecha, PDO::PARAM_STR);
-        
 
         $stmt->execute();
-        
+
         return $stmt;
     }
-    
-    
 
+    /**
+     * Método para poner la contraseña al usuario dado su correo
+     * @param $mail
+     * @param $contra
+     * @return $stmt
+     */
     public function nuevaContraseña($mail, $contra) {
-
         $sql = "select * from usuario where correo=?";
 
         $stmt = $this->conexion->prepare($sql);
@@ -110,12 +144,17 @@ class ConsultasLogin extends Conexion {
         $stmt->bindParam(':contrasena', $contra, PDO::PARAM_STR); //nueva contraseña de usuario hash
 
         $stmt->execute();
-        
+
         return $stmt;
     }
 
+    /**
+     * Método que deshabilita la cuenta cuando se pide cambio de contraseña
+     * @param $mail
+     * @param $contra
+     * @return $stmt
+     */
     public function quitarActivacion($mail, $contra) {
-
         $sql = "select * from usuario where correo=?";
 
         $stmt = $this->conexion->prepare($sql);
@@ -140,7 +179,7 @@ class ConsultasLogin extends Conexion {
         $stmt->bindParam(':contrasena', $contra, PDO::PARAM_STR); //nueva contraseña de usuario hash
 
         $stmt->execute();
-       
+
         return $stmt;
     }
 

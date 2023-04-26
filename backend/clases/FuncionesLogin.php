@@ -1,77 +1,62 @@
 <?php
+
 namespace clases;
 
- class FuncionesLogin{
-     
-     
-public function campos(array $campos, $requeridos) {
-    $noCubiertos = [];
-    foreach ($campos as $campo) {
-        if (empty($requeridos[$campo])) {
-            $noCubiertos[] = $campo;
-        }
-    }
-    if (sizeof($noCubiertos) > 0) {
-        $respuesta = implode(', ', $noCubiertos);
-    } else {
-        $respuesta = true;
-    }
-    return $respuesta;
-}
+class FuncionesLogin {
 
-public function texto($texto) {
-    /*
-     * Función que compruebe que la cadena recibida sólo acepta letras, incluyendo tildes
+    /**
+     * Método que comprueba que los campos pasdos existan en los dos array
+     * @param array $campos. Campos que fueron cubiertos
+     * @param $requeridos. Campos que son obligatorios
+     * @return boolean $respuesta. En caso de que esten todos devuelve true  en caso contrario devuelve un string en formato del array dado
      */
-    $pattern = '/[a-zA-ZáéíóúÁÉÍÓÚñÑ]$/';
-    return preg_match($pattern, $texto);
-}
-
-public function correo($mail) {
-
-    return filter_var($mail, FILTER_SANITIZE_EMAIL);
-}
-
-
-
-public function hora() {
-    $a = getdate(time());
-    return $a["hours"] . ":" . $a["minutes"] . ":" . $a["seconds"];
-}
-
-public function fechaActual() {
-    return   date("Y-m-d ");
-}
-public function fechaHoraActual() {
-    return  date("Y-m-d H:i:s", time());
-}
-
- 
-
-     /*
-function contrasenas($pass, $pass2) {
-
-    if ($pass == $pass2) {
-        return true;
-    } else {
-        return false;
+    public function campos(array $campos, $requeridos) {
+        $noCubiertos = [];
+        foreach ($campos as $campo) {
+            if (empty($requeridos[$campo])) {
+                $noCubiertos[] = $campo;
+            }
+        }
+        if (sizeof($noCubiertos) > 0) {
+            $respuesta = implode(', ', $noCubiertos);
+        } else {
+            $respuesta = true;
+        }
+        return $respuesta;
     }
-}*/
 
-   /*
-  function cookis($var1, $var2 = " ", $var3 = " ") {
+    /**
+     * Método que comprueba si el email cumple con el formato email y lo devuelve saneado.
+     * @param string $mail
+     * @return string $mail. La dirección de correo electrónico filtrada y saneada.
+     */
+    public function correo($mail) {
+        return filter_var($mail, FILTER_SANITIZE_EMAIL);
+    }
 
-  if (empty($var3)) {
-  $cook1 = setcookie($var1, $var2);
-  } else {
-  $cook1 = setcookie($var1, $var2, time() + $var3);
+    /**
+     * Método para coger la hora separada por horas, :, minutos, :, segundos
+     * @return $a. Ya separado y con formato.
+     */
+    public function hora() {
+        $a = getdate(time());
+        return $a["hours"] . ":" . $a["minutes"] . ":" . $a["seconds"];
+    }
 
-  }
+    /**
+     * Método para coger la Fecha actual 
+     * @return date.
+     */
+    public function fechaActual() {
+        return date("Y-m-d ");
+    }
 
-  if ($cook1) {
-  echo "cookie creada<br>";
-  }
-  }
- */  
-     
- }
+    /**
+     * Método para coger la Fecha actual hora minutos y segundos 
+     * @return date.
+     */
+    public function fechaHoraActual() {
+        return date("Y-m-d H:i:s", time());
+    }
+
+}

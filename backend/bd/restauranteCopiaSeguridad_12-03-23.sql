@@ -68,8 +68,8 @@ nombre varchar(100) not null,
 descripcion varchar(300) null,
 tipo int not null,
 subtipo int null,
-fecha_inicio TIMESTAMP not null,
-fecha_fin TIMESTAMP null,
+fecha_inicio date not null,
+fecha_fin date null,
 precio float not null,
 disponible  enum('si','no') not null default 'si',
 img varchar(100) not null,
@@ -109,7 +109,7 @@ id_comida int not null
 CREATE TABLE IF NOT EXISTS pedidos (
   id_ped INT NOT NULL AUTO_INCREMENT,
   id_usuario int not null,
-  fecha TIMESTAMP NOT NULL,
+  fecha date NOT NULL,
   enviado enum('si', 'no') NOT NULL default "no",
   restaurante VARCHAR(10) NOT NULL,
   PRIMARY KEY (id_ped)
@@ -121,7 +121,7 @@ id_factura int auto_increment,
 id_usuario int not null,
 cif_empresa varchar(10) not null,
 fecha TIMESTAMP not null,
-total int not null,
+total float not null,
 modo_pago int not null,
 id_ped int not null,
 
@@ -159,7 +159,7 @@ CREATE TABLE if not exists ped_prod (
   id_ped int NOT NULL,
   id_prod int NOT NULL,
   cantidad int NOT NULL,
-  precio int NOT NULL,
+  precio float NOT NULL,
   constraint pk_id_ped_prod primary key (id_ped_prod)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

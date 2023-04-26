@@ -16,8 +16,20 @@ if (isset($_GET["todos"])) {
     $cantidadResultados = 20;
 }
 
-$paginaActual = isset($_GET["pagina"]) ? (int) $_GET["pagina"] : 1;
-$paginaInicio = ($paginaActual - 1) * $cantidadResultados;
+//$paginaActual = isset($_GET["pagina"]) ? (int) $_GET["pagina"] : 1;
+//$paginaInicio = ($paginaActual - 1) * $cantidadResultados;
+
+
+$por_pagina = 10;
+
+if (isset($_GET['pagina'])) {
+    $pagina_actual = $_GET['pagina'];
+} else {
+    $pagina_actual = 1;
+}
+$indice_primer_elemento = ($pagina_actual - 1) * $por_pagina;
+$total_paginas = ceil($consulta->obtenerNumProductos() / $por_pagina);
+
 
 if (isset($_POST["validar2"])) {
     
@@ -28,33 +40,35 @@ if (isset($_POST["validar2"])) {
     }
     if (!empty($_POST['opcion'])) {
         $opcion = $_POST['opcion'];
+        $_SESSION["opcion"] = $opcion;
     }
     if (!empty($_POST['orden'])) {
         $orden = $_POST['orden'];
+        $_SESSION["orden"] = $orden;
     }
   
 $nombre1 = (isset($nombre1)) ? $nombre1 : "";
-$opcion = (isset($opcion)) ? $opcion : "";
-$orden = (isset($orden)) ? $orden : "";
+$opcion = (isset($_SESSION["opcion"])) ? $_SESSION["opcion"] : "";
+$orden = (isset($_SESSION["orden"])) ? $_SESSION["orden"] : "";
 
 
 
 $formularios->listaFiltradaProductos();
-$fila = $consulta->filtradoProductos($paginaInicio, $cantidadResultados, $nombre1, $opcion, $orden);
-$formularios->tablaProductos($fila);
+$fila = $consulta->filtradoProductos($indice_primer_elemento, $por_pagina, $nombre1, $opcion, $orden);
+$formularios->tablaProductos($fila, $total_paginas, $pagina_actual);
 
 
 
     }else{
         
     
-$fila1 = $consulta->productos();
+$fila1 = $consulta->productos($indice_primer_elemento, $por_pagina);
 $formularios->listaFiltradaProductos();
 if (empty($fila1)) {
     $mensaje1 = "Producto no registrado";
     echo "<script> alert('" . $mensaje1 . "'); </script>";
 }
-$formularios->tablaProductos($fila1);
+$formularios->tablaProductos($fila1, $total_paginas, $pagina_actual);
     }
 $contador = $consulta->productosActivos();
 $total = ceil($contador / $cantidadResultados);

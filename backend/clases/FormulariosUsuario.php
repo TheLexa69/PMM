@@ -163,7 +163,7 @@ class FormulariosUsuario {
      * Método que muestra un formulario con los datos modificados del usuario
      * @param type $id
      */
-    public function formularioCambiosPerfil($id) {
+    public function formularioCambiosPerfil($id, $total_paginas, $pagina_actual) {
         ?>
         <div class="container main mt-5">
             <div class="card rounded">
@@ -220,6 +220,20 @@ class FormulariosUsuario {
                         </tbody>
                     </table>
                 </div>
+                <div class='d-flex justify-content-center gap-3'>
+                
+                <?php echo "<nav aria-label='...'>
+                    <ul class='pagination pagination-lg'>";
+                    for ($i = 1; $i <= $total_paginas; $i++) {
+                        if ($i == $pagina_actual) {
+                        echo "<li class='page-item active' aria-current='page'><span class='page-link'><a style = 'color: black;' href='#'> $i </a></span></li>";
+                        } else {
+                            echo "<li class='page-item'><a class='page-link' style = 'color: black;' href='?pagina=$i'> $i </a></li>";
+                        }
+                    }
+                    echo "</ul></nav>";
+                
+                ?>
                 <div class="text-center my-3">
                     <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>" id="cancel" name="cancel" class="btn btn-default btn-outline-danger">Volver</a>
                 </div>

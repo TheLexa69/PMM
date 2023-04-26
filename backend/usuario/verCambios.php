@@ -16,12 +16,31 @@ $funcionesU = new funcionesUsuario;
  
 $id = $_SESSION["usuario"];
 
+$por_pagina = 10;
+
+if (isset($_GET['pagina'])) {
+    $pagina_actual = $_GET['pagina'];
+} else {
+    $pagina_actual = 1;
+}
+$indice_primer_elemento = ($pagina_actual - 1) * $por_pagina;
+$total_paginas = ceil($consulta->comprobarFilasDatos($id) / $por_pagina);
+
+
 if (!empty($_POST['orden'])) {
     $orden = $_POST['orden'];
+    $_SESSION["orden"] = $orden;
 }
 $orden = (isset($orden)) ? $orden : "";
 
-$datos = $consulta->solicitarDatosCambiados($id, $orden);
-$formularios->formularioCambiosPerfil($datos);
+
+$datos = $consulta->solicitarDatosCambiados($id, $_SESSION["orden"], $indice_primer_elemento, $por_pagina);
+
+//$datos = $consulta->solicitarDatosCambiados($id, $orden);
+//$formularios->formularioCambiosPerfil($datos);
+
+$formularios->formularioCambiosPerfil($datos, $total_paginas, $pagina_actual);
+
+
 
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");

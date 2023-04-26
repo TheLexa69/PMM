@@ -205,7 +205,7 @@ class FormulariosAdministrador {
      * Método que carga los empleados en una tabla en caso de no tener ninguno saldra un mensaje alert avisando de ello
      * @param $fila. Datos de  la consulta de empleados
      */
-    public function tablaEmpleados($fila) {
+    public function tablaEmpleados($fila, $total_paginas, $pagina_actual) {
         if (isset($_GET["mensaje"])) {
             echo "<script> alert('" . $_GET["mensaje"] . "'); </script>";
         }
@@ -247,9 +247,25 @@ class FormulariosAdministrador {
                             ?>
                         </tbody>
                     </table>
+                    <div class="d-flex justify-content-center gap-3">
+                    <?php 
+                        echo "<nav aria-label='...'>
+                            <ul class='pagination pagination-lg'>
+                            ";
+                        for ($i = 1; $i <= $total_paginas; $i++) {
+                            if ($i == $pagina_actual) {
+                            echo "<li class='page-item active' aria-current='page'><span class='page-link'><a style = 'color: black;' href='#'> $i </a></span></li>";
+                            } else {
+                                echo "<li class='page-item'><a class='page-link' style = 'color: black;' href='?pagina=$i'> $i </a></li>";
+                            }
+                        }
+                        echo "</ul></nav>";
+                
+                    ?>
+                    </div>
                     <div class="d-flex justify-content-center mb-2">
                         <a href='indexAdministrador.php'>
-                            <input type='button' value='Volver a inicio' class="btn btn-outline-warning">
+                            <input type='button' value='Volver' class="btn btn-outline-warning">
                         </a>
                     </div>
                 </div>
@@ -499,7 +515,7 @@ class FormulariosAdministrador {
      * Método que precarga los datos de los productos en un formulario para su posterior tratamiento 
      * @param $fila  Continene los productos
      */
-    public function tablaProductos($fila) {
+    public function tablaProductos($fila, $total_paginas, $pagina_actual) {
         if (isset($_GET["mensaje"])) {
             echo "<script> alert('" . $_GET["mensaje"] . "'); </script>";
         }
@@ -555,9 +571,25 @@ class FormulariosAdministrador {
                             ?>
                         </tbody>
                     </table>
+                    <div class="d-flex justify-content-center gap-3">
+                    <?php 
+                        echo "<nav aria-label='...'>
+                            <ul class='pagination pagination-lg'>
+                            ";
+                        for ($i = 1; $i <= $total_paginas; $i++) {
+                            if ($i == $pagina_actual) {
+                            echo "<li class='page-item active' aria-current='page'><span class='page-link'><a style = 'color: black;' href='#'> $i </a></span></li>";
+                            } else {
+                                echo "<li class='page-item'><a class='page-link' style = 'color: black;' href='?pagina=$i'> $i </a></li>";
+                            }
+                        }
+                        echo "</ul></nav>";
+                
+                    ?>
+                    </div>
                     <div class="d-flex justify-content-center mb-2">
                         <a href='indexAdministrador.php'>
-                            <input type='button' value='Volver a inicio' class="btn btn-outline-warning">
+                            <input type='button' value='Volver' class="btn btn-outline-warning">
                         </a>
                     </div>
                 </div>

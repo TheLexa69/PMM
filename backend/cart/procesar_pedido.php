@@ -5,8 +5,8 @@ comprobar_sesion();
 require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "nav.php"); 
 use \clases\Pedido as pedido;
 use \clases\Carrito as carrito;
-$c = new carrito( $_SESSION['rolUsusario'][0]);
-$p = new pedido( $_SESSION['rolUsusario'][0]);
+$c = new carrito( $_SESSION['rolUsusario']);
+$p = new pedido( $_SESSION['rolUsusario']);
 
 $id_usuario = $_SESSION['usuario'];
 $carrito = $_SESSION['carrito'];

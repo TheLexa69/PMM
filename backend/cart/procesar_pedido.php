@@ -1,11 +1,13 @@
 <?php
 require "../sesiones/sesiones.php";
+//session_start();
 comprobar_sesion();
 require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "nav.php"); 
 use \clases\Pedido as pedido;
 use \clases\Carrito as carrito;
-$c = new carrito();
-$p = new pedido();
+$c = new carrito( $_SESSION['rolUsusario']);
+$p = new pedido( $_SESSION['rolUsusario']);
+
 $id_usuario = $_SESSION['usuario'];
 $carrito = $_SESSION['carrito'];
 // Calcula el precio total del carrito
@@ -35,15 +37,12 @@ $c->add($id_usuario, NULL);
 echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-center">Ocurrió algún error y no se pudo realizar el pedido</h2></div>';
 }
 ?>
-
 </br>
-<!-- Botón de volver al inicio -->
 <div class="layered box row mr-2">
-    <div class="col-2 d-flex justify-content-right">
+        <div class="col-2 d-flex justify-content-right">
         <a href="../login/indexLogin.php"><button type="button" class="btn btn-outline-success">Volver al inicio</button></a>
-    </div>
-</div>
+        </div>
+      </div>
+
 <?php
-// Requiere el archivo de pie de página
 require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "footer.php"); 
-?>

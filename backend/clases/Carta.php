@@ -1,31 +1,24 @@
 <?php
+
 namespace clases;
+
 /**
  * Description of carta
  *
- * @author Nuria
+ * @author Nuria y Guillermo
  */
-
-
 use \PDO;
 use \PDOException;
 
 class Carta extends Conexion {
-    
+
     private $table = 'carta_comida';
 
-    public function __construct() {
-<<<<<<< Updated upstream
-                // Conexión a la base de datos
-              //  $this->pdo = conexion();
-            //} catch(PDOException $e) {
-            //    die("Error de conexión: " . $e->getMessage());
-            //}
-=======
->>>>>>> Stashed changes
-            parent::__construct();
+    public function __construct($rol=5) {
+            parent::__construct($rol);
         
     }
+
     public function __destruct() {
         $this->conexion = null;
     }
@@ -48,7 +41,6 @@ class Carta extends Conexion {
         $stmt->execute();
         return $stmt->fetchAll();
     }
-    
 
     /**
      * Obtiene una lista de todos los platos de la carta.
@@ -75,8 +67,6 @@ class Carta extends Conexion {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-<<<<<<< Updated upstream
-=======
 
     /**
      * Obtiene una lista de platos filtrados por alérgenos.
@@ -110,9 +100,4 @@ class Carta extends Conexion {
         return $stmt->fetchAll();
     }
 
->>>>>>> Stashed changes
 }
-
-
-
-

@@ -1,71 +1,41 @@
 <?php
+
 namespace clases;
+
 /**
  * Description of carrito
  *
  * @author Nuria
  */
-
-
 use \PDO;
 use \PDOException;
 
-
-//namespace clases_carrito;
 class Carrito extends Conexion {
-    
+
     private $table = 'carrito';
 
-    public function __construct() {
-                // Conexión a la base de datos
-              //  $this->pdo = conexion();
-            //} catch(PDOException $e) {
-            //    die("Error de conexión: " . $e->getMessage());
-            //}
-            parent::__construct();
-        
+    public function __construct($rol=5) {
+        parent::__construct($rol);
     }
+
     public function __destruct() {
         $this->conexion = null;
     }
 
-<<<<<<< Updated upstream
-    /*saca todas las filas de la cesta del usuario con el que tenemos sesión */
-=======
     /**
      * Devuelve la cantidad de cada producto en el carrito del usuario con sesión iniciada
      *
      * @param int $id_usuario El ID del usuario
      * @return mixed Un array con la cantidad de cada producto en el carrito del usuario, o false si hay un error
      */
->>>>>>> Stashed changes
     public function getCarro($id_usuario) {
+        /* saca todas las filas de la cesta del usuario con el que tenemos sesión */
         $stmt = $this->conexion->prepare("SELECT comida_cantidad FROM $this->table WHERE id_usuario = :id_usuario AND id_ped IS NULL");
         $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch();
     }
     
-<<<<<<< Updated upstream
-    /*Saca cada producto que tiene en la cesta con esos campos, parecido al de arriba*/
-    /*Sin utilidad, anteriormente para mostrar cada fila x producto, base de datos cambiada*/
-    /*public function printCarro($id_usuario) {
-        $rows = "";
-        $stmt = $this->conexion->prepare("SELECT c.id_comida, p.img, p.nombre, precio, c.id_usuario, c.cantidad 
-                                            FROM carta_comida p 
-                                            INNER JOIN $this->table c ON p.id_comida = c.id_comida 
-                                            WHERE c.id_usuario = :id_usuario");
-        $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-        foreach ($result as $row) {
-            $rows .= 'id comida:' .$row['id_comida']. 'Imagen: ' . $row['img'] . ', Nombre: ' . $row['nombre'] . ', Precio: ' . $row['precio'] . ', ID usuario: ' . $row['id_usuario'] . ', cantidad: ' . $row['cantidad'] . '<br>';
-        }
-        return $rows;
-        //Código para visualizar el carro
-    }*/
-
-=======
     /**
      * Devuelve el HTML para mostrar un producto en el carrito con su imagen, nombre, precio y cantidad
      *
@@ -73,28 +43,22 @@ class Carrito extends Conexion {
      * @param int $cantidad La cantidad del producto
      * @return string El HTML para mostrar el producto en el carrito
      */
->>>>>>> Stashed changes
     public function printCarroSes($id_comida, $cantidad) {
         $stmt = $this->conexion->prepare("SELECT id_comida, img, nombre, precio
                                             FROM carta_comida WHERE id_comida = :id_comida");
         $stmt->bindParam(':id_comida', $id_comida, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetch();
-<<<<<<< Updated upstream
-        //$row = 'id comida:' .$result['id_comida']. 'Imagen: ' . $result['img'] . ', Nombre: ' . $result['nombre'] . ', Precio: ' . $result['precio'] . ', cantidad: ' . $cantidad . '<br>';
-        
-        //return $row;
-=======
->>>>>>> Stashed changes
         
         //Código para visualizar el carro
-        $url = DIRECTORY_SEPARATOR .'proyecto'.DIRECTORY_SEPARATOR .'backend'. DIRECTORY_SEPARATOR . 'cart'. DIRECTORY_SEPARATOR.'eliminar_carrito.php?cod='. $result['id_comida'];
-        $html_code = "<div class=\"layered box row mr-2\" id=\"producto\">
+        $url = DIRECTORY_SEPARATOR . 'proyecto' . DIRECTORY_SEPARATOR . 'backend' . DIRECTORY_SEPARATOR . 'cart' . DIRECTORY_SEPARATOR . 'eliminar_carrito.php?cod=' . $result['id_comida'];
+        $html_code = "<div class=\"container my-5 py-3 bg-light rounded\">
+                        <div class=\"row\" id=\"producto\">
                         <div class=\"col-4\">                        
                                 <img class=\"imagenes rounded img-fluid\" id=\"producto_img\" title=\"vaso\" src=\"https://cdn.pixabay.com/photo/2020/12/15/13/44/children-5833685__340.jpg\">
-                                </div>
+                         </div>
                         <div class=\"col-4 d-flex ml-2 flex-column\">
-                            <h4 class=\"nombre-producto\">" .  $result['nombre'] . "</h4>
+                            <h4 class=\"nombre-producto\">" . $result['nombre'] . "</h4>
                             <p>Descripción:
                             <a href=\"#\" id=\"info\">
                                 <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" class=\"bi bi-exclamation-circle\" viewBox=\"0 0 16 16\">
@@ -104,23 +68,19 @@ class Carrito extends Conexion {
                             </a>
                             </p>
 
-                            <h5 class=\"precio-producto\"> Precio: ". $result['precio'] ."€</h5>
-                            <form method=\"post\" action=\"". $url  ."\">
-                            <label for=\"cantidad\">Cantidad:</label>
-                            <input type=\"number\" name=\"cantidad\" value=\"" . $cantidad . "\" min=\"1\" max=\"10\" onchange=\"updateCantidad(" . $id_comida . ", this.value)\">
+                            <h5 class=\"precio-producto\"> Precio: " . $result['precio'] . "€</h5>
+                            <form method=\"post\" action=\"" . $url . "\">
+                                <label for=\"cantidad\">Cantidad:</label>
+                                <input type=\"number\" name=\"cantidad\" value=\"" . $cantidad . "\" min=\"1\" max=\"10\" onchange=\"updateCantidad(" . $id_comida . ", this.value)\">
 
-                </div>
-        <div class=\"col-4 d-flex justify-content-center\">    
-                <button class=\"btn-add-cart btn btn-outline-secondary\" id=\"eliminar\" type=\"submit\">Eliminar</button></form></div></div>";
+                            </div>
+                            <div class=\"col-4 d-flex justify-content-center align-items-center\">    
+                                <button class=\"btn-add-cart btn btn-outline-secondary\" id=\"eliminar\" type=\"submit\">Eliminar</button>
+                            </form></div></div> </div>";
 
         return $html_code;
-
-
     }
 
-<<<<<<< Updated upstream
-    
-=======
     /**
     *
     * @param int $id_comida El id de la comida que se desea agregar al carrito
@@ -129,7 +89,6 @@ class Carrito extends Conexion {
     * @return string El fragmento de HTML generado para mostrar la información
     * de la comida en el carrito de compras
     */
->>>>>>> Stashed changes
     function printCarritoCarta($id_comida, $cantidad) {
         $stmt = $this->conexion->prepare("SELECT id_comida, nombre, precio
                                         FROM carta_comida WHERE id_comida = :id_comida");
@@ -138,14 +97,14 @@ class Carrito extends Conexion {
         $result = $stmt->fetch();
 
         //Código para visualizar el carro
-        $url = DIRECTORY_SEPARATOR .'proyecto'.DIRECTORY_SEPARATOR .'backend'. DIRECTORY_SEPARATOR . 'cart'. DIRECTORY_SEPARATOR.'eliminar_carrito.php?cod='. $result['id_comida'] . '&red=1';
+        $url = DIRECTORY_SEPARATOR . 'proyecto' . DIRECTORY_SEPARATOR . 'backend' . DIRECTORY_SEPARATOR . 'cart' . DIRECTORY_SEPARATOR . 'eliminar_carrito.php?cod=' . $result['id_comida'] . '&red=1';
         $html_code = '<div class="row align-items-center border-bottom pt-2 pb-2">
-                <div class="col-3">'.$result['nombre'].'</div>
-                <div class="col-3">'.$result['precio'].'</div>
+                <div class="col-3">' . $result['nombre'] . '</div>
+                <div class="col-3">' . $result['precio'] . '</div>
                 <div class="col-3">
-                <input type="number" name="cantidad" size="5" value="'. $cantidad . '" min="1" max="10" onchange="updateCantidad(\'' . $id_comida . '\', this.value)"></div>
+                <input type="number" name="cantidad" size="5" value="' . $cantidad . '" min="1" max="10" onchange="updateCantidad(\'' . $id_comida . '\', this.value)"></div>
                 <div class="col-3 d-flex justify-content-center align-items-center">
-                    <a href="'.$url.'">
+                    <a href="' . $url . '">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-trash" viewBox="0 0 16 16">
                             <path
@@ -157,13 +116,6 @@ class Carrito extends Conexion {
                 </div>
             </div>';
 
-<<<<<<< Updated upstream
-return $html_code;
-
-    }
-    
-    /*Añadir productos al carro*/
-=======
         return $html_code;
 
     }
@@ -178,45 +130,33 @@ return $html_code;
     *
     * @return bool Devuelve true si se ha añadido correctamente el producto al carrito, de lo contrario devuelve false.
     */
->>>>>>> Stashed changes
     public function add($id_usuario, $carrito) {
         $comida_cantidad = serialize($carrito);
         try {
             // Iniciar transacción
-                $this->conexion->beginTransaction();
+            $this->conexion->beginTransaction();
 
-                if ($this->getCarro($id_usuario)) {
-                    $stmt = $this->conexion->prepare("UPDATE $this->table SET comida_cantidad = :comida_cantidad WHERE id_usuario = :id_usuario AND id_ped IS NULL");
-                    $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
-                    $stmt->bindParam(':comida_cantidad', $comida_cantidad, PDO::PARAM_STR);
-                    $stmt->execute();
-                } else {
-                    $stmt = $this->conexion->prepare("INSERT INTO $this->table (id_usuario, comida_cantidad) VALUES (:id_usuario, :comida_cantidad)");
-                    $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
-                    $stmt->bindParam(':comida_cantidad', $comida_cantidad, PDO::PARAM_STR);
-                    $stmt->execute();
-                }
+            if ($this->getCarro($id_usuario)) {
+                $stmt = $this->conexion->prepare("UPDATE $this->table SET comida_cantidad = :comida_cantidad WHERE id_usuario = :id_usuario AND id_ped IS NULL");
+                $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+                $stmt->bindParam(':comida_cantidad', $comida_cantidad, PDO::PARAM_STR);
+                $stmt->execute();
+            } else {
+                $stmt = $this->conexion->prepare("INSERT INTO $this->table (id_usuario, comida_cantidad) VALUES (:id_usuario, :comida_cantidad)");
+                $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+                $stmt->bindParam(':comida_cantidad', $comida_cantidad, PDO::PARAM_STR);
+                $stmt->execute();
+            }
             // Si la consulta de inserción o actualización se ejecuta correctamente
             // se confirma la transacción, de lo contrario se hace un rollback
             $this->conexion->commit();
             return true;
-        } catch(PDOException $e) {
+        } catch (PDOException $e) {
             $this->conexion->rollBack();
             return false;
         }
     }
     
-<<<<<<< Updated upstream
-    /*public function getTotalPrice($id_usuario) {
-        $query = "select sum(precio) from carta_comida p, $this->table c, usuario u where (c.id_usuario = :id_usuario) and (p.id_comida = c.id_comida)";
-        $stmt = $this->conexion->prepare($query);
-        $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_STR);
-        $stmt->execute();
-        return $stmt->fetch();
-        //guardar en variable y return en html
-    }*/
-
-=======
     /**
     *
     * Calcula el precio total de los productos en el carrito
@@ -225,33 +165,28 @@ return $html_code;
     *
     * @return string Precio total con formato de moneda (€)
     */
->>>>>>> Stashed changes
     public function getTotalPrice($carrito) {
         $precio = 0;
         // Obtener todos los productos en el carrito
-        foreach($carrito as $cod => $cant) {
+        foreach ($carrito as $cod => $cant) {
             $stmt = $this->conexion->prepare("SELECT precio FROM carta_comida WHERE id_comida = ?");
             $stmt->bindParam(1, $cod, PDO::PARAM_INT);
             $stmt->execute();
             $productos = $stmt->fetch();
             if ($productos) {
-                $precio += (double)$productos['precio'] * (double)$cant;
+                $precio += (double) $productos['precio'] * (double) $cant;
             }
         }
-    
-        return number_format($precio,2) . "€";
+
+        return number_format($precio, 2) . "€";
     }
     
-<<<<<<< Updated upstream
-
-=======
     /**
     *
     * Busca el ID de un usuario por su dirección de correo electrónico
     * @param string $email Dirección de correo electrónico del usuario
     * @return array|false Devuelve un array con el ID de usuario si existe, o false si no existe
     */
->>>>>>> Stashed changes
     function searchId($email) {
         $query = "SELECT id_usuario FROM usuario WHERE correo = :email";
         $stmt = $this->conexion->prepare($query);
@@ -274,9 +209,4 @@ return $html_code;
         return $stmt->fetch();
     }
 
-
 }
-
-
-
-

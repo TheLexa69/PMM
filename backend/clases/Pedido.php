@@ -1,29 +1,29 @@
 <?php
 
 namespace clases;
+
 /**
  * Description of pedido
  *
  * @author Nuria
  */
 use \clases\Mails as mails;
-
 use \PDO;
 use \PDOException;
 
 class Pedido extends Conexion {
-    
+
     private $tabla_pedidos;
     private $tabla_productos;
     private $tabla_factura;
-    
-    public function __construct() {
-        parent::__construct();
+
+    public function __construct($rol=5) {
+        parent::__construct($rol);
         $this->tabla_pedidos = 'pedidos';
         $this->tabla_productos = 'ped_prod';
         $this->tabla_factura = 'factura';
     }
-    
+
     public function __destruct() {
         $this->conexion = null;
     }
@@ -84,15 +84,15 @@ class Pedido extends Conexion {
      * 
      * @return array Array con todos los pedidos del usuario
      */
-
-    public function obtenerPedidos($id_usuario, $orden) {
+    public function obtenerPedidos($id_usuario, $orden, $indice_primer_elemento, $por_pagina) {
         if (empty($orden)) {
-            $stmt = $this->conexion->prepare("SELECT id_ped, fecha FROM $this->tabla_pedidos WHERE id_usuario = :id_usuario ORDER BY fecha DESC");
+            $stmt = $this->conexion->prepare("SELECT id_ped, fecha FROM $this->tabla_pedidos WHERE id_usuario = :id_usuario ORDER BY fecha DESC LIMIT :indice_primer_elemento, :por_pagina");
         } else {
-            $stmt = $this->conexion->prepare("SELECT id_ped, fecha, restaurante FROM $this->tabla_pedidos WHERE id_usuario = :id_usuario ORDER BY fecha $orden");
+            $stmt = $this->conexion->prepare("SELECT id_ped, fecha, restaurante FROM $this->tabla_pedidos WHERE id_usuario = :id_usuario ORDER BY fecha $orden LIMIT :indice_primer_elemento, :por_pagina");
         }
         $stmt->bindParam(":id_usuario", $id_usuario, PDO::PARAM_INT);
-        
+        $stmt->bindParam(":indice_primer_elemento", $indice_primer_elemento, PDO::PARAM_INT);
+        $stmt->bindParam(":por_pagina", $por_pagina, PDO::PARAM_INT);
         $stmt->execute();
         $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($pedidos as &$pedido) {
@@ -106,9 +106,9 @@ class Pedido extends Conexion {
         return $pedidos;
     }
 
-    /**
-     * Método para obtener todos los pedidos (de todos los usuarios)
-     *
+  /**
+     * Método para obtener todos los pedidos (de todos los usuarios) NO SE USA ES GENERAL
+     * @param int $id_usuario ID del usuario para controlar que sea admin
      * @return array Array con todos los pedidos de todos los usuarios
      */
     public function obtenerPedidosAdmin($id_usuario) {
@@ -130,7 +130,7 @@ class Pedido extends Conexion {
      * 
      * @return array Array con la información del pedido y los productos que se pidieron
      */
-    public function obtenerPedido($id_pedido) {
+    public function obtenerPedido($id) {
         $stmt = $this->conexion->prepare("SELECT * FROM $this->tabla_pedidos WHERE id = ?");
         $stmt->execute([$id_pedido]);
         $pedido = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -138,6 +138,21 @@ class Pedido extends Conexion {
         $stmt->execute([$id_pedido]);
         $pedido['productos'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $pedido;
+    }
+
+    /**
+     * Método para obtener número de pedidos 
+     *
+     * @param int $id ID del usuario
+     * 
+     * @return int 
+     */
+    public function obtenerNumPedidos($id_usuario) {
+        $stmt = $this->conexion->prepare("SELECT count(*) FROM $this->tabla_pedidos WHERE id_usuario = :id_usuario");
+        $stmt->bindParam(":id_usuario", $id_usuario, PDO::PARAM_INT);
+        $stmt->execute();
+        $pedidos = $stmt->fetch();
+        return $pedidos[0];
     }
 
     /**
@@ -178,12 +193,12 @@ class Pedido extends Conexion {
             $stmt->bindParam(':id_comida', $id_comida, PDO::PARAM_INT);
             $stmt->execute();
             $result = $stmt->fetch();
-            $array_carrito .=  "<tr><td>" .$result['nombre']. "</td><td>$cantidad</td><td>".$result['precio']."€</td><td> </tr>";
+            $array_carrito .= "<tr><td>" . $result['nombre'] . "</td><td>$cantidad</td><td>" . $result['precio'] . "€</td><td> </tr>";
         }
         $array_carrito .= "<tr><td colspan=3>_________________</td></tr></tr>
                             <tr><td>Precio Total</td><td colspan=2>$precio_total </td> </tr>
                             <tr><td colspan=3>_________________</td></tr>
-                            <tr><td>Especificaciones del cliente: </td><td colspan=2>$especif</td> </tr>"; 
+                            <tr><td>Especificaciones del cliente: </td><td colspan=2>$especif</td> </tr>";
         return $array_carrito;
     }
 
@@ -205,18 +220,17 @@ class Pedido extends Conexion {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $pesoTotal = 0;
         $texto = "<h1>Pedido nº $pedido</h1>";
-        $texto .= "<p><h3>".$result["nombreLocal"]."</h3></p><p><h3>".$result["cif"]."</h3></p><p><h3>".$result["nombre_sociedad"]."</h3></p><p><h3>".$result["direccion"]."</h3></p><p><h3>".$result["ciudad"]."</h3></p><p><h3>".$result["cp"]."</h3></p><p><h3>".$result["fecha"]."</h3></p>";
+        $texto .= "<p><h3>" . $result["nombreLocal"] . "</h3></p><p><h3>" . $result["cif"] . "</h3></p><p><h3>" . $result["nombre_sociedad"] . "</h3></p><p><h3>" . $result["direccion"] . "</h3></p><p><h3>" . $result["ciudad"] . "</h3></p><p><h3>" . $result["cp"] . "</h3></p><p><h3>" . $result["fecha"] . "</h3></p>";
         $texto .= "Detalle del pedido:";
         $texto .= "<table>"; //abrir la tabla
         $texto .= "<tr><th>Nombre</th><th>Unidades</th><th>Precio</th></tr>";
         $texto .= $carrito;
-        $texto .= "<tr><td colspan=3> Modo de pago: ".$result["nombre"]."</td></tr>";
+        $texto .= "<tr><td colspan=3> Modo de pago: " . $result["nombre"] . "</td></tr>";
         $texto .= "<tr><td colspan=3> Su pedido se está cocinando... </td></tr></table>";
         return $texto;
     }
 
     /**
-
     * Envía el correo electrónico con el contenido proporcionado.
     * @param string $email La dirección de correo electrónico a la que se enviará el correo.
     * @param string $cuerpo El contenido del correo electrónico.
@@ -225,4 +239,5 @@ class Pedido extends Conexion {
         $c_envio = new mails;
         $c_envio->enviar_correo_pedidos($email, $cuerpo);
     }
+
 }

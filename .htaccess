@@ -1,0 +1,2 @@
+ErrorDocument 404 /proyecto/frontend/errores/error404.php
+ErrorDocument 403 /proyecto/frontend/errores/error403.php

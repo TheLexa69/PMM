@@ -1,132 +1,128 @@
 <?php
+
 session_start();
-require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "nav.php"); 
+require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
+
 use clases\Carrito as carrito;
+
 $carrito = new carrito();
 $rol = isset($_SESSION['id_rol']) ? $_SESSION['id_rol'] : null;
 $win_loc = "../login/indexLogin.php";
 ?>
 <script>
-<<<<<<< Updated upstream
+    /**
+     *
+     * Actualiza la cantidad de un producto en el carrito a través de una petición AJAX
+     * @param {number} id_comida - El ID del producto a actualizar
+     * @param {number} cantidad - La nueva cantidad del producto
+     * @return {void}
+     */
+    function updateCantidad(id_comida, cantidad) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'actualizar_carrito.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                // Actualizar la página para reflejar los cambios
+                window.location.reload();
+            }
+        };
+        xhr.send('id_comida=' + id_comida + '&cantidad=' + cantidad);
+    }
 
+    document.addEventListener("DOMContentLoaded", function (event) {
+        // Obtener el botón de realizar compra
+        const miEnlace = document.getElementById("log");
 
-=======
-	/**
-	*
-	* Actualiza la cantidad de un producto en el carrito a través de una petición AJAX
-	* @param {number} id_comida - El ID del producto a actualizar
-	* @param {number} cantidad - La nueva cantidad del producto
-	* @return {void}
-	*/
->>>>>>> Stashed changes
-	function updateCantidad(id_comida, cantidad) {
-		var xhr = new XMLHttpRequest();
-		xhr.open('POST', 'actualizar_carrito.php', true);
-		xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-		xhr.onreadystatechange = () => {
-			if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-			// Actualizar la página para reflejar los cambios
-			window.location.reload();
-			}
-		};
-		xhr.send('id_comida=' + id_comida + '&cantidad=' + cantidad);
-	}
+        // Añadir un evento de clic al botón
+        miEnlace.addEventListener("click", function () {
+            // Comprobar si el usuario ha iniciado sesión
+            if (!usuarioIniciado()) {
+                // Mostrar un alerta y redirigir a la página de inicio de sesión
 
-	document.addEventListener("DOMContentLoaded", function(event) {
-	// Obtener el botón de realizar compra
-	const miEnlace = document.getElementById("log");
+                window.location.href = "../login/indexLogin.php";
 
-		// Añadir un evento de clic al botón
-		miEnlace.addEventListener("click", function() {
-		// Comprobar si el usuario ha iniciado sesión
-		if (!usuarioIniciado()) {
-			// Mostrar un alerta y redirigir a la página de inicio de sesión
-<<<<<<< Updated upstream
-			alert("Tienes que iniciar sesión");
-			window.location.href = "../login/indexLogin.php";
-=======
-			confirm("Tienes que iniciar sesión");
-			window.location.href = "../login/indexLogin.php?redirigido=si";
->>>>>>> Stashed changes
-		} 
-		});
+                confirm("Tienes que iniciar sesión");
+                window.location.href = "../login/indexLogin.php?redirigido=si";
 
-		/**
-		*
-		* Verifica si el usuario ha iniciado sesión.
-		*
-		* @return {boolean} true si el usuario no ha iniciado sesión, false si ha iniciado sesión.
-		*/
-		function usuarioIniciado() {
-			// Obtener todas las cookies del sitio
-			var cookies = document.cookie.split(";");
+            }
+        });
 
-			// Buscar la cookie de sesión específica
-			for (var i = 0; i < cookies.length; i++) {
-			var cookie = cookies[i].trim();
-			if (cookie.indexOf("carrito=") == 0) {
-				// La cookie de sesión específica existe
-				return false;
-			}
-			}
+        /**
+         *
+         * Verifica si el usuario ha iniciado sesión.
+         *
+         * @return {boolean} true si el usuario no ha iniciado sesión, false si ha iniciado sesión.
+         */
+        function usuarioIniciado() {
+            // Obtener todas las cookies del sitio
+            var cookies = document.cookie.split(";");
 
-			// Si no, el usuario no ha iniciado sesión
-			return true;
-		}
-});
+            // Buscar la cookie de sesión específica
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.indexOf("carrito=") == 0) {
+                    // La cookie de sesión específica existe
+                    return false;
+                }
+            }
+
+            // Si no, el usuario no ha iniciado sesión
+            return true;
+        }
+    });
 
 </script>
 <?php
+
 if (isset($_SESSION['usuario'])) {
-	$usuario = $_SESSION['usuario'];
-		//Sacamos el carrito de la base de datos y lo igualamos a la variable de sesión
-		//Si no encuentra nada en la base de datos va a mirar a las cookies y si no hay 
-		//nada en ninguno de los dos crear la variable de sesión como array vacío 
-		//Mejora: elegir entre el carrito de la base de datos y el carrito de las cookies
-		
-        if (!isset($_SESSION['carrito'])) { 
-		if (isset($_COOKIE['carrito']) && !empty(unserialize($_COOKIE['carrito']))) {
-			$_SESSION['carrito'] = unserialize($_COOKIE['carrito'], ["allowed_classes" => false]);
-		} elseif (!isset($_SESSION['carrito'])) {
-			$carrito_guardado = $carrito->getCarro($usuario); 
-			if ($carrito_guardado) {
-				$_SESSION['carrito'] = unserialize($carrito_guardado['comida_cantidad'], ["allowed_classes" => false]);
-			}
-		}
+    $usuario = $_SESSION['usuario'];
+    //Sacamos el carrito de la base de datos y lo igualamos a la variable de sesión
+    //Si no encuentra nada en la base de datos va a mirar a las cookies y si no hay 
+    //nada en ninguno de los dos crear la variable de sesión como array vacío 
+    //Mejora: elegir entre el carrito de la base de datos y el carrito de las cookies
+
+    if (!isset($_SESSION['carrito'])) {
+        if (isset($_COOKIE['carrito']) && !empty(unserialize($_COOKIE['carrito']))) {
+            $_SESSION['carrito'] = unserialize($_COOKIE['carrito'], ["allowed_classes" => false]);
+        } elseif (!isset($_SESSION['carrito'])) {
+            $carrito_guardado = $carrito->getCarro($usuario);
+            if ($carrito_guardado) {
+                $_SESSION['carrito'] = unserialize($carrito_guardado['comida_cantidad'], ["allowed_classes" => false]);
+            }
         }
-	
-	if(empty($_SESSION["carrito"])) {
-		echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-center">No tienes productos en tu cesta todavía.</h2></div>';
-	} else {
-		foreach($_SESSION['carrito'] as $comida => $cant) {
-			$id_comida = $comida;
-			$cantidad = (int) $cant;
-			print ($carrito->printCarroSes($id_comida, $cantidad));
-		}
-		$precio_total = $carrito->getTotalPrice($_SESSION['carrito']);
-		echo  '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-end">Total: '. $precio_total .'</h2>';
-		echo '<div class="col-2 d-flex justify-content-right"><a href="realizar_pedido.php"><button type="button" class="btn btn-outline-success">Finalizar compra</button></a></div></div>';
-	}
-	
-	
-		
-} else { 
+    }
+
+    if (empty($_SESSION["carrito"])) {
+        echo '<div class="container mt-5 bg-light rounded text-center py-5"><h2>No tienes productos en tu cesta todavía.</h2></div>';
+    } else {
+        foreach ($_SESSION['carrito'] as $comida => $cant) {
+            $id_comida = $comida;
+            $cantidad = (int) $cant;
+            print ($carrito->printCarroSes($id_comida, $cantidad));
+        }
+        $precio_total = $carrito->getTotalPrice($_SESSION['carrito']);
+        echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-end">Total: ' . $precio_total . '</h2>';
+        echo '<div class="col-2 d-flex justify-content-right"><a href="realizar_pedido.php"><button type="button" class="btn btn-outline-success">Finalizar compra</button></a></div></div>';
+    }
+} else {
     if (isset($_COOKIE['carrito'])) {
-		if (empty(unserialize($_COOKIE['carrito']))) {
-			echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-center">No tienes productos en tu cesta todavía.</h2></div>';
-		} else {
-			foreach(unserialize($_COOKIE['carrito'], []) as $comida => $cant) {
-				$id_comida = $comida;
-				$cantidad = (int) $cant;
-				echo ($carrito->printCarroSes($id_comida, $cantidad));
-			}
-			$precio_total = $carrito->getTotalPrice(unserialize($_COOKIE['carrito'], ["allowed_classes" => false]));
-			echo  '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-end">Total: '. $precio_total .'</h2>';
-		echo '<div class="col-2 d-flex justify-content-right"><a href="#"><button id="log" type="button" class="btn btn-outline-success">Finalizar compra</button></a></div></div>';
-	}
-	} else {
-		echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-center">No tienes productos en tu cesta todavía.</h2></div>';
+        if (empty(unserialize($_COOKIE['carrito']))) {
+            echo '<div class="container mt-5 bg-light rounded text-center py-5"><h2>No tienes productos en tu cesta todavía.</h2></div>';
+        } else {
+            foreach (unserialize($_COOKIE['carrito'], []) as $comida => $cant) {
+                $id_comida = $comida;
+                $cantidad = (int) $cant;
+                echo ($carrito->printCarroSes($id_comida, $cantidad));
+            }
+            $precio_total = $carrito->getTotalPrice(unserialize($_COOKIE['carrito'], ["allowed_classes" => false]));
+            echo '<div class="mt-5 bg-light rounded py-5 row">'
+            . '<h2 class="col-10 d-flex justify-content-end">Total: ' . $precio_total . '</h2>';
+            echo '<div class="col-2 d-flex justify-content-right"><a href="#"><button id="log" type="button" class="btn btn-outline-success">Finalizar compra</button></a></div></div>';
+        }
+    } else {
+        echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-center">No tienes productos en tu cesta todavía.</h2></div>';
     }
 }
-require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "footer.php"); 
+require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");
 ?>

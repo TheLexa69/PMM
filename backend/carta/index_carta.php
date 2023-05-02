@@ -63,6 +63,7 @@ if (isset($_POST['dato'])) {
     $url = "";
 }
 ?>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 
     /**
@@ -90,6 +91,9 @@ if (isset($_POST['dato'])) {
     function closeCarritoFlotante() {
         document.getElementById('carritoFlotante').style.top = "150vh";
     }
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover();
+    });
 </script>
 <div class="main">
     <div class="card container mt-5" style="padding: 0 !important">
@@ -234,21 +238,21 @@ if (isset($_POST['dato'])) {
             $count = 0;
             foreach ($consultaAlergenos as $fila) {
                 if ($count % 3 == 0) {
-                    echo '</div><div class="d-flex flex-wrap justify-content-evenly">';
+                    echo '</div><div class="container d-flex flex-wrap justify-content-between">';
                 }
                 ?>
-                <div class="d-flex flex-wrap justify-content-evenly">
+                <div class="d-flex flex-wrap">
                     <div class="card p-2 mb-2" style="width: 20rem;">
                         <?php if (!empty($fila[4])) { ?>
-                            <img src="<?php echo $fila[4] ?>" alt="Card image cap" class="card-img rounded">
+                            <img src="<?php echo $fila[4] ?>" alt="Card image cap" class="card-img rounded" style="object-fit: cover; width: 100%; height: 200px;">
                         <?php } else { ?>
-                            <img src="../imagenes/imgProductos/defecto.jpg" alt="Card image cap" class="card-img rounded">
+                            <img src="../imagenes/imgProductos/defecto.jpg" alt="Card image cap" class="card-img rounded" style="object-fit: cover; width: 100%; height: 200px;">
                         <?php } ?>
                         <div class="card-body text-center lh-sm">
                             <h4 class="nombre-producto"><?php echo $fila[0] ?></h4>
                             <div class="text-center">
                                 <p>Descripción:
-                                    <a href="#" id="info">
+                                    <a href="#" title="Dismissible popover" data-toggle="popover" data-trigger="focus" data-content="Click anywhere in the document to close this popover">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
                                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                         <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
@@ -258,7 +262,7 @@ if (isset($_POST['dato'])) {
                                 <h5 class="precio-producto"> Precio: <?php echo number_format($fila[3], 2, '.', '') ?> €</h5>
                                 <form method="post" action="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "agregar_carrito.php?cod=" . $fila[6] . $url; ?>">
                                     <label for="cantidad">Cantidad:</label>
-                                    <select id="cantidad" name="cantidad">
+                                    <select id="cantidad" name="cantidad" style="margin-bottom: 5px"">
                                         <?php
                                         for ($i = 1; $i <= 10; $i++) {
                                             echo '<option value="' . $i . '">' . $i . '</option>';
@@ -297,7 +301,7 @@ if (isset($_POST['dato'])) {
                             <h4 class="nombre-producto"><?php echo $fila[0] ?></h4>
                             <div class="text-center">
                                 <p>Descripción:
-                                    <a href="#" id="info">
+                                    <a href="#" title="Dismissible popover" data-toggle="popover" data-trigger="focus" data-content="Click anywhere in the document to close this popover">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
                                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                         <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>

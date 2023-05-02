@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
 
@@ -74,7 +73,6 @@ $win_loc = "../login/indexLogin.php";
 
 </script>
 <?php
-
 if (isset($_SESSION['usuario'])) {
     $usuario = $_SESSION['usuario'];
     //Sacamos el carrito de la base de datos y lo igualamos a la variable de sesión
@@ -94,31 +92,66 @@ if (isset($_SESSION['usuario'])) {
     }
 
     if (empty($_SESSION["carrito"])) {
-        echo '<div class="container mt-5 bg-light rounded text-center py-5"><h2>No tienes productos en tu cesta todavía.</h2></div>';
+        echo
+        '<div class="container main mt-5 bg-light rounded text-center py-5">'
+        . '<h2>No tienes productos en tu cesta todavía.</h2>'
+        . '</div>';
     } else {
-        foreach ($_SESSION['carrito'] as $comida => $cant) {
-            $id_comida = $comida;
-            $cantidad = (int) $cant;
-            print ($carrito->printCarroSes($id_comida, $cantidad));
-        }
-        $precio_total = $carrito->getTotalPrice($_SESSION['carrito']);
-        echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-end">Total: ' . $precio_total . '</h2>';
-        echo '<div class="col-2 d-flex justify-content-right"><a href="realizar_pedido.php"><button type="button" class="btn btn-outline-success">Finalizar compra</button></a></div></div>';
+        ?>
+        <div class="container main mt-5">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="fw-bold">Cesta</h3>
+                </div>
+                <div class="card-body">
+                    <?php
+                    foreach ($_SESSION['carrito'] as $comida => $cant) {
+                        $id_comida = $comida;
+                        $cantidad = (int) $cant;
+                        print ($carrito->printCarroSes($id_comida, $cantidad));
+                    }
+                    $precio_total = $carrito->getTotalPrice($_SESSION['carrito']);
+                    echo '<div class="mt-5 rounded py-3 d-flex justify-content-end align-items-center">'
+                    . '<h3 class="fw-bold me-2 mb-0">Total: ' . $precio_total . '</h3>'
+                    . '<a href="#"><button id="log" type="button" class="btn btn-outline-success">Finalizar compra</button>'
+                    . '</a>'
+                    . '</div>';
+                    ?>
+                </div>
+            </div>
+        </div>
+        <?php
     }
 } else {
     if (isset($_COOKIE['carrito'])) {
         if (empty(unserialize($_COOKIE['carrito']))) {
             echo '<div class="container mt-5 bg-light rounded text-center py-5"><h2>No tienes productos en tu cesta todavía.</h2></div>';
         } else {
-            foreach (unserialize($_COOKIE['carrito'], []) as $comida => $cant) {
-                $id_comida = $comida;
-                $cantidad = (int) $cant;
-                echo ($carrito->printCarroSes($id_comida, $cantidad));
-            }
-            $precio_total = $carrito->getTotalPrice(unserialize($_COOKIE['carrito'], ["allowed_classes" => false]));
-            echo '<div class="mt-5 bg-light rounded py-5 row">'
-            . '<h2 class="col-10 d-flex justify-content-end">Total: ' . $precio_total . '</h2>';
-            echo '<div class="col-2 d-flex justify-content-right"><a href="#"><button id="log" type="button" class="btn btn-outline-success">Finalizar compra</button></a></div></div>';
+            ?>
+            <div class="container main mt-5">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="fw-bold">Cesta</h3>
+                    </div>
+                    <div class="card-body">
+                        <?php
+                        foreach (unserialize($_COOKIE['carrito'], []) as $comida => $cant) {
+                            $id_comida = $comida;
+                            $cantidad = (int) $cant;
+                            echo ($carrito->printCarroSes($id_comida, $cantidad));
+                        }
+
+                        $precio_total = $carrito->getTotalPrice(unserialize($_COOKIE['carrito'], ["allowed_classes" => false]));
+                        echo '<div class="mt-5 rounded py-3 d-flex justify-content-end align-items-center">'
+                        . '<h3 class="fw-bold me-2 mb-0">Total: ' . $precio_total . '</h3>'
+                        . '<a href="#"><button id="log" type="button" class="btn btn-outline-success">Finalizar compra</button>'
+                        . '</a>'
+                        . '</div>';
+                        ?>
+                    </div>
+                </div>
+            </div>
+            <?php
         }
     } else {
         echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-center">No tienes productos en tu cesta todavía.</h2></div>';

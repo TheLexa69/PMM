@@ -84,16 +84,19 @@ if (isset($_POST['dato'])) {
         };
         xhr.send('id_comida=' + id_comida + '&cantidad=' + cantidad);
     }
+    function showCarritoFlotante() {
+        document.getElementById('carritoFlotante').style.top = "70px";
+    }
+    function closeCarritoFlotante() {
+        document.getElementById('carritoFlotante').style.top = "150vh";
+    }
 </script>
 <div class="main">
-<div class="container-fluid px-0">
-    <div class="row mx-0 d-flex justify-content-between">
-        <div class="col-md-1"></div>
-        <div class="col-md-6 bg-light rounded mt-2">
-            <div class="text-center mt-3">
-                <h2>Alergenos</h2>
-                <hr>
-            </div>
+    <div class="card container mt-5" style="padding: 0 !important">
+        <div class="card-header text-center">
+            <h3 class="fw-bold">Alérgenos</h3>
+        </div>
+        <div class="card-body">
             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
                 <div class="text-center">
                     <label class="checkeable">
@@ -178,50 +181,54 @@ if (isset($_POST['dato'])) {
                 </div>
             </form>
         </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-3 bg-light rounded mt-2 ml-auto mr-3">
-            <div  id="producto">
-                <div class="mt-3 mb-3">
-                    <h2 class="d-flex justify-content-center">Cesta</h2>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col">
-                        <p>Producto</p>
-                    </div>
-                    <div class="col">
-                        <p>Precio</p>
-                    </div>
-                    <div class="col d-flex align-items-center">
-                        <p>Cantidad</p>
-                    </div>
-                    <div class="col d-flex justify-content-center align-items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-trash" viewBox="0 0 16 16">
-                        <path
-                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                        <path fill-rule="evenodd"
-                              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                        </svg>
-                    </div>
-                </div>
-                <hr>
-                <?php
-                foreach ($array_carrito as $comida => $cant) {
-                    echo $carrito->printCarritoCarta($comida, $cant);
-                }
-                ?>
-                <div class="d-flex justify-content-around mb-3" id="totalFixed">
-                    <a href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "index_carrito.php"; ?>'><button type='button' class='btn btn-outline-success'>Realizar Compra</button></a>
-                    <h4>Total: <?php echo $carrito->getTotalPrice($array_carrito) ?> </h4>
-                </div>
+    </div>
+
+    <div class="card shadow" id="carritoFlotante">
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <h3 class="fw-bold text-center mx-auto">Cesta</h3>
+            <i class="fa-solid fa-xmark fa-2xl" onclick="closeCarritoFlotante();" style="cursor: pointer"></i>
+        </div>
+        <div class="card-body" style="padding: 0 !important">
+            <table class="table">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-trash" viewBox="0 0 16 16">
+                            <path
+                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                            <path fill-rule="evenodd"
+                                  d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                            </svg>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($array_carrito as $comida => $cant) {
+                        echo $carrito->printCarritoCarta($comida, $cant);
+                    }
+                    ?>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-around mb-3" id="totalFixed">
+                <a href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "index_carrito.php"; ?>'><button type='button' class='btn btn-outline-success'>Realizar Compra</button></a>
+                <h4>Total: <?php echo $carrito->getTotalPrice($array_carrito) ?> </h4>
             </div>
         </div>
-        <div class="col-md-1"></div>
     </div>
-</div>
-<div class="container d-flex flex-wrap justify-content-evenly mt-5">
-    <!--<div class="row mt-5">-->
+    <div id="divPopUpForm" onclick="showCarritoFlotante();" style="">
+        <p class="px-2 py-2 shadow fw-bold"
+           style="margin-right: 40px; margin-bottom: -30px; height: 60px;background-color: white; width: 180px; border-radius: 5px;">
+            Confiere tus productos!</p>
+        <i class="fa-solid fa-circle fa-2xl circ" style="font-size: 4em; position: absolute; bottom: 0; right: 0;"></i>
+        <i class="fa-solid fa-basket-shopping fa-bounce fa-2xl" style="position: absolute; right: 14px; color: white;"></i>
+    </div>
+    <div class="container d-flex flex-wrap justify-content-evenly mt-5">
+        <!--<div class="row mt-5">-->
         <?php
         if (isset($consultaAlergenos)) {
             $count = 0;
@@ -321,9 +328,7 @@ if (isset($_POST['dato'])) {
             }
         }
         ?>
-    <!--</div>-->
-</div>
-
+    </div>
 </div>
 
 <script src="../../frontend/js/main.js"></script>

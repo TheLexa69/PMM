@@ -59,9 +59,9 @@ if (isset($_GET['red'])) {
                     <li class="nav-item">
                         <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "contacto.php"; ?>'><i class="fa-solid fa-file-signature fa-2xl menu-responsive my-auto pe-2"></i>Contacto</a>
                     </li>
-                    <li class="nav-item">
+                   <!-- <li class="nav-item">
                         <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "reservas.php"; ?>'><i class="fa-solid fa-book fa-2xl menu-responsive my-auto pe-2"></i>Reservas</a>
-                    </li>
+                    </li>-->
                     <li class="nav-item">  
                         <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "index_carrito.php"; ?>'><i class="fa-solid fa-basket-shopping menu-responsive fa-2xl my-auto pe-2"></i>Cesta</a>
                     </li>

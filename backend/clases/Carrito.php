@@ -98,12 +98,12 @@ class Carrito extends Conexion {
 
         //Código para visualizar el carro
         $url = DIRECTORY_SEPARATOR . 'proyecto' . DIRECTORY_SEPARATOR . 'backend' . DIRECTORY_SEPARATOR . 'cart' . DIRECTORY_SEPARATOR . 'eliminar_carrito.php?cod=' . $result['id_comida'] . '&red=1';
-        $html_code = '<div class="row align-items-center border-bottom pt-2 pb-2">
-                <div class="col-3">' . $result['nombre'] . '</div>
-                <div class="col-3">' . $result['precio'] . '</div>
-                <div class="col-3">
-                <input type="number" name="cantidad" size="5" value="' . $cantidad . '" min="1" max="10" onchange="updateCantidad(\'' . $id_comida . '\', this.value)"></div>
-                <div class="col-3 d-flex justify-content-center align-items-center">
+        $html_code = '<tr>
+                <td>' . $result['nombre'] . '</td>
+                <td>' . $result['precio'] . '</td>
+                <td>
+                <input type="number" name="cantidad" size="5" value="' . $cantidad . '" min="1" max="10" onchange="updateCantidad(\'' . $id_comida . '\', this.value)"></td>
+                <td>
                     <a href="' . $url . '">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-trash" viewBox="0 0 16 16">
@@ -113,8 +113,8 @@ class Carrito extends Conexion {
                                 d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
                         </svg>
                     </a>
-                </div>
-            </div>';
+                </td>
+            </tr>';
 
         return $html_code;
 

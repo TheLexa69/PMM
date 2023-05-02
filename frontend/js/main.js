@@ -7,8 +7,8 @@ window.onload = function () {
         }
     });
     
-    var mensajeDiv2 = document.getElementById('cookie');
-    mensajeDiv2.style.top = '-20%';
+    //var mensajeDiv2 = document.getElementById('cookie');
+    //mensajeDiv2.style.top = '-20%';
 
     console.log('asdasdasd');
     function checkCookie() {

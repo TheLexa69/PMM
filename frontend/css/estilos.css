@@ -49,7 +49,7 @@ html {
 
 body {
     margin: 0;
-    background: url(../img/local/terraza.png) no-repeat;
+    background: url(../img/leonardo/leonardo1.jpg) no-repeat;
     background-size: cover;
     background-position: center center;
     height: 100%;
@@ -84,6 +84,30 @@ body {
 }
 /*--------------------------------------*/
 
+#divPopUpForm {
+  cursor: pointer;
+  position: fixed;
+  top: 85%;
+  right: 25px;
+  z-index: 3;
+}
+
+#carritoFlotante {
+  width: 600px;
+  top: 150vh;
+  transition: top 0.5s;
+  position: fixed;
+  bottom: 10vh;
+  right: 25px;
+  z-index: 10;
+  overflow: hidden;
+  height: fit-content;
+}
+
+#formPopUp i {
+  cursor: pointer;
+}
+
 .layered.box {
     min-width: 400px;
     height: 50vh;
@@ -111,6 +135,10 @@ body {
 
 #totalFixed {
     margin-top: 2vh;
+}
+
+.login{
+    width: 600px;
 }
 
 /*PIE DE PAGINA PEGADO ABAJO*/

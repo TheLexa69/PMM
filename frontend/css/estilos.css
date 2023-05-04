@@ -49,11 +49,11 @@ html {
 
 body {
     margin: 0;
-    background: url(../img/leonardo/leonardo1.jpg) no-repeat;
-    background-size: cover;
-    background-position: center center;
+    background: url('http://drive.google.com/uc?export=view&id=1CMd-GRGmu2Puri9bhJ--eieCaBZH_D7r') no-repeat;
+    background-size: cover !important;
+    background-position: center center !important;
     height: 100%;
-    background-attachment: fixed;
+    background-attachment: fixed !important;
 }
 
 /*----------------- CARTA -----------------*/

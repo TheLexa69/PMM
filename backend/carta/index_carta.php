@@ -235,14 +235,10 @@ if (isset($_POST['dato'])) {
         <!--<div class="row mt-5">-->
         <?php
         if (isset($consultaAlergenos)) {
-            $count = 0;
             foreach ($consultaAlergenos as $fila) {
-                if ($count % 3 == 0) {
-                    echo '</div><div class="container d-flex flex-wrap justify-content-between">';
-                }
                 ?>
-                <div class="d-flex flex-wrap">
-                    <div class="card p-2 mb-2" style="width: 20rem;">
+                <div class="d-flex flex-wrap my-3 mx-2 shadow">
+                    <div class="card" style="width: 20rem;">
                         <?php if (!empty($fila[4])) { ?>
                             <img src="<?php echo $fila[4] ?>" alt="Card image cap" class="card-img rounded" style="object-fit: cover; width: 100%; height: 200px;">
                         <?php } else { ?>
@@ -252,7 +248,7 @@ if (isset($_POST['dato'])) {
                             <h4 class="nombre-producto"><?php echo $fila[0] ?></h4>
                             <div class="text-center">
                                 <p>Descripción:
-                                    <a href="#" title="Dismissible popover" data-toggle="popover" data-trigger="focus" data-content="Click anywhere in the document to close this popover">
+                                    <a href="#" onclick="event.preventDefault();" title="<?php echo $fila[1] ?>" data-toggle="popover" data-trigger="focus" data-content="Click anywhere in the document to close this popover">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
                                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                         <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
@@ -279,29 +275,22 @@ if (isset($_POST['dato'])) {
                     </div>
                 </div>
                 <?php
-                $count++;
             }
         } else {
-            $count = 0;
             foreach ($rdo as $fila) {
-                if ($count % 3 == 0) {
-                    echo '</div><div class="row">';
-                }
                 ?>
-                <div class="col-md-4">
-                    <div class="layered box" id="producto">
-                        <div class="p-2 text-center">
-                            <?php if (!empty($fila[4])) { ?>
-                                <img class="imagenes rounded img-fluid  w-50" id="producto_img" title="productoss" src="<?php echo $fila[4] ?>">
-                            <?php } else { ?>
-                                <img class="imagenes rounded img-fluid  w-50" id="producto_img" title="productoss" src="../imagenes/imgProductos/defecto.jpg">
-                            <?php } ?>
-                        </div>
-                        <div class="p-2 ml-2">
+                <div class="d-flex flex-wrap my-3 mx-2 shadow">
+                    <div class="card" style="width: 20rem;">
+                        <?php if (!empty($fila[4])) { ?>
+                            <img src="<?php echo $fila[4] ?>" alt="Card image cap" class="card-img rounded" style="object-fit: cover; width: 100%; height: 200px;">
+                        <?php } else { ?>
+                            <img src="../imagenes/imgProductos/defecto.jpg" alt="Card image cap" class="card-img rounded" style="object-fit: cover; width: 100%; height: 200px;">
+                        <?php } ?>
+                        <div class="card-body text-center lh-sm">
                             <h4 class="nombre-producto"><?php echo $fila[0] ?></h4>
                             <div class="text-center">
                                 <p>Descripción:
-                                    <a href="#" title="Dismissible popover" data-toggle="popover" data-trigger="focus" data-content="Click anywhere in the document to close this popover">
+                                    <a href="#" onclick="event.preventDefault();" title="<?php echo $fila[1] ?>" data-toggle="popover" data-trigger="focus" data-content="Click anywhere in the document to close this popover">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
                                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                         <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
@@ -311,7 +300,7 @@ if (isset($_POST['dato'])) {
                                 <h5 class="precio-producto"> Precio: <?php echo number_format($fila[3], 2, '.', '') ?> €</h5>
                                 <form method="post" action="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "agregar_carrito.php?cod=" . $fila[6] . $url; ?>">
                                     <label for="cantidad">Cantidad:</label>
-                                    <select id="cantidad" name="cantidad">
+                                    <select id="cantidad" name="cantidad" style="margin-bottom: 5px"">
                                         <?php
                                         for ($i = 1; $i <= 10; $i++) {
                                             echo '<option value="' . $i . '">' . $i . '</option>';
@@ -328,7 +317,6 @@ if (isset($_POST['dato'])) {
                     </div>
                 </div>
                 <?php
-                $count++;
             }
         }
         ?>

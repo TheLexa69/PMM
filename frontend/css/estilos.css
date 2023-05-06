@@ -85,27 +85,27 @@ body {
 /*--------------------------------------*/
 
 #divPopUpForm {
-  cursor: pointer;
-  position: fixed;
-  top: 85%;
-  right: 25px;
-  z-index: 3;
+    cursor: pointer;
+    position: fixed;
+    top: 85%;
+    right: 25px;
+    z-index: 3;
 }
 
 #carritoFlotante {
-  width: 600px;
-  top: 150vh;
-  transition: top 0.5s;
-  position: fixed;
-  bottom: 10vh;
-  right: 25px;
-  z-index: 10;
-  overflow: hidden;
-  height: fit-content;
+    width: 600px;
+    top: 150vh;
+    transition: top 0.5s;
+    position: fixed;
+    bottom: 10vh;
+    right: 25px;
+    z-index: 10;
+    overflow: hidden;
+    height: fit-content;
 }
 
 #formPopUp i {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .layered.box {
@@ -131,6 +131,7 @@ body {
 #botonCompra{
     margin: 0 auto;
     display: block;
+    justify-content: center;
 }
 
 #totalFixed {
@@ -251,4 +252,62 @@ footer {
         color: white !important;
     }
 
+    #carritoFlotante {
+        width: auto;
+    }
+
+    .main{
+        margin-bottom: 300px;
+    }
+
+    .cuerpo-contacto > div{
+        flex-direction: column !important;
+    }
+
+    .contact-info{
+        width: 100%;
+        border-right: none !important;
+        border-bottom: 1px solid lightgray;
+        padding-bottom: 1.5rem;
+        padding-right: inherit !important;
+    }
+
+    .contact-form{
+        width: 100%;
+        padding-top: 3rem;
+        padding-left: inherit !important;
+    }
+
+    .content-cart{
+        flex-direction: column !important;
+    }
+
+    .content-cart > div{
+        width: 100% !important;
+    }
+
+    .content-cart > .col-4 > button{
+        margin-top: 10px;
+    }
+    
+    .content-cart > .col-4 > .nombre-producto{
+        margin-top: 20px;
+    }
+    
+    footer{
+        margin-top: 0.5rem !important;
+    }
+
+    footer > div > img {
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    footer > div{
+        flex-direction: column;
+    }
+
+    footer > span {
+        display: none;
+    }
 }

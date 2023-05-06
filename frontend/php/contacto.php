@@ -11,9 +11,9 @@ require (dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPA
         <div class="card-header">
             <h3 class="text-center">Contacto</h3>
         </div>
-        <div class="card-body container">
-            <div class="row">
-                <div class="col-6 border-end pe-5">
+        <div class="card-body container cuerpo-contacto">
+            <div class="d-flex flex-row">
+                <div class="col-6 border-end pe-5 contact-info">
                     <div class="p-2 pb-3 border-bottom lh-2">
                         <h5 class="pb-2">Dirección</h5>
                         <span>Rúa de Eduardo Cabello, 25</span><br>
@@ -29,7 +29,7 @@ require (dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPA
                         <span>luacheabouzas@gmail.com</span>
                     </div>
                 </div>
-                <div class="col-6 d-flex justify-content-center align-items-center">
+                <div class="col-6 ps-5 d-flex justify-content-center align-items-center contact-form">
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"  method="POST">
                         <div class="form-group">
                             <input type="text" name="nombre" id="nombre" class="form-control" size="100" placeholder="Nombre (*)" required>

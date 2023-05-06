@@ -53,11 +53,11 @@ class Carrito extends Conexion {
         //Código para visualizar el carro
         $url = DIRECTORY_SEPARATOR . 'proyecto' . DIRECTORY_SEPARATOR . 'backend' . DIRECTORY_SEPARATOR . 'cart' . DIRECTORY_SEPARATOR . 'eliminar_carrito.php?cod=' . $result['id_comida'];
         $html_code = "<div class=\"py-3 border-bottom rounded w-100\">
-    <div class=\"row\" id=\"producto\">
+    <div class=\"d-flex flex-row content-cart\" id=\"producto\">
         <div class=\"col-4 d-flex align-items-center\">                        
             <img style=\"object-fit: cover; width: 100%; height: 200px;\" class=\"imagenes rounded img-fluid\" id=\"producto_img\" title=\"producto\" src=\"". $result['img'] ."\">
         </div>
-        <div class=\"col-4 d-flex flex-column\">
+        <div class=\"col-4 d-flex flex-column ps-3\">
             <h4 class=\"nombre-producto\">" . $result['nombre'] . "</h4>
             <p>Descripción:
                 <a href=\"#\" id=\"info\">
@@ -68,9 +68,9 @@ class Carrito extends Conexion {
                 </a>
             </p>
             <h5 class=\"precio-producto\">Precio: " . $result['precio'] . "€</h5>
-            <form method=\"post\" action=\"" . $url . "\">
+            <form method=\"post\" class=\"d-flex align-items-center\" action=\"" . $url . "\">
                 <label for=\"cantidad\">Cantidad:</label>
-                <input type=\"number\" name=\"cantidad\" class=\"form-control\" value=\"" . $cantidad . "\" min=\"1\" max=\"10\" onchange=\"updateCantidad(" . $id_comida . ", this.value)\">
+                <input type=\"number\" name=\"cantidad\" class=\"form-control ms-2 w-25\" value=\"" . $cantidad . "\" min=\"1\" max=\"10\" onchange=\"updateCantidad(" . $id_comida . ", this.value)\">
         </div>
         <div class=\"col-4 d-flex justify-content-center align-items-center\">    
             <button class=\"btn-add-cart btn btn-outline-secondary\" id=\"eliminar\" type=\"submit\">Eliminar</button>

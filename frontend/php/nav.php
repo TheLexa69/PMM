@@ -103,7 +103,7 @@ if (isset($_GET['red'])) {
                     }
                     ?>
                     <li class="nav-item"> 
-                        <a class="nav-link" aria-current="page" href= '#' onclick="changeTheme();"><i class="fa-solid fa-circle-half-stroke fa-xl pe-4 menu-responsive my-auto"></i>Tema</a>
+                        <a class="nav-link" href= '#' onclick="changeTheme();"><i class="fa-solid fa-circle-half-stroke fa-xl pe-4 menu-responsive my-auto"></i>Tema</a>
                     </li>
                 </ul> 
             </div>

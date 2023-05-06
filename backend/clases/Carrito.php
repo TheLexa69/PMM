@@ -14,7 +14,7 @@ class Carrito extends Conexion {
 
     private $table = 'carrito';
 
-    public function __construct($rol=5) {
+    public function __construct($rol = 5) {
         parent::__construct($rol);
     }
 
@@ -35,7 +35,7 @@ class Carrito extends Conexion {
         $stmt->execute();
         return $stmt->fetch();
     }
-    
+
     /**
      * Devuelve el HTML para mostrar un producto en el carrito con su imagen, nombre, precio y cantidad
      *
@@ -49,44 +49,47 @@ class Carrito extends Conexion {
         $stmt->bindParam(':id_comida', $id_comida, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetch();
-        
+        $result['img'] = $result['img'] == '' ? '../imagenes/imgProductos/defecto.jpg' : $result['img'];
         //Código para visualizar el carro
         $url = DIRECTORY_SEPARATOR . 'proyecto' . DIRECTORY_SEPARATOR . 'backend' . DIRECTORY_SEPARATOR . 'cart' . DIRECTORY_SEPARATOR . 'eliminar_carrito.php?cod=' . $result['id_comida'];
-        $html_code = "<div class=\"layered box row mr-2\" id=\"producto\">
-                        <div class=\"col-4\">                        
-                                <img class=\"imagenes rounded img-fluid\" id=\"producto_img\" title=\"vaso\" src=\"https://cdn.pixabay.com/photo/2020/12/15/13/44/children-5833685__340.jpg\">
-                                </div>
-                        <div class=\"col-4 d-flex ml-2 flex-column\">
-                            <h4 class=\"nombre-producto\">" . $result['nombre'] . "</h4>
-                            <p>Descripción:
-                            <a href=\"#\" id=\"info\">
-                                <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" class=\"bi bi-exclamation-circle\" viewBox=\"0 0 16 16\">
-                                <path d=\"M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z\"/>
-                                <path d=\"M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z\"/>
-                                </svg>
-                            </a>
-                            </p>
-
-                            <h5 class=\"precio-producto\"> Precio: " . $result['precio'] . "€</h5>
-                            <form method=\"post\" action=\"" . $url . "\">
-                            <label for=\"cantidad\">Cantidad:</label>
-                            <input type=\"number\" name=\"cantidad\" value=\"" . $cantidad . "\" min=\"1\" max=\"10\" onchange=\"updateCantidad(" . $id_comida . ", this.value)\">
-
-                </div>
-        <div class=\"col-4 d-flex justify-content-center\">    
-                <button class=\"btn-add-cart btn btn-outline-secondary\" id=\"eliminar\" type=\"submit\">Eliminar</button></form></div></div>";
+        $html_code = "<div class=\"py-3 border-bottom rounded w-100\">
+    <div class=\"d-flex flex-row content-cart\" id=\"producto\">
+        <div class=\"col-4 d-flex align-items-center\">                        
+            <img style=\"object-fit: cover; width: 100%; height: 200px;\" class=\"imagenes rounded img-fluid\" id=\"producto_img\" title=\"producto\" src=\"". $result['img'] ."\">
+        </div>
+        <div class=\"col-4 d-flex flex-column ps-3\">
+            <h4 class=\"nombre-producto\">" . $result['nombre'] . "</h4>
+            <p>Descripción:
+                <a href=\"#\" id=\"info\">
+                    <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" class=\"bi bi-exclamation-circle\" viewBox=\"0 0 16 16\">
+                        <path d=\"M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z\"/>
+                        <path d=\"M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z\"/>
+                    </svg>
+                </a>
+            </p>
+            <h5 class=\"precio-producto\">Precio: " . $result['precio'] . "€</h5>
+            <form method=\"post\" class=\"d-flex align-items-center\" action=\"" . $url . "\">
+                <label for=\"cantidad\">Cantidad:</label>
+                <input type=\"number\" name=\"cantidad\" class=\"form-control ms-2 w-25\" value=\"" . $cantidad . "\" min=\"1\" max=\"10\" onchange=\"updateCantidad(" . $id_comida . ", this.value)\">
+        </div>
+        <div class=\"col-4 d-flex justify-content-center align-items-center\">    
+            <button class=\"btn-add-cart btn btn-outline-secondary\" id=\"eliminar\" type=\"submit\">Eliminar</button>
+            </form>
+        </div>
+    </div>
+</div>";
 
         return $html_code;
     }
 
     /**
-    *
-    * @param int $id_comida El id de la comida que se desea agregar al carrito
-    * @param int $cantidad La cantidad de la comida que se desea agregar al carrito
-    *
-    * @return string El fragmento de HTML generado para mostrar la información
-    * de la comida en el carrito de compras
-    */
+     *
+     * @param int $id_comida El id de la comida que se desea agregar al carrito
+     * @param int $cantidad La cantidad de la comida que se desea agregar al carrito
+     *
+     * @return string El fragmento de HTML generado para mostrar la información
+     * de la comida en el carrito de compras
+     */
     function printCarritoCarta($id_comida, $cantidad) {
         $stmt = $this->conexion->prepare("SELECT id_comida, nombre, precio
                                         FROM carta_comida WHERE id_comida = :id_comida");
@@ -96,12 +99,12 @@ class Carrito extends Conexion {
 
         //Código para visualizar el carro
         $url = DIRECTORY_SEPARATOR . 'proyecto' . DIRECTORY_SEPARATOR . 'backend' . DIRECTORY_SEPARATOR . 'cart' . DIRECTORY_SEPARATOR . 'eliminar_carrito.php?cod=' . $result['id_comida'] . '&red=1';
-        $html_code = '<div class="row align-items-center border-bottom pt-2 pb-2">
-                <div class="col-3">' . $result['nombre'] . '</div>
-                <div class="col-3">' . $result['precio'] . '</div>
-                <div class="col-3">
-                <input type="number" name="cantidad" size="5" value="' . $cantidad . '" min="1" max="10" onchange="updateCantidad(\'' . $id_comida . '\', this.value)"></div>
-                <div class="col-3 d-flex justify-content-center align-items-center">
+        $html_code = '<tr>
+                <td>' . $result['nombre'] . '</td>
+                <td>' . $result['precio'] . '</td>
+                <td>
+                <input type="number" name="cantidad" size="5" value="' . $cantidad . '" min="1" max="10" onchange="updateCantidad(\'' . $id_comida . '\', this.value)"></td>
+                <td>
                     <a href="' . $url . '">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-trash" viewBox="0 0 16 16">
@@ -111,23 +114,22 @@ class Carrito extends Conexion {
                                 d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
                         </svg>
                     </a>
-                </div>
-            </div>';
+                </td>
+            </tr>';
 
         return $html_code;
-
     }
-    
+
     /**
-    *
-    * Añadir productos al carrito del usuario en la base de datos.
-    *
-    * @param int $id_usuario El ID del usuario al que se va a añadir productos al carrito.
-    *
-    * @param array $carrito El array que contiene los detalles de los productos que se van a añadir.
-    *
-    * @return bool Devuelve true si se ha añadido correctamente el producto al carrito, de lo contrario devuelve false.
-    */
+     *
+     * Añadir productos al carrito del usuario en la base de datos.
+     *
+     * @param int $id_usuario El ID del usuario al que se va a añadir productos al carrito.
+     *
+     * @param array $carrito El array que contiene los detalles de los productos que se van a añadir.
+     *
+     * @return bool Devuelve true si se ha añadido correctamente el producto al carrito, de lo contrario devuelve false.
+     */
     public function add($id_usuario, $carrito) {
         $comida_cantidad = serialize($carrito);
         try {
@@ -154,15 +156,15 @@ class Carrito extends Conexion {
             return false;
         }
     }
-    
+
     /**
-    *
-    * Calcula el precio total de los productos en el carrito
-    *
-    * @param array $carrito Array de productos en el carrito con su cantidad correspondiente
-    *
-    * @return string Precio total con formato de moneda (€)
-    */
+     *
+     * Calcula el precio total de los productos en el carrito
+     *
+     * @param array $carrito Array de productos en el carrito con su cantidad correspondiente
+     *
+     * @return string Precio total con formato de moneda (€)
+     */
     public function getTotalPrice($carrito) {
         $precio = 0;
         // Obtener todos los productos en el carrito
@@ -178,13 +180,13 @@ class Carrito extends Conexion {
 
         return number_format($precio, 2) . "€";
     }
-    
+
     /**
-    *
-    * Busca el ID de un usuario por su dirección de correo electrónico
-    * @param string $email Dirección de correo electrónico del usuario
-    * @return array|false Devuelve un array con el ID de usuario si existe, o false si no existe
-    */
+     *
+     * Busca el ID de un usuario por su dirección de correo electrónico
+     * @param string $email Dirección de correo electrónico del usuario
+     * @return array|false Devuelve un array con el ID de usuario si existe, o false si no existe
+     */
     function searchId($email) {
         $query = "SELECT id_usuario FROM usuario WHERE correo = :email";
         $stmt = $this->conexion->prepare($query);
@@ -194,11 +196,11 @@ class Carrito extends Conexion {
     }
 
     /**
-    *
-    * Busca el rol de un usuario por su ID de usuario
-    * @param int $id_usuario ID de usuario
-    * @return array|false Devuelve un array con el ID de rol del usuario si existe, o false si no existe
-    */
+     *
+     * Busca el rol de un usuario por su ID de usuario
+     * @param int $id_usuario ID de usuario
+     * @return array|false Devuelve un array con el ID de rol del usuario si existe, o false si no existe
+     */
     function searchRol($id_usuario) {
         $query = "SELECT id_rol FROM usuario WHERE id_usuario = :id_usuario";
         $stmt = $this->conexion->prepare($query);

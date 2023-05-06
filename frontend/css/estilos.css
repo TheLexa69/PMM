@@ -5,10 +5,42 @@
     box-sizing: border-box;
 }
 
+html {
+    min-height: 100%;
+    position: relative;
+
+}
+
 :root {
     --green: #27ae60;
     --black: #192a56;
     --light-color: #666;
+}
+
+/*Bootstrap sobrescribo las clases*/
+.nav {
+    --bs-nav-link-padding-x: 1rem;
+    --bs-nav-link-padding-y: 0.5rem;
+    --bs-nav-link-font-weight: '';
+    --bs-nav-link-color: white;
+    --bs-nav-link-hover-color: white;
+    --bs-nav-link-disabled-color: var(--bs-secondary-color);
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.nav-tabs {
+    --bs-nav-tabs-border-width: var(--bs-border-width);
+    --bs-nav-tabs-border-color: none;
+    --bs-nav-tabs-border-radius: var(--bs-border-radius);
+    --bs-nav-tabs-link-hover-border-color: var(--bs-secondary-bg) var(--bs-secondary-bg) var(--bs-border-color);
+    --bs-nav-tabs-link-active-color: var(--bs-emphasis-color);
+    --bs-nav-tabs-link-active-bg: var(--bs-body-bg);
+    --bs-nav-tabs-link-active-border-color: var(--bs-border-color) var(--bs-border-color) var(--bs-body-bg);
+    border-bottom: var(--bs-nav-tabs-border-width) solid var(--bs-nav-tabs-border-color);
 }
 
 .checkeable input[type=checkbox] {
@@ -16,11 +48,12 @@
 }
 
 body {
-    background: url(../img/local/terraza.png) no-repeat;
-    background-size: cover;
-    background-position: center center;
-    height: 100vw 100vh;
-    background-attachment: fixed;
+    margin: 0;
+    background: url('https://dl.dropboxusercontent.com/s/e2z1cqj7jc7q7j6/leonardo3.jpg') no-repeat;
+    background-size: cover !important;
+    background-position: center center !important;
+    height: 100%;
+    background-attachment: fixed !important;
 }
 
 /*----------------- CARTA -----------------*/
@@ -51,6 +84,30 @@ body {
 }
 /*--------------------------------------*/
 
+#divPopUpForm {
+    cursor: pointer;
+    position: fixed;
+    top: 85%;
+    right: 25px;
+    z-index: 3;
+}
+
+#carritoFlotante {
+    width: 600px;
+    top: 150vh;
+    transition: top 0.5s;
+    position: fixed;
+    bottom: 10vh;
+    right: 25px;
+    z-index: 10;
+    overflow: hidden;
+    height: fit-content;
+}
+
+#formPopUp i {
+    cursor: pointer;
+}
+
 .layered.box {
     min-width: 400px;
     height: 50vh;
@@ -74,48 +131,41 @@ body {
 #botonCompra{
     margin: 0 auto;
     display: block;
+    justify-content: center;
 }
 
 #totalFixed {
     margin-top: 2vh;
 }
 
+.login{
+    width: 600px;
+}
+
 /*PIE DE PAGINA PEGADO ABAJO*/
+.cookie {
+    position: absolute;
+    padding: 10px;
+    /*bottom: 0;*/
+    max-width: 80%;
+    color: black;
+    z-index: 3;
+    left: 0;
+    transition: top 0.5s;
+    top: -150%; 
+}
+
+.main {
+    margin-bottom: 250px;
+}
+
 footer {
-    /*position: fixed;*/
-    margin-top: 10vh;
-    bottom: 0;
+    position: absolute;
     width: 100%;
-    height: 480px;
-    text-align: center;
-    background: black;
-    /*opacity: 0.4;*/
+    min-height: 200px;
+    bottom: 0px;
+    left: 0;
     color: white;
-    border-top-right-radius: 25%;
-    border-bottom-left-radius: 25%;
-}
-
-.datos_footer {
-    justify-content: center;
-    text-align: left;
-
-}
-
-.footer_grid {
-    display: grid;
-    justify-content: center;
-    grid-template-columns: repeat(2, 1fr);
-}
-
-.footer_img {
-    display: flex;
-    justify-content: center;
-
-}
-
-.footer_img img {
-    height: 100px;
-    margin-top: 20px;
 }
 
 .table_grid {
@@ -128,31 +178,136 @@ footer {
 
 }
 
-.email {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .numero {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#circulo {
-    height: 60px;
-    width: 60px;
-    background: var(--green);
-    border-radius: 50px;
-    margin-right: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.menu-responsive {
+    display: none;
+}
+
+.navgationbar {
+    flex-direction: row;
 }
 
 @media (max-width: 768px) {
     .layered.box {
         height: 30vh; /* altura del 30% del viewport height */
+    }
+}
+
+@media (max-width: 600px) {
+    #navbarNavAltMarkup {
+        position: relative;
+        left: 0;
+        top: -60vh;
+        height: 160px;
+        transition: top 0.5s;
+    }
+
+    .menu-responsive {
+        display: block;
+        cursor: pointer;
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        margin-top: 14px;
+    }
+
+    .navNavgationBar {
+        height: 60px;
+        flex-direction: column;
+        justify-content: unset !important;
+    }
+
+    .navgationbar {
+        justify-content: end !important;
+        flex-direction: column;
+        z-index: 3;
+        padding: 0 !important;
+        background-color: var(--primary);
+        padding-bottom: 5px;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+
+    .navNavgationBar:hover {
+        pointer-events: auto;
+    }
+
+    .nav{
+        margin-top: 20px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: #212529;
+    }
+
+    .nav-link{
+        display: flex;
+    }
+    .nav-link:focus, .nav-link:hover {
+        color: white !important;
+    }
+
+    #carritoFlotante {
+        width: auto;
+    }
+
+    .main{
+        margin-bottom: 300px;
+    }
+
+    .cuerpo-contacto > div{
+        flex-direction: column !important;
+    }
+
+    .contact-info{
+        width: 100%;
+        border-right: none !important;
+        border-bottom: 1px solid lightgray;
+        padding-bottom: 1.5rem;
+        padding-right: inherit !important;
+    }
+
+    .contact-form{
+        width: 100%;
+        padding-top: 3rem;
+        padding-left: inherit !important;
+    }
+
+    .content-cart{
+        flex-direction: column !important;
+    }
+
+    .content-cart > div{
+        width: 100% !important;
+    }
+
+    .content-cart > .col-4 > button{
+        margin-top: 10px;
+    }
+    
+    .content-cart > .col-4 > .nombre-producto{
+        margin-top: 20px;
+    }
+    
+    footer{
+        margin-top: 0.5rem !important;
+    }
+
+    footer > div > img {
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    footer > div{
+        flex-direction: column;
+    }
+
+    footer > span {
+        display: none;
     }
 }

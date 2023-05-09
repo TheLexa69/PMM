@@ -133,9 +133,9 @@ class ConsultasAdministrador extends Conexion {
     }
 
     /**
-      Devuelve un array con todos los roles de trabajadores registrados en la base de datos.
-      @return array El array con los roles de trabajadores.
-      @throws PDOException Si hay algún error al ejecutar la consulta SQL.
+    *  Devuelve un array con todos los roles de trabajadores registrados en la base de datos.
+    *  @return array El array con los roles de trabajadores.
+    *  @throws PDOException Si hay algún error al ejecutar la consulta SQL.
      */
     public function rolesTrabajadores() {
         try {
@@ -455,11 +455,12 @@ class ConsultasAdministrador extends Conexion {
      * @return $stmt.
      * @throws PDOException Si hay algún error al ejecutar la consulta SQL.
      */
-    public function productos() {
+    public function productos($indice_primer_elemento, $por_pagina) {
         try {
-            $sql = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo  ";
+            $sql = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo  LIMIT $indice_primer_elemento, $por_pagina";
             $stmt = $this->conexion->query($sql);
-            return $stmt->fetchall();
+            $stmt->execute();
+            return $stmt->fetchAll();
         } catch (PDOException $e) {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
@@ -490,25 +491,25 @@ class ConsultasAdministrador extends Conexion {
      * @return $fila.
      * @throws PDOException Si hay algún error al ejecutar la consulta SQL.
      */
-    public function filtradoProductos($paginaInicio, $cantidadResultados, $nombre, $opcion, $orden) {
+    public function filtradoProductos($indice_primer_elemento, $por_pagina, $nombre, $opcion, $orden) {
         try {
             if (!empty($nombre) && empty($orden) && empty($opcion)) {
 
-                $sql2 = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo  where nombre=:nombre LIMIT :paginaInicio, :cantidadResultados";
+                $sql2 = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo  where nombre=:nombre LIMIT $indice_primer_elemento, $por_pagina";
             } else if (!empty($nombre) && !empty($opcion) && empty($orden)) {
 
-                $sql2 = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo where nombre=:nombre ORDER BY $opcion  LIMIT :paginaInicio, :cantidadResultados";
+                $sql2 = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo where nombre=:nombre ORDER BY $opcion  LIMIT $indice_primer_elemento, $por_pagina";
             } else if (empty($nombre) && !empty($opcion) && empty($orden)) {
 
-                $sql2 = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo  ORDER BY $opcion LIMIT :paginaInicio, :cantidadResultados";
+                $sql2 = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo  ORDER BY $opcion LIMIT $indice_primer_elemento, $por_pagina";
             } elseif (empty($nombre) && !empty($opcion) && !empty($orden)) {
 
-                $sql2 = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo  ORDER BY $opcion $orden LIMIT :paginaInicio, :cantidadResultados";
+                $sql2 = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo  ORDER BY $opcion $orden LIMIT $indice_primer_elemento, $por_pagina";
             } elseif (!empty($nombre) && !empty($opcion) && !empty($orden)) {
 
-                $sql2 = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo where nombre=:nombre    ORDER BY $opcion $orden  LIMIT :paginaInicio, :cantidadResultados";
+                $sql2 = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo where nombre=:nombre ORDER BY $opcion $orden  LIMIT $indice_primer_elemento, $por_pagina";
             } else {
-                $sql2 = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo LIMIT :paginaInicio, :cantidadResultados";
+                $sql2 = "select c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo,e.nombre_subtipo from carta_comida  as c inner join tipo as t on c.tipo = t.id_tipo inner join subtipo as e on c.subtipo = e.id_subtipo LIMIT $indice_primer_elemento, $por_pagina";
             }
 
             $stmt = $this->conexion->prepare($sql2);
@@ -516,10 +517,6 @@ class ConsultasAdministrador extends Conexion {
 
                 $stmt->bindValue(':nombre', $nombre, PDO::PARAM_STR);
             }
-
-            $stmt->bindValue(':paginaInicio', $paginaInicio, PDO::PARAM_INT);
-            $stmt->bindValue(':cantidadResultados', $cantidadResultados, PDO::PARAM_INT);
-
             $stmt->execute();
             $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -528,6 +525,21 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
+
+    public function obtenerNumProductos() {
+        $stmt = $this->conexion->prepare("SELECT count(*) FROM carta_comida");
+        $stmt->execute();
+        $num = $stmt->fetch();
+        return $num[0];
+    }
+
+    public function obtenerNumTrabajadores() {
+        $stmt = $this->conexion->prepare("SELECT count(*) FROM trabajador");
+        $stmt->execute();
+        $num = $stmt->fetch();
+        return $num[0];
+    }
+
 
     /**
      * Método que elimina el producto que tenga ese id.

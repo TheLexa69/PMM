@@ -320,7 +320,7 @@ if (isset($_POST['dato'])) {
             }
         }
         ?>
-    </div>
+    <!--</div>-->
 </div>
 
 <script src="../../frontend/js/main.js"></script>

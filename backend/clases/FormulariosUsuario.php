@@ -163,7 +163,7 @@ class FormulariosUsuario {
      * Método que muestra un formulario con los datos modificados del usuario
      * @param type $id
      */
-    public function formularioCambiosPerfil($id) {
+    public function formularioCambiosPerfil($id, $total_paginas, $pagina_actual) {
         ?>
         <div class="container main mt-5">
             <div class="card rounded">

@@ -9,7 +9,6 @@
         </div>
     </div>
     <span class="fs-5 pt-3"><i class="fa-solid fa-copyright fa-sm"> 2013. Todos los derechos de autor reservados.</i></span>
-
 </footer>
 </body>
 </html>

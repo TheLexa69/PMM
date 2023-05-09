@@ -27,7 +27,7 @@ if (isset($_GET['red'])) {
         <script src="https://kit.fontawesome.com/bd61d050b0.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "css" . DIRECTORY_SEPARATOR . "estilos.css"; ?>'/>
         <link rel="stylesheet" href='<?php echo "frontend" . DIRECTORY_SEPARATOR . "css" . DIRECTORY_SEPARATOR . "index.css"; ?>'/>
-        <script src="./frontend/js/main.js" defer></script>
+        <script src="./js/main.js" defer></script>
     </head>
 
     <body>
@@ -109,7 +109,6 @@ if (isset($_GET['red'])) {
                     </li>
                 </ul> 
             </div>
-
             <script>
                 const nav = document.getElementById('navbarNavAltMarkup');
                 console.log(document.getElementById('navbarNavAltMarkup'));

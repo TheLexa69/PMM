@@ -7,10 +7,10 @@ window.onload = function () {
         }
     });
     
-    //var mensajeDiv2 = document.getElementById('cookie');
-    //mensajeDiv2.style.top = '-20%';
+    var mensajeDiv2 = document.getElementById('cookie');
+    mensajeDiv2.style.top = '-20%';
 
-   // console.log('asdasdasd');
+    console.log('asdasdasd');
     function checkCookie() {
         const cookieBox = document.querySelector(".cookie"), acceptBtn = cookieBox.querySelector("button");
         if (document.cookie) { // Si la cookie está configurada

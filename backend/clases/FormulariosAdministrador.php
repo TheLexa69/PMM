@@ -206,7 +206,7 @@ class FormulariosAdministrador {
      * Método que carga los empleados en una tabla en caso de no tener ninguno saldra un mensaje alert avisando de ello
      * @param $fila. Datos de  la consulta de empleados
      */
-    public function tablaEmpleados($fila) {
+    public function tablaEmpleados($fila, $total_paginas, $pagina_actual) {
         if (isset($_GET["mensaje"])) {
             echo "<script> alert('" . $_GET["mensaje"] . "'); </script>";
         }
@@ -368,7 +368,7 @@ class FormulariosAdministrador {
                             if (!empty($_POST['nombre'])) {
                                 echo " value='" . $_POST['nombre'] . "'";
                             }
-                            ?> >
+                            ?> 
                         </div>
 
                         <div class="mt-3">
@@ -467,6 +467,34 @@ class FormulariosAdministrador {
                         }
                         ?>
 
+                            <tr>
+                                <td>Precio:</td>
+                                <td><input type="text" name="precio" value="<?php echo $id["precio"]; ?>" class="form-control"> </td>
+                            </tr> 
+                            <tr>
+                                <td>Disponible:</td>
+                                <td>
+                                    <select name="disponible" class="form-select"> 
+                                        <option value="<?php echo ($id["disponible"] == 'si') ? 'si' : 'no'; ?>"><?php echo ($id["disponible"] == 'si') ? 'Hay Stock' : 'Sin Stock'; ?></option>
+                                        <option  value="<?php echo ($id["disponible"] == 'no') ? 'si' : 'no'; ?>"> <?php echo ($id["disponible"] == 'si') ? 'Sin Stock' : 'Hay Stock'; ?> </option> 
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Nombre Imagen:</td>
+                                <td>
+                                    <input type="file" name="imagen[]" class="form-control" id="c9">
+                                </td>
+                            </tr>  
+                        </table>
+                        <div class="my-3 d-flex flex-wrap justify-content-evenly">
+                            <input type="hidden" name="id" value="<?php echo $id["id_comida"]; ?>">
+                            <input type="submit" name="actualizar" value="Actualizar" class="btn btn-outline-info mb-2">
+                            <input type="submit" name="eliminar" value="Eliminar" class="btn btn-outline-danger mb-2"> 
+                            <a href="productos.php"><input type="button" value="Modificar Otro Producto" class="btn btn-outline-success mb-2"></a>
+                            <a href="indexAdministrador.php"><input type="button" value="Volver a inicio" class="btn btn-outline-warning mb-2"></a>
+                        </div>
                     </form>
                 </div>
             </div>

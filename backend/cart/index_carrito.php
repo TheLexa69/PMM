@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
 
@@ -73,6 +74,7 @@ $win_loc = "../login/indexLogin.php";
 
 </script>
 <?php
+
 if (isset($_SESSION['usuario'])) {
     $usuario = $_SESSION['usuario'];
     //Sacamos el carrito de la base de datos y lo igualamos a la variable de sesión

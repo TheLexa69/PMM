@@ -1,4 +1,5 @@
 <?php
+ob_start();
 include dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "autoloadClasesLogin.php";
 
 //echo"../../autoloadClasesLogin.php";
@@ -25,7 +26,8 @@ if (isset($_GET['red'])) {
         crossorigin="anonymous"></script>
         <script src="https://kit.fontawesome.com/bd61d050b0.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "css" . DIRECTORY_SEPARATOR . "estilos.css"; ?>'/>
-
+        <link rel="stylesheet" href='<?php echo "frontend" . DIRECTORY_SEPARATOR . "css" . DIRECTORY_SEPARATOR . "index.css"; ?>'/>
+        <script src="./frontend/js/main.js" defer></script>
     </head>
 
     <body>
@@ -39,10 +41,10 @@ if (isset($_GET['red'])) {
                 <ul class="nav nav-tabs justify-content-end ">
 
                     <li class="nav-item"> 
-                        <a class="nav-link active" aria-current="page" href= '<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>' ><i class="fa-solid fa-house fa-xl pe-3 menu-responsive my-auto pe-2"></i>Inicio</a>
+                        <a class="nav-link active" aria-current="page" href= '<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>' ><i class="fa-solid fa-house fa-xl pe-4 menu-responsive my-auto"></i>Inicio</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false"><i class="fa-solid fa-utensils fa-2xl menu-responsive my-auto pe-2"></i>Carta</a>
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false"><i class="fa-solid fa-utensils fa-2xl menu-responsive my-auto pe-4"></i>Carta</a>
                         <ul class="dropdown-menu ">   
                             <?php
                             foreach ($categorias as $nombre11) {
@@ -57,38 +59,32 @@ if (isset($_GET['red'])) {
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "contacto.php"; ?>'><i class="fa-solid fa-file-signature fa-2xl menu-responsive my-auto pe-2"></i>Contacto</a>
+                        <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "contacto.php"; ?>'><i class="fa-solid fa-file-signature fa-2xl menu-responsive my-auto pe-4"></i>Contacto</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "reservas.php"; ?>'><i class="fa-solid fa-book fa-2xl menu-responsive my-auto pe-2"></i>Reservas</a>
+                        <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "reservas.php"; ?>'><i class="fa-solid fa-book fa-2xl menu-responsive my-auto pe-4"></i>Reservas</a>
                     </li>
                     <li class="nav-item">  
-                        <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "index_carrito.php"; ?>'><i class="fa-solid fa-basket-shopping menu-responsive fa-2xl my-auto pe-2"></i>Cesta</a>
+                        <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "index_carrito.php"; ?>'><i class="fa-solid fa-basket-shopping fa-2xl menu-responsive  my-auto pe-4"></i>Cesta</a>
                     </li>
                     <?php
                     if (!empty($_SESSION['usuario']) && isset($_SESSION)) {
                         ?> 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Usuario</a>
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false"><i class="fa-solid fa-user fa-2xl  menu-responsive my-auto pe-4"></i>Usuario</a>
                             <ul class="dropdown-menu ">   
-                                <li class="nav-item">
-                                    <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "modificarDatosUsuario.php"; ?>'>Cambiar Perfil</a>
-                                </li> 
+                                <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "modificarDatosUsuario.php"; ?>'>Cambiar Perfil</a>                                </li> 
                                 <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "index_pedidos.php"; ?>'>Pedidos</a></li>
                                 <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "verCambios.php"; ?>'>Histórico Datos</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "login" . DIRECTORY_SEPARATOR . "logout.php"; ?>'>Cerrar Session</a>
-                                </li>
+                                <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "login" . DIRECTORY_SEPARATOR . "logout.php"; ?>'>Cerrar Session</a></li>
                             </ul>
                         </li>
-
-
                         <?php
                     } elseif (!empty($_SESSION['administrador'])) {
                         ?> 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false"><i class="fa-solid fa-user fa-2xl menu-responsive my-auto pe-2"></i>Administración</a>
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false"><i class="fa-solid fa-user fa-2xl menu-responsive my-auto pe-4"></i>Administración</a>
                             <ul class="dropdown-menu ">
                                 <li>
                                     <a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "administrador" . DIRECTORY_SEPARATOR . "indexAdministrador.php"; ?>'>Panel Administrador </a>
@@ -103,18 +99,33 @@ if (isset($_GET['red'])) {
                     } else {
                         ?> 
                         <li class="nav-item">
-                            <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "login" . DIRECTORY_SEPARATOR . "indexLogin.php"; ?>'>Login</a>
+                            <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "login" . DIRECTORY_SEPARATOR . "indexLogin.php"; ?>'><i class="fa-solid fa-right-to-bracket fa-2xl pe-4 menu-responsive my-auto"></i>Login</a>
                         </li>
                         <?php
                     }
                     ?>
+                    <li class="nav-item"> 
+                        <a class="nav-link" href= '#' onclick="changeTheme();"><i class="fa-solid fa-circle-half-stroke fa-xl pe-4 menu-responsive my-auto"></i>Tema</a>
+                    </li>
                 </ul> 
             </div>
-            
             <script>
                 const nav = document.getElementById('navbarNavAltMarkup');
                 console.log(document.getElementById('navbarNavAltMarkup'));
                 nav.style.top = nav.style.top == '0px' ? '-60vh' : '0px';
+                function changeTheme() {
+                    console.log(document.body.style.backgroundImage);
+                    if (document.body.style.background == "url(\"https://dl.dropboxusercontent.com/s/e2z1cqj7jc7q7j6/leonardo3.jpg\") no-repeat") {
+                        document.body.style.background = "url(\"https://dl.dropboxusercontent.com/s/jr28g3sfwre6dkf/leonardo2.jpg\") no-repeat";
+                        document.body.style.backgroundSize = "cover";
+                        document.body.style.backgroundPosition = "center center";
+                        document.body.style.backgAttachment = 'fixed';
+
+                    } else {
+                        document.body.style.background = "url(\"https://dl.dropboxusercontent.com/s/e2z1cqj7jc7q7j6/leonardo3.jpg\") no-repeat";
+
+                    }
+                }
             </script>
         </div>
 

@@ -1,22 +1,7 @@
 <?php
 session_start();
-?>
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-        <link rel="stylesheet" href='<?php echo "frontend" . DIRECTORY_SEPARATOR . "css" . DIRECTORY_SEPARATOR . "index.css"; ?>'/>
-        <script src="./frontend/js/main.js" defer></script>
 
-        <title>Inicio</title>
-    </head>
-    <body>
-        <?php require(__DIR__ . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
+require(__DIR__ . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
         ?>
         <div class='main'>
             <div id="carouselExampleDark" class="carousel carousel-dark slide">
@@ -44,7 +29,7 @@ session_start();
                                                 <img id="imagen_c1" src="<?php echo "frontend" . DIRECTORY_SEPARATOR . "img" . DIRECTORY_SEPARATOR . "comida" . DIRECTORY_SEPARATOR . "cachopo1.png" ?>">
                                             </div>
                                             <p id="descripcion_c1">
-                                                ¿Quieres probar algo delicioso de Asturias? El cachopo es una comida típica que no puedes perderte. 
+                                                ¿Quieres probar algo deliciosoo de Asturias? El cachopo es una comida típica que no puedes perderte. 
                                                 Hecho con jamón serrano, queso tetilla, cheddar, cebolla caramelizada y tomate, es una deliciosa combinación de sabores en una delgada pieza de carne. 
                                                 ¡No te pierdas la oportunidad de probar este plato asturiano imprescindible!
                                             </p>
@@ -73,7 +58,7 @@ session_start();
                                                 </div>
                                                 <p id="descripcion_c2">¿Amante del chocolate? Prueba el brownie con chocolate fundido, nata y helado de vainilla. 
                                                     Este postre decadente combina un brownie suave con una bola de helado de vainilla cremoso y nata montada. 
-                                                    Perfecto para aquellos que buscan una delicia dulce y seductora.
+                                                    Perfecto para aquellos que buscan una delicia dulce y seductora.</p>
                                                 <div class="d-grid gap-3">
                                                     <a class="btn btn-primary" href="./backend/carta/index_carta.php?tipo=postre">Pedir ya</a>
                                                 </div>
@@ -131,5 +116,4 @@ session_start();
             </div>
         </div>
         <?php require(__DIR__ . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php"); ?>
-    </body>
-</html>
+

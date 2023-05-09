@@ -40,11 +40,11 @@ $ped = $pedidos->obtenerPedidos($id, $orden, $indice_primer_elemento, $por_pagin
                     <div class="mt-2 d-flex align-items-center justify-content-center">
                         <input type="radio" name="orden" value="ASC" id="ASC" class="form-check-input" id="asc"> 
                         <label class="form-check-label" for="ASC">
-                            Antiguas primero
+                            Ascendente
                         </label>
                         <input type="radio" name="orden" value="DESC" id="DESC" class="form-check-input"> 
                         <label class="form-check-label" for="DESC">
-                            Recientes primero
+                            Descendente
                         </label>
                     </div>
                     <input type="submit" name=validar value="Filtrar" class='btn btn-default btn-outline-success mt-2'>

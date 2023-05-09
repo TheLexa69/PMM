@@ -13,7 +13,7 @@ class FormulariosLogin {
         ?>
         <!--<link rel="stylesheet" href="../../frontend/css/login.css"/>-->
         <div class='main d-flex justify-content-center'>
-            <div class="card rounded mt-5 pb-3">
+            <div class="card rounded mt-5 pb-3 login">
                 <div class="card-header text-center">
                     <h2 class="fw-bold">Inicia sesión en LuaChea</h2>
                 </div>

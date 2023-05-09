@@ -348,7 +348,7 @@ class ConsultasAdministrador extends Conexion {
     }
 
     /**
-     * Método que devuelve el producto de la tabla carta_comida con tipo y subtipo en formato testo de las tablas tipo y subtipo
+     * Método que devuelve el producto de la tabla carta_comida con tipo y subtipo en formato texto de las tablas tipo y subtipo
      * @param $dato
      * @return $datos.
      * @throws PDOException Si hay algún error al ejecutar la consulta SQL.
@@ -557,6 +557,107 @@ class ConsultasAdministrador extends Conexion {
             $stmt->execute();
 
             return $stmt;
+        } catch (PDOException $e) {
+            die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
+        }
+    }
+    
+    /**
+     * Método que muestra todos los tipos de comidas que hay en la carta de comida.
+     * @return $$tipo.
+     * @throws PDOException Si hay algún error al ejecutar la consulta SQL.
+     */
+    public function productoTipo() {
+        try {
+            $sql = "select nombre_tipo from tipo";
+
+            $stmt = $this->conexion->prepare($sql);
+
+            $stmt->execute();
+
+            $tipo = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $tipo;
+        } catch (PDOException $e) {
+            die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
+        }
+    }
+    
+    /**
+     * Método que muestra todos los subtipos de comidas que hay en la carta de comida.
+     * @return $$tipo.
+     * @throws PDOException Si hay algún error al ejecutar la consulta SQL.
+     */
+    public function productoSubTipo() {
+        try {
+            $sql = "select nombre_subtipo from subtipo";
+
+            $stmt = $this->conexion->prepare($sql);
+
+            $stmt->execute();
+
+            $tipo = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $tipo;
+        } catch (PDOException $e) {
+            die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
+        }
+    }
+    
+     /**
+     * Método para añadir los datos de un trabajador, las variables son referenciadas al dato.
+     * @param type $nombre
+     * @param type $apellido1
+     * @param type $apellido2
+     * @param type $token2        es el numero generado aleatoriamente y pasado a hash que se guarda en la base de datos en el registro
+     * @param type $mail
+     * @param type $telefono
+     * @param type $privilegios    es  rol del usuario que puede ser Administrador Gestor Administrador o Trabajador
+     * @param type $fecha           Fecha en la cual hace loggin o en este caso se inserta en la tabla
+     * @param type $nie             
+     * @param type $pasaporte
+     */
+    public function agregarProducto($nombre, $desc, $tipo, $subtipo, $fechaInicio, $fechaFin, $precio, $disponible, $alergenos, $imagen) {
+        try {
+            $sql = "INSERT INTO trabajador (nombre,apellido1 ,apellido2,contraseña,correo,num_telef, id_rol,fecha,nie_trabajador,pasaporte_trabajador) VALUES (:nombre,:apellido1,:apellido2,:contrasena,:correo,:num_telef,:rol,:fecha,:nie,:pasaporte)";
+
+            $stmt = $this->conexion->prepare($sql);
+
+            $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR, 25);
+            $stmt->bindParam(':apellido1', $desc, PDO::PARAM_STR, 25);
+            $stmt->bindParam(':apellido2', $tipo, PDO::PARAM_STR, 25);
+            $stmt->bindParam(':contrasena', $subtipo, PDO::PARAM_STR);
+            $stmt->bindParam(':correo', $fechaInicio, PDO::PARAM_STR, 50);
+            $stmt->bindParam(':num_telef', $fechaFin, PDO::PARAM_STR);
+            $stmt->bindParam(':rol', $precio, PDO::PARAM_STR);
+            $stmt->bindParam(':fecha', $disponible, PDO::PARAM_STR);
+            $stmt->bindParam(':nie', $alergenos, PDO::PARAM_STR);
+            $stmt->bindParam(':pasaporte', $imagen, PDO::PARAM_STR);
+
+            $stmt->execute();
+            unset($stmt);
+            unset($this->conexion);
+        } catch (PDOException $e) {
+            die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
+        }
+    }
+    
+    /**
+     * Método que muestra todos los subtipos de comidas que hay en la carta de comida.
+     * @return $$tipo.
+     * @throws PDOException Si hay algún error al ejecutar la consulta SQL.
+     */
+    public function nombreAlergenos() {
+        try {
+            $sql = "select id_alergeno, nombre_alergeno from alergenos";
+
+            $stmt = $this->conexion->prepare($sql);
+
+            $stmt->execute();
+
+            $tipo = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $tipo;
         } catch (PDOException $e) {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }

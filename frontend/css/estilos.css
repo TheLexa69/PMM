@@ -49,11 +49,11 @@ html {
 
 body {
     margin: 0;
-    background: url(../img/local/terraza.png) no-repeat;
-    background-size: cover;
-    background-position: center center;
+    background: url('https://dl.dropboxusercontent.com/s/e2z1cqj7jc7q7j6/leonardo3.jpg') no-repeat;
+    background-size: cover !important;
+    background-position: center center !important;
     height: 100%;
-    background-attachment: fixed;
+    background-attachment: fixed !important;
 }
 
 /*----------------- CARTA -----------------*/
@@ -84,6 +84,30 @@ body {
 }
 /*--------------------------------------*/
 
+#divPopUpForm {
+    cursor: pointer;
+    position: fixed;
+    top: 85%;
+    right: 25px;
+    z-index: 3;
+}
+
+#carritoFlotante {
+    width: 600px;
+    top: 150vh;
+    transition: top 0.5s;
+    position: fixed;
+    bottom: 10vh;
+    right: 25px;
+    z-index: 10;
+    overflow: hidden;
+    height: fit-content;
+}
+
+#formPopUp i {
+    cursor: pointer;
+}
+
 .layered.box {
     min-width: 400px;
     height: 50vh;
@@ -107,10 +131,15 @@ body {
 #botonCompra{
     margin: 0 auto;
     display: block;
+    justify-content: center;
 }
 
 #totalFixed {
     margin-top: 2vh;
+}
+
+.login{
+    width: 600px;
 }
 
 /*PIE DE PAGINA PEGADO ABAJO*/
@@ -223,4 +252,62 @@ footer {
         color: white !important;
     }
 
+    #carritoFlotante {
+        width: auto;
+    }
+
+    .main{
+        margin-bottom: 300px;
+    }
+
+    .cuerpo-contacto > div{
+        flex-direction: column !important;
+    }
+
+    .contact-info{
+        width: 100%;
+        border-right: none !important;
+        border-bottom: 1px solid lightgray;
+        padding-bottom: 1.5rem;
+        padding-right: inherit !important;
+    }
+
+    .contact-form{
+        width: 100%;
+        padding-top: 3rem;
+        padding-left: inherit !important;
+    }
+
+    .content-cart{
+        flex-direction: column !important;
+    }
+
+    .content-cart > div{
+        width: 100% !important;
+    }
+
+    .content-cart > .col-4 > button{
+        margin-top: 10px;
+    }
+    
+    .content-cart > .col-4 > .nombre-producto{
+        margin-top: 20px;
+    }
+    
+    footer{
+        margin-top: 0.5rem !important;
+    }
+
+    footer > div > img {
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    footer > div{
+        flex-direction: column;
+    }
+
+    footer > span {
+        display: none;
+    }
 }

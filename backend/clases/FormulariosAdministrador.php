@@ -21,6 +21,7 @@ class FormulariosAdministrador {
                     <div class="d-flex flex-wrap justify-content-center pt-2">
                         <a href='altaTrabajador.php'><input type='button' class='btn btn-outline-success me-1 mb-2' value='Añadir Trabajador'></a>
                         <a href='trabajadores.php'><input type='button' class='btn btn-outline-success me-1 mb-2' value='Listar Trabajadores'></a>
+                        <a href='agregarProductos.php'><input type='button' class='btn btn-outline-success me-1 mb-2' value='Agregar Productos'></a>
                         <a href='productos.php'><input type='button' class='btn btn-outline-success me-1 mb-2' value='Modificar Productos'></a>
                         <a href='consultaReservas.php'><input type='button' class='btn btn-outline-success me-1 mb-2' value='Reservas sin confirmar'></a>
                         <a href='reservasPorDias.php'><input type='button' class='btn btn-outline-success me-1 mb-2' value='Historico Reservas'></a>
@@ -247,25 +248,9 @@ class FormulariosAdministrador {
                             ?>
                         </tbody>
                     </table>
-                    <div class="d-flex justify-content-center gap-3">
-                    <?php 
-                        echo "<nav aria-label='...'>
-                            <ul class='pagination pagination-lg'>
-                            ";
-                        for ($i = 1; $i <= $total_paginas; $i++) {
-                            if ($i == $pagina_actual) {
-                            echo "<li class='page-item active' aria-current='page'><span class='page-link'><a style = 'color: black;' href='#'> $i </a></span></li>";
-                            } else {
-                                echo "<li class='page-item'><a class='page-link' style = 'color: black;' href='?pagina=$i'> $i </a></li>";
-                            }
-                        }
-                        echo "</ul></nav>";
-                
-                    ?>
-                    </div>
                     <div class="d-flex justify-content-center mb-2">
                         <a href='indexAdministrador.php'>
-                            <input type='button' value='Volver' class="btn btn-outline-warning">
+                            <input type='button' value='Volver a inicio' class="btn btn-outline-warning">
                         </a>
                     </div>
                 </div>
@@ -351,6 +336,165 @@ class FormulariosAdministrador {
                             echo "<br><br><b style=color:red>Faltan campos obligatorios para completar el registro:</b> <br>$necesarios";
                         }
                         ?>               
+                    </form>
+                </div>
+            </div>
+        </div>
+        <?php
+    }
+
+    public function htmlAgregarProducto($tipo, $subtipo, $alergenos, $mensaje = "") {
+        ?>
+        <div class="main container mt-5">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3> Agregar Producto </h3>
+                </div>
+                <div class="card-body">
+                    <form enctype="multipart/form-data" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
+                        <div class="text-center">
+                            <h2>
+                                <?php
+                                if (isset($mensaje)) {
+                                    echo $mensaje;
+                                }
+                                ?>
+                            </h2>
+                        </div>
+
+                        <div class="mt-3">
+                            <label for="c1" class="form-label">Nombre (*):</label>
+                            <input type="text" name="nombre" required class="form-control" id="c1" <?php
+                            if (!empty($_POST['nombre'])) {
+                                echo " value='" . $_POST['nombre'] . "'";
+                            }
+                            ?> 
+                        </div>
+
+                        <div class="mt-3">
+                            <label for="c2" class="form-label">Descripción:</label>
+                            <input type="text" name="descri" class="form-control" id="c2" <?php
+                            if (!empty($_POST['descri'])) {
+                                echo " value='" . $_POST['descri'] . "'";
+                            }
+                            ?> >
+                        </div>
+
+                        <div class="mt-3">
+                            <label for="c3" class="form-label">Tipo (*):</label>
+                            <select name="tipo" class="form-select">
+                                <?php foreach ($tipo as $id => $nombre) { ?>
+                                    <option value='<?php echo $id + 1 ?>'><?php echo $nombre["nombre_tipo"] ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+
+                        <div class="mt-3">
+                            <label for="c4" class="form-label">Subtipo:</label>
+                            <select name="subtipo" class="form-select">
+                                <?php foreach ($subtipo as $id => $nombre) { ?>
+                                    <option value='<?php echo $id + 1 ?>'><?php echo $nombre["nombre_subtipo"] ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+
+                        <div class="mt-3">
+                            <label for="c5" class="form-label">Disponible desde (*):</label>
+                            <input type=date name="desde" class="form-control"  pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}">
+                        </div>
+
+                        <div class="mt-3">
+                            <label for="c6" class="form-label">Disponible Hasta:</label>
+                            <input type=date name="hasta" class="form-control" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}">
+                        </div>
+
+                        <div class="mt-3">
+                            <label for="c7" class="form-label">Precio (*):</label>             
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="precio" aria-label="Dollar amount (with dot and two decimal places)">
+                                <span class="input-group-text">€</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <label for="c8" class="form-label">Disponible (*):</label>
+                            <select class="form-select" name="disponible"> 
+                                <option value="1" selected="selected">Hay Stock</option>
+                                <option value="2" >Sin Stock</option>
+                            </select>
+                        </div>
+
+                        <div class="mt-3">
+                            <p class="mb-1">Alérgenos:</p>
+                            <?php foreach ($alergenos as $id1 => $nombre) {
+                                if($id1 >= 0){ ?>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value='<?php echo ucfirst($nombre["id_alergeno"])?>'>
+                                    <label class="form-check-label" for="inlineCheckbox1"><?php echo ucfirst($nombre["nombre_alergeno"])?></label>
+                                </div>
+                            <?php }} ?>
+                        </div>
+
+                        <div class="mt-3">
+                            <label for="formFile" class="form-label">Imagen (*):</label>
+                            <input class="form-control" name="imagen" type="file" id="formFile">
+                        </div> 
+
+                        <p class="mt-3 text-center fst-italic">Por favor, asegúrese de completar todos los campos que lleven un asterisco (*) antes de enviar el formulario.</p>
+
+                        <div class='mt-3 d-flex justify-content-center'>
+                            <div class="pe-2">
+                                <input type="submit" class='btn btn-outline-success' style='width: 100px' name="registro" value='Añadir'>
+                            </div>
+                            <?php
+                            if (isset($mensaje)) {
+                                echo "<a href='indexAdministrador.php' id='cancel' name='cancel' style='width: 100px' class='btn btn-default btn-outline-danger'>Cancelar</a>";
+                            }
+                            ?>
+                        </div>
+
+                        <?php
+                        if (!empty($_POST['registro']) && $necesarios !== true) {
+                            //Enseña los campos que faltan al usuario
+                            $necesarios = str_replace('apellido1', 'primer apellido', $necesarios);
+                            $necesarios = str_replace('nie', 'nie incorrecto', $necesarios);
+                            $necesarios = str_replace('pasaporte', 'pasaporte o NIE', $necesarios);
+                            $necesarios = str_replace('privilegios', 'privilegios', $necesarios);
+                            $necesarios = str_replace('password', 'contraseña', $necesarios);
+                            // $necesarios = str_replace('password2', 'confirmación de la contraseña',$necesarios);
+                            $necesarios = str_replace('email', 'correo', $necesarios);
+                            echo "<br><br><b style=color:red>Faltan campos obligatorios:</b> <br>$necesarios";
+                        }
+                        ?>
+
+                            <tr>
+                                <td>Precio:</td>
+                                <td><input type="text" name="precio" value="<?php echo $id["precio"]; ?>" class="form-control"> </td>
+                            </tr> 
+                            <tr>
+                                <td>Disponible:</td>
+                                <td>
+                                    <select name="disponible" class="form-select"> 
+                                        <option value="<?php echo ($id["disponible"] == 'si') ? 'si' : 'no'; ?>"><?php echo ($id["disponible"] == 'si') ? 'Hay Stock' : 'Sin Stock'; ?></option>
+                                        <option  value="<?php echo ($id["disponible"] == 'no') ? 'si' : 'no'; ?>"> <?php echo ($id["disponible"] == 'si') ? 'Sin Stock' : 'Hay Stock'; ?> </option> 
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Nombre Imagen:</td>
+                                <td>
+                                    <input type="file" name="imagen[]" class="form-control" id="c9">
+                                </td>
+                            </tr>  
+                        </table>
+                        <div class="my-3 d-flex flex-wrap justify-content-evenly">
+                            <input type="hidden" name="id" value="<?php echo $id["id_comida"]; ?>">
+                            <input type="submit" name="actualizar" value="Actualizar" class="btn btn-outline-info mb-2">
+                            <input type="submit" name="eliminar" value="Eliminar" class="btn btn-outline-danger mb-2"> 
+                            <a href="productos.php"><input type="button" value="Modificar Otro Producto" class="btn btn-outline-success mb-2"></a>
+                            <a href="indexAdministrador.php"><input type="button" value="Volver a inicio" class="btn btn-outline-warning mb-2"></a>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -515,7 +659,7 @@ class FormulariosAdministrador {
      * Método que precarga los datos de los productos en un formulario para su posterior tratamiento 
      * @param $fila  Continene los productos
      */
-    public function tablaProductos($fila, $total_paginas, $pagina_actual) {
+    public function tablaProductos($fila) {
         if (isset($_GET["mensaje"])) {
             echo "<script> alert('" . $_GET["mensaje"] . "'); </script>";
         }
@@ -571,25 +715,9 @@ class FormulariosAdministrador {
                             ?>
                         </tbody>
                     </table>
-                    <div class="d-flex justify-content-center gap-3">
-                    <?php 
-                        echo "<nav aria-label='...'>
-                            <ul class='pagination pagination-lg'>
-                            ";
-                        for ($i = 1; $i <= $total_paginas; $i++) {
-                            if ($i == $pagina_actual) {
-                            echo "<li class='page-item active' aria-current='page'><span class='page-link'><a style = 'color: black;' href='#'> $i </a></span></li>";
-                            } else {
-                                echo "<li class='page-item'><a class='page-link' style = 'color: black;' href='?pagina=$i'> $i </a></li>";
-                            }
-                        }
-                        echo "</ul></nav>";
-                
-                    ?>
-                    </div>
                     <div class="d-flex justify-content-center mb-2">
                         <a href='indexAdministrador.php'>
-                            <input type='button' value='Volver' class="btn btn-outline-warning">
+                            <input type='button' value='Volver a inicio' class="btn btn-outline-warning">
                         </a>
                     </div>
                 </div>

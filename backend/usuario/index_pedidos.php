@@ -27,7 +27,9 @@ $total_paginas = ceil($pedidos->obtenerNumPedidos($id) / $por_pagina);
 
 $ped = $pedidos->obtenerPedidos($id, $orden, $indice_primer_elemento, $por_pagina);
 ?>
-
+<head>
+    <title>Pedidos</title>
+</head>
 <div class="container main mt-5">
     <div class="card rounded">
         <div class="card-header text-center">

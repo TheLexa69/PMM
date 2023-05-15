@@ -26,8 +26,8 @@ if (isset($_GET['red'])) {
         crossorigin="anonymous"></script>
         <script src="https://kit.fontawesome.com/bd61d050b0.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "css" . DIRECTORY_SEPARATOR . "estilos.css"; ?>'/>
-        <link rel="stylesheet" href='<?php echo "frontend" . DIRECTORY_SEPARATOR . "css" . DIRECTORY_SEPARATOR . "index.css"; ?>'/>
-        <script src="./js/main.js" defer></script>
+        <link rel="stylesheet" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "css" . DIRECTORY_SEPARATOR . "index.css"; ?>'/>
+        <script src="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "js" . DIRECTORY_SEPARATOR . "main.js"; ?>" defer></script>
     </head>
 
     <body>
@@ -109,24 +109,7 @@ if (isset($_GET['red'])) {
                     </li>
                 </ul> 
             </div>
-            <script>
-                const nav = document.getElementById('navbarNavAltMarkup');
-                console.log(document.getElementById('navbarNavAltMarkup'));
-                nav.style.top = nav.style.top == '0px' ? '-60vh' : '0px';
-                function changeTheme() {
-                    console.log(document.body.style.backgroundImage);
-                    if (document.body.style.background == "url(\"https://dl.dropboxusercontent.com/s/e2z1cqj7jc7q7j6/leonardo3.jpg\") no-repeat") {
-                        document.body.style.background = "url(\"https://dl.dropboxusercontent.com/s/jr28g3sfwre6dkf/leonardo2.jpg\") no-repeat";
-                        document.body.style.backgroundSize = "cover";
-                        document.body.style.backgroundPosition = "center center";
-                        document.body.style.backgAttachment = 'fixed';
 
-                    } else {
-                        document.body.style.background = "url(\"https://dl.dropboxusercontent.com/s/e2z1cqj7jc7q7j6/leonardo3.jpg\") no-repeat";
-
-                    }
-                }
-            </script>
         </div>
 
 

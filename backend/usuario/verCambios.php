@@ -17,7 +17,11 @@ $funcionesU = new funcionesUsuario;
 $id = $_SESSION["usuario"];
 
 $por_pagina = 10;
-
+?>
+<head>
+    <title>Cambios Perfil</title>
+</head>
+<?php
 if (isset($_GET['pagina'])) {
     $pagina_actual = $_GET['pagina'];
 } else {

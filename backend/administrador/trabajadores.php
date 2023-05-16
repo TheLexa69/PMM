@@ -12,9 +12,19 @@ use \clases\ConsultasAdministrador as consultasAdministrador;
 $formularios = new formulariosAdministrador;
 $consulta = new consultasAdministrador($_SESSION['administrador'][1]);
 
-$cantidadResultados = 15;
-$paginaActual = isset($_GET["pagina"]) ? (int) $_GET["pagina"] : 1;
-$paginaInicio = ($paginaActual - 1) * $cantidadResultados;
+//$cantidadResultados = 15;
+//$paginaActual = isset($_GET["pagina"]) ? (int) $_GET["pagina"] : 1;
+//$paginaInicio = ($paginaActual - 1) * $cantidadResultados;
+
+$por_pagina = 10;
+
+if (isset($_GET['pagina'])) {
+    $pagina_actual = $_GET['pagina'];
+} else {
+    $pagina_actual = 1;
+}
+$indice_primer_elemento = ($pagina_actual - 1) * $por_pagina;
+$total_paginas = ceil($consulta->obtenerNumTrabajadores() / $por_pagina);
 
 if (isset($_POST["validar"])) {
       $_POST['nombre'];
@@ -26,13 +36,15 @@ if (isset($_POST["validar"])) {
     }
     if (!empty($_POST['orden'])) {
         $orden = $_POST['orden'];
+        $_SESSION["orden"] = $orden;
+        
     }
 }
 $nombre = (isset($nombre)) ? $nombre :"";
 $opcion = (isset($opcion)) ? $opcion :"";
-$orden = (isset($orden)) ? $orden :"";
+$orden = (isset($_SESSION["orden"])) ? $_SESSION["orden"] : false;
 
-$fila = $consulta->filtradoTrabajadores($paginaInicio, $cantidadResultados, $nombre, $opcion, $orden);
+$fila = $consulta->filtradoTrabajadores($indice_primer_elemento, $por_pagina, $nombre, $opcion, $orden);
 
 
 $formularios->listaFiltradaEmpleados();
@@ -41,7 +53,7 @@ if(empty($fila)){
 echo "<script> alert('".$mensaje1."'); </script>";
     
 }
-$formularios->tablaEmpleados($fila);
+$formularios->tablaEmpleados($fila, $total_paginas, $pagina_actual);
 
 $contador = $consulta->trabajadoresActivos();
 $total = ceil($contador / $cantidadResultados);

@@ -84,14 +84,15 @@ class Pedido extends Conexion {
      * 
      * @return array Array con todos los pedidos del usuario
      */
-    public function obtenerPedidos($id_usuario, $orden) {
+    public function obtenerPedidos($id_usuario, $orden, $indice_primer_elemento, $por_pagina) {
         if (empty($orden)) {
-            $stmt = $this->conexion->prepare("SELECT id_ped, fecha FROM $this->tabla_pedidos WHERE id_usuario = :id_usuario ORDER BY fecha DESC");
+            $stmt = $this->conexion->prepare("SELECT id_ped, fecha FROM $this->tabla_pedidos WHERE id_usuario = :id_usuario ORDER BY fecha DESC LIMIT :indice_primer_elemento, :por_pagina");
         } else {
-            $stmt = $this->conexion->prepare("SELECT id_ped, fecha, restaurante FROM $this->tabla_pedidos WHERE id_usuario = :id_usuario ORDER BY fecha $orden");
+            $stmt = $this->conexion->prepare("SELECT id_ped, fecha, restaurante FROM $this->tabla_pedidos WHERE id_usuario = :id_usuario ORDER BY fecha $orden LIMIT :indice_primer_elemento, :por_pagina");
         }
         $stmt->bindParam(":id_usuario", $id_usuario, PDO::PARAM_INT);
-        
+        $stmt->bindParam(":indice_primer_elemento", $indice_primer_elemento, PDO::PARAM_INT);
+        $stmt->bindParam(":por_pagina", $por_pagina, PDO::PARAM_INT);
         $stmt->execute();
         $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($pedidos as &$pedido) {
@@ -129,7 +130,7 @@ class Pedido extends Conexion {
      * 
      * @return array Array con la información del pedido y los productos que se pidieron
      */
-    public function obtenerPedido($id_pedido) {
+    public function obtenerPedido($id) {
         $stmt = $this->conexion->prepare("SELECT * FROM $this->tabla_pedidos WHERE id = ?");
         $stmt->execute([$id_pedido]);
         $pedido = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -137,6 +138,21 @@ class Pedido extends Conexion {
         $stmt->execute([$id_pedido]);
         $pedido['productos'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $pedido;
+    }
+
+    /**
+     * Método para obtener número de pedidos 
+     *
+     * @param int $id ID del usuario
+     * 
+     * @return int 
+     */
+    public function obtenerNumPedidos($id_usuario) {
+        $stmt = $this->conexion->prepare("SELECT count(*) FROM $this->tabla_pedidos WHERE id_usuario = :id_usuario");
+        $stmt->bindParam(":id_usuario", $id_usuario, PDO::PARAM_INT);
+        $stmt->execute();
+        $pedidos = $stmt->fetch();
+        return $pedidos[0];
     }
 
     /**

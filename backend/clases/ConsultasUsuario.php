@@ -176,15 +176,18 @@ class ConsultasUsuario extends Conexion {
      * @return $dato
      * @throws PDOException Si hay algún error al ejecutar la consulta SQL.
      */
-    public function solicitarDatosCambiados($id, $orden) {
+    public function solicitarDatosCambiados($id, $orden, $indice_primer_elemento, $por_pagina) {
         try {
             if (empty($orden)) {
-                $sql = "select * from datos_usuario where id_usuario=?";
+                $sql = "select * from datos_usuario where id_usuario = :id LIMIT :indice_primer_elemento, :por_pagina";
             } else {
-                $sql = "select * from datos_usuario where id_usuario=? ORDER BY fecha $orden";
+                $sql = "select * from datos_usuario where id_usuario = :id ORDER BY fecha $orden LIMIT :indice_primer_elemento, :por_pagina";
             }
             $stmt = $this->conexion->prepare($sql);
-            $stmt->execute(array($id));
+            $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+            $stmt->bindParam(":indice_primer_elemento", $indice_primer_elemento, PDO::PARAM_INT);
+            $stmt->bindParam(":por_pagina", $por_pagina, PDO::PARAM_INT);
+            $stmt->execute();
             $dato = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             unset($stmt);
@@ -192,6 +195,25 @@ class ConsultasUsuario extends Conexion {
         } catch (Exception $ex) {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
+    }
+
+    /**
+     * Método que devuelve las filas del histórico de datos de un usuario pasandole el email
+     * @param $mail
+     * @return $datos
+     */
+    public function comprobarFilasDatos($id) {
+        $sql = "select count(*) from datos_usuario where id_usuario=?";
+
+        $stmt = $this->conexion->prepare($sql);
+
+        $stmt->execute(array($id));
+
+        $fila = $stmt->fetch();
+
+
+        unset($stmt);
+        return $fila[0];
     }
 
 }

@@ -37,7 +37,7 @@ class FormulariosLogin {
                         <div class="pt-2">
                             <div class="">
                                 <label for="c1" class="form-label"><b>Email:</b></label>
-                                <input type="email" name="mail" class="form-control" id="c1" placeholder="E-mail" <?php
+                                <input type="email" name="mail" class="form-control" id="c1" autocomplete="email" placeholder="Correo electrónico" <?php
                                 if (!empty($_POST['mail'])) {
                                     echo " value='" . $_POST['mail'] . "'";
                                 }
@@ -46,7 +46,7 @@ class FormulariosLogin {
                             <div class="mt-3">
                                 <label for="c2" class="form-label"><b>Contraseña:</b></label>
                                 <div class='col-xs-3'>
-                                    <input type="password" name="pass" class="form-control" id="c2" placeholder="Contraseña">
+                                    <input type="password" name="pass" class="form-control" id="c2" placeholder="Contraseña" autocomplete="current-password">
                                 </div>
                             </div>
                         </div>

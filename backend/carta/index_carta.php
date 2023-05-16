@@ -95,6 +95,9 @@ if (isset($_POST['dato'])) {
         $('[data-toggle="popover"]').popover();
     });
 </script>
+<head>
+    <title>Carta</title>
+</head>
 <div class="main">
     <div class="card container mt-5" style="padding: 0 !important">
         <div class="card-header text-center">
@@ -320,10 +323,7 @@ if (isset($_POST['dato'])) {
             }
         }
         ?>
-    </div>
+    <!--</div>-->
 </div>
-
-<script src="../../frontend/js/main.js"></script>
-
 <?php
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");

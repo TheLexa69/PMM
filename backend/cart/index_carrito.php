@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
 
@@ -8,71 +9,11 @@ $carrito = new carrito();
 $rol = isset($_SESSION['id_rol']) ? $_SESSION['id_rol'] : null;
 $win_loc = "../login/indexLogin.php";
 ?>
-<script>
-    /**
-     *
-     * Actualiza la cantidad de un producto en el carrito a través de una petición AJAX
-     * @param {number} id_comida - El ID del producto a actualizar
-     * @param {number} cantidad - La nueva cantidad del producto
-     * @return {void}
-     */
-    function updateCantidad(id_comida, cantidad) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'actualizar_carrito.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                // Actualizar la página para reflejar los cambios
-                window.location.reload();
-            }
-        };
-        xhr.send('id_comida=' + id_comida + '&cantidad=' + cantidad);
-    }
-
-    document.addEventListener("DOMContentLoaded", function (event) {
-        // Obtener el botón de realizar compra
-        const miEnlace = document.getElementById("log");
-
-        // Añadir un evento de clic al botón
-        miEnlace.addEventListener("click", function () {
-            // Comprobar si el usuario ha iniciado sesión
-            if (!usuarioIniciado()) {
-                // Mostrar un alerta y redirigir a la página de inicio de sesión
-
-                window.location.href = "../login/indexLogin.php";
-
-                confirm("Tienes que iniciar sesión");
-                window.location.href = "../login/indexLogin.php?redirigido=si";
-
-            }
-        });
-
-        /**
-         *
-         * Verifica si el usuario ha iniciado sesión.
-         *
-         * @return {boolean} true si el usuario no ha iniciado sesión, false si ha iniciado sesión.
-         */
-        function usuarioIniciado() {
-            // Obtener todas las cookies del sitio
-            var cookies = document.cookie.split(";");
-
-            // Buscar la cookie de sesión específica
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = cookies[i].trim();
-                if (cookie.indexOf("carrito=") == 0) {
-                    // La cookie de sesión específica existe
-                    return false;
-                }
-            }
-
-            // Si no, el usuario no ha iniciado sesión
-            return true;
-        }
-    });
-
-</script>
+<head>
+    <title>Cesta</title>
+</head>
 <?php
+
 if (isset($_SESSION['usuario'])) {
     $usuario = $_SESSION['usuario'];
     //Sacamos el carrito de la base de datos y lo igualamos a la variable de sesión
@@ -154,7 +95,7 @@ if (isset($_SESSION['usuario'])) {
             <?php
         }
     } else {
-        echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-center">No tienes productos en tu cesta todavía.</h2></div>';
+        echo '<div class="container mt-5 bg-light rounded text-center py-5"><h2>No tienes productos en tu cesta todavía.</h2></div>';
     }
 }
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");

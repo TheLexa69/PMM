@@ -11,10 +11,25 @@ $id = $_SESSION["usuario"];
 
 if (!empty($_POST['orden'])) {
     $orden = $_POST['orden'];
+    $_SESSION["orden"] = $orden;
 }
-$orden = (isset($orden)) ? $orden : false;
-$ped = $pedidos->obtenerPedidos($id, $orden);
+$orden = (isset($_SESSION["orden"])) ? $_SESSION["orden"] : false;
+
+$por_pagina = 10;
+
+if (isset($_GET['pagina'])) {
+    $pagina_actual = $_GET['pagina'];
+} else {
+    $pagina_actual = 1;
+}
+$indice_primer_elemento = ($pagina_actual - 1) * $por_pagina;
+$total_paginas = ceil($pedidos->obtenerNumPedidos($id) / $por_pagina);
+
+$ped = $pedidos->obtenerPedidos($id, $orden, $indice_primer_elemento, $por_pagina);
 ?>
+<head>
+    <title>Pedidos</title>
+</head>
 <div class="container main mt-5">
     <div class="card rounded">
         <div class="card-header text-center">
@@ -69,8 +84,25 @@ $ped = $pedidos->obtenerPedidos($id, $orden);
                 </tbody>
             </table>
         </div>
+        <div class="d-flex justify-content-center gap-3">
+        <?php 
+            echo "<nav aria-label='...'>
+                <ul class='pagination pagination-lg'>
+                ";
+            for ($i = 1; $i <= $total_paginas; $i++) {
+                if ($i == $pagina_actual) {
+                echo "<li class='page-item active' aria-current='page'><span class='page-link'><a style = 'color: black;' href='#'> $i </a></span></li>";
+                } else {
+                    echo "<li class='page-item'><a class='page-link' style = 'color: black;' href='?pagina=$i'> $i </a></li>";
+                }
+            }
+            echo "</ul></nav>";
+      
+        ?>
+        </div>
+
         <div class="text-center my-3">
-            <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>" id="cancel" name="cancel" class="btn btn-default btn-outline-danger">Volver</a>
+            <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>" id="cancel" name="cancel" class="btn btn-default btn-outline-danger">Volver al inicio</a>
         </div>
     </div>
 </div>

@@ -73,6 +73,9 @@ $win_loc = "../login/indexLogin.php";
     });
 
 </script>
+<head>
+    <title>Cesta</title>
+</head>
 <?php
 
 if (isset($_SESSION['usuario'])) {

@@ -1,5 +1,4 @@
 <?php
-
 require dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "sesiones" . DIRECTORY_SEPARATOR . "sesiones.php";
 comprobar_sesion();
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
@@ -18,7 +17,11 @@ $funcionesU = new funcionesUsuario;
 $id = $_SESSION["usuario"];
 
 $datos = $consulta->datosUsuario($id);
-
+?>
+<head>
+    <title>Perfil</title>
+</head>
+<?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_POST = $filtro->validarPost($_POST);
 
@@ -36,7 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cp = $filtro->verificarDatos("[0-9]{5,5}", $cp);
     $cp = (strlen($cp) == 5) ? $cp : "";
     $nif = ( $_POST['nif'] == $datos["NIF"]) ? $datos["NIF"] : "";
-
     if ($nif == "") {
         if ($filtro->validaDniCifNie($_POST['nif'])) {
             $nif = $_POST['nif'];
@@ -69,7 +71,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $datos = $consulta->datosUsuario($id);
         $formularios->registroDatosPorUsuario($datos, $necesarios);
     } else {
-
 
         if (isset($mensaje2)) {
 

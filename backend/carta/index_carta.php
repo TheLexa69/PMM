@@ -95,6 +95,9 @@ if (isset($_POST['dato'])) {
         $('[data-toggle="popover"]').popover();
     });
 </script>
+<head>
+    <title>Carta</title>
+</head>
 <div class="main">
     <div class="card container mt-5" style="padding: 0 !important">
         <div class="card-header text-center">

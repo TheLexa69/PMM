@@ -143,16 +143,18 @@ body {
 }
 
 /*PIE DE PAGINA PEGADO ABAJO*/
-.cookie {
+#cookie {
+    display: flex;
+    flex-direction: column;
     position: absolute;
     padding: 10px;
     /*bottom: 0;*/
-    max-width: 80%;
+    max-width: 900px;
     color: black;
     z-index: 3;
     left: 0;
     transition: top 0.5s;
-    top: -150%; 
+    top: -150vh;
 }
 
 .main {

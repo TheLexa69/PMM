@@ -32,10 +32,8 @@ if ($pedido) {
     $array_carrito = $p->array_carrito($carrito, $precio, $especif);
     $cuerpo = $p->crear_correo($array_carrito, $pedido);
     $p->enviar($_SESSION['mail'], $cuerpo);
-    echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-center">'
-    . 'Pedido realizado con éxito, te hemos enviado un correo.</h2>'
-    . '</div>';
-    
+    echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-center">Pedido realizado con éxito, te hemos enviado un correo.</h2></div>';
+
     echo '<div id="mensaje" class="rounded" style="z-index: 4; position: absolute; transition: top 0.5s; top: -150%; right: 0; background-color: #80ff00; color: black; padding: 10px;">';
     echo '<h2>Pedido realizado con éxito, te hemos enviado un correo.</h2>';
     echo '</div>';
@@ -53,9 +51,9 @@ if ($pedido) {
 } else {
     //echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-center">Ocurrió algún error y no se pudo realizar el pedido</h2></div>';
     echo '<div id="mensaje" class="rounded" style="z-index: 4; position: absolute; transition: top 0.5s; top: -150%; right: 0; background-color: #f44336; color: white; padding: 10px;">';
-        echo '<h2>Ocurrió algún error y no se pudo realizar el pedido.</h2>';
-        echo '</div>';
-        echo "<script defer>
+    echo '<h2>Ocurrió algún error y no se pudo realizar el pedido.</h2>';
+    echo '</div>';
+    echo "<script defer>
               window.onload = function() {
               var mensajeDiv = document.getElementById('mensaje');
               mensajeDiv.style.top = '20%';

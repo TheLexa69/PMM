@@ -124,11 +124,18 @@ class FormulariosLogin {
                             <tr>
                                 <td><h5>Teléfono</h5></td>
                                 <td>
-                                    <input type="text" name="telefono" class="form-control" id="c5" <?php
+                                    <input type="hidden" name="codPais" value="">
+                                    <input type="text" name="telefono" placeholder="Teléfono" class="form-control" id="phone"<?php
                                     if (!empty($_POST['telefono'])) {
                                         echo " value='" . $_POST['telefono'] . "'";
                                     }
-                                    ?>>
+                                    ?>/> 
+                                    <!--<input type="text" name="telefono" class="form-control" id="c5" <?php
+                                    //if (!empty($_POST['telefono'])) {
+                                    //    echo " value='" . $_POST['telefono'] . "'";
+                                    //}
+                                    ?>
+                                    >-->
                                 </td>
                             </tr>
                         </table>
@@ -200,6 +207,8 @@ class FormulariosLogin {
                 </div>
                 <div class="card-body">
                     <form action= "comprobarToken.php " method="POST">
+                        <?php var_dump($_POST['codPais'] . ' - ' . $_POST['telefono']) ?>
+
                         <h5 class="text-center">Para completar el proceso, por favor revise su bandeja de correo electrónico. Le hemos enviado un código de verificación.</h5>                
                         <label for="c" class="form-label">Codigo Mail:</label>
                         <input type="password" class="form-control" id="c" name="token">

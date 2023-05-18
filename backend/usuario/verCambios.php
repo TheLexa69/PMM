@@ -30,15 +30,14 @@ if (isset($_GET['pagina'])) {
 $indice_primer_elemento = ($pagina_actual - 1) * $por_pagina;
 $total_paginas = ceil($consulta->comprobarFilasDatos($id) / $por_pagina);
 
-
 if (!empty($_POST['orden'])) {
     $orden = $_POST['orden'];
-    $_SESSION["orden"] = $orden;
+    $datos = $consulta->solicitarDatosCambiados($id, $orden, $indice_primer_elemento, $por_pagina);
+    //$_SESSION["orden"] = $orden;
 }
 $orden = (isset($orden)) ? $orden : "";
 
-
-$datos = $consulta->solicitarDatosCambiados($id, $_SESSION["orden"], $indice_primer_elemento, $por_pagina);
+$datos = $consulta->solicitarDatosCambiados($id, $orden, $indice_primer_elemento, $por_pagina);
 
 //$datos = $consulta->solicitarDatosCambiados($id, $orden);
 //$formularios->formularioCambiosPerfil($datos);

@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 require(__DIR__ . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
 ?>
 <head>

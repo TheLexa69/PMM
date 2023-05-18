@@ -67,6 +67,9 @@ if (isset($_GET['red'])) {
                     <li class="nav-item">  
                         <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "index_carrito.php"; ?>'><i class="fa-solid fa-basket-shopping fa-2xl menu-responsive  my-auto pe-4"></i>Cesta</a>
                     </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link" href= '#' onclick="changeTheme();"><i class="fa-solid fa-circle-half-stroke fa-xl pe-4 menu-responsive my-auto"></i>Tema</a>
+                    </li>
                     <?php
                     if (!empty($_SESSION['usuario']) && isset($_SESSION)) {
                         ?> 
@@ -104,9 +107,6 @@ if (isset($_GET['red'])) {
                         <?php
                     }
                     ?>
-                    <li class="nav-item"> 
-                        <a class="nav-link" href= '#' onclick="changeTheme();"><i class="fa-solid fa-circle-half-stroke fa-xl pe-4 menu-responsive my-auto"></i>Tema</a>
-                    </li>
                 </ul> 
             </div>
 

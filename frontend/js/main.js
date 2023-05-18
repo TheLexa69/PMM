@@ -78,6 +78,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 
 console.log('JS funcionando');
+
 function getCookie(name) {
     const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
     return cookieValue ? cookieValue.pop() : '';
@@ -121,13 +122,11 @@ for (let i = 0; i < imagenes.length; i++) {
             imagenes[i].style.border = '1px solid red';
             imagenes[i].setAttribute('checked', '');
         }
-
         // Actualizar el contenido del contenedor de alérgenos
         /*const contenedor = document.getElementById("contenedorAlergenos");
          contenedor.innerHTML = seleccionadas.join(", ");*/
     });
 }
-
 /**
  * Función que muestra o oculta la barra de navegación.
  * @param {none}
@@ -137,7 +136,6 @@ function showHideNav() {
     const nav = document.getElementById('navbarNavAltMarkup');
     nav.style.top = nav.style.top === '0px' ? '-150vh' : '0px';
 }
-
 /**
  * Función que cambia el tema de la página.
  * @param {none}
@@ -150,7 +148,6 @@ function changeTheme() {
         document.body.style.backgroundSize = "cover";
         document.body.style.backgroundPosition = "center center";
         document.body.style.backgAttachment = 'fixed';
-
         /*const elements = document.querySelectorAll('.bg-light');
          console.log(elements);
          elements.forEach(element => {

@@ -31,10 +31,10 @@ if (isset($_GET['red'])) {
     </head>
 
     <body>
-       <div class="d-flex bg-dark sticky-top justify-content-end navNavgationBar">
-          
+        <div class="d-flex bg-dark sticky-top justify-content-end navNavgationBar">
+
             <div class="p-2 navgationbar" >
-                    <ul class="nav nav-tabs justify-content-end ">
+                <ul class="nav nav-tabs justify-content-end ">
 
                     <li class="nav-item"> 
                         <a class="nav-link active" aria-current="page" href= '<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>' >Inicio</a>
@@ -63,15 +63,16 @@ if (isset($_GET['red'])) {
                     <li class="nav-item">  
                         <a class="nav-link" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "index_carrito.php"; ?>'>Cesta</a>
                     </li>
-                      <li class="nav-item"> 
-                        <a class="nav-link" href= '#' onclick="changeTheme();"><i class="fa-solid fa-circle-half-stroke fa-xl pe-4 menu-responsive my-auto"></i>Tema</a>
-                    </li>
+
                     <?php
                     if (!empty($_SESSION['usuario']) && isset($_SESSION)) {
                         ?> 
+                        <li class="nav-item"> 
+                            <a class="nav-link" href onclick="changeTheme();"><i class="fa-solid fa-circle-half-stroke fa-xl pe-4 menu-responsive my-auto"></i>Tema</a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Usuario</a>
-                           <ul class="dropdown-menu ">   
+                            <ul class="dropdown-menu ">   
                                 <li class="nav-item"><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "modificarDatosUsuario.php"; ?>'>Cambiar Perfil</a></li> 
                                 <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "index_pedidos.php"; ?>'>Pedidos</a></li>
                                 <li><a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "usuario" . DIRECTORY_SEPARATOR . "verCambios.php"; ?>'>Histórico Datos</a></li>
@@ -80,13 +81,14 @@ if (isset($_GET['red'])) {
                                     <a class="dropdown-item" href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "login" . DIRECTORY_SEPARATOR . "logout.php"; ?>'>Cerrar Session</a>
                                 </li>
                             </ul>
+
                         </li>
 
 
                         <?php
                     } elseif (!empty($_SESSION['administrador'])) {
                         ?> 
-                                               <li class="nav-item dropdown">
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false"><i class="fa-solid fa-user fa-2xl menu-responsive my-auto pe-4"></i>Administración</a>
                             <ul class="dropdown-menu ">
                                 <li>

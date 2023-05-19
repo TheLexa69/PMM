@@ -33,14 +33,12 @@ function updateCantidad(id_comida, cantidad) {
 document.addEventListener("DOMContentLoaded", function (event) {
     // Obtener el botón de realizar compra
     const miEnlace = document.getElementById("log");
-    console.log(miEnlace);
     // Añadir un evento de clic al botón
     if (miEnlace !== null) {
         miEnlace.addEventListener("click", function () {
             // Comprobar si el usuario ha iniciado sesión
             if (!usuarioIniciado()) {
                 // Mostrar un alerta y redirigir a la página de inicio de sesión
-
                 window.location.href = "../login/indexLogin.php";
 
                 confirm("Tienes que iniciar sesión");
@@ -142,7 +140,6 @@ function showHideNav() {
  * @return {none}
  */
 function changeTheme() {
-    console.log("aa" + document.body.style.background);
     if (document.body.style.background === "url(\"https://dl.dropboxusercontent.com/s/e2z1cqj7jc7q7j6/leonardo3.jpg\") no-repeat") {
         document.body.style.background = "url(\"https://dl.dropboxusercontent.com/s/jr28g3sfwre6dkf/leonardo2.jpg\") no-repeat";
         document.body.style.backgroundSize = "cover";

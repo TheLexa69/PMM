@@ -13,7 +13,6 @@ $win_loc = "../login/indexLogin.php";
     <title>Cesta</title>
 </head>
 <?php
-
 if (isset($_SESSION['usuario'])) {
     $usuario = $_SESSION['usuario'];
     //Sacamos el carrito de la base de datos y lo igualamos a la variable de sesión
@@ -38,7 +37,7 @@ if (isset($_SESSION['usuario'])) {
         . '<h2>No tienes productos en tu cesta todavía.</h2>'
         . '</div>';
     } else {
-        ?>
+        ?><!--Tiene comida almacenada-->
         <div class="container main mt-5">
             <div class="card">
                 <div class="card-header">
@@ -54,7 +53,7 @@ if (isset($_SESSION['usuario'])) {
                     $precio_total = $carrito->getTotalPrice($_SESSION['carrito']);
                     echo '<div class="mt-5 rounded py-3 d-flex justify-content-end align-items-center">'
                     . '<h3 class="fw-bold me-2 mb-0">Total: ' . $precio_total . '</h3>'
-                    . '<a href="#"><button id="log" type="button" class="btn btn-outline-success">Finalizar compra</button>'
+                    . '<a href="realizar_pedido.php"><button id="log" type="button" class="btn btn-outline-success">Finalizar compra</button>'
                     . '</a>'
                     . '</div>';
                     ?>
@@ -85,7 +84,7 @@ if (isset($_SESSION['usuario'])) {
                         $precio_total = $carrito->getTotalPrice(unserialize($_COOKIE['carrito'], ["allowed_classes" => false]));
                         echo '<div class="mt-5 rounded py-3 d-flex justify-content-end align-items-center">'
                         . '<h3 class="fw-bold me-2 mb-0">Total: ' . $precio_total . '</h3>'
-                        . '<a href="#"><button id="log" type="button" class="btn btn-outline-success">Finalizar compra</button>'
+                        . '<a href="realizar_pedido.php"><button id="log" type="button" class="btn btn-outline-success">Finalizar compra</button>'
                         . '</a>'
                         . '</div>';
                         ?>

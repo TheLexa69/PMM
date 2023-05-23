@@ -325,8 +325,5 @@ if (isset($_POST['dato'])) {
         ?>
     <!--</div>-->
 </div>
-
-<script src="../../frontend/js/main.js"></script>
-
 <?php
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");

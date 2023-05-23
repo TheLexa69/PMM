@@ -43,6 +43,31 @@ html {
     border-bottom: var(--bs-nav-tabs-border-width) solid var(--bs-nav-tabs-border-color);
 }
 
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: white; 
+    background-color: inherit; 
+    border-color: inherit;
+}
+
+.nav-tabs .nav-link {
+    margin-bottom: calc(-1 * var(--bs-nav-tabs-border-width));
+    background: 0 0;
+    border: inherit;
+    border-top-left-radius: var(--bs-nav-tabs-border-radius);
+    border-top-right-radius: var(--bs-nav-tabs-border-radius);
+}
+
+.active{
+    border-bottom-right-radius: 1rem;
+    border-bottom: white 3px solid !important;
+    border-bottom-left-radius: 1rem;
+}
+
+.nav-item{
+    padding-top: 5px;
+}
+/*-----------------------------------------------*/
+
 .checkeable input[type=checkbox] {
     display: none;
 }
@@ -204,7 +229,7 @@ footer {
     #navbarNavAltMarkup {
         position: relative;
         left: 0;
-        top: -60vh;
+        top: -80vh;
         height: 160px;
         transition: top 0.5s;
     }
@@ -240,7 +265,7 @@ footer {
     }
 
     .nav{
-        margin-top: 20px;
+        /*margin-top: 20px;*/
         width: 100%;
         display: flex;
         flex-direction: column;

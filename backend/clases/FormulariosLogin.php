@@ -37,7 +37,7 @@ class FormulariosLogin {
                         <div class="pt-2">
                             <div class="">
                                 <label for="c1" class="form-label"><b>Email:</b></label>
-                                <input type="email" name="mail" class="form-control" id="c1" placeholder="E-mail" <?php
+                                <input type="email" name="mail" class="form-control" id="c1" autocomplete="email" placeholder="Correo electrónico" <?php
                                 if (!empty($_POST['mail'])) {
                                     echo " value='" . $_POST['mail'] . "'";
                                 }
@@ -46,7 +46,7 @@ class FormulariosLogin {
                             <div class="mt-3">
                                 <label for="c2" class="form-label"><b>Contraseña:</b></label>
                                 <div class='col-xs-3'>
-                                    <input type="password" name="pass" class="form-control" id="c2" placeholder="Contraseña">
+                                    <input type="password" name="pass" class="form-control" id="c2" placeholder="Contraseña" autocomplete="current-password">
                                 </div>
                             </div>
                         </div>
@@ -124,11 +124,18 @@ class FormulariosLogin {
                             <tr>
                                 <td><h5>Teléfono</h5></td>
                                 <td>
-                                    <input type="text" name="telefono" class="form-control" id="c5" <?php
+                                    <input type="hidden" name="codPais" value="">
+                                    <input type="text" name="telefono" placeholder="Teléfono" class="form-control" id="phone"<?php
                                     if (!empty($_POST['telefono'])) {
                                         echo " value='" . $_POST['telefono'] . "'";
                                     }
-                                    ?>>
+                                    ?>/> 
+                                    <!--<input type="text" name="telefono" class="form-control" id="c5" <?php
+                                    //if (!empty($_POST['telefono'])) {
+                                    //    echo " value='" . $_POST['telefono'] . "'";
+                                    //}
+                                    ?>
+                                    >-->
                                 </td>
                             </tr>
                         </table>
@@ -200,6 +207,8 @@ class FormulariosLogin {
                 </div>
                 <div class="card-body">
                     <form action= "comprobarToken.php " method="POST">
+                        <?php var_dump($_POST['codPais'] . ' - ' . $_POST['telefono']) ?>
+
                         <h5 class="text-center">Para completar el proceso, por favor revise su bandeja de correo electrónico. Le hemos enviado un código de verificación.</h5>                
                         <label for="c" class="form-label">Codigo Mail:</label>
                         <input type="password" class="form-control" id="c" name="token">

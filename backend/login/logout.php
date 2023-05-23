@@ -13,7 +13,18 @@ if (!empty($_SESSION['carrito'])) {
     $c = new carrito();
     $agregado = $c->add($_SESSION['usuario'], $_SESSION['carrito']);
     if (!$agregado) {
-        echo "Por alguna razón no se pudo guardar tu cesta";
+        echo '<div id="mensaje" class="rounded" style="z-index: 4; position: absolute; transition: top 0.5s; top: -150%; right: 0; background-color: #f44336; color: white; padding: 10px;">';
+        echo 'Por alguna razón no se pudo guardar tu cesta.';
+        echo '</div>';
+        echo "<script defer>
+              window.onload = function() {
+              var mensajeDiv = document.getElementById('mensaje');
+              mensajeDiv.style.top = '20%';
+              setTimeout(function() {
+                    mensajeDiv.style.top = '-150%';
+                    }, 5000);
+                    }
+              </script>";
     }
 }
 

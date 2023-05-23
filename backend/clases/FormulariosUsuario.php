@@ -179,7 +179,7 @@ class FormulariosUsuario {
                                 <label class="form-check-label" for="asc">
                                     Ascendente
                                 </label>
-                                <input type="radio" name="orden" value="DESC" class="form-check-input ms-2"> 
+                                <input type="radio" name="orden" checked value="DESC" class="form-check-input ms-2"> 
                                 <label class="form-check-label" for="desc">
                                     Descendente
                                 </label>

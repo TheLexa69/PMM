@@ -1,8 +1,9 @@
 <?php
-
 require_once '../sesiones/sesiones.php';
 comprobar_sesiones();
 include(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
+
+//include dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "autoloadClasesLogin.php";
 
 use \clases\FormulariosLogin as formulariosLogin;
 use \clases\FuncionesLogin as funcionesLogin;
@@ -77,18 +78,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         $fecha = $funciones->fechaHoraActual();
                                         $consulta2 = new consultasLogin($rol);
                                         $consulta2->registroHoraSession($id_usuario, $fecha);
-                                        
+
                                         // session_start();
                                         // $usu tiene campos correo y codRes, correo 
                                         //$_SESSION['rol'] = $datos["id_rol"];
                                         $_SESSION['mail'] = $datos['correo'];
                                         $_SESSION['usuario'] = $id_usuario; //array de dos elementos
-                                        $_SESSION['rolUsusario'] =$rol;
+                                        $_SESSION['rolUsusario'] = $rol;
                                         // $_SESSION['carrito'] = [];
                                         if (isset($_GET['redirigido'])) {
                                             header("Location: /proyecto/backend/cart/index_carrito.php");
                                         } else {
-                                            header("Location: /proyecto/index.php");
+                                            //header("Location: /proyecto/index.php");
+                                            echo '<div id="mensaje" class="rounded" style="z-index: 4; position: absolute; transition: top 0.5s; top: -150%; right: 0; background-color: #80ff00; color: black; padding: 10px;">';
+                                            echo '<h2>Redirigiendo....</h2>';
+                                            echo '</div>';
+                                            echo "<script defer>
+              window.onload = function() {
+              var mensajeDiv = document.getElementById('mensaje');
+              mensajeDiv.style.top = '20%';
+              setTimeout(function() {
+                    mensajeDiv.style.top = '-150%';
+                    }, 5000);
+                    }
+              </script>";
+                                            ?>
+                                            <meta http-equiv="refresh" content="2; url=/proyecto/index.php">
+                                            <?php
                                         }
                                     } catch (PDOException $e) {
 
@@ -122,7 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         //   session_start();
                                         // $usu tiene campos correo y codRes, correo 
                                         $_SESSION['administrador'] = array($id_trabajador, $roltrabajador); //array de dos elementos
-                                        
+
                                         header("Location: /proyecto/index.php");
                                     } catch (PDOException $e) {
                                         die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
@@ -141,7 +157,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 }
                             }
                         } else {
-                            $formularios->html("No ha puesto datos de loggin");
+                            $formularios->html("No ha puesto datos de login");
                         }
                     } else {
                         $formularios->html();
@@ -156,6 +172,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 } else {
+    //include(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
     $formularios->html();
 }
 include(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");

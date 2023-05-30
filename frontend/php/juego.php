@@ -7,108 +7,111 @@
             canvas {
                 border: 1px solid black;
             }
+            .medal {
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                background-color: gold;
+                margin-right: 5px;
+            }
         </style>
     </head>
     <body>
-        <h1>Minijuego de Construir una Hamburguesa</h1>
-        <canvas id="canvas" width="400" height="400"></canvas>
-        <div>
-            <h3>Estilo de la Hamburguesa:</h3>
-            <div id="burger-style">
-                <!-- Aquí se mostrará el estilo de la hamburguesa generada -->
+        <div class="main container mt-5">
+            <h1>Construye tu hamburguesa</h1>
+            <div>
+                <div id="burger-style"></div>
+                <canvas id="canvas" width="200" height="300"></canvas>
             </div>
+            <div>
+                <button class="add-ingredient" data-ingredient="Pan">Añadir Pan</button>
+                <button class="add-ingredient" data-ingredient="Carne">Añadir Carne</button>
+                <button class="add-ingredient" data-ingredient="Queso">Añadir Queso</button>
+                <button id="delete-ingredient">Borrar Último Ingrediente</button>
+            </div>
+            <div id="message"></div>
+            <div id="medals-container"></div>
         </div>
-        <div>
-            <h3>Ingredientes:</h3>
-            <button class="add-ingredient" data-ingredient="Pan">Añadir Pan</button>
-            <button class="add-ingredient" data-ingredient="Carne">Añadir Carne</button>
-            <button class="add-ingredient" data-ingredient="Queso">Añadir Queso</button>
-            <button id="delete-ingredient">Borrar Último Ingrediente</button>
-        </div>
-        <div id="message"></div>
+
         <script>
-            window.onload = function () {
-                // Obtener elementos del DOM
-                var canvas = document.getElementById('canvas');
-                var context = canvas.getContext('2d');
-                var burgerStyleDiv = document.getElementById('burger-style');
-                var addIngredientButtons = document.getElementsByClassName('add-ingredient');
-                var deleteIngredientButton = document.getElementById('delete-ingredient');
-                var messageDiv = document.getElementById('message');
+            document.addEventListener("DOMContentLoaded", function () {
+                const canvas = document.getElementById("canvas");
+                const context = canvas.getContext("2d");
 
-                var burgerStyle = ['Pan', 'Carne', 'Queso']; // Estilo de la hamburguesa
-                var userBurger = []; // Ingredientes seleccionados por el usuario
+                const burgerStyle = document.getElementById("burger-style");
+                const message = document.getElementById("message");
+                const deleteIngredientButton = document.getElementById("delete-ingredient");
+                const addIngredientButtons = document.getElementsByClassName("add-ingredient");
+                const medalsContainer = document.getElementById("medals-container");
 
-                // Función para dibujar la hamburguesa
-                function drawBurger() {
+                const ingredients = ["Pan", "Carne", "Queso"];
+                const burger = [];
+                let score = 0;
+
+                let burgerStyleIndex;
+                let medalsEarned = 0;
+
+                function getRandomBurgerStyle() {
+                    burgerStyleIndex = Math.floor(Math.random() * ingredients.length);
+                    burgerStyle.textContent = ingredients[burgerStyleIndex];
+                }
+
+                function clearCanvas() {
                     context.clearRect(0, 0, canvas.width, canvas.height);
+                }
 
-                    // Dibujar ingredientes
-                    var yPos = 50;
-                    for (var i = 0; i < userBurger.length; i++) {
-                        context.fillText(userBurger[i], 20, yPos);
+                function drawBurger() {
+                    clearCanvas();
+
+                    let yPos = 50;
+                    for (let i = 0; i < burger.length; i++) {
+                        context.fillText(burger[i], 80, yPos);
                         yPos += 30;
                     }
                 }
 
-                // Función para actualizar el estilo de la hamburguesa mostrado en pantalla
-                function updateBurgerStyle() {
-                    burgerStyleDiv.textContent = burgerStyle.join(' - ');
-                }
-
-                // Función para añadir un ingrediente a la hamburguesa
-                function addIngredient(ingredient) {
-                    userBurger.push(ingredient);
-                    drawBurger();
-                    checkBurger();
-                }
-
-                // Función para borrar el último ingrediente añadido
-                function deleteLastIngredient() {
-                    if (userBurger.length > 0) {
-                        userBurger.pop();
-                        drawBurger();
-                    }
-                }
-
-                // Función para comprobar si la hamburguesa está montada correctamente
                 function checkBurger() {
-                    if (userBurger.length === burgerStyle.length) {
-                        var isCorrect = true;
-                        for (var i = 0; i < userBurger.length; i++) {
-                            if (userBurger[i] !== burgerStyle[i]) {
-                                isCorrect = false;
-                                break;
-                            }
+                    if (JSON.stringify(burger) === JSON.stringify([ingredients[burgerStyleIndex]])) {
+                        message.textContent = "¡Felicidades, has montado una hamburguesa!";
+                        score++;
+                        if (score % 5 === 0) {
+                            medalsEarned++;
+                            showMedal();
                         }
-                        if (isCorrect) {
-                            messageDiv.textContent = "¡Felicidades! Has montado una hamburguesa";
-                        } else {
-                            messageDiv.textContent = "La hamburguesa no está montada correctamente";
-                        }
-                    } else {
-                        messageDiv.textContent = "";
+                        resetGame();
                     }
                 }
 
-                // Asignar eventos a los botones de añadir ingredientes
-                for (var i = 0; i < addIngredientButtons.length; i++) {
-                    addIngredientButtons[i].addEventListener('click', function () {
-                        var ingredient = this.dataset.ingredient;
-                        addIngredient(ingredient);
+                function resetGame() {
+                    burger.length = 0;
+                    clearCanvas();
+                    message.textContent = "";
+                    getRandomBurgerStyle();
+                }
+
+                function showMedal() {
+                    const medal = document.createElement("span");
+                    medal.classList.add("medal");
+                    medalsContainer.appendChild(medal);
+                }
+
+                getRandomBurgerStyle();
+
+                for (let i = 0; i < addIngredientButtons.length; i++) {
+                    addIngredientButtons[i].addEventListener("click", function () {
+                        const ingredient = this.dataset.ingredient;
+                        burger.push(ingredient);
+                        drawBurger();
+                        checkBurger();
                     });
                 }
 
-                // Asignar evento al botón de borrar último ingrediente
-                deleteIngredientButton.addEventListener('click', function () {
-                    deleteLastIngredient();
-                    checkBurger();
+                deleteIngredientButton.addEventListener("click", function () {
+                    burger.pop();
+                    drawBurger();
                 });
+            });
 
-                // Dibujar la hamburguesa inicial y actualizar el estilo mostrado en pantalla
-                drawBurger();
-                updateBurgerStyle();
-            };
 
         </script>
     </body>

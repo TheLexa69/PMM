@@ -112,9 +112,9 @@ require (dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPA
                 let yPos = 40;
                 for (let i = 0; i < burger.length; i++) {
                     //context.fillText(burger[i], 80, yPos);
-                    drawIngredients(burger[i], yPos);
-                    yPos += 25;
-                    if(i === burger.length - 1){
+
+                    yPos += drawIngredients(burger[i], yPos);
+                    if (i === burger.length - 1) {
                         drawPlate(yPos);
                     }
                 }
@@ -138,6 +138,7 @@ require (dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPA
                         ctx.roundRect(canvas.width / 4, yPos, 100, 20, 10);
                         ctx.stroke();
                         ctx.fill();
+                        return 20;
                         break;
                     case "Carne":
                         ctx.strokeStyle = "rgb(0, 0, 0)";
@@ -146,6 +147,7 @@ require (dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPA
                         ctx.roundRect(canvas.width / 4, yPos, 100, 20, 10);
                         ctx.stroke();
                         ctx.fill();
+                        return 20;
                         break;
                     case "Queso":
                         ctx.strokeStyle = "rgb(0, 0, 0)";
@@ -154,6 +156,7 @@ require (dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPA
                         ctx.roundRect(canvas.width / 4, yPos, 100, 5, 10);
                         ctx.stroke();
                         ctx.fill();
+                        return 5;
                         break;
                     case "Lechuga":
                         ctx.strokeStyle = "rgb(0, 0, 0)";
@@ -162,29 +165,44 @@ require (dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPA
                         ctx.roundRect(canvas.width / 4, yPos, 100, 10, 10);
                         ctx.stroke();
                         ctx.fill();
+                        return 10;
                         break;
                     case "Tomate":
                         ctx.strokeStyle = "rgb(0, 0, 0)";
                         ctx.fillStyle = "rgba(255, 83, 48)";
                         ctx.beginPath();
-                        ctx.roundRect((canvas.width / 4), yPos, 100/2, 10, 10);
+                        ctx.roundRect((canvas.width / 4) + 5, yPos, 100 / 2, 10, 10);
                         ctx.stroke();
                         ctx.fill();
-                        
+
                         ctx.strokeStyle = "rgb(0, 0, 0)";
                         ctx.fillStyle = "rgba(255, 83, 48)";
                         ctx.beginPath();
-                        ctx.roundRect(canvas.width / 2, yPos, 100/2, 10, 10);
+                        ctx.roundRect((canvas.width / 2) - 5, yPos, 100 / 2, 10, 10);
                         ctx.stroke();
                         ctx.fill();
+                        return 10;
                         break;
                     case "Cebolla":
                         ctx.strokeStyle = "rgb(0, 0, 0)";
                         ctx.fillStyle = "rgba(177, 149, 169)";
                         ctx.beginPath();
-                        ctx.roundRect(canvas.width / 4, yPos, 100, 10, 10);
+                        ctx.roundRect((canvas.width / 4) + 5, yPos, 100 / 3, 10, 10);
                         ctx.stroke();
                         ctx.fill();
+                        ctx.strokeStyle = "rgb(0, 0, 0)";
+                        ctx.fillStyle = "rgba(177, 149, 169)";
+                        ctx.beginPath();
+                        ctx.roundRect((canvas.width / 3) + 15, yPos, 100 / 3, 10, 10);
+                        ctx.stroke();
+                        ctx.fill();
+                        ctx.strokeStyle = "rgb(0, 0, 0)";
+                        ctx.fillStyle = "rgba(177, 149, 169)";
+                        ctx.beginPath();
+                        ctx.roundRect(canvas.width / 1.8, yPos, 100 / 3, 10, 10);
+                        ctx.stroke();
+                        ctx.fill();
+                        return 10;
                         break;
                     default:
                         return "Perdón, algo ha fallado.";

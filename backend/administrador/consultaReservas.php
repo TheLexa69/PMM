@@ -52,7 +52,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($fila)) {
         $formularios->tablaReservas($fila, "pendientes");
     } else {
-       echo "<h1 class='  text-center'>No hay reservas por validar </h1>";
+       echo "<div class='main bg-light mt-5'>
+               <div class='card'>
+                <div class='card-header text-center'>
+                    <h3>Validar Reservas</h3>
+                </div>
+                <div class='card-body text-center'>
+                    <h4>No hay reservas por validar</h4>
+                </div>
+            </div>
+            </div>";
     }
 }
 require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");
+
+

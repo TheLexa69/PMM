@@ -71,7 +71,7 @@ class Carrito extends Conexion {
                             <h5 class=\"precio-producto\"> Precio: " . $result['precio'] . "€</h5>
                             <form method=\"post\" action=\"" . $url . "\">
                                 <label for=\"cantidad\">Cantidad:</label>
-                                <input type=\"number\" name=\"cantidad\" value=\"" . $cantidad . "\" min=\"1\" max=\"10\" onchange=\"updateCantidad(" . $id_comida . ", this.value)\">
+                                <input type=\"number\" name=\"cantidad\" value=\"" . $cantidad . "\" min=\"1\" max=\"15\" onchange=\"updateCantidad(" . $id_comida . ", this.value)\">
 
                             </div>
                             <div class=\"col-4 d-flex justify-content-center align-items-center\">    
@@ -102,7 +102,7 @@ class Carrito extends Conexion {
                 <div class="col-3">' . $result['nombre'] . '</div>
                 <div class="col-3">' . $result['precio'] . '</div>
                 <div class="col-3">
-                <input type="number" name="cantidad" size="5" value="' . $cantidad . '" min="1" max="10" onchange="updateCantidad(\'' . $id_comida . '\', this.value)"></div>
+                <input type="number" name="cantidad" size="5" value="' . $cantidad . '" min="1" max="15" onchange="updateCantidad(\'' . $id_comida . '\', this.value)"></div>
                 <div class="col-3 d-flex justify-content-center align-items-center">
                     <a href="' . $url . '">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

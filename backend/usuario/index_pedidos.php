@@ -47,7 +47,7 @@ $ped = $pedidos->obtenerPedidos($id, $orden, $indice_primer_elemento, $por_pagin
                             Recientes primero
                         </label>
                     </div>
-                    <input type="submit" name=validar value="Filtrar" class='btn btn-default btn-outline-success mt-2'>
+                    <input type="submit" name="validar" value="Filtrar" class='btn btn-default btn-outline-success mt-2'>
                 </form>
             </div>
         </div>

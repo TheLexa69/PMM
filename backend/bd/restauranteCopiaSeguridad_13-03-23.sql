@@ -552,10 +552,10 @@ SELECT nombre, descripcion, tipo, precio, img, disponible, id_comida from carta_
 
 #UPDATE carta_comida SET subtipo='enum('','','','','','','')';
 
-select * from datos_usuario where id_usuario=1;
-select * from datos_usuario where id_usuario = 3;
-update usuario set nombre = "Nuria AA AA" where id_usuario=3;
-select * from usuario;
+-- select * from datos_usuario where id_usuario=1;
+-- select * from datos_usuario where id_usuario = 3;
+-- update usuario set nombre = "Nuria AA AA" where id_usuario=3;
+-- select * from usuario;
 
 #CREATE USER IF NOT EXISTS administrador IDENTIFIED BY 'renaido2023';
 

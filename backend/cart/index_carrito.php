@@ -73,6 +73,9 @@ $win_loc = "../login/indexLogin.php";
     });
 
 </script>
+<head>
+    <title>Cesta</title>
+</head>
 <?php
 
 if (isset($_SESSION['usuario'])) {
@@ -102,24 +105,43 @@ if (isset($_SESSION['usuario'])) {
             print ($carrito->printCarroSes($id_comida, $cantidad));
         }
         $precio_total = $carrito->getTotalPrice($_SESSION['carrito']);
-        echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-end">Total: ' . $precio_total . '</h2>';
-        echo '<div class="col-2 d-flex justify-content-right"><a href="realizar_pedido.php"><button type="button" class="btn btn-outline-success">Finalizar compra</button></a></div></div>';
+        echo '<div class="container mt-5 bg-light rounded text-center py-5">';
+        echo '<div class="row">';
+        echo '<h2 class="col-9 d-flex justify-content-end">Total: ' . $precio_total . '</h2>';
+        echo '<div class="col-2 d-flex justify-content-end"><a href="realizar_pedido.php"><button type="button" class="btn btn-outline-success">Finalizar compra</button></a></div>';
+        echo '</div>';
+        echo '</div>';
     }
 } else {
     if (isset($_COOKIE['carrito'])) {
         if (empty(unserialize($_COOKIE['carrito']))) {
             echo '<div class="container mt-5 bg-light rounded text-center py-5"><h2>No tienes productos en tu cesta todavía.</h2></div>';
         } else {
+            ?>
+            <div class="container main mt-5">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="fw-bold">Cesta</h3>
+                    </div>
+                    <div class="card-body">
+            <?php
             foreach (unserialize($_COOKIE['carrito'], []) as $comida => $cant) {
                 $id_comida = $comida;
                 $cantidad = (int) $cant;
                 echo ($carrito->printCarroSes($id_comida, $cantidad));
             }
             $precio_total = $carrito->getTotalPrice(unserialize($_COOKIE['carrito'], ["allowed_classes" => false]));
-            echo '<div class="mt-5 bg-light rounded py-5 row">'
-            . '<h2 class="col-10 d-flex justify-content-end">Total: ' . $precio_total . '</h2>';
-            echo '<div class="col-2 d-flex justify-content-right"><a href="#"><button id="log" type="button" class="btn btn-outline-success">Finalizar compra</button></a></div></div>';
-        }
+            echo '<div class="mt-5 rounded py-3 d-flex justify-content-end align-items-center">'
+            . '<h3 class="fw-bold me-2 mb-0">Total: ' . $precio_total . '</h3>'
+            . '<a href="#"><button id="log" type="button" class="btn btn-outline-success">Finalizar compra</button>'
+            . '</a>'
+            . '</div>';
+            ?>
+            </div>
+        </div>
+    </div>
+    <?php
+}
     } else {
         echo '<div class="layered box row mr-2"><h2 class="col-10 d-flex justify-content-center">No tienes productos en tu cesta todavía.</h2></div>';
     }

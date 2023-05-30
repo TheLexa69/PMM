@@ -88,8 +88,6 @@ class ConsultasLogin extends Conexion {
         return $datos;
     }
 
-    
-
     /**
      * Método que registra la hora en la cual el usuario hizo el login
      * @param $id

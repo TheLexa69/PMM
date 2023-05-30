@@ -1,4 +1,3 @@
-<?php ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,6 +19,8 @@
         <div class="main container mt-5">
             <h1>Construye tu hamburguesa</h1>
             <div>
+                <div id="score">Hamburguesas bien hechas: <span id="burger-count">0</span></div>
+                <div id="medals">Medallas conseguidas: <span id="medals-count">0</span></div>
                 <div id="burger-style"></div>
                 <canvas id="canvas" width="200" height="300"></canvas>
             </div>
@@ -27,6 +28,9 @@
                 <button class="add-ingredient" data-ingredient="Pan">Añadir Pan</button>
                 <button class="add-ingredient" data-ingredient="Carne">Añadir Carne</button>
                 <button class="add-ingredient" data-ingredient="Queso">Añadir Queso</button>
+                <button class="add-ingredient" data-ingredient="Lechuga">Añadir Lechuga</button>
+                <button class="add-ingredient" data-ingredient="Tomate">Añadir Tomate</button>
+                <button class="add-ingredient" data-ingredient="Cebolla">Añadir Cebolla</button>
                 <button id="delete-ingredient">Borrar Último Ingrediente</button>
             </div>
             <div id="message"></div>
@@ -43,17 +47,31 @@
                 const deleteIngredientButton = document.getElementById("delete-ingredient");
                 const addIngredientButtons = document.getElementsByClassName("add-ingredient");
                 const medalsContainer = document.getElementById("medals-container");
+                const medalsScore = document.getElementById("medals-count");
+                const burgerScore = document.getElementById("burger-count");
 
-                const ingredients = ["Pan", "Carne", "Queso"];
+                const ingredients = ["Pan", "Carne", "Queso", "Lechuga", "Tomate", "Cebolla"];
                 const burger = [];
                 let score = 0;
 
-                let burgerStyleIndex;
+                let burgerStyleIndices = [];
                 let medalsEarned = 0;
 
                 function getRandomBurgerStyle() {
-                    burgerStyleIndex = Math.floor(Math.random() * ingredients.length);
-                    burgerStyle.textContent = ingredients[burgerStyleIndex];
+                    burgerStyleIndices.length = 0;
+                    let numIngredients = Math.floor(Math.random() * 4) + 1; // Generar de 1 a 4 ingredientes
+
+                    burgerStyleIndices.push(0); // Agregar "Pan" al inicio
+
+                    for (let i = 0; i < numIngredients; i++) {
+                        let ingredientIndex = Math.floor(Math.random() * (ingredients.length - 1)) + 1; // Excluir "Pan" en la generación aleatoria
+                        burgerStyleIndices.push(ingredientIndex);
+                    }
+
+                    burgerStyleIndices.push(0); // Agregar "Pan" al final
+
+                    let burgerStyleText = burgerStyleIndices.map(index => ingredients[index]).join(" ");
+                    burgerStyle.textContent = burgerStyleText;
                 }
 
                 function clearCanvas() {
@@ -71,12 +89,13 @@
                 }
 
                 function checkBurger() {
-                    if (JSON.stringify(burger) === JSON.stringify([ingredients[burgerStyleIndex]])) {
+                    if (JSON.stringify(burger) === JSON.stringify(burgerStyleIndices.map(index => ingredients[index]))) {
                         message.textContent = "¡Felicidades, has montado una hamburguesa!";
                         score++;
+                        burgerScore.innerHTML = score;
                         if (score % 5 === 0) {
                             medalsEarned++;
-                            showMedal();
+                            showMedal(medalsEarned);
                         }
                         resetGame();
                     }
@@ -89,10 +108,11 @@
                     getRandomBurgerStyle();
                 }
 
-                function showMedal() {
+                function showMedal(countMedals) {
                     const medal = document.createElement("span");
                     medal.classList.add("medal");
                     medalsContainer.appendChild(medal);
+                    medalsScore.innerHTML = countMedals;
                 }
 
                 getRandomBurgerStyle();
@@ -111,8 +131,6 @@
                     drawBurger();
                 });
             });
-
-
         </script>
     </body>
 </html>

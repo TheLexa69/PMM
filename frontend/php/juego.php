@@ -167,7 +167,14 @@ require (dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPA
                         ctx.strokeStyle = "rgb(0, 0, 0)";
                         ctx.fillStyle = "rgba(255, 83, 48)";
                         ctx.beginPath();
-                        ctx.roundRect(canvas.width / 4, yPos, 100, 10, 10);
+                        ctx.roundRect((canvas.width / 4), yPos, 100/2, 10, 10);
+                        ctx.stroke();
+                        ctx.fill();
+                        
+                        ctx.strokeStyle = "rgb(0, 0, 0)";
+                        ctx.fillStyle = "rgba(255, 83, 48)";
+                        ctx.beginPath();
+                        ctx.roundRect(canvas.width / 2, yPos, 100/2, 10, 10);
                         ctx.stroke();
                         ctx.fill();
                         break;

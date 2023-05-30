@@ -42,6 +42,9 @@ require (dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPA
 </head>
 <body>
     <div class="main container mt-5 card p-0">
+        <div id="mensaje" class="rounded" style="z-index: 4; position: absolute; transition: top 0.5s; top: -150%; right: 0; background-color: #BDECB6; color: black; padding: 10px;">
+            ¡Felicidades, conseguiste una medalla!
+        </div>
         <div class="card-header"><h1>Construye tu hamburguesa</h1></div>
         <div class="card-body text-center">
             <div id="score">Hamburguesas bien hechas: <span id="burger-count">0</span></div>
@@ -217,7 +220,8 @@ require (dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPA
                     if (score % 5 === 0) {
                         medalsEarned++;
                         showMedal(medalsEarned);
-                        alert('¡Felicidades, conseguiste una medalla!');
+                        showConfetti();
+                        //alert('¡Felicidades, conseguiste una medalla!');
                     }
                     setTimeout(() => {
                         resetGame();
@@ -226,7 +230,11 @@ require (dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPA
             }
 
             function showConfetti() {
-
+                var mensajeDiv = document.getElementById('mensaje');
+                mensajeDiv.style.top = '20%';
+                setTimeout(function () {
+                    mensajeDiv.style.top = '-150%';
+                }, 5000);
             }
 
             function resetGame() {
@@ -240,6 +248,9 @@ require (dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPA
                 const medal = document.createElement("span");
                 medal.classList.add("medal");
                 medal.classList.add("mx-4");
+                medal.classList.add("border");
+                medal.classList.add("border-dark");
+                medal.classList.add("shadow");
                 medalsContainer.appendChild(medal);
                 medalsScore.innerHTML = countMedals;
             }

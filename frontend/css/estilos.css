@@ -68,6 +68,10 @@ html {
 }
 /*-----------------------------------------------*/
 
+.hide{
+    display: none;
+}
+
 .checkeable input[type=checkbox] {
     display: none;
 }

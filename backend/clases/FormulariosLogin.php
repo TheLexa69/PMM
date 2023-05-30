@@ -78,8 +78,8 @@ class FormulariosLogin {
                 <div class="card-header text-center">
                     <h3 class="fw-bold">Regístrate en LuaChea.</h3>
                 </div>
-                <div class="card-body table-responsive">
-                    <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
+                <div class="card-body table-responsive p-0">
+                    <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" id="htmlRegistro" method="POST" >
                         <table class="table table-striped table-hover">
                             <tr>
                                 <td><h5>Nombre</h5></td>
@@ -124,12 +124,14 @@ class FormulariosLogin {
                             <tr>
                                 <td><h5>Teléfono</h5></td>
                                 <td>
-                                    <input type="hidden" name="codPais" value="">
-                                    <input type="text" name="telefono" placeholder="Teléfono" class="form-control" id="phone"<?php
+                                    <input id="phone" type="tel" name="telefono" class="form-control" <?php
                                     if (!empty($_POST['telefono'])) {
                                         echo " value='" . $_POST['telefono'] . "'";
                                     }
-                                    ?>/> 
+                                    ?>>
+                                    <span id="valid-msg" class="hide" style="color: green">✓ Correcto</span>
+                                    <span id="error-msg" class="hide" style="color: red">Incorrecto</span>
+                                    <input id="codPais" name="codPais" value="" type="hidden">
                                     <!--<input type="text" name="telefono" class="form-control" id="c5" <?php
                                     //if (!empty($_POST['telefono'])) {
                                     //    echo " value='" . $_POST['telefono'] . "'";
@@ -150,8 +152,7 @@ class FormulariosLogin {
                             echo "<br><b style=color:red>Faltan campos obligatorios:</b> <br>$necesarios";
                         }
                         ?>
-                        <div class="text-center"><input type="submit" class="btn btn-success" name="registro"></div>
-
+                        <div class="text-center pb-2"><input type="submit" onclick="setCode();" class="btn btn-success" name="registro" value="Enviar"></div>
                     </form>
                 </div>
             </div>
@@ -208,7 +209,7 @@ class FormulariosLogin {
                 <div class="card-body">
                     <form action= "comprobarToken.php " method="POST">
                         <?php var_dump($_POST['codPais'] . ' - ' . $_POST['telefono']) ?>
-
+                        <?php var_dump($_POST)?>
                         <h5 class="text-center">Para completar el proceso, por favor revise su bandeja de correo electrónico. Le hemos enviado un código de verificación.</h5>                
                         <label for="c" class="form-label">Codigo Mail:</label>
                         <input type="password" class="form-control" id="c" name="token">
@@ -280,9 +281,9 @@ class FormulariosLogin {
                     <form action="guardarContrasena.php" method="POST">
                         <label for="c2" class="form-label">Escriba su contraseña:</label><br>
                         <label for="c3" class="form-label">Contraseña:</label><br>
-                        <input type="password" name="pass" class="form-control" id="c3"  ><br>
+                        <input type="password" autocomplete="new-password" name="pass" class="form-control" id="c3"  ><br>
                         <label for="c4" class="form-label">Repite contraseña:</label><br>
-                        <input type="password" name="pass2" class="form-control" id="c4"  ><br><br> 
+                        <input type="password" autocomplete="new-password" name="pass2" class="form-control" id="c4"  ><br><br> 
                         <input type="hidden" name="mail" value="<?php
                         if (!empty($mail)) {
                             echo $mail;
@@ -317,9 +318,9 @@ class FormulariosLogin {
                         <h5 class="text-center">Lo siento, las contraseñas que ha introducido no coinciden. Por favor, inténtelo de nuevo.</h5>   
                         <label for="c2" class="form-label">Escriba su contraseña:</label><br>
                         <label for="c3" class="form-label">Contraseña:</label><br>
-                        <input type="password" name="pass" class="form-control" id="c3"  ><br>
+                        <input type="password" autocomplete="new-password" name="pass" class="form-control" id="c3"  ><br>
                         <label for="c4" class="form-label">Repite contraseña:</label><br>
-                        <input type="password" name="pass2" class="form-control" id="c4"><br><br>
+                        <input type="password" autocomplete="new-password" name="pass2" class="form-control" id="c4"><br><br>
                         <input type="hidden" name="rol" value="<?php echo $rol ?>">
                         <input type="hidden" name="mail" value="<?php
                         if (!empty($mail)) {

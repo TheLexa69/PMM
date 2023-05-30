@@ -77,6 +77,88 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 console.log('JS funcionando');
 
+const input = document.querySelector("#phone");
+const errorMsg = document.querySelector("#error-msg");
+const validMsg = document.querySelector("#valid-msg");
+
+// here, the index maps to the error code returned from getValidationError - see readme
+const errorMap = ["Número incorrecto", "Código incorrecto", "Muy corto", "Muy largo", "Número incorrecto"];
+
+// initialise plugin
+if (input) {
+    const iti = window.intlTelInput(input, {
+        utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js",
+        initialCountry: "ES",
+        separateDialCode: true,
+        geoIpLookup: function (callback) {
+            fetch("https://ipapi.co/json")
+                    .then(function (res) {
+                        return res.json();
+                    })
+                    .then(function (data) {
+                        callback(data.country_code);
+                    })
+                    .catch(function () {
+                        callback("us");
+                    });
+        },
+        preferredCountries: ["es", "pt", "us", "gb", ]
+    });
+    console.log(document.querySelector(".iti__selected-dial-code").innerHTML);
+
+    const reset = () => {
+        input.classList.remove("error");
+        errorMsg.innerHTML = "";
+        errorMsg.classList.add("hide");
+        validMsg.classList.add("hide");
+    };
+
+// on blur: validate
+    input.addEventListener('blur', () => {
+        reset();
+        if (input.value.trim()) {
+            if (iti.isValidNumber()) {
+                validMsg.classList.remove("hide");
+            } else {
+                input.classList.add("error");
+                const errorCode = iti.getValidationError();
+                errorMsg.innerHTML = errorMap[errorCode];
+                errorMsg.classList.remove("hide");
+            }
+        }
+    });
+
+// on keyup / change flag: reset
+    input.addEventListener('change', reset);
+    input.addEventListener('keyup', reset);
+}
+
+/*window.intlTelInput(telInput2, {
+ utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js",
+ initialCountry: "ES",
+ geoIpLookup: function (callback) {
+ fetch("https://ipapi.co/json")
+ .then(function (res) {
+ return res.json();
+ })
+ .then(function (data) {
+ callback(data.country_code);
+ })
+ .catch(function () {
+ callback("us");
+ });
+ },
+ preferredCountries: ["es", "pt","us", "gb",],
+ separateDialCode: true,
+ autoInsertDialCode: true
+ });*/
+
+/*==================================================*/
+
+function setCode() {
+    document.getElementById('codPais').value = document.querySelector(".iti__selected-dial-code").innerHTML;
+}
+
 function getCookie(name) {
     const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
     return cookieValue ? cookieValue.pop() : '';

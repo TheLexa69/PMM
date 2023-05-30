@@ -40,10 +40,13 @@ class FormulariosAdministrador {
      */
     public function htmlRegistroEmpleados($necesarios, $mensaje = "") {
         ?>
+        <div class="bg-light p-2 fs-5">
+            <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "administrador" . DIRECTORY_SEPARATOR . "indexAdministrador.php"; ?>">Panel administrador</a> > Añadir Trabajador
+        </div>
         <div class="main container mt-5">
             <div class="card">
                 <div class="card-header text-center">
-                    <h3> Registrar Trabajador </h3>
+                    <h3> Registrar Trabajador/a </h3>
                 </div>
                 <div class="card-body">
                     <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
@@ -167,6 +170,9 @@ class FormulariosAdministrador {
      */
     public function listaFiltradaEmpleados() {
         ?>
+        <div class="bg-light p-2 fs-5">
+            <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "administrador" . DIRECTORY_SEPARATOR . "indexAdministrador.php"; ?>">Panel administrador</a> > Lista de Empleados
+        </div>
         <div class="container mt-5">
             <div class="card rounded-top">
                 <div class="card-header text-center">
@@ -345,6 +351,9 @@ class FormulariosAdministrador {
 
     public function htmlAgregarProducto($tipo, $subtipo, $alergenos, $mensaje = "") {
         ?>
+        <div class="bg-light p-2 fs-5">
+            <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "administrador" . DIRECTORY_SEPARATOR . "indexAdministrador.php"; ?>">Panel administrador</a> > Agregar Producto
+        </div>
         <div class="main container mt-5">
             <div class="card">
                 <div class="card-header text-center">
@@ -369,103 +378,108 @@ class FormulariosAdministrador {
                                 echo " value='" . $_POST['nombre'] . "'";
                             }
                             ?> 
-                        </div>
+                                   </div>
 
-                        <div class="mt-3">
-                            <label for="c2" class="form-label">Descripción:</label>
-                            <input type="text" name="descri" class="form-control" id="c2" <?php
-                            if (!empty($_POST['descri'])) {
-                                echo " value='" . $_POST['descri'] . "'";
-                            }
-                            ?> >
-                        </div>
-
-                        <div class="mt-3">
-                            <label for="c3" class="form-label">Tipo (*):</label>
-                            <select name="tipo" class="form-select">
-                                <?php foreach ($tipo as $id => $nombre) { ?>
-                                    <option value='<?php echo $id + 1 ?>'><?php echo $nombre["nombre_tipo"] ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-
-                        <div class="mt-3">
-                            <label for="c4" class="form-label">Subtipo:</label>
-                            <select name="subtipo" class="form-select">
-                                <?php foreach ($subtipo as $id => $nombre) { ?>
-                                    <option value='<?php echo $id + 1 ?>'><?php echo $nombre["nombre_subtipo"] ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-
-                        <div class="mt-3">
-                            <label for="c5" class="form-label">Disponible desde (*):</label>
-                            <input type=date name="desde" class="form-control"  pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}">
-                        </div>
-
-                        <div class="mt-3">
-                            <label for="c6" class="form-label">Disponible Hasta:</label>
-                            <input type=date name="hasta" class="form-control" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}">
-                        </div>
-
-                        <div class="mt-3">
-                            <label for="c7" class="form-label">Precio (*):</label>             
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="precio" aria-label="Dollar amount (with dot and two decimal places)">
-                                <span class="input-group-text">€</span>
+                            <div class="mt-3">
+                                <label for="c2" class="form-label">Descripción:</label>
+                                <input type="text" name="descri" class="form-control" id="c2" <?php
+                                if (!empty($_POST['descri'])) {
+                                    echo " value='" . $_POST['descri'] . "'";
+                                }
+                                ?> >
                             </div>
-                        </div>
 
-                        <div class="mt-3">
-                            <label for="c8" class="form-label">Disponible (*):</label>
-                            <select class="form-select" name="disponible"> 
-                                <option value="1" selected="selected">Hay Stock</option>
-                                <option value="2" >Sin Stock</option>
-                            </select>
-                        </div>
+                            <div class="mt-3">
+                                <label for="c3" class="form-label">Tipo (*):</label>
+                                <select name="tipo" class="form-select">
+                                    <?php foreach ($tipo as $id => $nombre) { ?>
+                                        <option value='<?php echo $id + 1 ?>'><?php echo $nombre["nombre_tipo"] ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
 
-                        <div class="mt-3">
-                            <p class="mb-1">Alérgenos:</p>
-                            <?php foreach ($alergenos as $id1 => $nombre) {
-                                if($id1 >= 0){ ?>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value='<?php echo ucfirst($nombre["id_alergeno"])?>'>
-                                    <label class="form-check-label" for="inlineCheckbox1"><?php echo ucfirst($nombre["nombre_alergeno"])?></label>
+                            <div class="mt-3">
+                                <label for="c4" class="form-label">Subtipo:</label>
+                                <select name="subtipo" class="form-select">
+                                    <?php foreach ($subtipo as $id => $nombre) { ?>
+                                        <option value='<?php echo $id + 1 ?>'><?php echo $nombre["nombre_subtipo"] ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+
+                            <div class="mt-3">
+                                <label for="c5" class="form-label">Disponible desde (*):</label>
+                                <input type=date name="desde" class="form-control"  pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}">
+                            </div>
+
+                            <div class="mt-3">
+                                <label for="c6" class="form-label">Disponible Hasta:</label>
+                                <input type=date name="hasta" class="form-control" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}">
+                            </div>
+
+                            <div class="mt-3">
+                                <label for="c7" class="form-label">Precio (*):</label>             
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="precio" aria-label="Dollar amount (with dot and two decimal places)">
+                                    <span class="input-group-text">€</span>
                                 </div>
-                            <?php }} ?>
-                        </div>
-
-                        <div class="mt-3">
-                            <label for="formFile" class="form-label">Imagen (*):</label>
-                            <input class="form-control" name="imagen" type="file" id="formFile">
-                        </div> 
-
-                        <p class="mt-3 text-center fst-italic">Por favor, asegúrese de completar todos los campos que lleven un asterisco (*) antes de enviar el formulario.</p>
-
-                        <div class='mt-3 d-flex justify-content-center'>
-                            <div class="pe-2">
-                                <input type="submit" class='btn btn-outline-success' style='width: 100px' name="registro" value='Añadir'>
                             </div>
+
+                            <div class="mt-3">
+                                <label for="c8" class="form-label">Disponible (*):</label>
+                                <select class="form-select" name="disponible"> 
+                                    <option value="1" selected="selected">Hay Stock</option>
+                                    <option value="2" >Sin Stock</option>
+                                </select>
+                            </div>
+
+                            <div class="mt-3">
+                                <p class="mb-1">Alérgenos:</p>
+                                <?php
+                                foreach ($alergenos as $id1 => $nombre) {
+                                    if ($id1 >= 0) {
+                                        ?>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value='<?php echo ucfirst($nombre["id_alergeno"]) ?>'>
+                                            <label class="form-check-label" for="inlineCheckbox1"><?php echo ucfirst($nombre["nombre_alergeno"]) ?></label>
+                                        </div>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </div>
+
+                            <div class="mt-3">
+                                <label for="formFile" class="form-label">Imagen (*):</label>
+                                <input class="form-control" name="imagen" type="file" id="formFile">
+                            </div> 
+
+                            <p class="mt-3 text-center fst-italic">Por favor, asegúrese de completar todos los campos que lleven un asterisco (*) antes de enviar el formulario.</p>
+
+                            <div class='mt-3 d-flex justify-content-center'>
+                                <div class="pe-2">
+                                    <input type="submit" class='btn btn-outline-success' style='width: 100px' name="registro" value='Añadir'>
+                                </div>
+                                <?php
+                                if (isset($mensaje)) {
+                                    echo "<a href='indexAdministrador.php' id='cancel' name='cancel' style='width: 100px' class='btn btn-default btn-outline-danger'>Cancelar</a>";
+                                }
+                                ?>
+                            </div>
+
                             <?php
-                            if (isset($mensaje)) {
-                                echo "<a href='indexAdministrador.php' id='cancel' name='cancel' style='width: 100px' class='btn btn-default btn-outline-danger'>Cancelar</a>";
+                            if (!empty($_POST['registro']) && $necesarios !== true) {
+                                //Enseña los campos que faltan al usuario
+                                $necesarios = str_replace('apellido1', 'primer apellido', $necesarios);
+                                $necesarios = str_replace('nie', 'nie incorrecto', $necesarios);
+                                $necesarios = str_replace('pasaporte', 'pasaporte o NIE', $necesarios);
+                                $necesarios = str_replace('privilegios', 'privilegios', $necesarios);
+                                $necesarios = str_replace('password', 'contraseña', $necesarios);
+                                // $necesarios = str_replace('password2', 'confirmación de la contraseña',$necesarios);
+                                $necesarios = str_replace('email', 'correo', $necesarios);
+                                echo "<br><br><b style=color:red>Faltan campos obligatorios:</b> <br>$necesarios";
                             }
                             ?>
-                        </div>
-
-                        <?php
-                        if (!empty($_POST['registro']) && $necesarios !== true) {
-                            //Enseña los campos que faltan al usuario
-                            $necesarios = str_replace('apellido1', 'primer apellido', $necesarios);
-                            $necesarios = str_replace('nie', 'nie incorrecto', $necesarios);
-                            $necesarios = str_replace('pasaporte', 'pasaporte o NIE', $necesarios);
-                            $necesarios = str_replace('privilegios', 'privilegios', $necesarios);
-                            $necesarios = str_replace('password', 'contraseña', $necesarios);
-                            // $necesarios = str_replace('password2', 'confirmación de la contraseña',$necesarios);
-                            $necesarios = str_replace('email', 'correo', $necesarios);
-                            echo "<br><br><b style=color:red>Faltan campos obligatorios:</b> <br>$necesarios";
-                        }
-                        ?>
 
                             <tr>
                                 <td>Precio:</td>
@@ -487,14 +501,14 @@ class FormulariosAdministrador {
                                     <input type="file" name="imagen[]" class="form-control" id="c9">
                                 </td>
                             </tr>  
-                        </table>
-                        <div class="my-3 d-flex flex-wrap justify-content-evenly">
-                            <input type="hidden" name="id" value="<?php echo $id["id_comida"]; ?>">
-                            <input type="submit" name="actualizar" value="Actualizar" class="btn btn-outline-info mb-2">
-                            <input type="submit" name="eliminar" value="Eliminar" class="btn btn-outline-danger mb-2"> 
-                            <a href="productos.php"><input type="button" value="Modificar Otro Producto" class="btn btn-outline-success mb-2"></a>
-                            <a href="indexAdministrador.php"><input type="button" value="Volver a inicio" class="btn btn-outline-warning mb-2"></a>
-                        </div>
+                            </table>
+                            <div class="my-3 d-flex flex-wrap justify-content-evenly">
+                                <input type="hidden" name="id" value="<?php echo $id["id_comida"]; ?>">
+                                <input type="submit" name="actualizar" value="Actualizar" class="btn btn-outline-info mb-2">
+                                <input type="submit" name="eliminar" value="Eliminar" class="btn btn-outline-danger mb-2"> 
+                                <a href="productos.php"><input type="button" value="Modificar Otro Producto" class="btn btn-outline-success mb-2"></a>
+                                <a href="indexAdministrador.php"><input type="button" value="Volver a inicio" class="btn btn-outline-warning mb-2"></a>
+                            </div>
                     </form>
                 </div>
             </div>
@@ -615,7 +629,9 @@ class FormulariosAdministrador {
      * Método que filtra los productos por Disponibilidad (stock o fechas dadas), Nombre , precio
      */
     public function listaFiltradaProductos() {
-        ?>
+        ?><div class="bg-light p-2 fs-5">
+            <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "administrador" . DIRECTORY_SEPARATOR . "indexAdministrador.php"; ?>">Panel administrador</a> > Lista de Productos
+        </div>
         <div class="container mt-5">
             <div class="card rounded-top">
                 <div class="card-header text-center">
@@ -734,10 +750,38 @@ class FormulariosAdministrador {
      */
     public function FiltrarReservasFecha() {
         ?>
+        <div class="bg-light p-2 fs-5">
+            <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "administrador" . DIRECTORY_SEPARATOR . "indexAdministrador.php"; ?>">Panel administrador</a> > Historico Reservas
+        </div>
         <div class="container mt-5">
             <div class='card'>
                 <div class="card-header text-center">
                     <h3>Reservas Aceptadas</h3>
+                </div>
+                <div class="card-body text-center">
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                        <h3>Ordenar por:</h3>
+                        <div class="form-group">
+                            <label for="fecha">Fecha:</label>
+                            <input type="date" name="fecha" class="form-control" style="width: 250px; margin: 0 auto;">
+                        </div>
+                        <input type="submit" name=validar value="Filtrar" class="btn btn-default mt-2 btn-outline-success">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <?php
+    }
+    
+    public function FiltrarReservasPedidos() {
+        ?>
+        <div class="bg-light p-2 fs-5">
+            <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "administrador" . DIRECTORY_SEPARATOR . "indexAdministrador.php"; ?>">Panel administrador</a> > Pedidos Pendientes
+        </div>
+        <div class="container mt-5">
+            <div class='card'>
+                <div class="card-header text-center">
+                    <h3>Pedidos Pendientes</h3>
                 </div>
                 <div class="card-body text-center">
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">

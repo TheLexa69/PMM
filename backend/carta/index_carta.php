@@ -263,7 +263,7 @@ if (isset($_POST['dato'])) {
                                     <label for="cantidad">Cantidad:</label>
                                     <select id="cantidad" name="cantidad" style="margin-bottom: 5px"">
                                         <?php
-                                        for ($i = 1; $i <= 10; $i++) {
+                                        for ($i = 1; $i <= 15; $i++) {
                                             echo '<option value="' . $i . '">' . $i . '</option>';
                                         }
                                         ?>
@@ -305,7 +305,7 @@ if (isset($_POST['dato'])) {
                                     <label for="cantidad">Cantidad:</label>
                                     <select id="cantidad" name="cantidad" style="margin-bottom: 5px"">
                                         <?php
-                                        for ($i = 1; $i <= 10; $i++) {
+                                        for ($i = 1; $i <= 15; $i++) {
                                             echo '<option value="' . $i . '">' . $i . '</option>';
                                         }
                                         ?>

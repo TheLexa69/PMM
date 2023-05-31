@@ -35,41 +35,42 @@ if (isset($_POST["validar2"])) {
     
     
     if (!empty($_POST['nombre'])) {
-        $nombre1 = trim($_POST['nombre']);
-        
+        $nombre = trim($_POST['nombre']);
+        $_SESSION['nombre_p'] = $nombre;
+    } else {
+        $_SESSION['nombre_p'] = "";
     }
     if (!empty($_POST['opcion'])) {
         $opcion = $_POST['opcion'];
-        $_SESSION["opcion"] = $opcion;
+        $_SESSION["opcion_p"] = $opcion;
     }
     if (!empty($_POST['orden'])) {
         $orden = $_POST['orden'];
         $_SESSION["orden"] = $orden;
     }
-  
-$nombre1 = (isset($nombre1)) ? $nombre1 : "";
-$opcion = (isset($_SESSION["opcion"])) ? $_SESSION["opcion"] : "";
+} 
+$nombre = (isset($_SESSION['nombre_p'])) ? $_SESSION['nombre_p'] : "";
+$opcion = (isset($_SESSION["opcion_p"])) ? $_SESSION["opcion_p"] : "";
 $orden = (isset($_SESSION["orden"])) ? $_SESSION["orden"] : "";
 
 
-
 $formularios->listaFiltradaProductos();
-$fila = $consulta->filtradoProductos($indice_primer_elemento, $por_pagina, $nombre1, $opcion, $orden);
+$fila = $consulta->filtradoProductos($indice_primer_elemento, $por_pagina, $nombre, $opcion, $orden);
 $formularios->tablaProductos($fila, $total_paginas, $pagina_actual);
 
 
 
-    }else{
+    // }else{
         
     
-$fila1 = $consulta->productos($indice_primer_elemento, $por_pagina);
-$formularios->listaFiltradaProductos();
-if (empty($fila1)) {
-    $mensaje1 = "Producto no registrado";
-    echo "<script> alert('" . $mensaje1 . "'); </script>";
-}
-$formularios->tablaProductos($fila1, $total_paginas, $pagina_actual);
-    }
+// $fila1 = $consulta->productos($indice_primer_elemento, $por_pagina);
+// $formularios->listaFiltradaProductos();
+// if (empty($fila1)) {
+//     $mensaje1 = "Producto no registrado";
+//     echo "<script> alert('" . $mensaje1 . "'); </script>";
+// }
+// $formularios->tablaProductos($fila1, $total_paginas, $pagina_actual);
+    // }
 $contador = $consulta->productosActivos();
 $total = ceil($contador / $cantidadResultados);
 

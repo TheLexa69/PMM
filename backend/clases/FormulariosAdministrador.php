@@ -16,7 +16,7 @@ class FormulariosAdministrador {
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">Panel administrador.</h5>
-                    <p class="card-text">Aqui podrás añadir trabajadores o listarlos, modificar productos o añadirlos, ver las reservas y mucho más.</p>
+                    <p class="card-text">Aquí podrás añadir trabajadores o listarlos, modificar productos o añadirlos, ver las reservas y mucho más.</p>
                     <hr>
                     <div class="d-flex flex-wrap justify-content-center pt-2">
                         <a href='altaTrabajador.php'><input type='button' class='btn btn-outline-success me-1 mb-2' value='Añadir Trabajador'></a>
@@ -183,7 +183,8 @@ class FormulariosAdministrador {
                             }
                             ?> >  
                             <label for="v">Ordenados por:</label> 
-                            <select name="opcion" class="form-select mt-2">            
+                            <select name="opcion" class="form-select mt-2"> 
+                                <option value="">-Seleccionar- </option>
                                 <option value="fecha">Fecha ultimo login</option> 
                                 <option value="nombre">Nombre</option> 
                                 <option value="id_rol">Privilegios</option> 
@@ -632,21 +633,21 @@ class FormulariosAdministrador {
                             }
                             ?>>
                             <label for="v">Ordenados por:</label> 
-                            <select name="opcion" class="form-select mt-2">           
+                            <select name="opcion" class="form-select mt-2">      
+                                <option value="">- Seleccionar -</option>      
                                 <option value="disponible">En stock</option> 
                                 <option value="fecha_inicio" >Disponible desde</option> 
-                                <option value="fecha_fin" >Disponible Hasta </option> 
+                                <option value="fecha_fin" >Disponible hasta </option> 
                                 <option value="nombre">Nombre</option> 
                                 <option value="precio">Precio</option> 
-                                <option value="disponible">En stock</option> 
                             </select> 
                             <div class="mt-2 d-flex align-items-center justify-content-center">
-                                <input type="radio" name="orden" value="ASC" class="form-check-input"> 
+                                <input type="radio" name="orden" id="ASC" value="ASC" class="form-check-input"> 
                                 <label class="form-check-label" for="ASC">Ascendente</label>
-                                <input type="radio" name="orden" value="DESC" class="form-check-input ms-2"> 
+                                <input type="radio" name="orden" id="DESC" value="DESC" class="form-check-input ms-2"> 
                                 <label class="form-check-label" for="DESC">Descendente</label>
                             </div>
-                            <input type="submit" name=validar2 value="Filtrar" class="btn btn-default btn-outline-success mt-2">
+                            <input type="submit" name="validar2" value="Filtrar" class="btn btn-default btn-outline-success mt-2">
                         </form>
                     </div>
                 </div>
@@ -663,7 +664,8 @@ class FormulariosAdministrador {
         if (isset($_GET["mensaje"])) {
             echo "<script> alert('" . $_GET["mensaje"] . "'); </script>";
         }
-        ?>    
+        ?> 
+           
         <div class="container">
             <div class="main card">
                 <div class="table-responsive">
@@ -960,7 +962,7 @@ class FormulariosAdministrador {
                         </table>
                         <div class="mt-3 text-center pb-3"> 
                             <a href='indexAdministrador.php'><input type='button' value='Volver a inicio' class="btn btn-outline-warning"></a>
-                            <input class="btn btn-outline-success" type="submit" name="aceptar" value="Aceptar reservas selecionadas" >
+                            <input class="btn btn-outline-success" type="submit" name="aceptar" value="Aceptar pedidos selecionados" >
                         </div>
                     </form>
                 </div>

@@ -2,11 +2,15 @@
 /* Suma productos a la cesta si eliges el mismo al añadir producto */
 session_start();
 use clases_carrito\Carrito as carrito;
-//require "../clases_carrito/carrito.php";
 
 $cod_comida = $_GET["cod"];
 $cantidad = $_POST["cantidad"];
 $tipo = $_GET['tipo'];
+
+if ($cantidad > 15) {
+	$cantidad = 15;
+}
+
 if (!isset($_SESSION['usuario'])) { 
 	// Si no hay una sesión iniciada, comprobar si hay productos en la cookie
 	if (isset($_COOKIE['carrito'])) {

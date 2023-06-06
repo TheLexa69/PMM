@@ -78,7 +78,6 @@ class Carta extends Conexion {
         $text = "";
         //var_dump($alergenos);
         if (count($alergenos) == 1) {
-            $a;
             foreach ($alergenos as $id) {
                 $a = $id;
             }

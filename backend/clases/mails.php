@@ -5,7 +5,7 @@ namespace clases;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require"../vendor/autoload.php";
+require "../vendor/autoload.php";
 
 class Mails {
 
@@ -35,7 +35,7 @@ class Mails {
         $config->load($xlmMail);
         $res = $config->schemaValidate($xsd);
         if ($res === FALSE) {
-            throw new InvalidArgumentException("Revise el fichero de configuración de mail");
+            throw new \InvalidArgumentException("Revise el fichero de configuración de mail");
         }
         $datos = simplexml_load_file($xlmMail);
 

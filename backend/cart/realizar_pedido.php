@@ -12,6 +12,7 @@ if false print error */
 if (isset($_SESSION['usuario'])) {
     ?>
 
+<<<<<<< Updated upstream
     <form action="procesar_pedido.php" method="post">
       <div class="layered box row mr-2">
       <h2 class="col-10 d-flex justify-content-right">
@@ -58,6 +59,29 @@ if (isset($_SESSION['usuario'])) {
         </div>
       </div>
     </form>
+=======
+            <div class="card-body">
+                <h2 class="">
+                    <label for="met_pago">Elige el método de pago:</label></h2><br>
+                <!-- foreach de la base de datos -->
+                <div class="form-check">
+                    <?php
+                    foreach ($modo_pago as $pago) {
+                        $nombre = $pago['nombre'];
+                        $id = $pago['id_modo_pago'];
+                        echo "<input class='form-check-input' type='radio' id='" . $id . "' name='opciones_modo_pago' value='" . $id . "' required>
+            <label class='form-label' for='" . $id . "'>" . strtoupper($nombre) . "</label><br>";
+                    }
+                    ?>
+                </div>
+            </div>
+            <div class="card-body d-flex justify-content-center">
+                <button type="submit" class="btn btn-outline-success">Finalizar compra</button>
+            </div>
+        </form>
+    </div>
+ 
+>>>>>>> Stashed changes
 
     <?php
 }

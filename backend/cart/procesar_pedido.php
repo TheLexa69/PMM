@@ -1,4 +1,5 @@
 <?php
+ob_clean();
 require "../sesiones/sesiones.php";
 //session_start();
 comprobar_sesion();

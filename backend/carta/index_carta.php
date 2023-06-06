@@ -7,7 +7,6 @@ use \clases\Carrito as carrito;
 
 $carta = new carta();
 $carrito = new carrito();
-
 // Comprueba si hay un usuario autenticado en la sesión actual y si existe un carrito en la sesión o en una cookie
 if (isset($_SESSION['usuario'])) {
     // Si hay un usuario autenticado en la sesión actual, lo guarda en una variable
@@ -41,27 +40,23 @@ if (isset($_SESSION['usuario'])) {
     $array_carrito = [];
 }
 
-// Si se recibe un valor en el parámetro POST llamado "dato", filtra la lista de artículos en la carta por alérgenos
-if (isset($_POST['dato'])) {
-    $consultaAlergenos = $carta->filterByAlergeno($_POST['dato']);
-    if (isset($_GET["tipo"])) {
-        $tipo = $_GET["tipo"];
-        $url = "&tipo=$tipo";
-    } else {
-        $url = "";
-    }
 
-// Si se recibe un valor en el parámetro GET llamado "tipo", filtra la lista de artículos en la carta por tipo
+if (!empty($_POST['dato'])) {
+    $consultaAlergenos = $carta->filterByAlergeno($_POST['dato']);
 } else if (isset($_GET["tipo"])) {
     $tipo = $_GET["tipo"];
     $rdo = $carta->filterByTipo($tipo);
-    $url = "&tipo=$tipo";
-
-// Si no se recibe ningún valor en los parámetros POST o GET, muestra la lista completa de artículos en la carta
 } else {
     $rdo = $carta->printCarta();
+}
+
+if (isset($_GET["tipo"])) {
+    $tipo = $_GET["tipo"];
+    $url = "&tipo=$tipo";
+} else {
     $url = "";
 }
+
 ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -184,7 +179,7 @@ if (isset($_POST['dato'])) {
                 <div id="contenedorAlergenos">
                 </div>
                 <div class="d-flex justify-content-center pb-3" id="reset">
-                    <input class="btn btn-outline-dark" type="submit" value="Filtrar" ">
+                    <input class="btn btn-outline-dark" type="submit" value="Filtrar" >
                 </div>
             </form>
         </div>
@@ -227,7 +222,7 @@ if (isset($_POST['dato'])) {
             </div>
         </div>
     </div>
-    <div id="divPopUpForm" onclick="showCarritoFlotante();" style="">
+    <div id="divPopUpForm" onclick="showCarritoFlotante();">
         <p class="px-2 py-2 shadow fw-bold"
            style="margin-right: 40px; margin-bottom: -30px; height: 60px;background-color: white; width: 180px; border-radius: 5px;">
             Confiere tus productos!</p>
@@ -261,7 +256,7 @@ if (isset($_POST['dato'])) {
                                 <h5 class="precio-producto"> Precio: <?php echo number_format($fila[3], 2, '.', '') ?> €</h5>
                                 <form method="post" action="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "agregar_carrito.php?cod=" . $fila[6] . $url; ?>">
                                     <label for="cantidad">Cantidad:</label>
-                                    <select id="cantidad" name="cantidad" style="margin-bottom: 5px"">
+                                    <select id="cantidad" name="cantidad" style="margin-bottom: 5px">
                                         <?php
                                         for ($i = 1; $i <= 15; $i++) {
                                             echo '<option value="' . $i . '">' . $i . '</option>';
@@ -303,7 +298,7 @@ if (isset($_POST['dato'])) {
                                 <h5 class="precio-producto"> Precio: <?php echo number_format($fila[3], 2, '.', '') ?> €</h5>
                                 <form method="post" action="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "agregar_carrito.php?cod=" . $fila[6] . $url; ?>">
                                     <label for="cantidad">Cantidad:</label>
-                                    <select id="cantidad" name="cantidad" style="margin-bottom: 5px"">
+                                    <select id="cantidad" name="cantidad" style="margin-bottom: 5px">
                                         <?php
                                         for ($i = 1; $i <= 15; $i++) {
                                             echo '<option value="' . $i . '">' . $i . '</option>';

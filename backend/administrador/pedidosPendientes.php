@@ -12,7 +12,7 @@ $formularios = new formulariosAdministrador;
 $consulta = new consultasAdministrador($_SESSION['administrador'][1]);
 $envioMail = new mailAdministrador;
 
-$formularios->FiltrarReservasFecha();
+$formularios->FiltrarReservasPedidos();
 $fecha = !empty(($_POST['fecha'])) ? $_POST['fecha'] : date("Y-m-d");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -29,8 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $formularios->tablaPedidos($fila);
     } else {
 
-
-
         $fila = $consulta->comprobarPedidosPorFecha($fecha);
         $formularios->tablaPedidos($fila);
     }
@@ -41,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($fila)) {
         $formularios->tablaPedidos($fila);
     } else {
+        $formularios->tablaPedidos($fila);
         $fecha1 = date("j-m-y");
         echo '<div id="mensaje" class="rounded" style="z-index: 4; position: absolute; transition: top 0.5s; top: -150%; right: 0; background-color: #f44336; color: white; padding: 10px;">';
         echo ' No hay Pedidos pendientes para el dia ' . $fecha1;

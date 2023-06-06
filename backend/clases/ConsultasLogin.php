@@ -38,9 +38,9 @@ class ConsultasLogin extends Conexion {
      * @param $cp              Codigo postal
      * @throws PDOException Si hay algún error al ejecutar la consulta SQL.
      */
-    public function añadirUsuario($nombre, $apellido1, $apellido2, $token2, $mail, $telefono, $rol, $fecha, $nif, $direccion, $cp) {
+    public function añadirUsuario($nombre, $apellido1, $apellido2, $token2, $mail, $codPais, $telefono, $rol, $fecha, $nif, $direccion, $cp) {
         try {
-            $sql = "INSERT INTO usuario (nombre,apellido1 ,apellido2,contraseña,correo,num_telef, id_rol,fecha,NIF,direccion,cp) VALUES (:nombre,:apellido1,:apellido2,:contrasena,:correo,:num_telef,:rol,:fecha,:nif,:direccion,:cp)";
+            $sql = "INSERT INTO usuario (nombre,apellido1 ,apellido2,contraseña,correo,codPais,num_telef, id_rol,fecha,NIF,direccion,cp) VALUES (:nombre,:apellido1,:apellido2,:contrasena,:correo, :codPais,:num_telef,:rol,:fecha,:nif,:direccion,:cp)";
 
             $stmt = $this->conexion->prepare($sql);
 
@@ -49,6 +49,7 @@ class ConsultasLogin extends Conexion {
             $stmt->bindParam(':apellido2', $apellido2, PDO::PARAM_STR, 25);
             $stmt->bindParam(':contrasena', $token2, PDO::PARAM_STR);
             $stmt->bindParam(':correo', $mail, PDO::PARAM_STR, 50);
+            $stmt->bindParam(':codPais', $codPais, PDO::PARAM_STR);
             $stmt->bindParam(':num_telef', $telefono, PDO::PARAM_STR);
             $stmt->bindParam(':rol', $rol, PDO::PARAM_STR);
             $stmt->bindParam(':fecha', $fecha, PDO::PARAM_STR);

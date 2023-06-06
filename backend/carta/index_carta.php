@@ -184,7 +184,7 @@ if (isset($_POST['dato'])) {
                 <div id="contenedorAlergenos">
                 </div>
                 <div class="d-flex justify-content-center pb-3" id="reset">
-                    <input class="btn btn-outline-dark" type="submit" value="Filtrar" ">
+                    <input class="btn btn-success" type="submit" value="Filtrar" ">
                 </div>
             </form>
         </div>
@@ -270,7 +270,7 @@ if (isset($_POST['dato'])) {
                                     </select>
                                     <div class="col-md-4 d-flex mt-2" id="botonCompra">
                                         <!-- if session rol = admin button editar, deshabilitar -->
-                                        <button class="btn-add-cart btn btn-outline-secondary" id="compra" type="submit">Añadir</button>
+                                        <button class="btn-add-cart btn btn-success" id="compra" type="submit">Añadir</button>
                                     </div>
                                 </form>
                             </div>
@@ -312,7 +312,7 @@ if (isset($_POST['dato'])) {
                                     </select>
                                     <div class="col-md-4 d-flex mt-2" id="botonCompra">
                                         <!-- if session rol = admin button editar, deshabilitar -->
-                                        <button class="btn-add-cart btn btn-outline-secondary" id="compra" type="submit">Añadir</button>
+                                        <button class="btn-add-cart btn btn-success" id="compra" type="submit">Añadir</button>
                                     </div>
                                 </form>
                             </div>

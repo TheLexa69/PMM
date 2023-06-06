@@ -84,7 +84,7 @@ $pedido = $p->crearPedido($id_usuario, $carrito, $precio, $cif, $modo_pago);
     <br>
     <div class="card-footer">
         <div class="col-2 d-flex justify-content-right">
-            <a href="../login/indexLogin.php"><button type="button" class="btn btn-outline-success">Volver al inicio</button></a>
+            <a href="../login/indexLogin.php"><button type="button" class="btn btn-outline-secondary">Volver al inicio</button></a>
         </div>
     </div>
 </div> <!--NO BORRAR ES EL FINAL DEL DIV DE ARRIBA-->

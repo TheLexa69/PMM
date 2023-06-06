@@ -18,16 +18,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $restaurante = $_POST['restaurante'];
     $turno = $_POST['turno'];
     $id = $_SESSION['usuario'];
-    var_dump($_POST['mesa']);
-    $mesa = !empty($_POST['mesa']) ? $_POST['mesa'] : 0;
-    var_dump($mesa);
+    $mesa = !empty($_POST['mesas']) ? $_POST['mesas'] : 0;
     if ($mesa == 0) {
         echo 'No hay mesas disponibles';
         ?>
-        <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . 'backend' . DIRECTORY_SEPARATOR . 'usuario' . DIRECTORY_SEPARATOR . "indexUsuario.php"; ?>" id="cancel" name="cancel" class="btn btn-default btn-outline-danger">Cancelar</a>
+        <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . 'backend' . DIRECTORY_SEPARATOR . 'usuario' . DIRECTORY_SEPARATOR . "reservas.php"; ?>" id="cancel" name="cancel" class="btn btn-default btn-outline-danger">Cancelar</a>
         <?php
     } else {
-        $consulta->hacerReserva($id, $restaurante, $mesa, $fecha, $turno);
+        //$idRestaurante->conseguirIDRestaurante($restaurante);
+        $idRestaurante = $consulta->conseguirIDRestaurante($restaurante);
+        $cif = $idRestaurante[0]['cif'];
+        $consulta->hacerReserva($id, $cif, $mesa, $fecha, $turno);
+        if ($consulta) {
+            $formularios->formularioReservaSuccess();
+        } else {
+            $formularios->formularioReservaError();
+        }
     }
 } else {
     $restaurante = $consulta->restaurantes();

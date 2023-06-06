@@ -30,6 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $apellido1 = ucfirst(($_POST["apellido1"] == $datos["apellido1"]) ? $datos["apellido1"] : $filtro->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]", $_POST["apellido1"]));
     $apellido2 = ucfirst(($_POST["apellido2"] == $datos["apellido2"]) ? $datos["apellido2"] : $filtro->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]", $_POST["apellido2"]));
     $apellido2 = (!empty($_POST["apellido2"])) ? ucfirst($filtro->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]", $_POST["apellido2"])) : "";
+    $codPais = ($_POST["codPais"] == $datos["codPais"]) ? (empty($datos["codPais"]) ? '+34' : $datos["codPais"] ) : $_POST["codPais"];
     $telefono = ($_POST["telefono"] == $datos["num_telef"]) ? $datos["num_telef"] : $_POST["telefono"];
     $telefono = $filtro->verificarDatos("[0-9]{9,9}", $telefono);
     $telefono = (strlen($telefono) == 9) ? $telefono : "";
@@ -66,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $imagen = $funcionesU->anadirImagen($id, $img);
         }
 
-        $consulta->actualizarDatosUsuario($id, $nombre, $apellido1, $apellido2, $telefono, $mail, $nif, $direccion, $cp, $imagen);
+        $consulta->actualizarDatosUsuario($id, $nombre, $apellido1, $apellido2, $codPais, $telefono, $mail, $nif, $direccion, $cp, $imagen);
 
         $datos = $consulta->datosUsuario($id);
         $formularios->registroDatosPorUsuario($datos, $necesarios);

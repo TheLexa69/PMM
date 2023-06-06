@@ -60,13 +60,13 @@ echo "<script> alert('".$mensaje1."'); </script>";
 $formularios->tablaEmpleados($fila, $total_paginas, $pagina_actual);
 
 $contador = $consulta->trabajadoresActivos();
-$total = ceil($contador / $cantidadResultados);
-
+//$total = ceil($contador / $cantidadResultados);
+/*
 echo '<div class="paginado" style="text-align:center">';
 for ($i = 1; $i <= $total; $i++) {
     echo "<a href='modificarDatosTrabajador.php?pagina=" . $i . "' > " . $i . "</a>";
 }
-echo " </div>";
+echo " </div>";*/
 echo "</div>";
 
  

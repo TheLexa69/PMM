@@ -19,11 +19,12 @@ $envioMail = new mailLogin;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $_POST = $filtro->validarPost($_POST);
-
     $nombre = $filtro->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]", $_POST['nombre']);
     $apellido1 = $filtro->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]", $_POST['apellido1']);
     $apellido2 = ($_POST['apellido2']) ? $filtro->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]", $_POST['apellido2']) : null;
     $mail = ($funciones->correo($_POST['mail'])) ? $funciones->correo($_POST['mail']) : "";
+    $codPais = $_POST['codPais'];
+
     $telefono = $filtro->verificarDatos("[0-9]{9,9}", $_POST['telefono']);
     $telefono = (strlen($telefono) == 9) ? $telefono : "";
     $nif = null;
@@ -44,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $token2 = password_hash($token, PASSWORD_DEFAULT);
         $envioMail->mail($mail, $nombre, $token);
 
-        $consulta->añadirUsuario($nombre, $apellido1, $apellido2, $token2, $mail, $telefono, $rol, $fecha, $nif, $direccion, $cp);
+        $consulta->añadirUsuario($nombre, $apellido1, $apellido2, $token2, $mail, $codPais, $telefono, $rol, $fecha, $nif, $direccion, $cp);
 
         if ($necesarios == true) {
 

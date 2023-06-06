@@ -1,9 +1,10 @@
 section {
-    padding: 3rem 9%
+    padding: 3rem;
 }
 
 .home {
-    margin-left: 100px;
+    /*    margin-left: 100px;
+        margin-right: 100px;*/
 }
 
 .carousel {
@@ -25,17 +26,14 @@ section {
 .home .home-slider .slide .image {
     flex: 1 1 45rem;
     margin-bottom: 60px;
-
 }
 
 .home .home-slider .slide .image img {
     width: 400px;
     height: 400px;
+    object-fit: cover;
     border-radius: 40px;
-    margin-left: 2rem;
-    margin-right: 2rem;
-    box-shadow:
-        rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
         rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
         rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset,
         rgba(0, 0, 0, 0.06) 0px 2px 1px,
@@ -45,6 +43,7 @@ section {
         rgba(0, 0, 0, 0.09) 0px 32px 16px;
     float: right;
 }
+
 
 .home .home-slider .slide .content span {
     color: var(--green);
@@ -59,10 +58,83 @@ section {
 .home .home-slider .slide .content p {
     color: var(--light-color);
     font-size: 2.2rem;
-    padding: .5rem 0;
+    padding: 0.5rem 10px 0px 0px;
     line-height: 1.5;
 }
 
-.swiper-pagination-bullet-active {
-    background: var(--green);
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: var(--green);
+}
+
+.carousel-indicators button {
+    width: 10px;
+    height: 10px;
+    background-color: #bbb;
+    border: none;
+    border-radius: 50%;
+    opacity: 1;
+}
+
+.carousel-indicators button.active {
+    background-color: var(--green);
+}
+
+.carousel-control-next, .carousel-control-prev {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3%;
+    padding: 0;
+    color: #fff;
+    text-align: center;
+    background: 0 0;
+    border: 0;
+    opacity: .5;
+    transition: opacity .15s ease;
+}
+
+@media (max-width: 600px) {
+
+    .home .home-slider .slide .image img {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        border-radius: 40px;
+        box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
+            rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
+            rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset,
+            rgba(0, 0, 0, 0.06) 0px 2px 1px,
+            rgba(0, 0, 0, 0.09) 0px 4px 2px,
+            rgba(0, 0, 0, 0.09) 0px 8px 4px,
+            rgba(0, 0, 0, 0.09) 0px 16px 8px,
+            rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    }
+
+    #carouselExampleDark´{
+        padding: 1rem !important;
+    }
+
+    .carousel-control-next, .carousel-control-prev {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 15%;
+        padding: 0;
+        color: #fff;
+        text-align: center;
+        background: 0 0;
+        border: 0;
+        opacity: .5;
+        transition: opacity .15s ease;
+    }
+
 }

@@ -76,7 +76,6 @@ class Carta extends Conexion {
      */
     public function filterByAlergeno($alergenos) {
         $text = "";
-        //var_dump($alergenos);
         if (count($alergenos) == 1) {
             $a;
             foreach ($alergenos as $id) {

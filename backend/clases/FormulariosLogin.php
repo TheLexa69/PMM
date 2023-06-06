@@ -208,8 +208,6 @@ class FormulariosLogin {
                 </div>
                 <div class="card-body">
                     <form action= "comprobarToken.php " method="POST">
-                        <?php var_dump($_POST['codPais'] . ' - ' . $_POST['telefono']) ?>
-                        <?php var_dump($_POST)?>
                         <h5 class="text-center">Para completar el proceso, por favor revise su bandeja de correo electrónico. Le hemos enviado un código de verificación.</h5>                
                         <label for="c" class="form-label">Codigo Mail:</label>
                         <input type="password" class="form-control" id="c" name="token">

@@ -11,7 +11,7 @@ class ConsultasUsuario extends Conexion {
      * Método contruct que al extender de la clase padre Conexión hereda
      * su constructor que es el puntero de conexión.
      */
-    public function __construct($rol=5) {
+    public function __construct($rol = 5) {
 
         parent::__construct($rol);
     }
@@ -59,13 +59,13 @@ class ConsultasUsuario extends Conexion {
      * @return $stmt
      * @throws PDOException Si hay algún error al ejecutar la consulta SQL.
      */
-    public function actualizarDatosUsuario($id, $nombre, $apellido1, $apellido2, $telefono, $mail, $nif, $direccion, $cp, $rutaImg) {
+    public function actualizarDatosUsuario($id, $nombre, $apellido1, $apellido2, $codPais, $telefono, $mail, $nif, $direccion, $cp, $rutaImg) {
         try {
             if ($rutaImg == 0) {
-                $sql = "UPDATE usuario SET nombre=:nombre, apellido1=:apellido1, apellido2=:apellido2, num_telef=:telefono, correo=:mail, NIF=:nif, direccion=:direccion, cp=:cp where id_usuario = :id";
+                $sql = "UPDATE usuario SET nombre=:nombre, apellido1=:apellido1, apellido2=:apellido2, codPais=:codPais, num_telef=:telefono, correo=:mail, NIF=:nif, direccion=:direccion, cp=:cp where id_usuario = :id";
             } else {
                 $rutaImagen = '../imagenes/imgUsuarios/' . $rutaImg;
-                $sql = "UPDATE usuario SET nombre=:nombre, apellido1=:apellido1, apellido2=:apellido2, num_telef=:telefono, correo=:mail, NIF=:nif, direccion=:direccion, cp=:cp, img=:img where id_usuario = :id";
+                $sql = "UPDATE usuario SET nombre=:nombre, apellido1=:apellido1, apellido2=:apellido2, codPais=:codPais, num_telef=:telefono, correo=:mail, NIF=:nif, direccion=:direccion, cp=:cp, img=:img where id_usuario = :id";
             }
 
             $stmt = $this->conexion->prepare($sql);
@@ -74,6 +74,7 @@ class ConsultasUsuario extends Conexion {
             $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
             $stmt->bindParam(':apellido1', $apellido1, PDO::PARAM_STR);
             $stmt->bindParam(':apellido2', $apellido2, PDO::PARAM_STR);
+            $stmt->bindParam(':codPais', $codPais, PDO::PARAM_STR);
             $stmt->bindParam(':telefono', $telefono, PDO::PARAM_STR);
             $stmt->bindParam(':mail', $mail, PDO::PARAM_STR);
             $stmt->bindParam(':nif', $nif, PDO::PARAM_STR);
@@ -120,14 +121,14 @@ class ConsultasUsuario extends Conexion {
      */
     public function mesas() {
         try {
-            $sql = "select * from mesas where (id_mesa not in (select id_mesa from reservas))";
+            $sql = "select * from mesas WHERE id_mesa not in (select id_mesa from reservas where fecha_reserva >= now())";
 
             $stmt = $this->conexion->prepare($sql);
 
             $stmt->execute();
 
             $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            
+
             $dato = array();
             foreach ($fila as $mesa) {
                 $dato = $mesa;
@@ -136,6 +137,27 @@ class ConsultasUsuario extends Conexion {
 
             unset($fila);
         } catch (Exception $ex) {
+            die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
+        }
+    }
+
+    /**
+     * Método para conseguir el cif del restaurante através del nombre.
+     * @param $restaurante Nombre restaurante
+     * @return $stmt
+     * @throws PDOException Si hay algún error al ejecutar la consulta SQL.
+     */
+    public function conseguirIDRestaurante($restaurante) {
+        try {
+            $sql = "SELECT cif FROM empresa WHERE nombreLocal LIKE :nombreLocal";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->bindParam(':nombreLocal', $restaurante, PDO::PARAM_STR);
+            $stmt->execute();
+            $dato = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            unset($stmt);
+            return $dato;
+        } catch (PDOException $e) {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
@@ -152,7 +174,7 @@ class ConsultasUsuario extends Conexion {
      */
     public function hacerReserva($id, $restaurante, $mesa, $fecha, $turno) {
         try {
-            $sql = "UPDATE reservas SET id_usuario=:id, id_restaurante=:restaurante, id_mesa=:mesa, fecha_reserva=:fecha, turno=:turno";
+            $sql = "INSERT INTO reservas (id_usuario, id_restaurante, id_mesa, fecha_reserva, turno) VALUES (:id, :restaurante, :mesa, :fecha, :turno)";
             $stmt = $this->conexion->prepare($sql);
 
             $stmt->bindParam(':id', $id, PDO::PARAM_STR, 25);
@@ -210,7 +232,6 @@ class ConsultasUsuario extends Conexion {
         $stmt->execute(array($id));
 
         $fila = $stmt->fetch();
-
 
         unset($stmt);
         return $fila[0];

@@ -46,6 +46,46 @@ require (dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPA
             ¡Felicidades, conseguiste una medalla!
         </div>
         <div class="card-header"><h1>Construye tu hamburguesa</h1></div>
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        &nbsp;&nbsp;&nbsp;¿ Cómo se juega ?
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                     data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        &nbsp;&nbsp;&nbsp;El juego se inicia automáticamente cuando entras, para lograr hacer una hamburguesa tienes que seguir el orden de los ingredientes, de <b>izquierda a derecha</b>.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        &nbsp;&nbsp;&nbsp;¿ Cómo gano puntos ?
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        &nbsp;&nbsp;&nbsp;Ganarás<strong>1 punto</strong> cada vez que una hamburguesa esté bien hecha.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        &nbsp;&nbsp;&nbsp;¿ Cómo gano medallas ?
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        &nbsp;&nbsp;&nbsp;Ganarás <strong>1 medalla</strong> cada vez que <b>5 hamburguesas</b> estén bien hechas.
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="card-body text-center">
             <div id="score">Hamburguesas bien hechas: <span id="burger-count">0</span></div>
             <div id="medals">Medallas conseguidas: <span id="medals-count">0</span></div>

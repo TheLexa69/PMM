@@ -63,6 +63,10 @@ html {
     border-bottom-left-radius: 1rem;
 }
 
+.carousel-item.active{
+    border-bottom: inherit !important;
+}
+
 .nav-item{
     padding-top: 5px;
 }
@@ -137,6 +141,7 @@ body {
     cursor: pointer;
 }
 
+
 .layered.box {
     min-width: 400px;
     height: 50vh;
@@ -175,15 +180,14 @@ body {
 #cookie {
     display: flex;
     flex-direction: column;
-    position: absolute;
-    padding: 10px;
+    position: fixed;
+    left: 0;
+
     /*bottom: 0;*/
     max-width: 900px;
     color: black;
     z-index: 3;
-    left: 0;
     transition: top 0.5s;
-    top: -150vh;
 }
 
 .main {
@@ -230,6 +234,18 @@ footer {
 }
 
 @media (max-width: 600px) {
+    #indexJuego{
+        flex-direction: column;
+    }
+
+    #textJuego{
+        width: 100% !important;
+    }
+
+    #imagenJuego{
+        width: 100%;
+    }
+
     #navbarNavAltMarkup {
         position: relative;
         left: 0;
@@ -320,11 +336,11 @@ footer {
     .content-cart > .col-4 > button{
         margin-top: 10px;
     }
-    
+
     .content-cart > .col-4 > .nombre-producto{
         margin-top: 20px;
     }
-    
+
     footer{
         margin-top: 0.5rem !important;
     }

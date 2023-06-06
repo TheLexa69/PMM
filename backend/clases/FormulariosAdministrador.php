@@ -256,7 +256,7 @@ class FormulariosAdministrador {
                     </table>
                     <div class="d-flex justify-content-center mb-2">
                         <a href='indexAdministrador.php'>
-                            <input type='button' value='Volver a inicio' class="btn btn-outline-warning">
+                            <input type='button' value='Volver a inicio' class="btn btn-outline-secondary">
                         </a>
                     </div>
                 </div>
@@ -326,7 +326,7 @@ class FormulariosAdministrador {
                             <input type="submit" name="actualizar" value="Actualizar" class="btn btn-outline-info">
                             <input type="submit" name="eliminar" value="Eliminar" class="btn btn-outline-danger"> 
                             <a href="trabajadores.php"><input type="button" value="Modificar Otro Trabajador" class="btn btn-outline-success"></a>
-                            <a href="indexAdministrador.php"><input type="button" value="Volver a inicio" class="btn btn-outline-warning"></a>
+                            <a href="indexAdministrador.php"><input type="button" value="Volver a inicio" class="btn btn-outline-secondary"></a>
                         </div>
 
                         <?php
@@ -507,7 +507,7 @@ class FormulariosAdministrador {
                                 <input type="submit" name="actualizar" value="Actualizar" class="btn btn-outline-info mb-2">
                                 <input type="submit" name="eliminar" value="Eliminar" class="btn btn-outline-danger mb-2"> 
                                 <a href="productos.php"><input type="button" value="Modificar Otro Producto" class="btn btn-outline-success mb-2"></a>
-                                <a href="indexAdministrador.php"><input type="button" value="Volver a inicio" class="btn btn-outline-warning mb-2"></a>
+                                <a href="indexAdministrador.php"><input type="button" value="Volver a inicio" class="btn btn-outline-secondary mb-2"></a>
                             </div>
                     </form>
                 </div>
@@ -614,7 +614,7 @@ class FormulariosAdministrador {
                             <input type="submit" name="actualizar" value="Actualizar" class="btn btn-outline-info mb-2">
                             <input type="submit" name="eliminar" value="Eliminar" class="btn btn-outline-danger mb-2"> 
                             <a href="productos.php"><input type="button" value="Modificar Otro Producto" class="btn btn-outline-success mb-2"></a>
-                            <a href="indexAdministrador.php"><input type="button" value="Volver a inicio" class="btn btn-outline-warning mb-2"></a>
+                            <a href="indexAdministrador.php"><input type="button" value="Volver a inicio" class="btn btn-outline-secondary mb-2"></a>
                         </div>
                     </form>
                 </div>
@@ -733,7 +733,7 @@ class FormulariosAdministrador {
                     </table>
                     <div class="d-flex justify-content-center mb-2">
                         <a href='indexAdministrador.php'>
-                            <input type='button' value='Volver a inicio' class="btn btn-outline-warning">
+                            <input type='button' value='Volver a inicio' class="btn btn-outline-secondary">
                         </a>
                     </div>
                 </div>
@@ -855,7 +855,7 @@ class FormulariosAdministrador {
                                 </tbody>
                             </table>
                             <div class="mt-3 text-center pb-3"> 
-                                <a href='indexAdministrador.php'><input type='button' value='Volver a inicio' class="btn btn-outline-warning"></a>
+                                <a href='indexAdministrador.php'><input type='button' value='Volver a inicio' class="btn btn-outline-secondary"></a>
                                 <input class="btn btn-outline-success" type="submit" name="aceptar" value="Aceptar reservas selecionadas" >
                                 <input class="btn btn-outline-success" type="submit" name="rechazar" value="Rechazar reservas selecionadas" >
                             </div>
@@ -918,7 +918,7 @@ class FormulariosAdministrador {
                         </table>
                     </div>
                     <div class="my-3 d-flex justify-content-center">
-                        <a href='indexAdministrador.php'><input type='button' value='Volver a inicio' class="btn btn-outline-warning"></a>
+                        <a href='indexAdministrador.php'><input type='button' value='Volver a inicio' class="btn btn-outline-secondary"></a>
                     </div>
                 </div>
                 <div id="mensaje" class="rounded" style="z-index: 4; position: absolute; transition: top 0.5s; top: -150%; right: 0; background-color: #f44336; color: white; padding: 10px;">
@@ -1003,7 +1003,7 @@ class FormulariosAdministrador {
                             </tbody>
                         </table>
                         <div class="mt-3 text-center pb-3"> 
-                            <a href='indexAdministrador.php'><input type='button' value='Volver a inicio' class="btn btn-outline-warning"></a>
+                            <a href='indexAdministrador.php'><input type='button' value='Volver a inicio' class="btn btn-outline-secondary"></a>
                             <input class="btn btn-outline-success" type="submit" name="aceptar" value="Aceptar reservas selecionadas" >
                         </div>
                     </form>

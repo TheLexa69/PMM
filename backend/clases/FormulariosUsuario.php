@@ -25,7 +25,7 @@ class FormulariosUsuario {
                 <div class="card-header text-center">
                     <h3>Modifica tus datos:</h3>
                 </div>
-                <div class="card-body table-responsive">
+                <div class="card-body table-responsive p-0">
                     <form enctype="multipart/form-data" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
                         <div class="my-3 d-flex justify-content-center">
                             <?php
@@ -58,8 +58,11 @@ class FormulariosUsuario {
                                 <td><input type="email" name="mail" class="form-control" id="c4" readonly value="<?php echo $id["correo"]; ?>"></td>
                             </tr>
                             <tr>
-                                <td>Teléfono: </td>
-                                <td><input type="text" name="telefono" class="form-control" id="c5"  value="<?php echo $id["num_telef"]; ?>"></td>
+                                <td>Teléfono: (<?php echo $id["codPais"]; ?>)</td>
+                                <td>
+                                    <input type="hidden" name="codPais" class="form-control" id="c5"  value="<?php echo $id["codPais"]; ?>">
+                                    <input type="text" name="telefono" class="form-control" id="c5"  value="<?php echo $id["num_telef"]; ?>">
+                                </td>
                             </tr>
                             <tr>
                                 <td>NIF: </td>
@@ -113,48 +116,89 @@ class FormulariosUsuario {
      */
     public function formularioReserva($restaurante, $mesas) {
         ?>
-        <div class="container bg-light rounded mt-5 w-60 p-3">
-            <form enctype="multipart/form-data" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
-                <div class="text-center">
-                    <h2>Reserva tu mesa</h2>
-                    <hr>
-                </div>
-                <div class="mt-3">
-                    <label for="c1" class="form-label">Fecha de Reserva:</label>     
-                    <input type=datetime-local name="fecha" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}">
-                </div>
+        <div class="container main mt-5">
 
-                <div class="mt-3">
-                    <label for="c2" class="form-label">Restaurante:</label>  
-                    <select name="restaurante">
-                        <?php foreach ($restaurante as $res) { ?>
-                            <option value = "<?php echo ($res["nombreLocal"]) ? $res["nombreLocal"] : "no"; ?>"><?php echo ($res["nombreLocal"]) ? $res["nombreLocal"] : "Restaurante no disponible"; ?></option>;
-                        <?php } ?>
-                    </select>
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>Reserva tu mesa:</h3>
                 </div>
+                <div class="card-body text-center">
+                    <form enctype="multipart/form-data" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
 
-                <div class='mt-3'>
-                    <label for="c2" class="form-label">Mesas:</label>
+                        <div class="mt-3">
+                            <label for="c1" class="form-label">Fecha de Reserva:</label>     
+                            <input type=datetime-local name="fecha" class="form-control" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}">
+                        </div>
 
-                    <select name="mesas">
-                        <option value = "<?php echo (!empty($mesas["id_mesa"])) ? $mesas["id_mesa"] : ""; ?>"><?php echo (!empty($mesas["id_mesa"])) ? "Hay mesas disponibles" : "No hay mesas disponibles"; ?></option>;
-                    </select>
+                        <div class="mt-3">
+                            <label for="c2" class="form-label">Restaurante:</label>  
+                            <select name="restaurante" class="form-select">
+                                <?php foreach ($restaurante as $res) { ?>
+                                    <option value = "<?php echo ($res["nombreLocal"]) ? $res["nombreLocal"] : "no"; ?>"><?php echo ($res["nombreLocal"]) ? $res["nombreLocal"] : "Restaurante no disponible"; ?></option>;
+                                <?php } ?>
+                            </select>
+                        </div>
+
+                        <div class='mt-3'>
+                            <label for="c2" class="form-label">Mesas:</label>
+
+                            <select name="mesas" class="form-select">
+                                <option value = "<?php echo (!empty($mesas["id_mesa"])) ? $mesas["id_mesa"] : ""; ?>"><?php echo (!empty($mesas["id_mesa"])) ? "Hay mesas disponibles" : "No hay mesas disponibles"; ?></option>;
+                            </select>
+                        </div>
+
+                        <div class='mt-3'>
+                            <label for="c2" class="form-label">Turno:</label>  
+                            <select name="turno" class="form-select">
+                                <option value = "comer" selected>Comer</option>;
+                                <option value = "cenar">Cenar</option>;
+                            </select>
+                        </div>
+
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-outline-success" name="registro">Reservar</button>
+                            <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>" id="cancel" name="cancel" class="btn btn-default btn-outline-danger">Cancelar</a>
+                        </div>
+
+                    </form>
                 </div>
+            </div>
+        </div>
+        <?php
+    }
 
-                <div class='mt-3'>
-                    <label for="c2" class="form-label">Turno:</label>  
-                    <select name="turno">
-                        <option value = "comer" selected>Comer</option>;
-                        <option value = "cenar">Cenar</option>;
-                    </select>
+    public function formularioReservaSuccess() {
+        ?>
+        <div class="container main mt-5">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">¡Gracias por reservar con nosotros!</h3> 
                 </div>
-
-                <div class="text-center mt-3">
-                    <button type="submit" class="btn btn-outline-success" name="registro">Reservar</button>
-                    <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>" id="cancel" name="cancel" class="btn btn-default btn-outline-danger">Cancelar</a>
+                <div class="card-body">
+                    <h5 class="mt-3">Su reserva ha sido recibida y está siendo procesada por nuestro equipo. <br><br>En breve, recibirá un correo electrónico con la confirmación de su reserva o con cualquier información adicional que pueda requerir. Si tiene alguna pregunta o inquietud, no dude en ponerse en contacto con nosotros. <br><br>¡Esperamos darle la bienvenida pronto en nuestro restaurante!</h5>
                 </div>
-
-            </form>
+                <div class="card-footer">
+                    <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>" id="volver" name="volver" class="btn btn-outline-secondary">Volver</a>
+                </div>
+            </div>
+        </div>
+        <?php
+    }
+    
+    public function formularioReservaError() {
+        ?>
+        <div class="container main mt-5">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">¡Lo sentimos mucho!</h3> 
+                </div>
+                <div class="card-body">
+                    <h5 class="mt-3">Hemos encontrado un problema al procesar su reserva. <br><br>Por favor, disculpe las molestias ocasionadas. Nuestro equipo está trabajando para solucionar la situación lo antes posible. <br><br>Le pedimos que espere un momento y vuelva a intentar realizar la reserva. <br><br>Si el problema persiste, por favor, póngase en contacto con nosotros para que podamos ayudarle a resolverlo.<br><br> Gracias por su comprensión.</h5>
+                </div>
+                <div class="card-footer">
+                    <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>" id="volver" name="volver" class="btn btn-outline-secondary">Volver</a>
+                </div>
+            </div>
         </div>
         <?php
     }
@@ -221,7 +265,7 @@ class FormulariosUsuario {
                     </table>
                 </div>
                 <div class="text-center my-3">
-                    <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>" id="cancel" name="cancel" class="btn btn-default btn-outline-danger">Volver</a>
+                    <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "index.php"; ?>" id="cancel" name="cancel" class="btn btn-default btn-outline-secondary">Volver</a>
                 </div>
             </div>
         </div>

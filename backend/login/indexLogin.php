@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             header("Location: /proyecto/backend/cart/index_carrito.php");
                                         } else {
                                             //header("Location: /proyecto/index.php");
-                                            echo '<div id="mensaje" class="rounded" style="z-index: 4; position: absolute; transition: top 0.5s; top: -150%; right: 0; background-color: #80ff00; color: black; padding: 10px;">';
+                                            echo '<div id="mensaje" class="rounded" style="z-index: 4; position: absolute; transition: top 0.5s; top: -150%; right: 0; background-color: #BDECB6; color: black; padding: 10px;">';
                                             echo '<h2>Redirigiendo....</h2>';
                                             echo '</div>';
                                             echo "<script defer>

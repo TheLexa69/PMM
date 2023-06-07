@@ -53,7 +53,7 @@ if (isset($_SESSION['usuario'])) {
                     $precio_total = $carrito->getTotalPrice($_SESSION['carrito']);
                     echo '<div class="mt-5 rounded py-3 d-flex justify-content-end align-items-center">'
                     . '<h3 class="fw-bold me-2 mb-0">Total: ' . $precio_total . '</h3>'
-                    . '<a href="realizar_pedido.php"><button id="log" type="button" class="btn btn-outline-success">Finalizar compra</button>'
+                    . '<a href="realizar_pedido.php"><button type="button" class="btn btn-outline-success">Finalizar compra</button>'
                     . '</a>'
                     . '</div>';
                     ?>
@@ -84,7 +84,7 @@ if (isset($_SESSION['usuario'])) {
                         $precio_total = $carrito->getTotalPrice(unserialize($_COOKIE['carrito'], ["allowed_classes" => false]));
                         echo '<div class="mt-5 rounded py-3 d-flex justify-content-end align-items-center">'
                         . '<h3 class="fw-bold me-2 mb-0">Total: ' . $precio_total . '</h3>'
-                        . '<a href="realizar_pedido.php"><button id="log" type="button" class="btn btn-outline-success">Finalizar compra</button>'
+                        . '<a href=#><button id="log" type="button" class="btn btn-outline-success">Finalizar compra</button>'
                         . '</a>'
                         . '</div>';
                         ?>

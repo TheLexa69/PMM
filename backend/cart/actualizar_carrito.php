@@ -3,6 +3,11 @@
 session_start();
 $id_comida = $_POST['id_comida'];
 $cantidad = $_POST['cantidad'];
+
+if ($cantidad > 15) {
+	$cantidad = 15;
+}
+
 if (!isset($_SESSION['usuario'])) { 
 	// Si no hay una sesión iniciada, comprobar si hay productos en la cookie
 	if (isset($_COOKIE['carrito'])) {

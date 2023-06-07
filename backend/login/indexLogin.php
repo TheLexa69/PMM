@@ -87,21 +87,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         $_SESSION['rolUsusario'] = $rol;
                                         // $_SESSION['carrito'] = [];
                                         if (isset($_GET['redirigido'])) {
-                                            header("Location: /proyecto/backend/cart/index_carrito.php");
+                                            //  header("Location: /proyecto/backend/cart/index_carrito.php");
+
+                                            echo '<div id="mensaje" class="rounded" style="z-index: 4; position: absolute; transition: top 0.5s; top: -150%; right: 0; background-color: #BDECB6; color: black; padding: 10px;">';
+                                            echo '<h2>Redirigiendo....</h2>';
+                                            echo '</div>';
+                                            echo "<script defer>   window.onload = function() {
+                                                  var mensajeDiv = document.getElementById('mensaje');
+                                                  mensajeDiv.style.top = '20%';
+                                                  setTimeout(function() {
+                                                  mensajeDiv.style.top = '-150%';
+                                                  }, 5000);
+                                                  }
+                                                  </script>";
+                                            ?>
+                                            <meta http-equiv="refresh" content="2; url=/proyecto/backend/cart/index_carrito.php">
+                                            <?php
                                         } else {
                                             //header("Location: /proyecto/index.php");
                                             echo '<div id="mensaje" class="rounded" style="z-index: 4; position: absolute; transition: top 0.5s; top: -150%; right: 0; background-color: #BDECB6; color: black; padding: 10px;">';
                                             echo '<h2>Redirigiendo....</h2>';
                                             echo '</div>';
-                                            echo "<script defer>
-              window.onload = function() {
-              var mensajeDiv = document.getElementById('mensaje');
-              mensajeDiv.style.top = '20%';
-              setTimeout(function() {
-                    mensajeDiv.style.top = '-150%';
-                    }, 5000);
-                    }
-              </script>";
+                                            echo "<script defer> window.onload = function() {
+                                                  var mensajeDiv = document.getElementById('mensaje');
+                                                  mensajeDiv.style.top = '20%';
+                                                  setTimeout(function() {
+                                                  mensajeDiv.style.top = '-150%';
+                                                  }, 5000);
+                                                  }
+                                                  </script>";
                                             ?>
                                             <meta http-equiv="refresh" content="2; url=/proyecto/index.php">
                                             <?php
@@ -138,8 +152,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         //   session_start();
                                         // $usu tiene campos correo y codRes, correo 
                                         $_SESSION['administrador'] = array($id_trabajador, $roltrabajador); //array de dos elementos
+                                        //   header("Location: /proyecto/index.php");
 
-                                        header("Location: /proyecto/index.php");
+                                        echo '<div id="mensaje" class="rounded" style="z-index: 4; position: absolute; transition: top 0.5s; top: -150%; right: 0; background-color: #BDECB6; color: black; padding: 10px;">';
+                                        echo '<h2>Redirigiendo....</h2>';
+                                        echo '</div>';
+                                        echo "<script defer>   window.onload = function() {
+                                                  var mensajeDiv = document.getElementById('mensaje');
+                                                  mensajeDiv.style.top = '20%';
+                                                  setTimeout(function() {
+                                                  mensajeDiv.style.top = '-150%';
+                                                  }, 5000);
+                                                  }
+                                                  </script>";
+                                        ?>
+                                        <meta http-equiv="refresh" content="2; url=/proyecto/index.php">
+                                        <?php
                                     } catch (PDOException $e) {
                                         die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
                                     }

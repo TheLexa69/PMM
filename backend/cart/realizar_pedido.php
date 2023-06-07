@@ -1,10 +1,7 @@
 <?php
 require "../sesiones/sesiones.php";
-//session_start();
 comprobar_sesion();
-require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
-
-//require "../clases/Pedido.php";
+require(dirname(__DIR__,2) .DIRECTORY_SEPARATOR ."frontend". DIRECTORY_SEPARATOR . "php". DIRECTORY_SEPARATOR . "nav.php"); 
 use \clases\Pedido as pedido;
 
 $p = new pedido();

@@ -334,7 +334,6 @@ class FormulariosAdministrador {
                                                 }
                                             }
                                             ?>
-
                                         </select>
                                     </td>
                                 </tr>
@@ -366,72 +365,6 @@ class FormulariosAdministrador {
             </div>
             <?php
         }
-        ?> 
-           
-        <div class="container">
-            <div class="main card">
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover">
-                        <thead class="table-light text-center">
-                            <tr>
-                                <th class=" d-sm-table-cell">Nombre</th>
-                                <th class=" d-sm-table-cell">Descripcion</th>
-                                <th class=" d-sm-table-cell">Tipo</th>
-                                <th class=" d-sm-table-cell">Subtipo</th>
-                                <th class=" d-sm-table-cell">Disponible desde</th>
-                                <th class=" d-sm-table-cell">Disponible hasta</th>
-                                <th class=" d-sm-table-cell">Precio</th>
-                                <th class=" d-sm-table-cell">Visible</th>
-                                <th class=" d-sm-table-cell">Imagen</th>
-                                <th class=" d-sm-table-cell">Editar</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            <?php
-                            if (empty($fila)) {
-                                echo "<tr><td class='text-center'></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
-                                echo "<script defer>
-                                    window.onload = function() {
-                                    var mensajeDiv = document.getElementById('mensaje');
-                                    mensajeDiv.style.top = '20%';
-                                    setTimeout(function() {
-                                        mensajeDiv.style.top = '-150%';
-                                    }, 5000);
-                                    }
-                                    </script>";
-                            }
-                            foreach ($fila as $a) {
-                                echo "<tr>"
-                                . "<td class='text-center'>" . $a["nombre"] . "</td> "
-                                . "<td class='text-center'>" . $a["descripcion"] . "</td> "
-                                . "<td class=' d-sm-table-cell text-center'>" . $a["nombre_tipo"] . "</td>"
-                                . "<td class=' d-sm-table-cell text-center'>" . $a["nombre_subtipo"] . "</td> "
-                                . "<td class=' d-sm-table-cell text-center'>" . $a["fecha_inicio"] . "</td>"
-                                . "<td class=' d-sm-table-cell text-center'>" . $a["fecha_fin"] . "</td>"
-                                . "<td class=' d-sm-table-cell text-center'>" . $a["precio"] . " €" . "</td>"
-                                . "<td class=' d-sm-table-cell text-center'>" . $a["disponible"] . "</td>"
-                                . "<td class=' d-sm-table-cell text-center'>" . ($a["img"] != '' ? 'tiene' : 'no tiene') . "</td>"
-                                . "<td class='text-center'>"
-                                . "<a href=modificarProductos.php?codigo=" . $a["id_comida"] . " class='btn btn-default btn-outline-info'>Modificar</a>"
-                                . "</td>"
-                                . "</tr>";
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                    <div class="d-flex justify-content-center mb-2">
-                        <a href='indexAdministrador.php'>
-                            <input type='button' value='Volver a inicio' class="btn btn-outline-warning">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div id="mensaje" class="rounded" style="z-index: 4; position: absolute; transition: top 0.5s; top: -150%; right: 0; background-color: #f44336; color: white; padding: 10px;">
-                Producto no encontrado
-            </div>
-        </div>
-        <?php
-    }
 
         public function htmlAgregarProducto($tipo, $subtipo, $alergenos, $mensaje = "") {
             ?>

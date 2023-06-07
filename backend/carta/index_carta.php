@@ -41,60 +41,27 @@ if (isset($_SESSION['usuario'])) {
     $array_carrito = [];
 }
 
-// Si se recibe un valor en el parámetro POST llamado "dato", filtra la lista de artículos en la carta por alérgenos
-if (isset($_POST['dato'])) {
-    $consultaAlergenos = $carta->filterByAlergeno($_POST['dato']);
-    if (isset($_GET["tipo"])) {
-        $tipo = $_GET["tipo"];
-        $url = "&tipo=$tipo";
+
+if (isset($_POST['dato'])) {// Si se recibe un valor en el parámetro POST llamado "dato", filtra la lista de artículos en la carta por alérgenos
+    if (isset($_GET['tipo'])) {
+        $tipo = $_GET['tipo'];
+        $consultaAlergenos = $carta->filterByAlergeno($_POST['dato'], $tipo);
+        $url = "?tipo=$tipo";
+        //<meta http-equiv="refresh" content="2; url=/proyecto/backend/carta/index_carta.php<?php echo $url">
+        //header("location: /proyecto/backend/carta/index_carta.php" . $url);
     } else {
+        $consultaAlergenos = $carta->filterByAlergeno($_POST['dato'], '');
         $url = "";
     }
-
-// Si se recibe un valor en el parámetro GET llamado "tipo", filtra la lista de artículos en la carta por tipo
-} else if (isset($_GET["tipo"])) {
+} else if (isset($_GET["tipo"])) {  // Si se recibe un valor en el parámetro GET llamado "tipo", filtra la lista de artículos en la carta por tipo
     $tipo = $_GET["tipo"];
     $rdo = $carta->filterByTipo($tipo);
     $url = "&tipo=$tipo";
-
-// Si no se recibe ningún valor en los parámetros POST o GET, muestra la lista completa de artículos en la carta
-} else {
+} else {  // Si no se recibe ningún valor en los parámetros POST o GET, muestra la lista completa de artículos en la carta
     $rdo = $carta->printCarta();
     $url = "";
 }
 ?>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-
-    /**
-     *
-     * Actualiza la cantidad de un producto en el carrito a través de una petición AJAX
-     * @param {number} id_comida - El ID del producto a actualizar
-     * @param {number} cantidad - La nueva cantidad del producto
-     * @return {void}
-     */
-    function updateCantidad(id_comida, cantidad) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '../cart/actualizar_carrito.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                // Actualizar la página para reflejar los cambios
-                window.location.reload();
-            }
-        };
-        xhr.send('id_comida=' + id_comida + '&cantidad=' + cantidad);
-    }
-    function showCarritoFlotante() {
-        document.getElementById('carritoFlotante').style.top = "70px";
-    }
-    function closeCarritoFlotante() {
-        document.getElementById('carritoFlotante').style.top = "150vh";
-    }
-    $(document).ready(function () {
-        $('[data-toggle="popover"]').popover();
-    });
-</script>
 <head>
     <title>Carta</title>
 </head>
@@ -104,7 +71,7 @@ if (isset($_POST['dato'])) {
             <h3 class="fw-bold">Alérgenos</h3>
         </div>
         <div class="card-body">
-            <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
+            <form action="/proyecto/backend/carta/index_carta.php<?php echo isset($_GET['tipo']) ? '?tipo=' . $_GET['tipo'] : ''; ?>" method="POST">
                 <div class="text-center">
                     <label class="checkeable">
                         <input type="checkbox" name="dato[]" value="2">
@@ -222,7 +189,8 @@ if (isset($_POST['dato'])) {
                 </tbody>
             </table>
             <div class="d-flex justify-content-around mb-3" id="totalFixed">
-                <a href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "index_carrito.php"; ?>'><button type='button' class='btn btn-outline-success'>Realizar Compra</button></a>
+                <a href='<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "index_carrito.php"; ?>'>
+                    <button type='button' class='btn btn-outline-success'>Realizar Compra</button></a>
                 <h4>Total: <?php echo $carrito->getTotalPrice($array_carrito) ?> </h4>
             </div>
         </div>
@@ -323,7 +291,8 @@ if (isset($_POST['dato'])) {
             }
         }
         ?>
-    <!--</div>-->
-</div>
-<?php
-require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");
+        <!--</div>-->
+    </div>
+    <?php
+    require(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php");
+    

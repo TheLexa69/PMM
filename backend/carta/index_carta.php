@@ -215,7 +215,7 @@ if (isset($_POST['dato'])) {// Si se recibe un valor en el parámetro POST llama
                         <?php } else { ?>
                             <img src="../imagenes/imgProductos/defecto.jpg" alt="Card image cap" class="card-img rounded" style="object-fit: cover; width: 100%; height: 200px;">
                         <?php } ?>
-                        <div class="card-body text-center lh-sm">
+                        <div class="card-body text-center lh-sm d-flex flex-column justify-content-between">
                             <h4 class="nombre-producto"><?php echo $fila[0] ?></h4>
                             <div class="text-center">
                                 <p>Descripción:
@@ -227,21 +227,21 @@ if (isset($_POST['dato'])) {// Si se recibe un valor en el parámetro POST llama
                                     </a>
                                 </p>
                                 <h5 class="precio-producto"> Precio: <?php echo number_format($fila[3], 2, '.', '') ?> €</h5>
-                                <form method="post" action="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "agregar_carrito.php?cod=" . $fila[6] . $url; ?>">
-                                    <label for="cantidad">Cantidad:</label>
-                                    <select id="cantidad" name="cantidad" style="margin-bottom: 5px"">
-                                        <?php
-                                        for ($i = 1; $i <= 15; $i++) {
-                                            echo '<option value="' . $i . '">' . $i . '</option>';
-                                        }
-                                        ?>
-                                    </select>
-                                    <div class="col-md-4 d-flex mt-2" id="botonCompra">
-                                        <!-- if session rol = admin button editar, deshabilitar -->
-                                        <button class="btn-add-cart btn btn-success" id="compra" type="submit">Añadir</button>
-                                    </div>
-                                </form>
                             </div>
+                            <form method="post" action="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "agregar_carrito.php?cod=" . $fila[6] . $url; ?>">
+                                <label for="cantidad">Cantidad:</label>
+                                <select id="cantidad" name="cantidad" style="margin-bottom: 5px"">
+                                    <?php
+                                    for ($i = 1; $i <= 15; $i++) {
+                                        echo '<option value="' . $i . '">' . $i . '</option>';
+                                    }
+                                    ?>
+                                </select>
+                                <div class="col-md-4 d-flex mt-2" id="botonCompra">
+                                    <!-- if session rol = admin button editar, deshabilitar -->
+                                    <button class="btn-add-cart btn btn-success" id="compra" type="submit">Añadir</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -257,9 +257,9 @@ if (isset($_POST['dato'])) {// Si se recibe un valor en el parámetro POST llama
                         <?php } else { ?>
                             <img src="../imagenes/imgProductos/defecto.jpg" alt="Card image cap" class="card-img rounded" style="object-fit: cover; width: 100%; height: 200px;">
                         <?php } ?>
-                        <div class="card-body text-center lh-sm">
-                            <h4 class="nombre-producto"><?php echo $fila[0] ?></h4>
+                        <div class="card-body text-center lh-sm d-flex flex-column justify-content-between">
                             <div class="text-center">
+                                <h4 class="nombre-producto"><?php echo $fila[0] ?></h4>
                                 <p>Descripción:
                                     <a href="#" onclick="event.preventDefault();" title="<?php echo $fila[1] ?>" data-toggle="popover" data-trigger="focus" data-content="Click anywhere in the document to close this popover">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
@@ -269,21 +269,21 @@ if (isset($_POST['dato'])) {// Si se recibe un valor en el parámetro POST llama
                                     </a>
                                 </p>
                                 <h5 class="precio-producto"> Precio: <?php echo number_format($fila[3], 2, '.', '') ?> €</h5>
-                                <form method="post" action="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "agregar_carrito.php?cod=" . $fila[6] . $url; ?>">
-                                    <label for="cantidad">Cantidad:</label>
-                                    <select id="cantidad" name="cantidad" style="margin-bottom: 5px"">
-                                        <?php
-                                        for ($i = 1; $i <= 15; $i++) {
-                                            echo '<option value="' . $i . '">' . $i . '</option>';
-                                        }
-                                        ?>
-                                    </select>
-                                    <div class="col-md-4 d-flex mt-2" id="botonCompra">
-                                        <!-- if session rol = admin button editar, deshabilitar -->
-                                        <button class="btn-add-cart btn btn-success" id="compra" type="submit">Añadir</button>
-                                    </div>
-                                </form>
                             </div>
+                            <form method="post" action="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "agregar_carrito.php?cod=" . $fila[6] . $url; ?>">
+                                <label for="cantidad">Cantidad:</label>
+                                <select id="cantidad" name="cantidad" style="margin-bottom: 5px"">
+                                    <?php
+                                    for ($i = 1; $i <= 15; $i++) {
+                                        echo '<option value="' . $i . '">' . $i . '</option>';
+                                    }
+                                    ?>
+                                </select>
+                                <div class="col-md-4 d-flex mt-2" id="botonCompra">
+                                    <!-- if session rol = admin button editar, deshabilitar -->
+                                    <button class="btn-add-cart btn btn-success" id="compra" type="submit">Añadir</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

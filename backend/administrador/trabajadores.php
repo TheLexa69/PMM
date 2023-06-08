@@ -27,12 +27,16 @@ $indice_primer_elemento = ($pagina_actual - 1) * $por_pagina;
 $total_paginas = ceil($consulta->obtenerNumTrabajadores() / $por_pagina);
 
 if (isset($_POST["validar"])) {
-      $_POST['nombre'];
+      
     if (!empty($_POST['nombre'])) {
           $nombre = trim($_POST['nombre']);
+          $_SESSION['nombre_t'] = $nombre;
+    } else {
+        $_SESSION['nombre_t'] = "";
     }
     if (!empty($_POST['opcion'])) {
         $opcion = $_POST['opcion'];
+        $_SESSION['opcion'] = $opcion;
     }
     if (!empty($_POST['orden'])) {
         $orden = $_POST['orden'];
@@ -40,8 +44,8 @@ if (isset($_POST["validar"])) {
         
     }
 }
-$nombre = (isset($nombre)) ? $nombre :"";
-$opcion = (isset($opcion)) ? $opcion :"";
+$nombre = (isset($_SESSION['nombre_t'])) ? $_SESSION['nombre_t'] :"";
+$opcion = (isset($_SESSION['opcion'])) ? $_SESSION['opcion'] :"";
 $orden = (isset($_SESSION["orden"])) ? $_SESSION["orden"] : false;
 
 $fila = $consulta->filtradoTrabajadores($indice_primer_elemento, $por_pagina, $nombre, $opcion, $orden);

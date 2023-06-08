@@ -16,7 +16,7 @@ class FormulariosAdministrador {
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">Panel administrador.</h5>
-                    <p class="card-text">Aqui podrás añadir trabajadores o listarlos, modificar productos o añadirlos, ver las reservas y mucho más.</p>
+                    <p class="card-text">Aquí podrás añadir trabajadores o listarlos, modificar productos o añadirlos, ver las reservas y mucho más.</p>
                     <hr>
                     <div class="d-flex flex-wrap justify-content-center pt-2">
                         <a href='altaTrabajador.php'><input type='button' class='btn btn-outline-success me-1 mb-2' value='Añadir Trabajador'></a>
@@ -189,7 +189,8 @@ class FormulariosAdministrador {
                             }
                             ?> >  
                             <label for="v">Ordenados por:</label> 
-                            <select name="opcion" class="form-select mt-2">            
+                            <select name="opcion" class="form-select mt-2"> 
+                                <option value="">-Seleccionar- </option>
                                 <option value="fecha">Fecha ultimo login</option> 
                                 <option value="nombre">Nombre</option> 
                                 <option value="id_rol">Privilegios</option> 
@@ -333,7 +334,6 @@ class FormulariosAdministrador {
                                                 }
                                             }
                                             ?>
-
                                         </select>
                                     </td>
                                 </tr>

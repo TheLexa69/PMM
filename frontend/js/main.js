@@ -6,9 +6,6 @@ document.querySelectorAll(".nav-link").forEach((link) => {
     }
 });
 
-//var mensajeDiv2 = document.getElementById('cookie');
-//mensajeDiv2.style.top = '-20%';
-
 /*============================= NURIA ==================================*/
 /**
  *
@@ -19,7 +16,7 @@ document.querySelectorAll(".nav-link").forEach((link) => {
  */
 function updateCantidad(id_comida, cantidad) {
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'actualizar_carrito.php', true);
+    xhr.open('POST', '../cart/actualizar_carrito.php', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = () => {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -29,6 +26,15 @@ function updateCantidad(id_comida, cantidad) {
     };
     xhr.send('id_comida=' + id_comida + '&cantidad=' + cantidad);
 }
+function showCarritoFlotante() {
+    document.getElementById('carritoFlotante').style.top = "70px";
+}
+function closeCarritoFlotante() {
+    document.getElementById('carritoFlotante').style.top = "150vh";
+}
+$(document).ready(function () {
+    $('[data-toggle="popover"]').popover();
+});
 
 document.addEventListener("DOMContentLoaded", function (event) {
     // Obtener el botón de realizar compra
@@ -222,24 +228,18 @@ function showHideNav() {
  * @return {none}
  */
 function changeTheme() {
-    if (document.body.style.background === "url(\"https://dl.dropboxusercontent.com/s/e2z1cqj7jc7q7j6/leonardo3.jpg\") no-repeat") {
-        document.body.style.background = "url(\"https://dl.dropboxusercontent.com/s/jr28g3sfwre6dkf/leonardo2.jpg\") no-repeat";
-        document.body.style.backgroundSize = "cover";
-        document.body.style.backgroundPosition = "center center";
-        document.body.style.backgAttachment = 'fixed';
-        /*const elements = document.querySelectorAll('.bg-light');
-         console.log(elements);
-         elements.forEach(element => {
-         element.classList.remove('bg-light');
-         element.classList.add('bg-dark');
-         });*/
+    var body = document.querySelector('body');
+    var currentBackground = getComputedStyle(body).getPropertyValue('background-image');
+    var newBackground;
+
+    if (currentBackground === 'url("https://dl.dropboxusercontent.com/s/e2z1cqj7jc7q7j6/leonardo3.jpg")') {
+        newBackground = 'url("https://dl.dropboxusercontent.com/s/jr28g3sfwre6dkf/leonardo2.jpg")';
     } else {
-        document.body.style.background = "url(\"https://dl.dropboxusercontent.com/s/e2z1cqj7jc7q7j6/leonardo3.jpg\") no-repeat";
-        /*const elements = document.querySelectorAll('.bg-dark');
-         console.log(elements);
-         elements.forEach(element => {
-         element.classList.remove('bg-dark');
-         element.classList.add('bg-light');
-         });*/
+        newBackground = 'url("https://dl.dropboxusercontent.com/s/e2z1cqj7jc7q7j6/leonardo3.jpg")';
     }
+
+    body.style.backgroundImage = newBackground;
+    body.style.backgroundSize = 'cover';
+    body.style.backgroundPosition = 'center center';
+    body.style.backgroundAttachment = 'fixed';
 }

@@ -71,7 +71,7 @@
     <div id = "medals">Medallas conseguidas: <span id = "medals-count-c">0</span></div>
     <div class = "mt-2">
         <span class = "fw-bold">Ingredientes:</span>
-        <div id = "cahopo-style"></div>
+        <div id = "cachopo-style"></div>
     </div>
     <canvas class = "rounded shadow-lg my-2" id = "canvas-c" width = "300" height = "200"></canvas>
     <div class = "fw-bold pb-1" id = "message-c"></div>
@@ -93,7 +93,7 @@
         const canvas = document.getElementById("canvas-c");
         const ctx = canvas.getContext("2d");
 
-        const cachopoStyle = document.getElementById("cahopo-style");
+        const cachopoStyle = document.getElementById("cachopo-style");
         const message = document.getElementById("message-c");
         const deleteIngredientButton = document.getElementById("delete-ingredient-c");
         const addIngredientButtons = document.getElementsByClassName("add-ingredient-c");
@@ -129,6 +129,7 @@
 
         function clearCanvas() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            document.getElementById("cachopo-style").style.color = "black";
         }
 
         function drawCachopo() {
@@ -149,119 +150,104 @@
             ctx.strokeStyle = "rgb(0, 0, 0)";
             ctx.fillStyle = "rgba(191, 191, 193)";
             ctx.beginPath();
-            ctx.roundRect(canvas.width / 5, yPos, 125, 5, 10);
+            ctx.roundRect(canvas.width / 4, yPos, canvas.width / 2, 5, 10);
             ctx.stroke();
             ctx.fill();
         }
 
         function drawIngredientsC(ingredient, yPos) {
-            console.log('dib' + ingredient)
+            let contador = 0;
 
             switch (ingredient) {
                 case "Pan Rallado":
-                    ctx.strokeStyle = "rgb(0, 0, 0)";
-                    ctx.fillStyle = "rgba(238,192,123)";
-                    ctx.beginPath();
-                    ctx.roundRect(canvas.width / 4, yPos, 100, 20, 10);
-                    ctx.stroke();
-                    ctx.fill();
-
-                    return 20;
+                    for (var i = 0, max = 10; i < max; i++) {
+                        ctx.strokeStyle = "rgb(0, 0, 0)";
+                        ctx.fillStyle = "rgb(238, 192, 123)";
+                        ctx.beginPath();
+                        ctx.roundRect((canvas.width / 3) + contador, yPos, 10, 5, 10);
+                        ctx.stroke();
+                        ctx.fill();
+                        contador += 10;
+                    }
+                    return 4;
                     break;
                 case "Carne":
                     ctx.strokeStyle = "rgb(0, 0, 0)";
-                    ctx.fillStyle = "rgba(105,61,61)";
+                    ctx.fillStyle = "rgb(105, 61, 61)";
                     ctx.beginPath();
-                    ctx.roundRect(canvas.width / 4, yPos, 100, 20, 10);
+                    ctx.roundRect(canvas.width / 3, yPos, 100, 10, 10);
                     ctx.stroke();
                     ctx.fill();
-                    return 20;
+                    return 10;
                     break;
                 case "Queso":
                     ctx.strokeStyle = "rgb(0, 0, 0)";
-                    ctx.fillStyle = "rgba(255, 255, 0)";
+                    ctx.fillStyle = "rgb(255, 255, 0)";
                     ctx.beginPath();
-                    ctx.roundRect(canvas.width / 4, yPos, 100, 5, 10);
+                    ctx.roundRect(canvas.width / 3, yPos, 100, 5, 10);
                     ctx.stroke();
                     ctx.fill();
                     return 5;
                     break;
                 case "Jamón Serrano":
                     ctx.strokeStyle = "rgb(0, 0, 0)";
-                    ctx.fillStyle = "rgba(141, 176, 7)";
+                    ctx.fillStyle = "rgb(255, 184, 121)";
                     ctx.beginPath();
-                    ctx.roundRect(canvas.width / 4, yPos, 100, 10, 10);
+                    ctx.roundRect(canvas.width / 3, yPos, 100, 5, 10);
                     ctx.stroke();
                     ctx.fill();
-                    return 10;
+                    return 5;
                     break;
                 case "Salsa BBQ":
-                    ctx.strokeStyle = "rgb(0, 0, 0)";
-                    ctx.fillStyle = "rgba(255, 83, 48)";
-                    ctx.beginPath();
-                    ctx.roundRect((canvas.width / 4) + 5, yPos, 100 / 2, 10, 10);
-                    ctx.stroke();
-                    ctx.fill();
+                    contador = 0;
+                    for (var i = 0, max = 2; i < max; i++) {
+                        ctx.strokeStyle = "rgb(0, 0, 0)";
+                        ctx.fillStyle = "rgb(192, 57, 43)";
+                        ctx.beginPath();
+                        ctx.roundRect((canvas.width / 3) + contador, yPos, 100 / 2, 10, 10);
+                        ctx.stroke();
+                        ctx.fill();
+                        contador += 100 / 2;
+                    }
 
-                    ctx.strokeStyle = "rgb(0, 0, 0)";
-                    ctx.fillStyle = "rgba(255, 83, 48)";
-                    ctx.beginPath();
-                    ctx.roundRect((canvas.width / 2) - 5, yPos, 100 / 2, 10, 10);
-                    ctx.stroke();
-                    ctx.fill();
                     return 10;
                     break;
                 case "Cebolla Caramelizada":
-                    ctx.strokeStyle = "rgb(0, 0, 0)";
-                    ctx.fillStyle = "rgba(177, 149, 169)";
-                    ctx.beginPath();
-                    ctx.roundRect((canvas.width / 4) + 5, yPos, 100 / 3, 10, 10);
-                    ctx.stroke();
-                    ctx.fill();
-                    ctx.strokeStyle = "rgb(0, 0, 0)";
-                    ctx.fillStyle = "rgba(177, 149, 169)";
-                    ctx.beginPath();
-                    ctx.roundRect((canvas.width / 3) + 15, yPos, 100 / 3, 10, 10);
-                    ctx.stroke();
-                    ctx.fill();
-                    ctx.strokeStyle = "rgb(0, 0, 0)";
-                    ctx.fillStyle = "rgba(177, 149, 169)";
-                    ctx.beginPath();
-                    ctx.roundRect(canvas.width / 1.8, yPos, 100 / 3, 10, 10);
-                    ctx.stroke();
-                    ctx.fill();
+                    contador = 100 / 3;
+                    for (var i = 0, max = 3; i < max; i++) {
+                        ctx.strokeStyle = "rgb(0, 0, 0)";
+                        ctx.fillStyle = "rgb(160, 82, 45)";
+                        ctx.beginPath();
+                        ctx.roundRect((canvas.width / 4) + contador, yPos, 100 / 3, 10, 10);
+                        ctx.stroke();
+                        ctx.fill();
+                        contador += 100 / 4;
+                    }
+
+
                     return 10;
                     break;
                 case "Setas":
-                    ctx.strokeStyle = "rgb(0, 0, 0)";
-                    ctx.fillStyle = "rgba(177, 149, 169)";
-                    ctx.beginPath();
-                    ctx.roundRect((canvas.width / 4) + 5, yPos, 100 / 3, 10, 10);
-                    ctx.stroke();
-                    ctx.fill();
-                    ctx.strokeStyle = "rgb(0, 0, 0)";
-                    ctx.fillStyle = "rgba(177, 149, 169)";
-                    ctx.beginPath();
-                    ctx.roundRect((canvas.width / 3) + 15, yPos, 100 / 3, 10, 10);
-                    ctx.stroke();
-                    ctx.fill();
-                    ctx.strokeStyle = "rgb(0, 0, 0)";
-                    ctx.fillStyle = "rgba(177, 149, 169)";
-                    ctx.beginPath();
-                    ctx.roundRect(canvas.width / 1.8, yPos, 100 / 3, 10, 10);
-                    ctx.stroke();
-                    ctx.fill();
+
+                    contador = 100 / 3;
+                    for (var i = 0, max = 3; i < max; i++) {
+                        ctx.strokeStyle = "rgb(0, 0, 0)";
+                        ctx.fillStyle = "rgb(139, 69, 19)";
+                        ctx.beginPath();
+                        ctx.roundRect((canvas.width / 4) + contador, yPos, 100 / 3, 10, 10);
+                        ctx.stroke();
+                        ctx.fill();
+                        contador += 100 / 4;
+                    }
                     return 10;
                     break;
                 default:
                     return "Perdón, algo ha fallado.";
             }
+
         }
 
         function checkCachopo() {
-            console.log(JSON.stringify(cachopo))
-            console.log(JSON.stringify(cachopoStyleIndices.map(index => ingredients[index])))
-
             if (JSON.stringify(cachopo) === JSON.stringify(cachopoStyleIndices.map(index => ingredients[index]))) {
                 message.textContent = "¡Felicidades, has montado un cachopo!";
                 score++;
@@ -270,8 +256,8 @@
                     medalsEarned++;
                     showMedal(medalsEarned);
                     showConfetti();
-                    //alert('¡Felicidades, conseguiste una medalla!');
                 }
+                document.getElementById("cachopo-style").style.color = "rgba(141, 176, 7)";
                 setTimeout(() => {
                     resetGame();
                 }, 3000);

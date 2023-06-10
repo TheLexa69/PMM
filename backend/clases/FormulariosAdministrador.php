@@ -366,7 +366,7 @@ class FormulariosAdministrador {
             <?php
         }
 
-        public function htmlAgregarProducto($tipo, $subtipo, $alergenos, $mensaje = "") {
+        public function htmlAgregarProducto($tipo, $subtipo, $alergenos ) {
             ?>
             <div class="bg-light p-2 fs-5">
                 <a href="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "administrador" . DIRECTORY_SEPARATOR . "indexAdministrador.php"; ?>">Panel administrador</a> > Agregar Producto
@@ -378,15 +378,7 @@ class FormulariosAdministrador {
                     </div>
                     <div class="card-body">
                         <form enctype="multipart/form-data" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
-                            <div class="text-center">
-                                <h2>
-                                    <?php
-                                    if (isset($mensaje)) {
-                                        echo $mensaje;
-                                    }
-                                    ?>
-                                </h2>
-                            </div>
+                       
 
                             <div class="mt-3">
                                 <label for="c1" class="form-label">Nombre (*):</label>
@@ -399,7 +391,7 @@ class FormulariosAdministrador {
 
                                 <div class="mt-3">
                                     <label for="c2" class="form-label">Descripción:</label>
-                                    <input type="text" name="descri" class="form-control" id="c2" <?php
+                                    <input type="text" name="descri" required class="form-control" id="c2" <?php
                         if (!empty($_POST['descri'])) {
                             echo " value='" . $_POST['descri'] . "'";
                         }
@@ -426,18 +418,18 @@ class FormulariosAdministrador {
 
                                 <div class="mt-3">
                                     <label for="c5" class="form-label">Disponible desde (*):</label>
-                                    <input type=date name="desde" class="form-control"  pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}">
+                                    <input type=date name="desde"  required class="form-control"  pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}">
                                 </div>
 
                                 <div class="mt-3">
                                     <label for="c6" class="form-label">Disponible Hasta:</label>
-                                    <input type=date name="hasta" class="form-control" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}">
+                                    <input type=date name="hasta" required class="form-control" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}">
                                 </div>
 
                                 <div class="mt-3">
                                     <label for="c7" class="form-label">Precio (*):</label>             
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="precio" aria-label="Dollar amount (with dot and two decimal places)">
+                                        <input type="text" class="form-control" required name="precio" aria-label="Dollar amount (with dot and two decimal places)">
                                         <span class="input-group-text">€</span>
                                     </div>
                                 </div>
@@ -454,24 +446,24 @@ class FormulariosAdministrador {
                                     <p class="mb-1">Alérgenos:</p>
                                     <?php
                                     foreach ($alergenos as $id1 => $nombre) {
+                                        echo "<div class='form-check form-check-inline'>";
+                                            
                                         if ($id1 >= 0) {
-                                            ?>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value='<?php echo ucfirst($nombre["id_alergeno"]) ?>'>
+                                            ?> 
+                                                <input class="form-check-input" name="alergenos[]" type="checkbox" id="inlineCheckbox1" value='<?php echo ucfirst($nombre["id_alergeno"]) ?>'>
                                                 <label class="form-check-label" for="inlineCheckbox1"><?php echo ucfirst($nombre["nombre_alergeno"]) ?></label>
-                                            </div>
+                                          
                                             <?php
-                                        }
+                                        }echo   "</div>";
                                     }
                                     ?>
                                 </div>
+                                
                                 <div class="mt-3">
                                     <label for="formFile" class="form-label">Imagen (*):</label>
-                                    <input class="form-control" name="imagen" type="file" id="formFile">
+                                    <input class="form-control" name="imagen[]" type="file" id="formFile">
                                 </div> 
-
-                                <p class="mt-3 text-center fst-italic">Por favor, asegúrese de completar todos los campos que lleven un asterisco (*) antes de enviar el formulario.</p>
-
+                                                                  
                                 <div class='mt-3 d-flex justify-content-center'>
                                     <div class="pe-2">
                                         <input type="submit" class='btn btn-outline-success' style='width: 100px' name="registro" value='Añadir'>
@@ -481,25 +473,7 @@ class FormulariosAdministrador {
                                         echo "<a href='indexAdministrador.php' id='cancel' name='cancel' style='width: 100px' class='btn btn-default btn-outline-danger'>Cancelar</a>";
                                     }
                                     ?>
-                                </div>
-
-                                <?php
-                                if (!empty($_POST['registro']) && $necesarios !== true) {
-                                    //Enseña los campos que faltan al usuario
-                                    $necesarios = str_replace('apellido1', 'primer apellido', $necesarios);
-                                    $necesarios = str_replace('nie', 'nie incorrecto', $necesarios);
-                                    $necesarios = str_replace('pasaporte', 'pasaporte o NIE', $necesarios);
-                                    $necesarios = str_replace('privilegios', 'privilegios', $necesarios);
-                                    $necesarios = str_replace('password', 'contraseña', $necesarios);
-                                    // $necesarios = str_replace('password2', 'confirmación de la contraseña',$necesarios);
-                                    $necesarios = str_replace('email', 'correo', $necesarios);
-                                    echo "<br><br><b style=color:red>Faltan campos obligatorios:</b> <br>$necesarios";
-                                }
-                                ?>
-
-
-
-
+                                </div> 
                                 </table>
                                 <div class="my-3 d-flex flex-wrap justify-content-evenly">
                                  <!--   <input type="hidden" name="id" value="<?php echo $id["id_comida"]; ?>"> -->
@@ -685,7 +659,7 @@ class FormulariosAdministrador {
                                     <th class=" d-sm-table-cell">Nombre</th>
                                     <th class=" d-sm-table-cell">Descripcion</th>
                                     <th class=" d-sm-table-cell">Tipo</th>
-                                    <th class=" d-sm-table-cell">Subtipo</th>
+                                <!--    <th class=" d-sm-table-cell">Subtipo</th>  -->
                                     <th class=" d-sm-table-cell">Disponible desde</th>
                                     <th class=" d-sm-table-cell">Disponible hasta</th>
                                     <th class=" d-sm-table-cell">Precio</th>
@@ -713,7 +687,7 @@ class FormulariosAdministrador {
                                     . "<td class='text-center'>" . $a["nombre"] . "</td> "
                                     . "<td class='text-center'>" . $a["descripcion"] . "</td> "
                                     . "<td class=' d-sm-table-cell text-center'>" . $a["nombre_tipo"] . "</td>"
-                                    . "<td class=' d-sm-table-cell text-center'>" . $a["nombre_subtipo"] . "</td> "
+                                 //   . "<td class=' d-sm-table-cell text-center'>" . $a["nombre_subtipo"] . "</td> "
                                     . "<td class=' d-sm-table-cell text-center'>" . $a["fecha_inicio"] . "</td>"
                                     . "<td class=' d-sm-table-cell text-center'>" . $a["fecha_fin"] . "</td>"
                                     . "<td class=' d-sm-table-cell text-center'>" . $a["precio"] . " €" . "</td>"
@@ -1015,7 +989,7 @@ class FormulariosAdministrador {
                             </table>
                             <div class="mt-3 text-center pb-3"> 
                                 <a href='indexAdministrador.php'><input type='button' value='Volver a inicio' class="btn btn-outline-secondary"></a>
-                                <input class="btn btn-outline-success" type="submit" name="aceptar" value="Aceptar reservas selecionadas" >
+                                <input class="btn btn-outline-success" type="submit" name="aceptar" value="Aceptar pedidos pendientes" >
                             </div>
                         </form>
                     </div>

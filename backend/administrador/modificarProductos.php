@@ -15,6 +15,8 @@ $consulta = new consultasAdministrador($_SESSION['administrador'][1]);
 $funcion = new funcionesAdministrador;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET["codigo"])) {
+    
+    
     if (isset($_POST["id"])) {
         $_POST = $filtro->validarPost($_POST);
     }

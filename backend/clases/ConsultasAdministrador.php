@@ -4,14 +4,17 @@ namespace clases;
 
 use \PDO;
 use \PDOException;
+use \clases\TraitImagen as GuardaImagen;
 
 class ConsultasAdministrador extends Conexion {
+
+    use GuardaImagen;
 
     /**
      * Método contruct que al extender de la clase padre Conexión hereda
      * su constructor que es el puntero de conexión.
      */
-    public function __construct($rol=5) {
+    public function __construct($rol = 5) {
         parent::__construct($rol);
     }
 
@@ -133,9 +136,9 @@ class ConsultasAdministrador extends Conexion {
     }
 
     /**
-    *  Devuelve un array con todos los roles de trabajadores registrados en la base de datos.
-    *  @return array El array con los roles de trabajadores.
-    *  @throws PDOException Si hay algún error al ejecutar la consulta SQL.
+     *  Devuelve un array con todos los roles de trabajadores registrados en la base de datos.
+     *  @return array El array con los roles de trabajadores.
+     *  @throws PDOException Si hay algún error al ejecutar la consulta SQL.
      */
     public function rolesTrabajadores() {
         try {
@@ -298,10 +301,10 @@ class ConsultasAdministrador extends Conexion {
         try {
             if (!empty($nombre) && empty($orden) && empty($opcion)) {
 
-                $sql2 = "select t.id_trabajador,t.nie_trabajador,t.pasaporte_trabajador,t.nombre,t.apellido1,t.apellido2,t.fecha,t.num_telef,t.estado_trabajador,t.trabajando,t.id_rol,r.nombre_rol from trabajador as t inner join roles as r on r.id_rol = t.id_rol  where nombre  LIKE '%" . $nombre ."%' LIMIT :paginaInicio, :cantidadResultados";
+                $sql2 = "select t.id_trabajador,t.nie_trabajador,t.pasaporte_trabajador,t.nombre,t.apellido1,t.apellido2,t.fecha,t.num_telef,t.estado_trabajador,t.trabajando,t.id_rol,r.nombre_rol from trabajador as t inner join roles as r on r.id_rol = t.id_rol  where nombre  LIKE '%" . $nombre . "%' LIMIT :paginaInicio, :cantidadResultados";
             } else if (!empty($nombre) && !empty($opcion) && empty($orden)) {
 
-                $sql2 = "select t.id_trabajador,t.nie_trabajador,t.pasaporte_trabajador,t.nombre,t.apellido1,t.apellido2,t.fecha,t.num_telef,t.estado_trabajador,t.trabajando,t.id_rol,r.nombre_rol from trabajador as t inner join roles as r on r.id_rol = t.id_rol  where nombre  LIKE '%" . $nombre ."%' ORDER BY $opcion  LIMIT :paginaInicio, :cantidadResultados";
+                $sql2 = "select t.id_trabajador,t.nie_trabajador,t.pasaporte_trabajador,t.nombre,t.apellido1,t.apellido2,t.fecha,t.num_telef,t.estado_trabajador,t.trabajando,t.id_rol,r.nombre_rol from trabajador as t inner join roles as r on r.id_rol = t.id_rol  where nombre  LIKE '%" . $nombre . "%' ORDER BY $opcion  LIMIT :paginaInicio, :cantidadResultados";
             } else if (empty($nombre) && !empty($opcion) && empty($orden)) {
 
                 $sql2 = "select t.id_trabajador,t.nie_trabajador,t.pasaporte_trabajador,t.nombre,t.apellido1,t.apellido2,t.fecha,t.num_telef,t.estado_trabajador,t.trabajando,t.id_rol,r.nombre_rol from trabajador as t inner join roles as r on r.id_rol = t.id_rol  ORDER BY $opcion LIMIT :paginaInicio, :cantidadResultados";
@@ -310,7 +313,7 @@ class ConsultasAdministrador extends Conexion {
                 $sql2 = "select t.id_trabajador,t.nie_trabajador,t.pasaporte_trabajador,t.nombre,t.apellido1,t.apellido2,t.fecha,t.num_telef,t.estado_trabajador,t.trabajando,t.id_rol,r.nombre_rol from trabajador as t inner join roles as r on r.id_rol = t.id_rol  ORDER BY $opcion $orden LIMIT :paginaInicio, :cantidadResultados";
             } elseif (!empty($nombre) && !empty($opcion) && !empty($orden)) {
 
-                $sql2 = "select t.id_trabajador,t.nie_trabajador,t.pasaporte_trabajador,t.nombre,t.apellido1,t.apellido2,t.fecha,t.num_telef,t.estado_trabajador,t.trabajando,t.id_rol,r.nombre_rol from trabajador as t inner join roles as r on r.id_rol = t.id_rol   where nombre  LIKE '%" . $nombre ."%' ORDER BY $opcion $orden  LIMIT :paginaInicio, :cantidadResultados";
+                $sql2 = "select t.id_trabajador,t.nie_trabajador,t.pasaporte_trabajador,t.nombre,t.apellido1,t.apellido2,t.fecha,t.num_telef,t.estado_trabajador,t.trabajando,t.id_rol,r.nombre_rol from trabajador as t inner join roles as r on r.id_rol = t.id_rol   where nombre  LIKE '%" . $nombre . "%' ORDER BY $opcion $orden  LIMIT :paginaInicio, :cantidadResultados";
             } else {
 
                 $sql2 = "select t.id_trabajador,t.nie_trabajador,t.pasaporte_trabajador,t.nombre,t.apellido1,t.apellido2,t.fecha,t.num_telef,t.estado_trabajador,t.trabajando,t.id_rol,r.nombre_rol from trabajador  as t inner join roles as r on r.id_rol = t.id_rol  LIMIT :paginaInicio, :cantidadResultados";
@@ -493,21 +496,21 @@ class ConsultasAdministrador extends Conexion {
      */
     public function filtradoProductos($indice_primer_elemento, $por_pagina, $nombre, $opcion, $orden) {
 
-        try {        
-            var_dump($_SESSION);
+        try {
+            //   var_dump($_SESSION);
             if (!empty($nombre) && empty($orden) && empty($opcion)) {
                 $sql2 = "SELECT c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo 
                 FROM carta_comida  AS c 
                 INNER JOIN tipo AS t ON c.tipo = t.id_tipo 
                 LEFT JOIN subtipo as e on c.subtipo = e.id_subtipo
-                WHERE nombre  LIKE '%" . $nombre ."%' LIMIT $indice_primer_elemento, $por_pagina";
+                WHERE nombre  LIKE '%" . $nombre . "%' LIMIT $indice_primer_elemento, $por_pagina";
             } else if (!empty($nombre) && !empty($opcion) && empty($orden)) {
 
                 $sql2 = "SELECT c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo 
                 FROM carta_comida  as c 
                 inner join tipo as t on c.tipo = t.id_tipo 
                 LEFT JOIN subtipo as e on c.subtipo = e.id_subtipo
-                WHERE nombre  LIKE '%" . $nombre ."%' ORDER BY $opcion  LIMIT $indice_primer_elemento, $por_pagina";
+                WHERE nombre  LIKE '%" . $nombre . "%' ORDER BY $opcion  LIMIT $indice_primer_elemento, $por_pagina";
             } else if (empty($nombre) && !empty($opcion) && empty($orden)) {
 
                 $sql2 = "SELECT c.id_comida,c.nombre,c.descripcion,c.tipo,c.subtipo,c.fecha_inicio ,c.fecha_fin, c.precio,c.disponible,c.img, t.nombre_tipo 
@@ -528,7 +531,7 @@ class ConsultasAdministrador extends Conexion {
                 from carta_comida  as c 
                 inner join tipo as t on c.tipo = t.id_tipo 
                 LEFT JOIN subtipo as e on c.subtipo = e.id_subtipo
-                WHERE nombre  LIKE '%" . $nombre ."%' 
+                WHERE nombre  LIKE '%" . $nombre . "%' 
                 LEFT JOIN subtipo as e on c.subtipo = e.id_subtipo
                 ORDER BY $opcion $orden  LIMIT $indice_primer_elemento, $por_pagina";
             } else {
@@ -541,7 +544,6 @@ class ConsultasAdministrador extends Conexion {
 
             $stmt = $this->conexion->prepare($sql2);
             // if (!empty($nombre)) {
-
             //     $stmt->bindValue(':nombre', $nombre, PDO::PARAM_STR);
             // }
             $stmt->execute();
@@ -567,7 +569,6 @@ class ConsultasAdministrador extends Conexion {
         return $num[0];
     }
 
-
     /**
      * Método que elimina el producto que tenga ese id.
      * @param $id
@@ -588,7 +589,7 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-    
+
     /**
      * Método que muestra todos los tipos de comidas que hay en la carta de comida.
      * @return $$tipo.
@@ -609,7 +610,7 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-    
+
     /**
      * Método que muestra todos los subtipos de comidas que hay en la carta de comida.
      * @return $$tipo.
@@ -630,8 +631,8 @@ class ConsultasAdministrador extends Conexion {
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-    
-     /**
+
+    /**
      * Método para añadir los datos de un trabajador, las variables son referenciadas al dato.
      * @param type $nombre
      * @param type $apellido1
@@ -644,31 +645,64 @@ class ConsultasAdministrador extends Conexion {
      * @param type $nie             
      * @param type $pasaporte
      */
-    public function agregarProducto($nombre, $desc, $tipo, $subtipo, $fechaInicio, $fechaFin, $precio, $disponible, $alergenos, $imagen) {
+    public function agregarProducto($datos, $imagen) {
+
         try {
-            $sql = "INSERT INTO trabajador (nombre,apellido1 ,apellido2,contraseña,correo,num_telef, id_rol,fecha,nie_trabajador,pasaporte_trabajador) VALUES (:nombre,:apellido1,:apellido2,:contrasena,:correo,:num_telef,:rol,:fecha,:nie,:pasaporte)";
+
+            $sql = "insert carta_comida  set nombre=:nombre, descripcion=:descripcion, tipo=:tipo, subtipo=:subtipo, fecha_inicio=:desde, fecha_fin=:hasta, precio=:precio, disponible=:disponible ";
+            $sql2 = "update carta_comida  set img=:img where id_comida=:id";
+            $sql3 = "insert carta_alergenos set id_alergeno=?, id_comida=?";
+
+            $this->conexion->beginTransaction();
 
             $stmt = $this->conexion->prepare($sql);
 
-            $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR, 25);
-            $stmt->bindParam(':apellido1', $desc, PDO::PARAM_STR, 25);
-            $stmt->bindParam(':apellido2', $tipo, PDO::PARAM_STR, 25);
-            $stmt->bindParam(':contrasena', $subtipo, PDO::PARAM_STR);
-            $stmt->bindParam(':correo', $fechaInicio, PDO::PARAM_STR, 50);
-            $stmt->bindParam(':num_telef', $fechaFin, PDO::PARAM_STR);
-            $stmt->bindParam(':rol', $precio, PDO::PARAM_STR);
-            $stmt->bindParam(':fecha', $disponible, PDO::PARAM_STR);
-            $stmt->bindParam(':nie', $alergenos, PDO::PARAM_STR);
-            $stmt->bindParam(':pasaporte', $imagen, PDO::PARAM_STR);
+            $stmt->bindParam(':nombre', $datos['nombre'], PDO::PARAM_STR);
+            $stmt->bindParam(':descripcion', $datos['descri'], PDO::PARAM_STR);
+            $stmt->bindParam(':tipo', $datos['tipo'], PDO::PARAM_INT);
+            $stmt->bindParam(':subtipo', $datos['subtipo'], PDO::PARAM_INT);
+            $stmt->bindParam(':desde', $datos['desde'], PDO::PARAM_STR);
+            $stmt->bindParam(':hasta', $datos['hasta'], PDO::PARAM_STR);
+            $stmt->bindParam(':precio', $datos['precio'], PDO::PARAM_STR);
+            $stmt->bindParam(':disponible', $datos['disponible'], PDO::PARAM_STR);
 
             $stmt->execute();
+
+            $ultimoID = $this->conexion->lastInsertId();
+
+            $img = $this->anadirImagenProductos($ultimoID, $imagen);
+
+            if (!$img == 0) {
+
+                $img = '../imagenes/imgProductos/' . $img;
+
+                $stmt = $this->conexion->prepare($sql2);
+
+                $stmt->bindParam(':img', $img, PDO::PARAM_STR);
+                $stmt->bindParam(':id', $ultimoID, PDO::PARAM_STR);
+                $stmt->execute();
+            }
+
+            $stmt = $this->conexion->prepare($sql3);
+            foreach ($datos['alergenos']as $key => $alergeno) {
+
+
+                $stmt->bindValue(1, $alergeno, \PDO::PARAM_INT);
+                $stmt->bindValue(2, $ultimoID, \PDO::PARAM_INT);
+                $stmt->execute();
+            }
+
+            $this->conexion->commit();
+            return true;
             unset($stmt);
             unset($this->conexion);
         } catch (PDOException $e) {
+            $this->conexion->rollBack();
+
             die("ERROR: " . $e->getMessage() . "<br>" . $e->getCode());
         }
     }
-    
+
     /**
      * Método que muestra todos los subtipos de comidas que hay en la carta de comida.
      * @return $$tipo.

@@ -5,7 +5,7 @@ namespace clases;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require"../vendor/autoload.php";
+require "../vendor/autoload.php";
 
 class Mails {
 
@@ -152,6 +152,36 @@ class Mails {
             $mail->isHTML(true);
             $mail->Subject = 'Solicitud de reserva';
             $mail->Body = $mensaje;
+
+            $mail->send();
+
+            //echo 'Mensaje enviado correctamente';
+        } catch (Exception $e) {
+
+            echo "Mensaje no enviado Error : {$mail->ErrorInfo}";
+        }
+    }
+    
+    
+    public function mailContacto($mensajeContacto) {
+        //Create an instance; passing `true` enables exceptions
+        $mail = new PHPMailer(true);
+
+        try {
+            $mail->isSMTP();
+            $mail->Host = $this->host;
+            $mail->SMTPAuth = true;
+            $mail->Username = $this->mailRestaurante;
+            $mail->Password = $this->clave;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port = 465;               //587  465                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+            $mail->setFrom($this->mailRestaurante, 'NovoLuaChea');
+            $mail->addAddress($this->mailRestaurante);
+
+            $mail->isHTML(true);
+            $mail->Subject = 'Solicitud de reserva';
+            $mail->Body = 'Nombre: '.$mensajeContacto["nombre"]."<br>"."Correo: ".$mensajeContacto["correo"]."<br>"."Asunto: ".$mensajeContacto["asunto"]."<br>"."texto: ".$mensajeContacto["texto"];
 
             $mail->send();
 

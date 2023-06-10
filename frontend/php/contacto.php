@@ -1,6 +1,7 @@
 <?php
 session_start();
 require (dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "nav.php");
+  
 ?>
 <head>
     <title>Contacto</title>
@@ -30,18 +31,18 @@ require (dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPA
                     </div>
                 </div>
                 <div class="col-6 ps-5 d-flex justify-content-center align-items-center contact-form">
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"  method="POST">
+                    <form action="../../backend/administrador/correo.php"  method="POST">
                         <div class="form-group">
-                            <input type="text" name="nombre" id="nombre" class="form-control" size="100" placeholder="Nombre (*)" required>
+                            <input type="text" name="nombre"  class="form-control" size="100" placeholder="Nombre (*)" required>
                         </div>
                         <div class="form-group mt-3">
-                            <input type="text" name="nombre" class="form-control" placeholder="Correo electrónico (*)" required>
+                            <input type="text" name="correo" class="form-control" placeholder="Correo electrónico (*)" required>
                         </div>
                         <div class="form-group mt-3">
-                            <input type="text" name="nombre" class="form-control" placeholder="Asunto (*)" required>
+                            <input type="text" name="asunto" class="form-control" placeholder="Asunto (*)" required>
                         </div>
                         <div class="form-group mt-3">
-                            <textarea class="form-control" placeholder="Mensaje (*)" rows="3" required></textarea>
+                            <textarea class="form-control" name="texto" placeholder="Mensaje (*)" rows="3" required></textarea>
                         </div>
 
                         <div class='mt-3 d-flex justify-content-center'>
@@ -57,4 +58,4 @@ require (dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPA
 </div>
 
 
-<?php require (dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php"); ?>
+<?php  require (dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "footer.php"); ?>

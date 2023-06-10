@@ -9,8 +9,8 @@ define('DS', DIRECTORY_SEPARATOR);
  */
 function autoloadClases($clase) {
     //   echo $fichero = __DIR__ . DS."backend".DS.str_replace('/','\\', DS, $clase). '.php';
-    $fichero = __DIR__ . DS . "backend" . DS . str_replace('\\', DS, $clase) . '.php';
-
+     $fichero = __DIR__ . DS . "backend" . DS . str_replace('\\', DS, $clase) . '.php';
+ 
     if (file_exists($fichero)) {
         include $fichero;
     } else {

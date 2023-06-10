@@ -16,12 +16,12 @@ class FuncionesAdministrador {
     public function anadirImagenProducto($id, $imagen) {
         try {
             $_FILES['imagen'] = $imagen;
-
+                    
             if (!isset($_FILES['imagen'])) {
                 throw new RuntimeException('Se produjo un error en el envío del fichero.');
             }
             $archivos = $_FILES['imagen'];
-
+         
             foreach ($archivos['name'] as $indice => $archivo) {
                 // Comprobamos el código de produce, si es OK se procesa el archivo
                 switch ($archivos['error'][$indice]) {

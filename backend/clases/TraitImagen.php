@@ -1,27 +1,26 @@
 <?php
 
-namespace clases;
+ namespace clases;
 
 use \RuntimeException;
 
-class FuncionesUsuario {
-
+trait TraitImagen {
     /**
-     * Método que añade la imagen del usuario.
-     * @param type $id
-     * @param type $imagen
+     * Método para añadir la imagen a los productos.
+     * @param $id
+     * @param $imagen
      * @return string
      * @throws RuntimeException
      */
-    public function anadirImagen($id, $imagen) {
+    public function anadirImagenProductos($id, $imagen) {
         try {
             $_FILES['imagen'] = $imagen;
-
+                    
             if (!isset($_FILES['imagen'])) {
                 throw new RuntimeException('Se produjo un error en el envío del fichero.');
             }
             $archivos = $_FILES['imagen'];
-
+         
             foreach ($archivos['name'] as $indice => $archivo) {
                 // Comprobamos el código de produce, si es OK se procesa el archivo
                 switch ($archivos['error'][$indice]) {
@@ -47,18 +46,20 @@ class FuncionesUsuario {
                 finfo_close($finfo);
                 // Comprobamos la extensión del archivo, si no es correcta se lanza una excepción
                 if ($ext === false) {
-                    throw new RuntimeException('El archivo no es una imagen Jpg o png.');
+                    throw new RuntimeException('El archivo no es un PDF o una imagen.');
                 }
                 // Comprobamos si existe el directorio, si no existe se crea
                 $nombreArchivo = $id;
-
-                $resultado = move_uploaded_file($archivos['tmp_name'][$indice], '../imagenes/imgUsuarios/' . $nombreArchivo . '.' . $ext);
+                //$nombreArchivo1 = $archivos['name'][$indice];
+                // Se mueve el archivo a la carpeta cvs
+                //$resultado = move_uploaded_file($archivos['tmp_name'][$indice], './cvs/' . $idUnico . '.' . $ext);
+                $resultado = move_uploaded_file($archivos['tmp_name'][$indice], '../imagenes/imgProductos/' . $nombreArchivo . '.' . $ext);
                 $ruta = $nombreArchivo . '.' . $ext;
+                //echo "Se ha subido el archivo $nombreArchivo correctamente<br>";
                 return $ruta;
             }
         } catch (RuntimeException $e) {
             echo $e->getMessage();
         }
     }
-
 }

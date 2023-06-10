@@ -7,7 +7,7 @@ require(__DIR__ . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php"
 </head>
 <div class='main'>
     <div class="my-5 bg-light rounded container p-3" id="indexJuego">
-        <h3 class="text-success border-bottom pb-2">LuaChea Game (Beta)</h3>
+        <h3 class="text-success border-bottom pb-2">LuaChea Games (Beta)</h3>
         ¡Hola! Estamos encantados de presentarte nuestro nuevo juego de montar comidas. En este juego, podrás crear tu cachopo o hamburguesa ideal y competir por la máxima puntuación y cantidad de estrellas. El juego se encuentra actualmente en fase beta, lo que significa que todavía estamos trabajando en mejoras y nuevas características. Esperamos que disfrutes jugando y que nos brindes tus comentarios para seguir mejorando. ¡Que te diviertas!
         <br>
         <div class="d-flex flex-wrap align-items-center ps-3 pt-3">

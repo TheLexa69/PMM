@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!isset($_POST['registro']) || (isset($_POST['registro']) && !is_string($necesarios))) {
         //Consulta de update
         if ($img == 0) {
-            $imagen = 0;
+             $imagen = 0;
         } else {
             $imagen = $funcionesU->anadirImagen($id, $img);
         }

@@ -25,8 +25,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mail = ($funciones->correo($_POST['mail'])) ? $funciones->correo($_POST['mail']) : "";
     $codPais = $_POST['codPais'];
 
-    $telefono = $filtro->verificarDatos("[0-9]{9,9}", $_POST['telefono']);
-    $telefono = (strlen($telefono) == 9) ? $telefono : "";
+    //$telefono = $filtro->verificarDatos("[0-9]{9,9}", $_POST['telefono']);
+    //$telefono = (strlen($telefono) == 9) ? $telefono : "";
+    $telefono =$_POST['telefono'];
     $nif = null;
     $direccion = null;
     $cp = null;

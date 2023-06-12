@@ -7,6 +7,7 @@ use \clases\Carrito as carrito;
 
 $carta = new carta();
 $carrito = new carrito();
+
 // Comprueba si hay un usuario autenticado en la sesión actual y si existe un carrito en la sesión o en una cookie
 if (isset($_SESSION['usuario'])) {
     // Si hay un usuario autenticado en la sesión actual, lo guarda en una variable
@@ -58,15 +59,8 @@ if (isset($_POST['dato'])) {// Si se recibe un valor en el parámetro POST llama
     $url = "&tipo=$tipo";
 } else {  // Si no se recibe ningún valor en los parámetros POST o GET, muestra la lista completa de artículos en la carta
     $rdo = $carta->printCarta();
-}
-
-if (isset($_GET["tipo"])) {
-    $tipo = $_GET["tipo"];
-    $url = "&tipo=$tipo";
-} else {
     $url = "";
 }
-
 ?>
 <head>
     <title>Carta</title>
@@ -157,7 +151,7 @@ if (isset($_GET["tipo"])) {
                 <div id="contenedorAlergenos">
                 </div>
                 <div class="d-flex justify-content-center pb-3" id="reset">
-                    <input class="btn btn-outline-dark" type="submit" value="Filtrar" >
+                    <input class="btn btn-success" type="submit" value="Filtrar" ">
                 </div>
             </form>
         </div>
@@ -201,7 +195,7 @@ if (isset($_GET["tipo"])) {
             </div>
         </div>
     </div>
-    <div id="divPopUpForm" onclick="showCarritoFlotante();">
+    <div id="divPopUpForm" onclick="showCarritoFlotante();" style="">
         <p class="px-2 py-2 shadow fw-bold"
            style="margin-right: 40px; margin-bottom: -30px; height: 60px;background-color: white; width: 180px; border-radius: 5px;">
             Confiere tus productos!</p>
@@ -236,7 +230,7 @@ if (isset($_GET["tipo"])) {
                             </div>
                             <form method="post" action="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "agregar_carrito.php?cod=" . $fila[6] . $url; ?>">
                                 <label for="cantidad">Cantidad:</label>
-                                <select id="cantidad" name="cantidad" style="margin-bottom: 5px">
+                                <select id="cantidad" name="cantidad" style="margin-bottom: 5px"">
                                     <?php
                                     for ($i = 1; $i <= 15; $i++) {
                                         echo '<option value="' . $i . '">' . $i . '</option>';
@@ -278,7 +272,7 @@ if (isset($_GET["tipo"])) {
                             </div>
                             <form method="post" action="<?php echo DIRECTORY_SEPARATOR . "proyecto" . DIRECTORY_SEPARATOR . "backend" . DIRECTORY_SEPARATOR . "cart" . DIRECTORY_SEPARATOR . "agregar_carrito.php?cod=" . $fila[6] . $url; ?>">
                                 <label for="cantidad">Cantidad:</label>
-                                <select id="cantidad" name="cantidad" style="margin-bottom: 5px">
+                                <select id="cantidad" name="cantidad" style="margin-bottom: 5px"">
                                     <?php
                                     for ($i = 1; $i <= 15; $i++) {
                                         echo '<option value="' . $i . '">' . $i . '</option>';

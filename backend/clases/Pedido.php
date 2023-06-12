@@ -132,10 +132,10 @@ class Pedido extends Conexion {
      */
     public function obtenerPedido($id) {
         $stmt = $this->conexion->prepare("SELECT * FROM $this->tabla_pedidos WHERE id = ?");
-        $stmt->execute([$id]);
+        $stmt->execute([$id_pedido]);
         $pedido = $stmt->fetch(PDO::FETCH_ASSOC);
         $stmt = $this->conexion->prepare("SELECT $this->tabla_productos.nombre, pedidos_productos.cantidad, ped_prod.precio FROM ped_prod INNER JOIN $this->tabla_productos ON ped_prod.id_producto = $this->tabla_productos.id WHERE ped_prof.id_pedido = ?");
-        $stmt->execute([$id]);
+        $stmt->execute([$id_pedido]);
         $pedido['productos'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $pedido;
     }

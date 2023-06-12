@@ -10,7 +10,6 @@ namespace clases;
 use \clases\Mails as mails;
 use \PDO;
 use \PDOException;
-use \clases\CrearPDF;
 
 class Pedido extends Conexion {
 
@@ -127,7 +126,7 @@ class Pedido extends Conexion {
     /**
      * Método para obtener un pedido en particular
      *
-     * @param int $id_pedido ID del pedido que se quiere obtener
+     * @param int $id ID del pedido que se quiere obtener
      * 
      * @return array Array con la información del pedido y los productos que se pidieron
      */
@@ -228,14 +227,8 @@ class Pedido extends Conexion {
         $texto .= $carrito;
         $texto .= "<tr><td colspan=3> Modo de pago: " . $result["nombre"] . "</td></tr>";
         $texto .= "<tr><td colspan=3> Su pedido se está cocinando... </td></tr></table>";
-        
-        $this->crearpdf($texto);
         return $texto;
     }
-
-    function crearpdf($texto) {
-        new CrearPDF($texto);
-    } 
 
     /**
     * Envía el correo electrónico con el contenido proporcionado.

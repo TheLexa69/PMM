@@ -192,7 +192,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
                 }
             } else {
-                header("Location: /proyecto/backend/login/registro.php?registro=no");
+                  ?>
+                     <meta http-equiv="refresh" content="1; url=/proyecto/backend/login/registro.php?registro=no">
+                  <?php
+               // header("Location: /proyecto/backend/login/registro.php?registro=no");
             }
         } catch (PDOException $e) {
 

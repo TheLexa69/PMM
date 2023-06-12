@@ -41,11 +41,11 @@ $pedido = $p->crearPedido($id_usuario, $carrito, $precio, $cif, $modo_pago);
         . 'Nos complace haber tenido la oportunidad de servirle y esperamos que haya disfrutado de su experiencia de compra. <br>'
         . 'En nuestra empresa, nos esforzamos por ofrecer productos y servicios de alta calidad, y su satisfacción es nuestra máxima prioridad. <br>'
         . 'Si tiene alguna pregunta o comentario sobre su compra, no dude en ponerse en contacto con nosotros. <br><br>'
-        . '¡Gracias de nuevo por elegirnos como su proveedor y esperamos poder servirle nuevamente en el futuro!</div>'
-        . '<div class="col-2 d-flex justify-content-right"><button type="button" class="btn btn-outline-secondary" id="download-button">Descargar factura en PDF</button></div>'
-        . '<div id="descargar">';
+        . '¡Gracias de nuevo por elegirnos como su proveedor y esperamos poder servirle nuevamente en el futuro!</div>';
+        echo '<div class="card-body"><div class="col-2 d-flex justify-content-right"><button type="button" class="btn btn-outline-secondary" id="download-button">Descargar factura en PDF</button></div>';
+        echo '<div id="descargar">';
          echo $cuerpo;
-        echo '</div>
+        echo '</div></div>
 
         <script>
             const guardarpdf = document.getElementById("download-button");

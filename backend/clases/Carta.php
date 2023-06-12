@@ -76,7 +76,6 @@ class Carta extends Conexion {
     public function filterByAlergeno($alergenos, $tipo) {
         $text = "";
         if (count($alergenos) == 1 && $tipo == null) {
-            $a;
             foreach ($alergenos as $id) {
                 $a = $id;
             }
@@ -108,7 +107,6 @@ class Carta extends Conexion {
                     WHERE nombre_tipo = '$tipo'
               )";
         } else {
-            $a;
             foreach ($alergenos as $id) {
                 $a = $id;
             }

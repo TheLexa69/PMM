@@ -10,6 +10,7 @@ namespace clases;
 use \clases\Mails as mails;
 use \PDO;
 use \PDOException;
+use \clases\CrearPDF;
 
 class Pedido extends Conexion {
 
@@ -132,10 +133,10 @@ class Pedido extends Conexion {
      */
     public function obtenerPedido($id) {
         $stmt = $this->conexion->prepare("SELECT * FROM $this->tabla_pedidos WHERE id = ?");
-        $stmt->execute([$id_pedido]);
+        $stmt->execute([$id]);
         $pedido = $stmt->fetch(PDO::FETCH_ASSOC);
         $stmt = $this->conexion->prepare("SELECT $this->tabla_productos.nombre, pedidos_productos.cantidad, ped_prod.precio FROM ped_prod INNER JOIN $this->tabla_productos ON ped_prod.id_producto = $this->tabla_productos.id WHERE ped_prof.id_pedido = ?");
-        $stmt->execute([$id_pedido]);
+        $stmt->execute([$id]);
         $pedido['productos'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $pedido;
     }
@@ -227,8 +228,14 @@ class Pedido extends Conexion {
         $texto .= $carrito;
         $texto .= "<tr><td colspan=3> Modo de pago: " . $result["nombre"] . "</td></tr>";
         $texto .= "<tr><td colspan=3> Su pedido se está cocinando... </td></tr></table>";
+        
+        $this->crearpdf($texto);
         return $texto;
     }
+
+    function crearpdf($texto) {
+        new CrearPDF($texto);
+    } 
 
     /**
     * Envía el correo electrónico con el contenido proporcionado.

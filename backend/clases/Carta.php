@@ -74,15 +74,20 @@ class Carta extends Conexion {
      * @param array $alergenos Array con los ids de los alérgenos a filtrar.
      * @return array Retorna un array con los platos que no contienen los alérgenos especificados.
      */
-    public function filterByAlergeno($alergenos) {
+    /**
+     * Obtiene una lista de platos filtrados por alérgenos.
+     *
+     * @param array $alergenos Array con los ids de los alérgenos a filtrar.
+     * @return array Retorna un array con los platos que no contienen los alérgenos especificados.
+     */
+    public function filterByAlergeno($alergenos, $tipo) {
         $text = "";
-        //var_dump($alergenos);
-        if (count($alergenos) == 1) {
+        if (count($alergenos) == 1 && $tipo == null) {
             foreach ($alergenos as $id) {
                 $a = $id;
             }
             $query = "SELECT nombre, descripcion, tipo, precio, img, disponible, id_comida from $this->table WHERE id_comida NOT IN ( SELECT id_comida FROM carta_alergenos WHERE id_alergeno = $a)";
-        } else {
+        } else if (count($alergenos) > 1 && $tipo == null) {
             $cantidad = count($alergenos);
             //$alergenos = implode(',', $alergenos);
             foreach ($alergenos as $id) {
@@ -92,7 +97,29 @@ class Carta extends Conexion {
                     $text .= ", ";
                 }
             }
-            echo $query = "SELECT nombre, descripcion, tipo, precio, img, disponible, id_comida from $this->table WHERE id_comida NOT IN ( SELECT id_comida FROM carta_alergenos WHERE id_alergeno IN ($text))";
+            $query = "SELECT nombre, descripcion, tipo, precio, img, disponible, id_comida from $this->table WHERE id_comida NOT IN ( SELECT id_comida FROM carta_alergenos WHERE id_alergeno IN ($text))";
+        } else if (count($alergenos) >= 2 && $tipo) {
+            $cantidad = count($alergenos);
+            $placeholders = implode(', ', $alergenos);
+            $query = "SELECT nombre, descripcion, tipo, precio, img, disponible, id_comida 
+              FROM carta_comida 
+              WHERE id_comida NOT IN (
+                    SELECT id_comida 
+                    FROM carta_alergenos 
+                    WHERE id_alergeno IN ($placeholders)
+              ) 
+              AND tipo IN (
+                    SELECT id_tipo 
+                    FROM tipo 
+                    WHERE nombre_tipo = '$tipo'
+              )";
+        } else {
+            foreach ($alergenos as $id) {
+                $a = $id;
+            }
+            $query = "SELECT nombre, descripcion, tipo, precio, img, disponible, id_comida from carta_comida 
+		WHERE id_comida NOT IN ( SELECT id_comida FROM carta_alergenos WHERE id_alergeno = $a)
+                AND tipo in (select id_tipo from tipo where nombre_tipo = '$tipo')";
         }
         $stmt = $this->conexion->prepare($query);
         $stmt->execute();
@@ -100,3 +127,5 @@ class Carta extends Conexion {
     }
 
 }
+
+

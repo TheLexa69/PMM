@@ -44,7 +44,7 @@ $pedido = $p->crearPedido($id_usuario, $carrito, $precio, $cif, $modo_pago);
         . '¡Gracias de nuevo por elegirnos como su proveedor y esperamos poder servirle nuevamente en el futuro!</div>';
         echo '<div class="card-body"><div class="col-2 d-flex justify-content-right"><button type="button" class="btn btn-outline-secondary" id="download-button">Descargar factura en PDF</button></div>';
         echo '<div id="descargar">';
-         echo $cuerpo;
+        echo $cuerpo;
         echo '</div></div>
 
         <script>
@@ -55,7 +55,7 @@ $pedido = $p->crearPedido($id_usuario, $carrito, $precio, $cif, $modo_pago);
             }
 
             guardarpdf.addEventListener("click", generarpdf);
-        </script> ';;
+        </script> ';
 
         echo '<div id="mensaje" class="rounded" style="z-index: 4; position: absolute; transition: top 0.5s; top: -150%; right: 0; background-color: #80ff00; color: black; padding: 10px;">';
         echo '<h2>Pedido realizado con éxito, te hemos enviado un correo.</h2>';

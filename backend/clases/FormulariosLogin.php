@@ -123,7 +123,7 @@ class FormulariosLogin {
                             </tr>
                             <tr>
                                 <td><h5>Teléfono</h5></td>
-                                <td>
+                                <td  onclick="document.getElementById('divBTN').style.marginTop = '150px';">
                                     <input id="phone" type="tel" name="telefono" class="form-control" <?php
                                     if (!empty($_POST['telefono'])) {
                                         echo " value='" . $_POST['telefono'] . "'";
@@ -152,7 +152,7 @@ class FormulariosLogin {
                             echo "<br><b style=color:red>Faltan campos obligatorios:</b> <br>$necesarios";
                         }
                         ?>
-                        <div class="text-center pb-2"><input type="submit" onclick="setCode();" class="btn btn-success" name="registro" value="Enviar"></div>
+                        <div class="text-center pb-2" id="divBTN"><input type="submit" onclick="setCode();" class="btn btn-success" name="registro" value="Enviar"></div>
                     </form>
                 </div>
             </div>

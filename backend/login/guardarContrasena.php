@@ -36,7 +36,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt->rowCount() > 0) {
                 unset($conexion);
                 unset($stmt);
-                header("Location:/proyecto/backend/login/indexLogin.php");
+                ?>
+                <meta http-equiv="refresh" content="1; url=/proyecto/backend/login/indexLogin.php">
+                <?php
+                //header("Location:/proyecto/backend/login/indexLogin.php");
             }
 
             unset($conexion);

@@ -105,7 +105,7 @@ require(__DIR__ . DIRECTORY_SEPARATOR . "frontend" . DIRECTORY_SEPARATOR . "php"
             <span class="visually-hidden">Next</span>
         </button>
     </div>
-    <div class="container-fluid bg-light rounded d-flex justify-content-center shadow-lg align-items-center text-center py-3" id="cookie">
+    <div class="container-fluid bg-light rounded d-flex justify-content-center fixed-bottom shadow-lg align-items-center text-center py-3" id="cookie">
         <p class="fs-2 fw-bold">Consentimiento de Cookies</p>
         <p>¡Tu privacidad es importante para nosotros! En nuestro sitio web utilizamos cookies desarrolladas internamente para mejorar tu experiencia de navegación. Estas cookies nos permiten personalizar el contenido y ofrecerte promociones especiales. Al hacer clic en "Lo entiendo", estás dando tu consentimiento para el uso de cookies en nuestro sitio web. Puedes obtener más información en nuestra Política de Privacidad. ¡Gracias por confiar en nosotros!</p>
         <p>Puedes visitar nuestro Sitemap: <a href="https://www.dropbox.com/scl/fi/i9aqp1574byllz116xa2d/sitemap_LuaChea.png?dl=0&rlkey=hhbnsxlak614tgq2iv1xllnra" target="_blank">enlace directo.</a></p>

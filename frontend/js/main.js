@@ -172,17 +172,17 @@ function getCookie(name) {
 
 if (getCookie('cookie') === 'true') {
     if (document.getElementById('cookie') !== null) {
-        document.getElementById('cookie').style.top = "-150vh";
+        document.getElementById('cookie').style.top = "150vh";
     }
 } else {
     if (document.getElementById('cookie') !== null) {
-        document.getElementById('cookie').style.top = "60%";
+        //document.getElementById('cookie').style.top = "60%";
     }
 }
 
 function ocultarBarraCookies() {
     const cookieBox = document.getElementById("cookie");
-    cookieBox.style.top = "-150vh";
+    cookieBox.style.top = "150vh";
     document.cookie = "cookie=true; expires=" + new Date(Date.now() + 8 * 60 * 60 * 1000).toUTCString() + "; path=/";
 
 }

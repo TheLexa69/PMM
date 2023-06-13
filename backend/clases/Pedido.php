@@ -218,17 +218,18 @@ class Pedido extends Conexion {
         $stmt->bindParam(':pedido', $pedido, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        $pesoTotal = 0;
-        $texto = "<h1>Pedido nº $pedido</h1>";
-        $texto .= "<p><h3>" . $result["nombreLocal"] . "</h3></p><p><h3>" . $result["cif"] . "</h3></p><p><h3>" . $result["nombre_sociedad"] . "</h3></p><p><h3>" . $result["direccion"] . "</h3></p><p><h3>" . $result["ciudad"] . "</h3></p><p><h3>" . $result["cp"] . "</h3></p><p><h3>" . $result["fecha"] . "</h3></p>";
-        $texto .= "Detalle del pedido:";
+        $texto = "<p style='padding-top: 30px;'><h5>" . $result["nombreLocal"] . "</h5></p><p><h5>" . $result["cif"] . "</h5></p><p><h5>" . $result["nombre_sociedad"] . "</h5></p><p><h5>" . $result["direccion"] . "</h5></p><p><h5>" . $result["ciudad"] . "</h5></p><p><h5>" . $result["cp"] . "</h5></p><p><h5>" . $result["fecha"] . "</h5></p>";
+        $texto .= "<p>Detalle del pedido:</p>";
+        $texto .= "<p>Pedido nº $pedido</p>";
         $texto .= "<table>"; //abrir la tabla
         $texto .= "<tr><th>Nombre</th><th>Unidades</th><th>Precio</th></tr>";
         $texto .= $carrito;
         $texto .= "<tr><td colspan=3> Modo de pago: " . $result["nombre"] . "</td></tr>";
         $texto .= "<tr><td colspan=3> Su pedido se está cocinando... </td></tr></table>";
+        
         return $texto;
     }
+
 
     /**
     * Envía el correo electrónico con el contenido proporcionado.

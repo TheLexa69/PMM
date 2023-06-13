@@ -25,7 +25,7 @@
                 &nbsp;
                 &nbsp;
                 &nbsp;
-                El juego se inicia automáticamente cuando entras, para lograr hacer una hamburguesa tienes que seguir el orden de los ingredientes, de <b>izquierda a derecha</b>.
+                El juego se inicia automáticamente cuando entras, para lograr hacer un cachopo tienes que seguir el orden de los ingredientes, de <b>izquierda a derecha</b>.
             </div>
         </div>
     </div>
